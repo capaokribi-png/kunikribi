@@ -1,12 +1,13 @@
 /* CuniSmart — Service Worker : mode hors ligne / offline mode */
-const CACHE = 'cunismart-v2';
+const CACHE = 'cunismart-v4';
 const FICHIERS = [
   './',
   './index.html',
   './manifest.json',
   './confidentialite.html',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  './icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', e => {
