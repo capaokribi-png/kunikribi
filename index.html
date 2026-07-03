@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1B4534">
+<meta name="theme-color" content="#9A3412">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>KuniKribi — Gestion d'élevage cunicole · Rabbit farm manager</title>
+<title>CuniSmart — Gestion d'élevage cunicole · Rabbit farm manager</title>
 <style>
   :root{
-    --vert-foret:#1B4534; --vert-fonce:#153427; --vert-moyen:#245C43;
-    --feuille:#8CC08B; --feuille-fonce:#5E9C5F;
-    --creme:#F3EEDF; --creme-2:#FAF7EE; --encre:#22302A; --gris:#5F6F64;
-    --rouge:#B4533A; --ambre:#C98A2D; --or:#B8860B;
+    --vert-foret:#9A3412; --vert-fonce:#6B2409; --vert-moyen:#E2711D;
+    --feuille:#F4B41A; --feuille-fonce:#0E7A46;
+    --creme:#FBF3E0; --creme-2:#FDF8EC; --encre:#2A1C10; --gris:#7A6A55;
+    --rouge:#C0392B; --ambre:#D98E04; --or:#D4A017;
+    --lime:#F4B41A; --cyan:#22D3EE;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--creme-2);color:var(--encre);}
@@ -44,7 +45,7 @@
   .card{background:#fff;border:1px solid #E6E0D0;border-radius:14px;padding:18px;}
   .stat .val{font-size:1.9rem;font-weight:700;color:var(--vert-foret);}
   .stat .lab{font-size:.78rem;color:var(--gris);letter-spacing:.6px;text-transform:uppercase;margin-top:2px;}
-  .stat.leaf{border-top:4px solid var(--feuille);}
+  .stat.leaf{border-top:4px solid var(--lime);}
   .stat.amber{border-top:4px solid var(--ambre);}
   .stat.red{border-top:4px solid var(--rouge);}
   .card h3{color:var(--vert-foret);font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
@@ -103,7 +104,7 @@
   .quiz-opt.bonne{background:#EAF3EA;border:1px solid var(--feuille-fonce);}
   .quiz-opt.fausse{background:#F9E9E4;border:1px solid var(--rouge);}
   .progress-bar{height:10px;background:#E6E0D0;border-radius:6px;overflow:hidden;margin:8px 0 4px;}
-  .progress-bar div{height:100%;background:linear-gradient(90deg,var(--feuille-fonce),var(--feuille));transition:.4s;}
+  .progress-bar div{height:100%;background:linear-gradient(90deg,var(--lime),var(--feuille-fonce));transition:.4s;}
 
   /* ===== Certificat ===== */
   .certif{background:linear-gradient(135deg,#FDF6E3,#F5E7C1);border:3px double var(--or);border-radius:16px;
@@ -136,18 +137,17 @@
   <aside class="sidebar">
     <div class="brand">
       <svg width="46" height="46" viewBox="0 0 512 512">
-        <rect width="512" height="512" rx="116" fill="#F3EEDF"/>
-        <rect x="148" y="112" width="60" height="288" rx="30" fill="#1B4534"/>
-        <ellipse cx="178" cy="196" rx="15" ry="58" fill="#F3EEDF"/>
-        <g transform="translate(280,192) rotate(46)">
-          <path d="M0 -112 C 40 -62, 42 56, 0 112 C -42 56, -40 -62, 0 -112 Z" fill="#5E9C5F"/>
-          <path d="M0 -88 L0 92" stroke="#F3EEDF" stroke-width="9" stroke-linecap="round"/>
-        </g>
-        <path d="M204 268 L344 386" stroke="#1B4534" stroke-width="60" stroke-linecap="round"/>
+        <rect width="512" height="512" rx="116" fill="#FBF3E0"/>
+        <path d="M352.4 141.1 A150 150 0 1 0 352.4 370.9" fill="none" stroke="#9A3412" stroke-width="56" stroke-linecap="round"/>
+        <circle cx="356" cy="136" r="34" fill="#9A3412"/>
+        <g transform="translate(336,74) rotate(-18)"><ellipse rx="15" ry="50" fill="#9A3412"/></g>
+        <g transform="translate(380,70) rotate(12)"><ellipse rx="15" ry="52" fill="#9A3412"/><ellipse rx="7" ry="34" fill="#F4B41A"/></g>
+        <circle cx="368" cy="132" r="6" fill="#FBF3E0"/>
+        <circle cx="352" cy="371" r="34" fill="#9A3412"/>
       </svg>
       <div>
-        <h1>Kuni<span>Kribi</span></h1>
-        <small id="brand-tag">ÉLEVAGE CUNICOLE</small>
+        <h1>Cuni<span>Smart</span></h1>
+        <small id="brand-tag">ÉLEVAGE CUNICOLE INTELLIGENT</small>
       </div>
     </div>
     <button class="nav-btn active" data-vue="tableau" onclick="naviguer('tableau')"><span class="ico">◫</span> <span data-i18n="nav_dash"></span></button>
@@ -158,7 +158,7 @@
     <button class="nav-btn" data-vue="bilan" onclick="naviguer('bilan')"><span class="ico">📊</span> <span data-i18n="nav_report"></span></button>
     <button class="nav-btn" data-vue="ecole" onclick="naviguer('ecole')"><span class="ico">🎓</span> <span data-i18n="nav_school"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
-    <div class="foot">KuniKribi v2.0 · Kribi, Cameroun</div>
+    <div class="foot">CuniSmart v2.0 · Kribi, Cameroun</div>
   </aside>
 
   <main id="contenu"></main>
@@ -168,7 +168,7 @@
 /* ================= INTERNATIONALISATION FR / EN ================= */
 const I18N = {
   fr: {
-    brand_tag:"ÉLEVAGE CUNICOLE", lang_btn:"🌍 English",
+    brand_tag:"ÉLEVAGE CUNICOLE INTELLIGENT", lang_btn:"🌍 English",
     nav_dash:"Tableau de bord", nav_herd:"Cheptel", nav_repro:"Reproduction",
     nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_school:"École",
     dash_title:"Tableau de bord", dash_sub:"Vue d’ensemble de l’élevage",
@@ -188,6 +188,7 @@ const I18N = {
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
     confirm_del:"Supprimer définitivement cet enregistrement ?",
+    btn_new_breed:"＋ Nouvelle race", prompt_new_breed:"Nom de la nouvelle race :",
     repro_title:"Reproduction", repro_sub:"Saillies, gestations ({g} j), mises bas et sevrages ({s} j)",
     repro_add:"＋ Enregistrer une saillie", f_doe:"Femelle", f_buck:"Mâle", f_matedate:"Date de saillie",
     repro_note:"→ L’application calculera automatiquement la date de palpation (J+{p}) et la mise bas prévue (J+{g}).",
@@ -223,7 +224,7 @@ const I18N = {
     d_margin:"Marge négative : l’aliment représente souvent 70 % des coûts — comparez les fournisseurs et complétez avec du fourrage séché de qualité.",
     d_ok:"Bons indicateurs ! Continuez à enregistrer chaque événement pour garder cette précision.",
     btn_share_wa:"Partager le bilan sur WhatsApp",
-    wa_report_title:"🐇 *BILAN KUNIKRIBI*", wa_herd:"Cheptel", wa_advice:"💡 Conseil",
+    wa_report_title:"🐇 *BILAN CUNISMART*", wa_herd:"Cheptel", wa_advice:"💡 Conseil",
     school_title:"École de cuniculture", school_sub:"6 leçons + quiz pour maîtriser l’élevage. Validez tout pour obtenir votre certificat !",
     school_progress:"{n}/6 leçons validées",
     lesson_done:"✓ Validée", lesson_todo:"À faire", btn_back:"← Retour aux leçons",
@@ -231,13 +232,13 @@ const I18N = {
     btn_check:"Corriger", quiz_pass:"🎉 Bravo, leçon validée !",
     quiz_fail:"Presque ! Relisez la leçon et réessayez.", btn_retry:"Réessayer",
     certif_title:"🏆 CERTIFICAT DE FORMATION",
-    certif_body:"a suivi et validé avec succès les 6 leçons de l’École de cuniculture KuniKribi",
+    certif_body:"a suivi et validé avec succès les 6 leçons de l’École de cuniculture CuniSmart",
     certif_name_ph:"Écrivez votre nom ici",
     btn_share_certif:"Partager mon certificat sur WhatsApp",
-    wa_certif:"🏆 J’ai obtenu mon *Certificat de formation en cuniculture* après avoir validé les 6 leçons et quiz de l’École KuniKribi ! 🐇📚"
+    wa_certif:"🏆 J’ai obtenu mon *Certificat de formation en cuniculture* après avoir validé les 6 leçons et quiz de l’École CuniSmart ! 🐇📚"
   },
   en: {
-    brand_tag:"RABBIT FARMING", lang_btn:"🌍 Français",
+    brand_tag:"SMART RABBIT FARMING", lang_btn:"🌍 Français",
     nav_dash:"Dashboard", nav_herd:"Herd", nav_repro:"Breeding",
     nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_school:"School",
     dash_title:"Dashboard", dash_sub:"Overview of your rabbitry",
@@ -257,6 +258,7 @@ const I18N = {
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
     confirm_del:"Permanently delete this record?",
+    btn_new_breed:"＋ New breed", prompt_new_breed:"Name of the new breed:",
     repro_title:"Breeding", repro_sub:"Matings, pregnancies ({g} d), kindlings and weanings ({s} d)",
     repro_add:"＋ Record a mating", f_doe:"Doe", f_buck:"Buck", f_matedate:"Mating date",
     repro_note:"→ The app will automatically compute the palpation date (D+{p}) and the expected kindling (D+{g}).",
@@ -292,7 +294,7 @@ const I18N = {
     d_margin:"Negative margin: feed is often 70% of costs — compare suppliers and supplement with quality dried forage.",
     d_ok:"Good indicators! Keep recording every event to maintain this accuracy.",
     btn_share_wa:"Share report on WhatsApp",
-    wa_report_title:"🐇 *KUNIKRIBI REPORT*", wa_herd:"Herd", wa_advice:"💡 Advice",
+    wa_report_title:"🐇 *CUNISMART REPORT*", wa_herd:"Herd", wa_advice:"💡 Advice",
     school_title:"Rabbit farming school", school_sub:"6 lessons + quizzes to master rabbit farming. Complete them all to earn your certificate!",
     school_progress:"{n}/6 lessons completed",
     lesson_done:"✓ Completed", lesson_todo:"To do", btn_back:"← Back to lessons",
@@ -300,10 +302,10 @@ const I18N = {
     btn_check:"Check answers", quiz_pass:"🎉 Well done, lesson completed!",
     quiz_fail:"Almost! Re-read the lesson and try again.", btn_retry:"Try again",
     certif_title:"🏆 TRAINING CERTIFICATE",
-    certif_body:"has successfully completed the 6 lessons of the KuniKribi Rabbit Farming School",
+    certif_body:"has successfully completed the 6 lessons of the CuniSmart Rabbit Farming School",
     certif_name_ph:"Write your name here",
     btn_share_certif:"Share my certificate on WhatsApp",
-    wa_certif:"🏆 I earned my *Rabbit Farming Training Certificate* after completing all 6 lessons and quizzes of the KuniKribi School! 🐇📚"
+    wa_certif:"🏆 I earned my *Rabbit Farming Training Certificate* after completing all 6 lessons and quizzes of the CuniSmart School! 🐇📚"
   }
 };
 let langue = 'fr';
@@ -400,7 +402,7 @@ const LECONS = [
 ];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
-let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' } };
+let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [] };
 let vueActive = 'tableau';
 let leconOuverte = null;
 let quizResultat = null;
@@ -427,6 +429,7 @@ async function charger(){
       etat = Object.assign(etat, anc);
       if(!etat.soins) etat.soins = [];
       if(!etat.ecole) etat.ecole = { validees: [], nom: '' };
+      if(!etat.racesPerso) etat.racesPerso = [];
     }
     const l = await store.get(CLE_LANG);
     if(l === 'en' || l === 'fr') langue = l;
@@ -466,6 +469,16 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6
 const pct = (num, den) => den > 0 ? Math.round(num / den * 100) : null;
 function partagerWhatsApp(texte){ window.open('https://wa.me/?text=' + encodeURIComponent(texte), '_blank'); }
 
+const toutesRaces = () => [...RACES, ...(etat.racesPerso||[])];
+function nouvelleRace(){
+  const r = prompt(t('prompt_new_breed'));
+  if(!r) return;
+  const v = r.trim();
+  if(!v) return;
+  if(!toutesRaces().includes(v)) { etat.racesPerso.push(v); sauver(); }
+  rendre();
+  setTimeout(()=>{ const s = document.getElementById('l-race'); if(s) s.value = v; }, 0);
+}
 function naviguer(v){
   vueActive = v; leconOuverte = null; quizResultat = null;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.vue === v));
@@ -580,7 +593,8 @@ function vueCheptel(){
       <form class="ligne" onsubmit="ajouterLapin(event)">
         <div class="champ"><label>${t('f_name')}</label><input id="l-nom" required placeholder="${t('ph_name')}"></div>
         <div class="champ"><label>${t('f_sex')}</label><select id="l-sexe"><option value="F">${t('f_female')}</option><option value="M">${t('f_male')}</option></select></div>
-        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${RACES.map(r=>`<option>${r}</option>`).join('')}</select></div>
+        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${toutesRaces().map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>
+        <button type="button" class="btn mini sec" style="margin-bottom:2px" onclick="nouvelleRace()">${t('btn_new_breed')}</button>
         <div class="champ"><label>${t('f_birth')}</label><input type="date" id="l-naiss"></div>
         <button class="btn">${t('btn_add')}</button>
       </form>
@@ -741,7 +755,7 @@ function partagerBilan(){
     '*' + t('kpi_margin') + ' : ' + fcfa(k.marge) + '*'
   ];
   if(conseils.length) lignes.push(t('wa_advice') + ' : ' + conseils[0]);
-  lignes.push('— KuniKribi 🐇');
+  lignes.push('— CuniSmart 🐇');
   partagerWhatsApp(lignes.join('\n'));
 }
 
@@ -759,7 +773,7 @@ function vueEcole(){
       <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
       <div class="grand-nom">${esc(etat.ecole.nom) || '…'}</div>
       <p>${t('certif_body')}</p>
-      <p style="margin-top:6px">🐇 KuniKribi · ${fdate(auj())}</p>
+      <p style="margin-top:6px">🐇 CuniSmart · ${fdate(auj())}</p>
       <button class="btn wa" style="margin-top:12px" onclick="partagerCertif()">🟢 ${t('btn_share_certif')}</button>
     </div>`;
   }
@@ -858,7 +872,7 @@ function majNomCertif(v){
 }
 function partagerCertif(){
   const n = etat.ecole.nom ? ' — ' + etat.ecole.nom : '';
-  partagerWhatsApp(t('wa_certif') + n + '\n' + fdate(auj()) + ' · KuniKribi');
+  partagerWhatsApp(t('wa_certif') + n + '\n' + fdate(auj()) + ' · CuniSmart');
 }
 
 /* ================= ACTIONS ================= */
