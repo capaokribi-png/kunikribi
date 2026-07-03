@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1B4534">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>KuniKribi — Gestion d'élevage cunicole · Rabbit farm manager</title>
+<style>
+  :root{
+    --vert-foret:#1B4534; --vert-fonce:#153427; --vert-moyen:#245C43;
+    --feuille:#8CC08B; --feuille-fonce:#5E9C5F;
+    --creme:#F3EEDF; --creme-2:#FAF7EE; --encre:#22302A; --gris:#5F6F64;
+    --rouge:#B4533A; --ambre:#C98A2D;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--creme-2);color:var(--encre);}
+
+  .app{display:flex;min-height:100vh;}
+  .sidebar{width:230px;background:linear-gradient(160deg,var(--vert-moyen),var(--vert-fonce));color:var(--creme);
+    padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;}
+  .brand{display:flex;align-items:center;gap:12px;padding:4px 8px 20px;border-bottom:1px solid rgba(243,238,223,.18);margin-bottom:14px;}
+  .brand h1{font-size:1.25rem;letter-spacing:.5px;}
+  .brand h1 span{color:var(--feuille);}
+  .brand small{display:block;font-size:.62rem;letter-spacing:2.5px;color:rgba(243,238,223,.65);font-weight:500;}
+  .nav-btn{display:flex;align-items:center;gap:10px;background:none;border:none;color:rgba(243,238,223,.82);
+    font-size:.95rem;padding:11px 14px;border-radius:10px;cursor:pointer;text-align:left;width:100%;transition:.15s;}
+  .nav-btn:hover{background:rgba(243,238,223,.08);}
+  .nav-btn.active{background:var(--creme);color:var(--vert-foret);font-weight:600;}
+  .nav-btn .ico{width:20px;text-align:center;}
+  .lang-btn{margin-top:10px;background:rgba(243,238,223,.12);border:1px solid rgba(243,238,223,.3);
+    color:var(--creme);padding:8px 14px;border-radius:9px;cursor:pointer;font-size:.85rem;font-weight:600;}
+  .lang-btn:hover{background:rgba(243,238,223,.22);}
+  .sidebar .foot{margin-top:auto;font-size:.7rem;color:rgba(243,238,223,.5);padding:0 8px;}
+
+  main{flex:1;padding:28px 34px;max-width:1100px;}
+  .page-title{font-size:1.5rem;color:var(--vert-foret);margin-bottom:4px;}
+  .page-sub{color:var(--gris);font-size:.9rem;margin-bottom:22px;}
+
+  .grid{display:grid;gap:16px;}
+  .grid.stats{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:22px;}
+  .card{background:#fff;border:1px solid #E6E0D0;border-radius:14px;padding:18px;}
+  .stat .val{font-size:1.9rem;font-weight:700;color:var(--vert-foret);}
+  .stat .lab{font-size:.78rem;color:var(--gris);letter-spacing:.6px;text-transform:uppercase;margin-top:2px;}
+  .stat.leaf{border-top:4px solid var(--feuille);}
+  .stat.amber{border-top:4px solid var(--ambre);}
+  .stat.red{border-top:4px solid var(--rouge);}
+  .card h3{color:var(--vert-foret);font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+  .alerte{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:.9rem;}
+  .alerte.warn{background:#FCF3E2;border:1px solid #EAD2A4;}
+  .alerte.urgent{background:#F9E9E4;border:1px solid #E3B7A9;}
+  .alerte.info{background:#EAF3EA;border:1px solid #C7E0C6;}
+  .alerte b{color:var(--vert-foret);}
+  .vide{color:var(--gris);font-size:.9rem;font-style:italic;padding:8px 0;}
+
+  form.ligne{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:18px;}
+  .champ{display:flex;flex-direction:column;gap:4px;}
+  .champ label{font-size:.72rem;letter-spacing:.5px;color:var(--gris);text-transform:uppercase;font-weight:600;}
+  .champ input,.champ select{padding:9px 12px;border:1.5px solid #D8D1BE;border-radius:9px;background:#fff;
+    font-size:.92rem;min-width:130px;color:var(--encre);}
+  .champ input:focus,.champ select:focus{outline:2px solid var(--feuille);border-color:var(--feuille-fonce);}
+  .btn{background:var(--vert-foret);color:var(--creme);border:none;padding:10px 20px;border-radius:9px;
+    font-size:.92rem;font-weight:600;cursor:pointer;transition:.15s;}
+  .btn:hover{background:var(--vert-moyen);}
+  .btn.sec{background:var(--feuille);color:var(--vert-fonce);}
+  .btn.mini{padding:5px 12px;font-size:.8rem;border-radius:7px;}
+  .btn.danger{background:transparent;color:var(--rouge);border:1.5px solid var(--rouge);}
+  .btn.danger:hover{background:var(--rouge);color:#fff;}
+
+  table{width:100%;border-collapse:collapse;font-size:.9rem;}
+  th{text-align:left;padding:9px 10px;color:var(--gris);font-size:.72rem;letter-spacing:.8px;
+    text-transform:uppercase;border-bottom:2px solid #E6E0D0;}
+  td{padding:10px;border-bottom:1px solid #EFEADB;}
+  tr:last-child td{border-bottom:none;}
+  .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
+  .tag.f{background:#F3E4EC;color:#8A4A6B;}
+  .tag.m{background:#E2ECF5;color:#3A5E82;}
+  .tag.ok{background:#EAF3EA;color:var(--feuille-fonce);}
+  .tag.gest{background:#FCF3E2;color:var(--ambre);}
+  .tag.fin{background:#EEEBE2;color:var(--gris);}
+  .tag.vente{background:#EAF3EA;color:var(--feuille-fonce);}
+  .tag.dep{background:#F9E9E4;color:var(--rouge);}
+  .solde-pos{color:var(--feuille-fonce);} .solde-neg{color:var(--rouge);}
+
+  @media(max-width:900px){
+    .app{flex-direction:column;}
+    .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center;padding:12px;}
+    .brand{border:none;padding:4px 10px;margin:0;}
+    .nav-btn{width:auto;padding:8px 12px;font-size:.85rem;}
+    .lang-btn{margin-top:0;}
+    .sidebar .foot{display:none;}
+    main{padding:18px;}
+    .champ input,.champ select{min-width:110px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <svg width="46" height="46" viewBox="0 0 512 512">
+        <rect width="512" height="512" rx="116" fill="#F3EEDF"/>
+        <rect x="148" y="112" width="60" height="288" rx="30" fill="#1B4534"/>
+        <ellipse cx="178" cy="196" rx="15" ry="58" fill="#F3EEDF"/>
+        <g transform="translate(280,192) rotate(46)">
+          <path d="M0 -112 C 40 -62, 42 56, 0 112 C -42 56, -40 -62, 0 -112 Z" fill="#5E9C5F"/>
+          <path d="M0 -88 L0 92" stroke="#F3EEDF" stroke-width="9" stroke-linecap="round"/>
+        </g>
+        <path d="M204 268 L344 386" stroke="#1B4534" stroke-width="60" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Kuni<span>Kribi</span></h1>
+        <small id="brand-tag">ÉLEVAGE CUNICOLE</small>
+      </div>
+    </div>
+    <button class="nav-btn active" data-vue="tableau" onclick="naviguer('tableau')"><span class="ico">◫</span> <span data-i18n="nav_dash"></span></button>
+    <button class="nav-btn" data-vue="cheptel" onclick="naviguer('cheptel')"><span class="ico">🐇</span> <span data-i18n="nav_herd"></span></button>
+    <button class="nav-btn" data-vue="repro" onclick="naviguer('repro')"><span class="ico">✿</span> <span data-i18n="nav_repro"></span></button>
+    <button class="nav-btn" data-vue="finances" onclick="naviguer('finances')"><span class="ico">₣</span> <span data-i18n="nav_fin"></span></button>
+    <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
+    <div class="foot">KuniKribi v1.1 · Kribi, Cameroun</div>
+  </aside>
+
+  <main id="contenu"></main>
+</div>
+
+<script>
+/* ================= INTERNATIONALISATION FR / EN ================= */
+const I18N = {
+  fr: {
+    brand_tag:'ÉLEVAGE CUNICOLE', lang_btn:'🌍 English',
+    nav_dash:'Tableau de bord', nav_herd:'Cheptel', nav_repro:'Reproduction', nav_fin:'Finances',
+    dash_title:'Tableau de bord', dash_sub:"Vue d'ensemble de l'élevage",
+    st_females:'Lapines', st_males:'Mâles', st_gest:'Gestations en cours',
+    st_kits:'Lapereaux sous la mère', st_balance:'Solde',
+    alerts_title:'⚑ Alertes & tâches du moment',
+    alerts_none:"Aucune alerte — tout est à jour. Pensez à vérifier l’eau et l’aliment matin et soir.",
+    al_palp:'<b>Palpation</b> de <b>{f}</b> à faire (saillie du {d}) — confirmer la gestation.',
+    al_soon:'<b>Mise bas imminente</b> : <b>{f}</b> prévue le {d} (J-{n}). Préparer la boîte à nid.',
+    al_over:'<b>Mise bas dépassée</b> pour <b>{f}</b> (prévue {d}). Vérifier ou enregistrer.',
+    al_wean:'<b>Sevrage</b> de la portée de <b>{f}</b> {q} ({n} lapereaux).',
+    al_wean_on:'prévu le {d}', al_wean_now:'à faire',
+    herd_title:'Registre du cheptel', herd_sub:"Reproducteurs et reproductrices de l'élevage",
+    herd_add:'＋ Enregistrer un lapin', herd_empty:'Aucun lapin enregistré. Commencez par ajouter vos reproducteurs.',
+    f_name:'Nom / N° boucle', ph_name:'Ex : F-001 ou Bella', f_sex:'Sexe', f_female:'♀ Femelle', f_male:'♂ Mâle',
+    f_breed:'Race', f_birth:'Date de naissance', btn_add:'Ajouter',
+    th_name:'Nom', th_sex:'Sexe', th_breed:'Race', th_birth:'Naissance', th_status:'Statut',
+    s_active:'Actif', s_sold:'Vendu', s_dead:'Décédé', btn_sold:'Vendu', btn_dead:'Décès',
+    confirm_del:'Supprimer définitivement ce lapin du registre ?',
+    repro_title:'Reproduction', repro_sub:'Saillies, gestations ({g} j), mises bas et sevrages ({s} j)',
+    repro_add:'＋ Enregistrer une saillie', f_doe:'Femelle', f_buck:'Mâle', f_matedate:'Date de saillie',
+    repro_note:"→ L'application calculera automatiquement la date de palpation (J+{p}) et la mise bas prévue (J+{g}).",
+    repro_need:'Il faut au moins une femelle disponible et un mâle actifs dans le cheptel pour enregistrer une saillie.',
+    th_pair:'Couple', th_mating:'Saillie', th_track:'Suivi',
+    tag_gest:'Gestation', palp_lbl:'Palpation', due_lbl:'Mise bas prévue',
+    tag_kindled:'Mise bas', born_line:'{v} vivant(s), {m} mort-né(s)',
+    weaned_lbl:'Sevrée', wean_due_lbl:'Sevrage',
+    btn_kindle:'Mise bas', btn_fail:'Échec', btn_wean:'Sevrer', tag_fail:'Échec / non gestante',
+    mb_title:'Mise bas de {f}', f_date:'Date', f_alive:'Nés vivants', f_still:'Mort-nés', btn_ok:'Valider',
+    fin_title:'Finances', fin_sub:"Ventes de lapins, achats d'aliment, soins vétérinaires…",
+    st_sales:'Total ventes', st_exp:'Total dépenses', st_profit:'Bénéfice',
+    fin_add:'＋ Nouvelle opération', f_type:'Type', t_sale:'Vente', t_exp:'Dépense',
+    f_desc:'Description', ph_desc:'Ex : Vente 4 lapins de chair', f_amount:'Montant (FCFA)',
+    btn_save:'Enregistrer', th_date:'Date', th_type:'Type', th_desc:'Description', th_amount:'Montant',
+    fin_empty:'Aucune opération enregistrée.'
+  },
+  en: {
+    brand_tag:'RABBIT FARMING', lang_btn:'🌍 Français',
+    nav_dash:'Dashboard', nav_herd:'Herd', nav_repro:'Breeding', nav_fin:'Finances',
+    dash_title:'Dashboard', dash_sub:'Overview of your rabbitry',
+    st_females:'Does', st_males:'Bucks', st_gest:'Ongoing pregnancies',
+    st_kits:'Kits with their mother', st_balance:'Balance',
+    alerts_title:'⚑ Alerts & current tasks',
+    alerts_none:'No alerts — everything is up to date. Remember to check water and feed morning and evening.',
+    al_palp:'<b>Palpation check</b> for <b>{f}</b> is due (mated on {d}) — confirm pregnancy.',
+    al_soon:'<b>Kindling soon</b>: <b>{f}</b> due on {d} (D-{n}). Prepare the nest box.',
+    al_over:'<b>Kindling overdue</b> for <b>{f}</b> (was due {d}). Check the doe or record the litter.',
+    al_wean:'<b>Weaning</b> of <b>{f}</b>’s litter {q} ({n} kits).',
+    al_wean_on:'due on {d}', al_wean_now:'is due now',
+    herd_title:'Herd register', herd_sub:'Breeding does and bucks of the farm',
+    herd_add:'＋ Register a rabbit', herd_empty:'No rabbit registered yet. Start by adding your breeders.',
+    f_name:'Name / Tag no.', ph_name:'E.g. F-001 or Bella', f_sex:'Sex', f_female:'♀ Doe', f_male:'♂ Buck',
+    f_breed:'Breed', f_birth:'Date of birth', btn_add:'Add',
+    th_name:'Name', th_sex:'Sex', th_breed:'Breed', th_birth:'Born', th_status:'Status',
+    s_active:'Active', s_sold:'Sold', s_dead:'Deceased', btn_sold:'Sold', btn_dead:'Death',
+    confirm_del:'Permanently remove this rabbit from the register?',
+    repro_title:'Breeding', repro_sub:'Matings, pregnancies ({g} d), kindlings and weanings ({s} d)',
+    repro_add:'＋ Record a mating', f_doe:'Doe', f_buck:'Buck', f_matedate:'Mating date',
+    repro_note:'→ The app will automatically compute the palpation date (D+{p}) and the expected kindling (D+{g}).',
+    repro_need:'You need at least one available doe and one active buck in the herd to record a mating.',
+    th_pair:'Pair', th_mating:'Mating', th_track:'Tracking',
+    tag_gest:'Pregnant', palp_lbl:'Palpation', due_lbl:'Kindling due',
+    tag_kindled:'Kindled', born_line:'{v} born alive, {m} stillborn',
+    weaned_lbl:'Weaned', wean_due_lbl:'Weaning',
+    btn_kindle:'Kindling', btn_fail:'Failed', btn_wean:'Wean', tag_fail:'Failed / not pregnant',
+    mb_title:'Kindling of {f}', f_date:'Date', f_alive:'Born alive', f_still:'Stillborn', btn_ok:'Confirm',
+    fin_title:'Finances', fin_sub:'Rabbit sales, feed purchases, veterinary care…',
+    st_sales:'Total sales', st_exp:'Total expenses', st_profit:'Profit',
+    fin_add:'＋ New transaction', f_type:'Type', t_sale:'Sale', t_exp:'Expense',
+    f_desc:'Description', ph_desc:'E.g. Sold 4 meat rabbits', f_amount:'Amount (FCFA)',
+    btn_save:'Save', th_date:'Date', th_type:'Type', th_desc:'Description', th_amount:'Amount',
+    fin_empty:'No transaction recorded yet.'
+  }
+};
+let langue = 'fr';
+const t = k => (I18N[langue][k] ?? I18N.fr[k] ?? k);
+const fmt = (s, vars) => s.replace(/\{(\w+)\}/g, (_,k) => vars[k] ?? '');
+const locale = () => langue === 'fr' ? 'fr-FR' : 'en-GB';
+
+/* ================= ÉTAT & PERSISTANCE ================= */
+let etat = { lapins: [], saillies: [], transactions: [] };
+let vueActive = 'tableau';
+const CLE = 'kunikribi-donnees';
+const CLE_LANG = 'kunikribi-langue';
+const memoire = {};
+
+/* Adaptateur de stockage : claude.ai (window.storage) → navigateur (localStorage) → mémoire */
+const store = {
+  async get(k){
+    try{ if(window.storage){ const r = await window.storage.get(k); return r ? r.value : null; } }catch(e){}
+    try{ return localStorage.getItem(k); }catch(e){ return memoire[k] ?? null; }
+  },
+  async set(k, v){
+    try{ if(window.storage){ await window.storage.set(k, v); return; } }catch(e){}
+    try{ localStorage.setItem(k, v); }catch(e){ memoire[k] = v; }
+  }
+};
+
+async function charger(){
+  try{
+    const d = await store.get(CLE);
+    if(d) etat = JSON.parse(d);
+    const l = await store.get(CLE_LANG);
+    if(l === 'en' || l === 'fr') langue = l;
+  }catch(e){ /* première utilisation */ }
+  appliquerLangue(); rendre();
+}
+async function sauver(){ try{ await store.set(CLE, JSON.stringify(etat)); }catch(e){} }
+
+function basculerLangue(){
+  langue = (langue === 'fr') ? 'en' : 'fr';
+  store.set(CLE_LANG, langue);
+  appliquerLangue(); rendre();
+}
+function appliquerLangue(){
+  document.documentElement.lang = langue;
+  document.getElementById('brand-tag').textContent = t('brand_tag');
+  document.getElementById('lang-btn').textContent = t('lang_btn');
+  document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+}
+
+/* ================= PARAMÈTRES ZOOTECHNIQUES ================= */
+const GESTATION = 31, PALPATION = 12, SEVRAGE = 35;
+const RACES = ['Néo-Zélandais blanc / New Zealand White','Californien / Californian','Bélier / Lop',
+  'Rex','Fauve de Bourgogne','Géant des Flandres / Flemish Giant','Papillon / Checkered',
+  'Chinchilla','Race locale / Local breed','Croisé / Crossbred'];
+
+/* ================= UTILITAIRES ================= */
+const auj = () => new Date().toISOString().slice(0,10);
+const ajJours = (d,n) => { const x=new Date(d+'T00:00:00'); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); };
+const diffJours = (a,b) => Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000);
+const fdate = d => d ? new Date(d+'T00:00:00').toLocaleDateString(locale(),{day:'numeric',month:'short',year:'numeric'}) : '—';
+const fcfa = n => n.toLocaleString(locale()) + ' FCFA';
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const lapin = id => etat.lapins.find(l => l.id === id);
+const nom = id => { const l = lapin(id); return l ? esc(l.nom) : '(?)'; };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+function naviguer(v){
+  vueActive = v;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.vue === v));
+  rendre();
+}
+
+/* ================= ALERTES ================= */
+function calculerAlertes(){
+  const a = [];
+  etat.saillies.forEach(s => {
+    if(s.statut === 'attente'){
+      const jp = diffJours(auj(), ajJours(s.date, PALPATION));
+      if(jp <= 0) a.push({t:'warn', txt: fmt(t('al_palp'), {f:nom(s.femelle), d:fdate(s.date)})});
+      const jmb = diffJours(auj(), ajJours(s.date, GESTATION));
+      if(jmb <= 3 && jmb >= 0) a.push({t:'urgent', txt: fmt(t('al_soon'), {f:nom(s.femelle), d:fdate(ajJours(s.date,GESTATION)), n:jmb})});
+      if(jmb < 0) a.push({t:'urgent', txt: fmt(t('al_over'), {f:nom(s.femelle), d:fdate(ajJours(s.date,GESTATION))})});
+    }
+    if(s.statut === 'misebas' && !s.sevre){
+      const js = diffJours(auj(), ajJours(s.dateMiseBas, SEVRAGE));
+      if(js <= 2){
+        const q = js >= 0 ? fmt(t('al_wean_on'), {d:fdate(ajJours(s.dateMiseBas,SEVRAGE))}) : t('al_wean_now');
+        a.push({t:'info', txt: fmt(t('al_wean'), {f:nom(s.femelle), q, n:s.vivants})});
+      }
+    }
+  });
+  return a;
+}
+
+/* ================= VUES ================= */
+function rendre(){
+  const c = document.getElementById('contenu');
+  if(vueActive === 'tableau') c.innerHTML = vueTableau();
+  else if(vueActive === 'cheptel') c.innerHTML = vueCheptel();
+  else if(vueActive === 'repro') c.innerHTML = vueRepro();
+  else c.innerHTML = vueFinances();
+}
+
+function vueTableau(){
+  const actifs = etat.lapins.filter(l => l.statut === 'actif');
+  const fem = actifs.filter(l => l.sexe === 'F').length;
+  const mal = actifs.filter(l => l.sexe === 'M').length;
+  const gest = etat.saillies.filter(s => s.statut === 'attente').length;
+  const kits = etat.saillies.filter(s => s.statut==='misebas' && !s.sevre).reduce((x,s)=>x+(s.vivants||0),0);
+  const ventes = etat.transactions.filter(x=>x.type==='vente').reduce((x,y)=>x+y.montant,0);
+  const dep = etat.transactions.filter(x=>x.type==='depense').reduce((x,y)=>x+y.montant,0);
+  const solde = ventes - dep;
+  const alertes = calculerAlertes();
+  const dateJour = new Date().toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  return `
+    <h2 class="page-title">${t('dash_title')}</h2>
+    <p class="page-sub">${t('dash_sub')} — ${dateJour}</p>
+    <div class="grid stats">
+      <div class="card stat leaf"><div class="val">${fem}</div><div class="lab">${t('st_females')}</div></div>
+      <div class="card stat leaf"><div class="val">${mal}</div><div class="lab">${t('st_males')}</div></div>
+      <div class="card stat amber"><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
+      <div class="card stat leaf"><div class="val">${kits}</div><div class="lab">${t('st_kits')}</div></div>
+      <div class="card stat ${solde>=0?'leaf':'red'}"><div class="val ${solde>=0?'solde-pos':'solde-neg'}" style="font-size:1.4rem">${fcfa(solde)}</div><div class="lab">${t('st_balance')}</div></div>
+    </div>
+    <div class="card">
+      <h3>${t('alerts_title')}</h3>
+      ${alertes.length ? alertes.map(a=>`<div class="alerte ${a.t}">${a.t==='urgent'?'⚠️':a.t==='warn'?'✋':'ℹ️'} <span>${a.txt}</span></div>`).join('')
+        : `<p class="vide">${t('alerts_none')}</p>`}
+    </div>`;
+}
+
+function vueCheptel(){
+  const lignes = etat.lapins.slice().reverse().map(l => `
+    <tr>
+      <td><b>${esc(l.nom)}</b></td>
+      <td><span class="tag ${l.sexe==='F'?'f':'m'}">${l.sexe==='F'?t('f_female'):t('f_male')}</span></td>
+      <td>${esc(l.race)}</td>
+      <td>${fdate(l.naissance)}</td>
+      <td><span class="tag ${l.statut==='actif'?'ok':'fin'}">${l.statut==='actif'?t('s_active'):l.statut==='vendu'?t('s_sold'):t('s_dead')}</span></td>
+      <td style="text-align:right">
+        ${l.statut==='actif' ? `<button class="btn mini sec" onclick="changerStatut('${l.id}','vendu')">${t('btn_sold')}</button>
+        <button class="btn mini danger" onclick="changerStatut('${l.id}','decede')">${t('btn_dead')}</button>` : ''}
+        <button class="btn mini danger" onclick="supprimerLapin('${l.id}')">✕</button>
+      </td>
+    </tr>`).join('');
+
+  return `
+    <h2 class="page-title">${t('herd_title')}</h2>
+    <p class="page-sub">${t('herd_sub')}</p>
+    <div class="card">
+      <h3>${t('herd_add')}</h3>
+      <form class="ligne" onsubmit="ajouterLapin(event)">
+        <div class="champ"><label>${t('f_name')}</label><input id="l-nom" required placeholder="${t('ph_name')}"></div>
+        <div class="champ"><label>${t('f_sex')}</label><select id="l-sexe"><option value="F">${t('f_female')}</option><option value="M">${t('f_male')}</option></select></div>
+        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${RACES.map(r=>`<option>${r}</option>`).join('')}</select></div>
+        <div class="champ"><label>${t('f_birth')}</label><input type="date" id="l-naiss"></div>
+        <button class="btn">${t('btn_add')}</button>
+      </form>
+      ${etat.lapins.length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
+        : `<p class="vide">${t('herd_empty')}</p>`}
+    </div>`;
+}
+
+function vueRepro(){
+  const femelles = etat.lapins.filter(l=>l.sexe==='F' && l.statut==='actif');
+  const males = etat.lapins.filter(l=>l.sexe==='M' && l.statut==='actif');
+  const occupees = new Set(etat.saillies.filter(s=>s.statut==='attente').map(s=>s.femelle));
+  const femDispo = femelles.filter(f=>!occupees.has(f.id));
+
+  const lignes = etat.saillies.slice().reverse().map(s => {
+    let etape = '', actions = '';
+    if(s.statut === 'attente'){
+      etape = `<span class="tag gest">${t('tag_gest')}</span><br><small>${t('palp_lbl')} : ${fdate(ajJours(s.date,PALPATION))}<br>${t('due_lbl')} : <b>${fdate(ajJours(s.date,GESTATION))}</b></small>`;
+      actions = `<button class="btn mini" onclick="formMiseBas('${s.id}')">${t('btn_kindle')}</button>
+                 <button class="btn mini danger" onclick="echecSaillie('${s.id}')">${t('btn_fail')}</button>`;
+    } else if(s.statut === 'misebas'){
+      etape = `<span class="tag ok">${t('tag_kindled')} ${fdate(s.dateMiseBas)}</span><br>
+        <small>${fmt(t('born_line'),{v:s.vivants,m:s.morts})}${s.sevre ? ' · <b>'+t('weaned_lbl')+'</b>' : ' · '+t('wean_due_lbl')+' : <b>'+fdate(ajJours(s.dateMiseBas,SEVRAGE))+'</b>'}</small>`;
+      if(!s.sevre) actions = `<button class="btn mini sec" onclick="sevrer('${s.id}')">${t('btn_wean')}</button>`;
+    } else {
+      etape = `<span class="tag fin">${t('tag_fail')}</span>`;
+    }
+    return `<tr><td><b>${nom(s.femelle)}</b> × ${nom(s.male)}</td><td>${fdate(s.date)}</td><td>${etape}</td><td style="text-align:right">${actions}</td></tr>`;
+  }).join('');
+
+  return `
+    <h2 class="page-title">${t('repro_title')}</h2>
+    <p class="page-sub">${fmt(t('repro_sub'),{g:GESTATION,s:SEVRAGE})}</p>
+    <div class="card" style="margin-bottom:16px">
+      <h3>${t('repro_add')}</h3>
+      ${femDispo.length && males.length ? `
+      <form class="ligne" onsubmit="ajouterSaillie(event)">
+        <div class="champ"><label>${t('f_doe')}</label><select id="s-fem">${femDispo.map(f=>`<option value="${f.id}">${esc(f.nom)}</option>`).join('')}</select></div>
+        <div class="champ"><label>${t('f_buck')}</label><select id="s-mal">${males.map(m=>`<option value="${m.id}">${esc(m.nom)}</option>`).join('')}</select></div>
+        <div class="champ"><label>${t('f_matedate')}</label><input type="date" id="s-date" value="${auj()}" required></div>
+        <button class="btn">${t('btn_save')}</button>
+      </form>
+      <p class="vide" style="font-style:normal">${fmt(t('repro_note'),{p:PALPATION,g:GESTATION})}</p>`
+      : `<p class="vide">${t('repro_need')}</p>`}
+      ${etat.saillies.length ? `<table><thead><tr><th>${t('th_pair')}</th><th>${t('th_mating')}</th><th>${t('th_track')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>` : ''}
+    </div>
+    <div id="zone-misebas"></div>`;
+}
+
+function vueFinances(){
+  const ventes = etat.transactions.filter(x=>x.type==='vente').reduce((x,y)=>x+y.montant,0);
+  const dep = etat.transactions.filter(x=>x.type==='depense').reduce((x,y)=>x+y.montant,0);
+  const lignes = etat.transactions.slice().reverse().map(x=>`
+    <tr><td>${fdate(x.date)}</td>
+      <td><span class="tag ${x.type==='vente'?'vente':'dep'}">${x.type==='vente'?t('t_sale'):t('t_exp')}</span></td>
+      <td>${esc(x.desc)}</td>
+      <td style="text-align:right;font-weight:600" class="${x.type==='vente'?'solde-pos':'solde-neg'}">${x.type==='vente'?'+':'−'} ${fcfa(x.montant)}</td>
+      <td style="text-align:right"><button class="btn mini danger" onclick="supprimerTrans('${x.id}')">✕</button></td></tr>`).join('');
+
+  return `
+    <h2 class="page-title">${t('fin_title')}</h2>
+    <p class="page-sub">${t('fin_sub')}</p>
+    <div class="grid stats">
+      <div class="card stat leaf"><div class="val solde-pos" style="font-size:1.4rem">${fcfa(ventes)}</div><div class="lab">${t('st_sales')}</div></div>
+      <div class="card stat red"><div class="val solde-neg" style="font-size:1.4rem">${fcfa(dep)}</div><div class="lab">${t('st_exp')}</div></div>
+      <div class="card stat ${ventes-dep>=0?'leaf':'red'}"><div class="val" style="font-size:1.4rem">${fcfa(ventes-dep)}</div><div class="lab">${t('st_profit')}</div></div>
+    </div>
+    <div class="card">
+      <h3>${t('fin_add')}</h3>
+      <form class="ligne" onsubmit="ajouterTrans(event)">
+        <div class="champ"><label>${t('f_type')}</label><select id="t-type"><option value="vente">${t('t_sale')}</option><option value="depense">${t('t_exp')}</option></select></div>
+        <div class="champ"><label>${t('f_desc')}</label><input id="t-desc" required placeholder="${t('ph_desc')}"></div>
+        <div class="champ"><label>${t('f_amount')}</label><input type="number" id="t-mont" min="1" required placeholder="20000"></div>
+        <div class="champ"><label>${t('f_date')||t('th_date')}</label><input type="date" id="t-date" value="${auj()}" required></div>
+        <button class="btn">${t('btn_save')}</button>
+      </form>
+      ${etat.transactions.length ? `<table><thead><tr><th>${t('th_date')}</th><th>${t('th_type')}</th><th>${t('th_desc')}</th><th style="text-align:right">${t('th_amount')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
+        : `<p class="vide">${t('fin_empty')}</p>`}
+    </div>`;
+}
+
+/* ================= ACTIONS ================= */
+function ajouterLapin(e){
+  e.preventDefault();
+  etat.lapins.push({
+    id: uid(),
+    nom: document.getElementById('l-nom').value.trim(),
+    sexe: document.getElementById('l-sexe').value,
+    race: document.getElementById('l-race').value,
+    naissance: document.getElementById('l-naiss').value || null,
+    statut: 'actif'
+  });
+  sauver(); rendre();
+}
+function changerStatut(id, st){ const l = lapin(id); if(!l) return; l.statut = st; sauver(); rendre(); }
+function supprimerLapin(id){
+  if(!confirm(t('confirm_del'))) return;
+  etat.lapins = etat.lapins.filter(l=>l.id!==id); sauver(); rendre();
+}
+function ajouterSaillie(e){
+  e.preventDefault();
+  etat.saillies.push({
+    id: uid(),
+    femelle: document.getElementById('s-fem').value,
+    male: document.getElementById('s-mal').value,
+    date: document.getElementById('s-date').value,
+    statut: 'attente', sevre: false
+  });
+  sauver(); rendre();
+}
+function echecSaillie(id){ const s = etat.saillies.find(x=>x.id===id); if(!s) return; s.statut='echec'; sauver(); rendre(); }
+function formMiseBas(id){
+  const s = etat.saillies.find(x=>x.id===id); if(!s) return;
+  document.getElementById('zone-misebas').innerHTML = `
+    <div class="card">
+      <h3>${fmt(t('mb_title'),{f:nom(s.femelle)})}</h3>
+      <form class="ligne" onsubmit="validerMiseBas(event,'${id}')">
+        <div class="champ"><label>${t('f_date')}</label><input type="date" id="mb-date" value="${auj()}" required></div>
+        <div class="champ"><label>${t('f_alive')}</label><input type="number" id="mb-viv" min="0" value="8" required></div>
+        <div class="champ"><label>${t('f_still')}</label><input type="number" id="mb-mort" min="0" value="0" required></div>
+        <button class="btn">${t('btn_ok')}</button>
+      </form>
+    </div>`;
+  document.getElementById('zone-misebas').scrollIntoView({behavior:'smooth'});
+}
+function validerMiseBas(e, id){
+  e.preventDefault();
+  const s = etat.saillies.find(x=>x.id===id); if(!s) return;
+  s.statut = 'misebas';
+  s.dateMiseBas = document.getElementById('mb-date').value;
+  s.vivants = parseInt(document.getElementById('mb-viv').value)||0;
+  s.morts = parseInt(document.getElementById('mb-mort').value)||0;
+  sauver(); rendre();
+}
+function sevrer(id){ const s = etat.saillies.find(x=>x.id===id); if(!s) return; s.sevre = true; sauver(); rendre(); }
+function ajouterTrans(e){
+  e.preventDefault();
+  etat.transactions.push({
+    id: uid(),
+    type: document.getElementById('t-type').value,
+    desc: document.getElementById('t-desc').value.trim(),
+    montant: parseInt(document.getElementById('t-mont').value)||0,
+    date: document.getElementById('t-date').value
+  });
+  sauver(); rendre();
+}
+function supprimerTrans(id){ etat.transactions = etat.transactions.filter(x=>x.id!==id); sauver(); rendre(); }
+
+/* ================= PWA : SERVICE WORKER ================= */
+if('serviceWorker' in navigator && location.protocol.indexOf('http') === 0){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  });
+}
+
+charger();
+</script>
+</body>
+</html>

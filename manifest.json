@@ -1,0 +1,17 @@
+{
+  "name": "KuniKribi — Gestion d'élevage cunicole",
+  "short_name": "KuniKribi",
+  "description": "Gérez votre élevage de lapins : cheptel, saillies, mises bas, finances. 100 % hors ligne. / Manage your rabbit farm: herd, matings, kindlings, finances. Works fully offline.",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#153427",
+  "theme_color": "#1B4534",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
