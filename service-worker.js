@@ -1,5 +1,5 @@
 /* KuniKribi — Service Worker : mode hors ligne / offline mode */
-const CACHE = 'kunikribi-v1';
+const CACHE = 'kunikribi-v2';
 const FICHIERS = [
   './',
   './index.html',
