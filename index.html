@@ -13,24 +13,24 @@
     --vert-foret:#1B4534; --vert-fonce:#153427; --vert-moyen:#245C43;
     --feuille:#8CC08B; --feuille-fonce:#5E9C5F;
     --creme:#F3EEDF; --creme-2:#FAF7EE; --encre:#22302A; --gris:#5F6F64;
-    --rouge:#B4533A; --ambre:#C98A2D;
+    --rouge:#B4533A; --ambre:#C98A2D; --or:#B8860B;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--creme-2);color:var(--encre);}
 
   .app{display:flex;min-height:100vh;}
   .sidebar{width:230px;background:linear-gradient(160deg,var(--vert-moyen),var(--vert-fonce));color:var(--creme);
-    padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;}
-  .brand{display:flex;align-items:center;gap:12px;padding:4px 8px 20px;border-bottom:1px solid rgba(243,238,223,.18);margin-bottom:14px;}
+    padding:22px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;}
+  .brand{display:flex;align-items:center;gap:12px;padding:4px 8px 18px;border-bottom:1px solid rgba(243,238,223,.18);margin-bottom:12px;}
   .brand h1{font-size:1.25rem;letter-spacing:.5px;}
   .brand h1 span{color:var(--feuille);}
   .brand small{display:block;font-size:.62rem;letter-spacing:2.5px;color:rgba(243,238,223,.65);font-weight:500;}
   .nav-btn{display:flex;align-items:center;gap:10px;background:none;border:none;color:rgba(243,238,223,.82);
-    font-size:.95rem;padding:11px 14px;border-radius:10px;cursor:pointer;text-align:left;width:100%;transition:.15s;}
+    font-size:.93rem;padding:10px 14px;border-radius:10px;cursor:pointer;text-align:left;width:100%;transition:.15s;}
   .nav-btn:hover{background:rgba(243,238,223,.08);}
   .nav-btn.active{background:var(--creme);color:var(--vert-foret);font-weight:600;}
   .nav-btn .ico{width:20px;text-align:center;}
-  .lang-btn{margin-top:10px;background:rgba(243,238,223,.12);border:1px solid rgba(243,238,223,.3);
+  .lang-btn{margin-top:8px;background:rgba(243,238,223,.12);border:1px solid rgba(243,238,223,.3);
     color:var(--creme);padding:8px 14px;border-radius:9px;cursor:pointer;font-size:.85rem;font-weight:600;}
   .lang-btn:hover{background:rgba(243,238,223,.22);}
   .sidebar .foot{margin-top:auto;font-size:.7rem;color:rgba(243,238,223,.5);padding:0 8px;}
@@ -69,6 +69,8 @@
   .btn.mini{padding:5px 12px;font-size:.8rem;border-radius:7px;}
   .btn.danger{background:transparent;color:var(--rouge);border:1.5px solid var(--rouge);}
   .btn.danger:hover{background:var(--rouge);color:#fff;}
+  .btn.wa{background:#25D366;color:#fff;}
+  .btn.wa:hover{background:#1EBE5B;}
 
   table{width:100%;border-collapse:collapse;font-size:.9rem;}
   th{text-align:left;padding:9px 10px;color:var(--gris);font-size:.72rem;letter-spacing:.8px;
@@ -85,11 +87,43 @@
   .tag.dep{background:#F9E9E4;color:var(--rouge);}
   .solde-pos{color:var(--feuille-fonce);} .solde-neg{color:var(--rouge);}
 
+  /* ===== École ===== */
+  .lecon-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1.5px solid #E6E0D0;
+    border-radius:12px;margin-bottom:10px;cursor:pointer;background:#fff;transition:.15s;}
+  .lecon-item:hover{border-color:var(--feuille-fonce);}
+  .lecon-num{width:34px;height:34px;border-radius:50%;background:var(--creme);color:var(--vert-foret);
+    display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+  .lecon-item.done .lecon-num{background:var(--feuille);color:var(--vert-fonce);}
+  .lecon-titre{flex:1;font-weight:600;color:var(--vert-foret);}
+  .lecon-texte p{margin-bottom:10px;line-height:1.6;font-size:.93rem;}
+  .quiz-q{margin:14px 0;padding:13px;border:1.5px solid #E6E0D0;border-radius:12px;background:#FDFCF7;}
+  .quiz-q p{font-weight:600;margin-bottom:8px;color:var(--vert-foret);}
+  .quiz-opt{display:flex;gap:8px;align-items:center;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:.92rem;}
+  .quiz-opt:hover{background:#F2EFE4;}
+  .quiz-opt.bonne{background:#EAF3EA;border:1px solid var(--feuille-fonce);}
+  .quiz-opt.fausse{background:#F9E9E4;border:1px solid var(--rouge);}
+  .progress-bar{height:10px;background:#E6E0D0;border-radius:6px;overflow:hidden;margin:8px 0 4px;}
+  .progress-bar div{height:100%;background:linear-gradient(90deg,var(--feuille-fonce),var(--feuille));transition:.4s;}
+
+  /* ===== Certificat ===== */
+  .certif{background:linear-gradient(135deg,#FDF6E3,#F5E7C1);border:3px double var(--or);border-radius:16px;
+    padding:26px;text-align:center;margin-bottom:18px;}
+  .certif h3{justify-content:center;color:var(--or);letter-spacing:1px;}
+  .certif .grand-nom{font-size:1.5rem;font-weight:700;color:var(--vert-foret);margin:10px 0;}
+  .certif p{font-size:.9rem;color:var(--gris);}
+  .certif input{margin:10px auto;display:block;text-align:center;padding:9px 14px;border:1.5px solid var(--or);
+    border-radius:9px;font-size:1rem;max-width:280px;width:100%;}
+
+  /* ===== Bilan / diagnostic ===== */
+  .kpi-note{font-size:.75rem;color:var(--gris);margin-top:3px;}
+  .diag{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:10px;margin-bottom:8px;
+    font-size:.9rem;background:#F4F8F2;border:1px solid #D7E6D4;}
+
   @media(max-width:900px){
     .app{flex-direction:column;}
     .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center;padding:12px;}
     .brand{border:none;padding:4px 10px;margin:0;}
-    .nav-btn{width:auto;padding:8px 12px;font-size:.85rem;}
+    .nav-btn{width:auto;padding:8px 11px;font-size:.83rem;}
     .lang-btn{margin-top:0;}
     .sidebar .foot{display:none;}
     main{padding:18px;}
@@ -119,9 +153,12 @@
     <button class="nav-btn active" data-vue="tableau" onclick="naviguer('tableau')"><span class="ico">◫</span> <span data-i18n="nav_dash"></span></button>
     <button class="nav-btn" data-vue="cheptel" onclick="naviguer('cheptel')"><span class="ico">🐇</span> <span data-i18n="nav_herd"></span></button>
     <button class="nav-btn" data-vue="repro" onclick="naviguer('repro')"><span class="ico">✿</span> <span data-i18n="nav_repro"></span></button>
+    <button class="nav-btn" data-vue="sante" onclick="naviguer('sante')"><span class="ico">✚</span> <span data-i18n="nav_health"></span></button>
     <button class="nav-btn" data-vue="finances" onclick="naviguer('finances')"><span class="ico">₣</span> <span data-i18n="nav_fin"></span></button>
+    <button class="nav-btn" data-vue="bilan" onclick="naviguer('bilan')"><span class="ico">📊</span> <span data-i18n="nav_report"></span></button>
+    <button class="nav-btn" data-vue="ecole" onclick="naviguer('ecole')"><span class="ico">🎓</span> <span data-i18n="nav_school"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
-    <div class="foot">KuniKribi v1.1 · Kribi, Cameroun</div>
+    <div class="foot">KuniKribi v2.0 · Kribi, Cameroun</div>
   </aside>
 
   <main id="contenu"></main>
@@ -131,78 +168,142 @@
 /* ================= INTERNATIONALISATION FR / EN ================= */
 const I18N = {
   fr: {
-    brand_tag:'ÉLEVAGE CUNICOLE', lang_btn:'🌍 English',
-    nav_dash:'Tableau de bord', nav_herd:'Cheptel', nav_repro:'Reproduction', nav_fin:'Finances',
-    dash_title:'Tableau de bord', dash_sub:"Vue d'ensemble de l'élevage",
-    st_females:'Lapines', st_males:'Mâles', st_gest:'Gestations en cours',
-    st_kits:'Lapereaux sous la mère', st_balance:'Solde',
-    alerts_title:'⚑ Alertes & tâches du moment',
+    brand_tag:"ÉLEVAGE CUNICOLE", lang_btn:"🌍 English",
+    nav_dash:"Tableau de bord", nav_herd:"Cheptel", nav_repro:"Reproduction",
+    nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_school:"École",
+    dash_title:"Tableau de bord", dash_sub:"Vue d’ensemble de l’élevage",
+    st_females:"Lapines", st_males:"Mâles", st_gest:"Gestations en cours",
+    st_kits:"Lapereaux sous la mère", st_balance:"Solde", st_school:"Leçons validées",
+    alerts_title:"⚑ Alertes & tâches du moment",
     alerts_none:"Aucune alerte — tout est à jour. Pensez à vérifier l’eau et l’aliment matin et soir.",
-    al_palp:'<b>Palpation</b> de <b>{f}</b> à faire (saillie du {d}) — confirmer la gestation.',
-    al_soon:'<b>Mise bas imminente</b> : <b>{f}</b> prévue le {d} (J-{n}). Préparer la boîte à nid.',
-    al_over:'<b>Mise bas dépassée</b> pour <b>{f}</b> (prévue {d}). Vérifier ou enregistrer.',
-    al_wean:'<b>Sevrage</b> de la portée de <b>{f}</b> {q} ({n} lapereaux).',
-    al_wean_on:'prévu le {d}', al_wean_now:'à faire',
-    herd_title:'Registre du cheptel', herd_sub:"Reproducteurs et reproductrices de l'élevage",
-    herd_add:'＋ Enregistrer un lapin', herd_empty:'Aucun lapin enregistré. Commencez par ajouter vos reproducteurs.',
-    f_name:'Nom / N° boucle', ph_name:'Ex : F-001 ou Bella', f_sex:'Sexe', f_female:'♀ Femelle', f_male:'♂ Mâle',
-    f_breed:'Race', f_birth:'Date de naissance', btn_add:'Ajouter',
-    th_name:'Nom', th_sex:'Sexe', th_breed:'Race', th_birth:'Naissance', th_status:'Statut',
-    s_active:'Actif', s_sold:'Vendu', s_dead:'Décédé', btn_sold:'Vendu', btn_dead:'Décès',
-    confirm_del:'Supprimer définitivement ce lapin du registre ?',
-    repro_title:'Reproduction', repro_sub:'Saillies, gestations ({g} j), mises bas et sevrages ({s} j)',
-    repro_add:'＋ Enregistrer une saillie', f_doe:'Femelle', f_buck:'Mâle', f_matedate:'Date de saillie',
-    repro_note:"→ L'application calculera automatiquement la date de palpation (J+{p}) et la mise bas prévue (J+{g}).",
-    repro_need:'Il faut au moins une femelle disponible et un mâle actifs dans le cheptel pour enregistrer une saillie.',
-    th_pair:'Couple', th_mating:'Saillie', th_track:'Suivi',
-    tag_gest:'Gestation', palp_lbl:'Palpation', due_lbl:'Mise bas prévue',
-    tag_kindled:'Mise bas', born_line:'{v} vivant(s), {m} mort-né(s)',
-    weaned_lbl:'Sevrée', wean_due_lbl:'Sevrage',
-    btn_kindle:'Mise bas', btn_fail:'Échec', btn_wean:'Sevrer', tag_fail:'Échec / non gestante',
-    mb_title:'Mise bas de {f}', f_date:'Date', f_alive:'Nés vivants', f_still:'Mort-nés', btn_ok:'Valider',
-    fin_title:'Finances', fin_sub:"Ventes de lapins, achats d'aliment, soins vétérinaires…",
-    st_sales:'Total ventes', st_exp:'Total dépenses', st_profit:'Bénéfice',
-    fin_add:'＋ Nouvelle opération', f_type:'Type', t_sale:'Vente', t_exp:'Dépense',
-    f_desc:'Description', ph_desc:'Ex : Vente 4 lapins de chair', f_amount:'Montant (FCFA)',
-    btn_save:'Enregistrer', th_date:'Date', th_type:'Type', th_desc:'Description', th_amount:'Montant',
-    fin_empty:'Aucune opération enregistrée.'
+    al_palp:"<b>Palpation</b> de <b>{f}</b> à faire (saillie du {d}) — confirmer la gestation.",
+    al_soon:"<b>Mise bas imminente</b> : <b>{f}</b> prévue le {d} (J-{n}). Préparer la boîte à nid.",
+    al_over:"<b>Mise bas dépassée</b> pour <b>{f}</b> (prévue {d}). Vérifier ou enregistrer.",
+    al_wean:"<b>Sevrage</b> de la portée de <b>{f}</b> {q} ({n} lapereaux).",
+    al_wean_on:"prévu le {d}", al_wean_now:"à faire",
+    herd_title:"Registre du cheptel", herd_sub:"Reproducteurs et reproductrices de l’élevage",
+    herd_add:"＋ Enregistrer un lapin", herd_empty:"Aucun lapin enregistré. Commencez par ajouter vos reproducteurs.",
+    f_name:"Nom / N° boucle", ph_name:"Ex : F-001 ou Bella", f_sex:"Sexe", f_female:"♀ Femelle", f_male:"♂ Mâle",
+    f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
+    th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
+    s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
+    confirm_del:"Supprimer définitivement cet enregistrement ?",
+    repro_title:"Reproduction", repro_sub:"Saillies, gestations ({g} j), mises bas et sevrages ({s} j)",
+    repro_add:"＋ Enregistrer une saillie", f_doe:"Femelle", f_buck:"Mâle", f_matedate:"Date de saillie",
+    repro_note:"→ L’application calculera automatiquement la date de palpation (J+{p}) et la mise bas prévue (J+{g}).",
+    repro_need:"Il faut au moins une femelle disponible et un mâle actifs dans le cheptel pour enregistrer une saillie.",
+    th_pair:"Couple", th_mating:"Saillie", th_track:"Suivi",
+    tag_gest:"Gestation", palp_lbl:"Palpation", due_lbl:"Mise bas prévue",
+    tag_kindled:"Mise bas", born_line:"{v} vivant(s), {m} mort-né(s)",
+    weaned_lbl:"Sevrée", wean_due_lbl:"Sevrage",
+    btn_kindle:"Mise bas", btn_fail:"Échec", btn_wean:"Sevrer", tag_fail:"Échec / non gestante",
+    mb_title:"Mise bas de {f}", f_date:"Date", f_alive:"Nés vivants", f_still:"Mort-nés", btn_ok:"Valider",
+    health_title:"Carnet sanitaire", health_sub:"Vaccinations, traitements, vermifuges et désinfections",
+    health_add:"＋ Nouvelle intervention", f_animal:"Animal", all_herd:"Tout le cheptel",
+    f_care:"Type", care_vacc:"Vaccination", care_treat:"Traitement", care_worm:"Vermifuge", care_disinf:"Désinfection",
+    f_product:"Produit", ph_product:"Ex : Ivermectine", f_note:"Note", ph_note:"Ex : gale des oreilles",
+    th_animal:"Animal", th_care:"Type", th_product:"Produit", th_note:"Note",
+    health_empty:"Aucune intervention enregistrée. Un carnet sanitaire à jour, c’est un élevage protégé.",
+    fin_title:"Finances", fin_sub:"Ventes de lapins, achats d’aliment, soins vétérinaires…",
+    st_sales:"Total ventes", st_exp:"Total dépenses", st_profit:"Bénéfice",
+    fin_add:"＋ Nouvelle opération", f_type:"Type", t_sale:"Vente", t_exp:"Dépense",
+    f_desc:"Description", ph_desc:"Ex : Vente 4 lapins de chair", f_amount:"Montant (FCFA)",
+    btn_save:"Enregistrer", th_date:"Date", th_type:"Type", th_desc:"Description", th_amount:"Montant",
+    fin_empty:"Aucune opération enregistrée.",
+    rep_title:"Bilan de l’élevage", rep_sub:"Vos indicateurs techniques et économiques, calculés automatiquement",
+    kpi_fert:"Fertilité", kpi_fert_note:"saillies réussies / saillies terminées",
+    kpi_prol:"Prolificité", kpi_prol_note:"nés vivants par portée en moyenne",
+    kpi_still:"Mortinatalité", kpi_still_note:"mort-nés / total des naissances",
+    kpi_margin:"Marge nette", kpi_margin_note:"ventes − dépenses",
+    diag_title:"🩺 Diagnostic & conseils",
+    diag_none:"Enregistrez quelques saillies, mises bas et opérations pour obtenir un diagnostic personnalisé.",
+    d_fert:"Fertilité faible ({v} %) : vérifiez l’état corporel des lapines, la vigueur du mâle (max 2-3 saillies/semaine) et refaites la palpation à J+12 pour re-saillir vite les femelles vides.",
+    d_prol:"Prolificité modeste ({v}/portée) : renforcez l’alimentation des femelles une semaine avant la saillie (flushing) et vérifiez l’âge des reproductrices.",
+    d_still:"Mortinatalité élevée ({v} %) : installez la boîte à nid dès J+28, garantissez le calme autour des cages et de l’eau à volonté à la mise bas.",
+    d_margin:"Marge négative : l’aliment représente souvent 70 % des coûts — comparez les fournisseurs et complétez avec du fourrage séché de qualité.",
+    d_ok:"Bons indicateurs ! Continuez à enregistrer chaque événement pour garder cette précision.",
+    btn_share_wa:"Partager le bilan sur WhatsApp",
+    wa_report_title:"🐇 *BILAN KUNIKRIBI*", wa_herd:"Cheptel", wa_advice:"💡 Conseil",
+    school_title:"École de cuniculture", school_sub:"6 leçons + quiz pour maîtriser l’élevage. Validez tout pour obtenir votre certificat !",
+    school_progress:"{n}/6 leçons validées",
+    lesson_done:"✓ Validée", lesson_todo:"À faire", btn_back:"← Retour aux leçons",
+    quiz_title:"✍️ Quiz de validation ({n} bonnes réponses sur 3 pour valider)",
+    btn_check:"Corriger", quiz_pass:"🎉 Bravo, leçon validée !",
+    quiz_fail:"Presque ! Relisez la leçon et réessayez.", btn_retry:"Réessayer",
+    certif_title:"🏆 CERTIFICAT DE FORMATION",
+    certif_body:"a suivi et validé avec succès les 6 leçons de l’École de cuniculture KuniKribi",
+    certif_name_ph:"Écrivez votre nom ici",
+    btn_share_certif:"Partager mon certificat sur WhatsApp",
+    wa_certif:"🏆 J’ai obtenu mon *Certificat de formation en cuniculture* après avoir validé les 6 leçons et quiz de l’École KuniKribi ! 🐇📚"
   },
   en: {
-    brand_tag:'RABBIT FARMING', lang_btn:'🌍 Français',
-    nav_dash:'Dashboard', nav_herd:'Herd', nav_repro:'Breeding', nav_fin:'Finances',
-    dash_title:'Dashboard', dash_sub:'Overview of your rabbitry',
-    st_females:'Does', st_males:'Bucks', st_gest:'Ongoing pregnancies',
-    st_kits:'Kits with their mother', st_balance:'Balance',
-    alerts_title:'⚑ Alerts & current tasks',
-    alerts_none:'No alerts — everything is up to date. Remember to check water and feed morning and evening.',
-    al_palp:'<b>Palpation check</b> for <b>{f}</b> is due (mated on {d}) — confirm pregnancy.',
-    al_soon:'<b>Kindling soon</b>: <b>{f}</b> due on {d} (D-{n}). Prepare the nest box.',
-    al_over:'<b>Kindling overdue</b> for <b>{f}</b> (was due {d}). Check the doe or record the litter.',
-    al_wean:'<b>Weaning</b> of <b>{f}</b>’s litter {q} ({n} kits).',
-    al_wean_on:'due on {d}', al_wean_now:'is due now',
-    herd_title:'Herd register', herd_sub:'Breeding does and bucks of the farm',
-    herd_add:'＋ Register a rabbit', herd_empty:'No rabbit registered yet. Start by adding your breeders.',
-    f_name:'Name / Tag no.', ph_name:'E.g. F-001 or Bella', f_sex:'Sex', f_female:'♀ Doe', f_male:'♂ Buck',
-    f_breed:'Breed', f_birth:'Date of birth', btn_add:'Add',
-    th_name:'Name', th_sex:'Sex', th_breed:'Breed', th_birth:'Born', th_status:'Status',
-    s_active:'Active', s_sold:'Sold', s_dead:'Deceased', btn_sold:'Sold', btn_dead:'Death',
-    confirm_del:'Permanently remove this rabbit from the register?',
-    repro_title:'Breeding', repro_sub:'Matings, pregnancies ({g} d), kindlings and weanings ({s} d)',
-    repro_add:'＋ Record a mating', f_doe:'Doe', f_buck:'Buck', f_matedate:'Mating date',
-    repro_note:'→ The app will automatically compute the palpation date (D+{p}) and the expected kindling (D+{g}).',
-    repro_need:'You need at least one available doe and one active buck in the herd to record a mating.',
-    th_pair:'Pair', th_mating:'Mating', th_track:'Tracking',
-    tag_gest:'Pregnant', palp_lbl:'Palpation', due_lbl:'Kindling due',
-    tag_kindled:'Kindled', born_line:'{v} born alive, {m} stillborn',
-    weaned_lbl:'Weaned', wean_due_lbl:'Weaning',
-    btn_kindle:'Kindling', btn_fail:'Failed', btn_wean:'Wean', tag_fail:'Failed / not pregnant',
-    mb_title:'Kindling of {f}', f_date:'Date', f_alive:'Born alive', f_still:'Stillborn', btn_ok:'Confirm',
-    fin_title:'Finances', fin_sub:'Rabbit sales, feed purchases, veterinary care…',
-    st_sales:'Total sales', st_exp:'Total expenses', st_profit:'Profit',
-    fin_add:'＋ New transaction', f_type:'Type', t_sale:'Sale', t_exp:'Expense',
-    f_desc:'Description', ph_desc:'E.g. Sold 4 meat rabbits', f_amount:'Amount (FCFA)',
-    btn_save:'Save', th_date:'Date', th_type:'Type', th_desc:'Description', th_amount:'Amount',
-    fin_empty:'No transaction recorded yet.'
+    brand_tag:"RABBIT FARMING", lang_btn:"🌍 Français",
+    nav_dash:"Dashboard", nav_herd:"Herd", nav_repro:"Breeding",
+    nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_school:"School",
+    dash_title:"Dashboard", dash_sub:"Overview of your rabbitry",
+    st_females:"Does", st_males:"Bucks", st_gest:"Ongoing pregnancies",
+    st_kits:"Kits with their mother", st_balance:"Balance", st_school:"Lessons completed",
+    alerts_title:"⚑ Alerts & current tasks",
+    alerts_none:"No alerts — everything is up to date. Remember to check water and feed morning and evening.",
+    al_palp:"<b>Palpation check</b> for <b>{f}</b> is due (mated on {d}) — confirm pregnancy.",
+    al_soon:"<b>Kindling soon</b>: <b>{f}</b> due on {d} (D-{n}). Prepare the nest box.",
+    al_over:"<b>Kindling overdue</b> for <b>{f}</b> (was due {d}). Check the doe or record the litter.",
+    al_wean:"<b>Weaning</b> of <b>{f}</b>’s litter {q} ({n} kits).",
+    al_wean_on:"due on {d}", al_wean_now:"is due now",
+    herd_title:"Herd register", herd_sub:"Breeding does and bucks of the farm",
+    herd_add:"＋ Register a rabbit", herd_empty:"No rabbit registered yet. Start by adding your breeders.",
+    f_name:"Name / Tag no.", ph_name:"E.g. F-001 or Bella", f_sex:"Sex", f_female:"♀ Doe", f_male:"♂ Buck",
+    f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
+    th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
+    s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
+    confirm_del:"Permanently delete this record?",
+    repro_title:"Breeding", repro_sub:"Matings, pregnancies ({g} d), kindlings and weanings ({s} d)",
+    repro_add:"＋ Record a mating", f_doe:"Doe", f_buck:"Buck", f_matedate:"Mating date",
+    repro_note:"→ The app will automatically compute the palpation date (D+{p}) and the expected kindling (D+{g}).",
+    repro_need:"You need at least one available doe and one active buck in the herd to record a mating.",
+    th_pair:"Pair", th_mating:"Mating", th_track:"Tracking",
+    tag_gest:"Pregnant", palp_lbl:"Palpation", due_lbl:"Kindling due",
+    tag_kindled:"Kindled", born_line:"{v} born alive, {m} stillborn",
+    weaned_lbl:"Weaned", wean_due_lbl:"Weaning",
+    btn_kindle:"Kindling", btn_fail:"Failed", btn_wean:"Wean", tag_fail:"Failed / not pregnant",
+    mb_title:"Kindling of {f}", f_date:"Date", f_alive:"Born alive", f_still:"Stillborn", btn_ok:"Confirm",
+    health_title:"Health record", health_sub:"Vaccinations, treatments, deworming and disinfections",
+    health_add:"＋ New intervention", f_animal:"Animal", all_herd:"Whole herd",
+    f_care:"Type", care_vacc:"Vaccination", care_treat:"Treatment", care_worm:"Deworming", care_disinf:"Disinfection",
+    f_product:"Product", ph_product:"E.g. Ivermectin", f_note:"Note", ph_note:"E.g. ear mange",
+    th_animal:"Animal", th_care:"Type", th_product:"Product", th_note:"Note",
+    health_empty:"No intervention recorded. An up-to-date health record means a protected farm.",
+    fin_title:"Finances", fin_sub:"Rabbit sales, feed purchases, veterinary care…",
+    st_sales:"Total sales", st_exp:"Total expenses", st_profit:"Profit",
+    fin_add:"＋ New transaction", f_type:"Type", t_sale:"Sale", t_exp:"Expense",
+    f_desc:"Description", ph_desc:"E.g. Sold 4 meat rabbits", f_amount:"Amount (FCFA)",
+    btn_save:"Save", th_date:"Date", th_type:"Type", th_desc:"Description", th_amount:"Amount",
+    fin_empty:"No transaction recorded yet.",
+    rep_title:"Farm report", rep_sub:"Your technical and economic indicators, computed automatically",
+    kpi_fert:"Fertility", kpi_fert_note:"successful matings / completed matings",
+    kpi_prol:"Prolificacy", kpi_prol_note:"average kits born alive per litter",
+    kpi_still:"Stillbirth rate", kpi_still_note:"stillborn / total births",
+    kpi_margin:"Net margin", kpi_margin_note:"sales − expenses",
+    diag_title:"🩺 Diagnosis & advice",
+    diag_none:"Record a few matings, kindlings and transactions to get a personalised diagnosis.",
+    d_fert:"Low fertility ({v}%): check the does’ body condition, the buck’s vigour (max 2-3 matings/week) and palpate at D+12 to quickly re-mate empty does.",
+    d_prol:"Modest prolificacy ({v}/litter): boost the does’ feeding one week before mating (flushing) and check the breeders’ age.",
+    d_still:"High stillbirth rate ({v}%): install the nest box from D+28, keep the cages calm and provide unlimited water at kindling.",
+    d_margin:"Negative margin: feed is often 70% of costs — compare suppliers and supplement with quality dried forage.",
+    d_ok:"Good indicators! Keep recording every event to maintain this accuracy.",
+    btn_share_wa:"Share report on WhatsApp",
+    wa_report_title:"🐇 *KUNIKRIBI REPORT*", wa_herd:"Herd", wa_advice:"💡 Advice",
+    school_title:"Rabbit farming school", school_sub:"6 lessons + quizzes to master rabbit farming. Complete them all to earn your certificate!",
+    school_progress:"{n}/6 lessons completed",
+    lesson_done:"✓ Completed", lesson_todo:"To do", btn_back:"← Back to lessons",
+    quiz_title:"✍️ Validation quiz ({n} correct answers out of 3 to pass)",
+    btn_check:"Check answers", quiz_pass:"🎉 Well done, lesson completed!",
+    quiz_fail:"Almost! Re-read the lesson and try again.", btn_retry:"Try again",
+    certif_title:"🏆 TRAINING CERTIFICATE",
+    certif_body:"has successfully completed the 6 lessons of the KuniKribi Rabbit Farming School",
+    certif_name_ph:"Write your name here",
+    btn_share_certif:"Share my certificate on WhatsApp",
+    wa_certif:"🏆 I earned my *Rabbit Farming Training Certificate* after completing all 6 lessons and quizzes of the KuniKribi School! 🐇📚"
   }
 };
 let langue = 'fr';
@@ -210,14 +311,103 @@ const t = k => (I18N[langue][k] ?? I18N.fr[k] ?? k);
 const fmt = (s, vars) => s.replace(/\{(\w+)\}/g, (_,k) => vars[k] ?? '');
 const locale = () => langue === 'fr' ? 'fr-FR' : 'en-GB';
 
+/* ================= LEÇONS DE L'ÉCOLE (contenu bilingue) ================= */
+const LECONS = [
+ {fr:{ti:"L’habitat du lapin",tx:[
+   "Le clapier est la première clé de la réussite. Il doit être surélevé (60 cm minimum) pour protéger les lapins de l’humidité du sol, des serpents et des rats. Placez-le à l’ombre, car le lapin supporte mal la chaleur au-delà de 30 °C.",
+   "L’air doit circuler sans courants d’air directs : un clapier trop fermé accumule l’ammoniac des urines et provoque des maladies respiratoires. Chaque reproducteur (mâle ou femelle) vit dans sa propre cage ; les lapins d’engraissement peuvent être groupés (3-4 par m²).",
+   "Nettoyez les cages chaque semaine et grattez les déjections chaque jour : la propreté prévient 80 % des maladies."],
+  qz:[{q:"Un bon clapier doit être…",o:["Sec et aéré, sans courants d’air","Complètement fermé pour la chaleur","Placé en plein soleil"],b:0},
+      {q:"Les reproducteurs sont logés…",o:["Tous ensemble dans une grande cage","Chacun dans sa propre cage","Avec les lapereaux sevrés"],b:1},
+      {q:"Pourquoi surélever les cages ?",o:["Pour la décoration","Pour gagner de la place","Pour protéger de l’humidité et des prédateurs"],b:2}]},
+  en:{ti:"Rabbit housing",tx:[
+   "The hutch is the first key to success. It must be raised (at least 60 cm) to protect rabbits from ground moisture, snakes and rats. Place it in the shade: rabbits suffer above 30 °C.",
+   "Air must circulate without direct draughts: a hutch that is too closed accumulates ammonia from urine and causes respiratory diseases. Each breeder (buck or doe) lives in its own cage; fattening rabbits can be grouped (3-4 per m²).",
+   "Clean cages every week and scrape droppings daily: cleanliness prevents 80% of diseases."],
+  qz:[{q:"A good hutch must be…",o:["Dry and airy, without draughts","Fully closed to keep heat","Placed in direct sunlight"],b:0},
+      {q:"Breeders are housed…",o:["All together in one big cage","Each in its own cage","With weaned kits"],b:1},
+      {q:"Why raise the cages off the ground?",o:["For decoration","To save space","To protect from moisture and predators"],b:2}]}},
+ {fr:{ti:"L’alimentation",tx:[
+   "Un lapin adulte consomme environ 100 à 150 g de granulés par jour, complétés par du fourrage sec (herbe fanée, feuilles de patate douce séchées). Attention : ne donnez JAMAIS d’herbe fraîchement coupée et mouillée — elle fermente et provoque des diarrhées mortelles. Fanez-la quelques heures au soleil.",
+   "L’eau propre doit être disponible en permanence : une lapine qui allaite boit jusqu’à 1 litre par jour ! Un abreuvoir sale ou vide fait chuter la production plus vite que tout le reste.",
+   "Tout changement d’aliment se fait progressivement sur 5 à 7 jours en mélangeant ancien et nouveau, sinon les troubles digestifs sont garantis."],
+  qz:[{q:"L’eau doit être disponible…",o:["Une fois par jour","En permanence et propre","Seulement le soir"],b:1},
+      {q:"L’herbe fraîchement coupée…",o:["Se donne immédiatement","Est interdite pour toujours","Doit être fanée (séchée) avant distribution"],b:2},
+      {q:"Un changement d’aliment se fait…",o:["Progressivement sur plusieurs jours","D’un seul coup","Sans aucune précaution"],b:0}]},
+  en:{ti:"Feeding",tx:[
+   "An adult rabbit eats about 100–150 g of pellets per day, plus dry forage (wilted grass, dried sweet-potato leaves). Warning: NEVER feed freshly cut wet grass — it ferments and causes deadly diarrhoea. Wilt it a few hours in the sun first.",
+   "Clean water must be available at all times: a nursing doe drinks up to 1 litre a day! A dirty or empty drinker cuts production faster than anything else.",
+   "Any feed change must be gradual, over 5–7 days, mixing old and new feed, otherwise digestive troubles are guaranteed."],
+  qz:[{q:"Water must be available…",o:["Once a day","At all times and clean","Only in the evening"],b:1},
+      {q:"Freshly cut grass…",o:["Can be fed immediately","Is forbidden forever","Must be wilted (dried) before feeding"],b:2},
+      {q:"A feed change is done…",o:["Gradually over several days","All at once","Without any precaution"],b:0}]}},
+ {fr:{ti:"La reproduction",tx:[
+   "Une lapine est prête pour sa première saillie vers 5-6 mois, quand elle atteint 80 % de son poids adulte. Un mâle sert 8 à 10 femelles, avec 2-3 saillies maximum par semaine pour rester fécond.",
+   "Règle d’or : on amène TOUJOURS la femelle dans la cage du mâle, jamais l’inverse — sur son territoire, la femelle attaque le mâle. La gestation dure environ 31 jours ; la palpation du ventre à J+12 confirme la gestation.",
+   "Placez la boîte à nid garnie de paille vers J+28 : la lapine y ajoutera ses poils. Une femelle bien conduite peut produire 6 à 8 portées par an."],
+  qz:[{q:"La gestation de la lapine dure environ…",o:["15 jours","31 jours","60 jours"],b:1},
+      {q:"Pour la saillie, on amène…",o:["La femelle chez le mâle","Le mâle chez la femelle","Les deux dans une cage neutre"],b:0},
+      {q:"La boîte à nid se place…",o:["Le jour de la saillie","Après la mise bas","Vers le 28e jour de gestation"],b:2}]},
+  en:{ti:"Breeding",tx:[
+   "A doe is ready for her first mating at 5-6 months, once she reaches 80% of her adult weight. One buck serves 8 to 10 does, with a maximum of 2-3 matings per week to stay fertile.",
+   "Golden rule: ALWAYS bring the doe to the buck’s cage, never the opposite — on her own territory the doe attacks the buck. Pregnancy lasts about 31 days; belly palpation at D+12 confirms it.",
+   "Place the nest box filled with straw around D+28: the doe will add her own fur. A well-managed doe can produce 6 to 8 litters per year."],
+  qz:[{q:"A doe’s pregnancy lasts about…",o:["15 days","31 days","60 days"],b:1},
+      {q:"For mating, you bring…",o:["The doe to the buck","The buck to the doe","Both to a neutral cage"],b:0},
+      {q:"The nest box is placed…",o:["On mating day","After kindling","Around day 28 of pregnancy"],b:2}]}},
+ {fr:{ti:"Les soins aux lapereaux",tx:[
+   "À la naissance, contrôlez le nid une fois par jour, mains propres : retirez les mort-nés et la paille souillée. Ne vous inquiétez pas de ne jamais voir la mère au nid : la lapine n’allaite que 1 à 2 fois par jour, quelques minutes, souvent la nuit — c’est normal.",
+   "Les lapereaux naissent nus et aveugles, ouvrent les yeux vers 10 jours et sortent du nid vers 18-21 jours pour goûter l’aliment de la mère.",
+   "Le sevrage se fait entre 28 et 35 jours. Séparez ensuite mâles et femelles vers 2,5-3 mois pour éviter les saillies incontrôlées et les bagarres."],
+  qz:[{q:"La lapine allaite ses petits…",o:["En continu toute la journée","1 à 2 fois par jour seulement","Jamais, ils se débrouillent"],b:1},
+      {q:"Le sevrage se fait vers…",o:["10 jours","28 à 35 jours","3 mois"],b:1},
+      {q:"À la naissance, il faut…",o:["Contrôler le nid et retirer les mort-nés","Ne jamais toucher au nid pendant un mois","Laver les lapereaux à l’eau"],b:0}]},
+  en:{ti:"Caring for the kits",tx:[
+   "After birth, check the nest once a day with clean hands: remove stillborn kits and soiled straw. Don’t worry if you never see the mother in the nest: a doe nurses only 1-2 times a day, for a few minutes, often at night — this is normal.",
+   "Kits are born naked and blind, open their eyes around day 10 and leave the nest around day 18-21 to taste the mother’s feed.",
+   "Weaning happens between 28 and 35 days. Then separate males and females around 2.5-3 months to avoid uncontrolled matings and fights."],
+  qz:[{q:"A doe nurses her kits…",o:["Continuously all day","Only 1-2 times a day","Never, they manage alone"],b:1},
+      {q:"Weaning happens around…",o:["10 days","28 to 35 days","3 months"],b:1},
+      {q:"At birth, you must…",o:["Check the nest and remove stillborn kits","Never touch the nest for a month","Wash the kits with water"],b:0}]}},
+ {fr:{ti:"Santé et hygiène",tx:[
+   "Un lapin en bonne santé est vif, a le poil lisse et mange avec appétit. Les deux ennemis principaux : la gale des oreilles (croûtes brunes dans l’oreille, tête penchée) à traiter vite à l’ivermectine, et la coccidiose (diarrhée, ventre gonflé chez les jeunes) favorisée par la saleté.",
+   "La prévention n°1 reste l’hygiène : désinfection régulière des cages, abreuvoirs propres, mains lavées avant de manipuler les animaux.",
+   "Tout nouvel animal doit passer 2 semaines de quarantaine à l’écart du cheptel avant d’être introduit : c’est ainsi qu’on évite de contaminer tout l’élevage. Notez chaque traitement dans le carnet sanitaire de l’application."],
+  qz:[{q:"Un nouvel animal acheté doit…",o:["Rejoindre le cheptel immédiatement","Passer environ 2 semaines en quarantaine","Être vendu aussitôt"],b:1},
+      {q:"Une diarrhée chez les jeunes lapins évoque souvent…",o:["La coccidiose","Un excès d’eau","Le froid"],b:0},
+      {q:"La prévention n°1 des maladies, c’est…",o:["Les antibiotiques systématiques","L’hygiène et la désinfection","Donner moins à manger"],b:1}]},
+  en:{ti:"Health and hygiene",tx:[
+   "A healthy rabbit is lively, has smooth fur and eats with appetite. The two main enemies: ear mange (brown crusts in the ear, tilted head), to be treated quickly with ivermectin, and coccidiosis (diarrhoea, swollen belly in young rabbits), encouraged by dirt.",
+   "Prevention no. 1 is hygiene: regular cage disinfection, clean drinkers, washed hands before handling animals.",
+   "Any new animal must spend 2 weeks in quarantine away from the herd before joining it: this is how you avoid contaminating the whole farm. Record every treatment in the app’s health record."],
+  qz:[{q:"A newly bought animal must…",o:["Join the herd immediately","Spend about 2 weeks in quarantine","Be sold right away"],b:1},
+      {q:"Diarrhoea in young rabbits often suggests…",o:["Coccidiosis","Too much water","Cold weather"],b:0},
+      {q:"The no. 1 disease prevention is…",o:["Systematic antibiotics","Hygiene and disinfection","Feeding less"],b:1}]}},
+ {fr:{ti:"Vendre et gérer son élevage",tx:[
+   "Le lapin de chair se vend généralement à 2-2,5 kg vifs, atteints vers 70-90 jours avec une bonne alimentation. Les reproducteurs sélectionnés (bonnes mères, belles portées) se vendent bien plus cher que le lapin de chair : c’est un second marché à développer.",
+   "L’aliment représente environ 70 % des coûts de production : c’est là que se joue votre rentabilité. Comparez les fournisseurs et valorisez les fourrages locaux séchés.",
+   "Enfin, on ne gère bien que ce que l’on mesure : notez CHAQUE vente et CHAQUE dépense dans l’application, et consultez votre Bilan chaque mois. Ciblez les périodes de forte demande (fêtes de fin d’année, cérémonies) pour planifier vos saillies en conséquence."],
+  qz:[{q:"L’aliment représente environ…",o:["10 % des coûts","30 % des coûts","70 % des coûts"],b:2},
+      {q:"Le lapin de chair se vend couramment à…",o:["1 kg","2 à 2,5 kg","5 kg"],b:1},
+      {q:"Pour connaître son vrai bénéfice, il faut…",o:["Noter toutes les ventes ET toutes les dépenses","Compter seulement les ventes","Faire une estimation de tête"],b:0}]},
+  en:{ti:"Selling and managing your farm",tx:[
+   "Meat rabbits usually sell at 2-2.5 kg live weight, reached around 70-90 days with good feeding. Selected breeders (good mothers, fine litters) sell for much more than meat rabbits: a second market worth developing.",
+   "Feed represents about 70% of production costs: that is where your profitability is decided. Compare suppliers and make use of dried local forages.",
+   "Finally, you can only manage what you measure: record EVERY sale and EVERY expense in the app, and check your Report every month. Target high-demand periods (end-of-year celebrations, ceremonies) to plan your matings accordingly."],
+  qz:[{q:"Feed represents about…",o:["10% of costs","30% of costs","70% of costs"],b:2},
+      {q:"Meat rabbits commonly sell at…",o:["1 kg","2 to 2.5 kg","5 kg"],b:1},
+      {q:"To know your real profit, you must…",o:["Record all sales AND all expenses","Count only the sales","Estimate in your head"],b:0}]}}
+];
+
 /* ================= ÉTAT & PERSISTANCE ================= */
-let etat = { lapins: [], saillies: [], transactions: [] };
+let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' } };
 let vueActive = 'tableau';
+let leconOuverte = null;
+let quizResultat = null;
 const CLE = 'kunikribi-donnees';
 const CLE_LANG = 'kunikribi-langue';
 const memoire = {};
 
-/* Adaptateur de stockage : claude.ai (window.storage) → navigateur (localStorage) → mémoire */
 const store = {
   async get(k){
     try{ if(window.storage){ const r = await window.storage.get(k); return r ? r.value : null; } }catch(e){}
@@ -232,10 +422,15 @@ const store = {
 async function charger(){
   try{
     const d = await store.get(CLE);
-    if(d) etat = JSON.parse(d);
+    if(d){
+      const anc = JSON.parse(d);
+      etat = Object.assign(etat, anc);
+      if(!etat.soins) etat.soins = [];
+      if(!etat.ecole) etat.ecole = { validees: [], nom: '' };
+    }
     const l = await store.get(CLE_LANG);
     if(l === 'en' || l === 'fr') langue = l;
-  }catch(e){ /* première utilisation */ }
+  }catch(e){}
   appliquerLangue(); rendre();
 }
 async function sauver(){ try{ await store.set(CLE, JSON.stringify(etat)); }catch(e){} }
@@ -268,9 +463,11 @@ const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;'
 const lapin = id => etat.lapins.find(l => l.id === id);
 const nom = id => { const l = lapin(id); return l ? esc(l.nom) : '(?)'; };
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const pct = (num, den) => den > 0 ? Math.round(num / den * 100) : null;
+function partagerWhatsApp(texte){ window.open('https://wa.me/?text=' + encodeURIComponent(texte), '_blank'); }
 
 function naviguer(v){
-  vueActive = v;
+  vueActive = v; leconOuverte = null; quizResultat = null;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.vue === v));
   rendre();
 }
@@ -297,13 +494,39 @@ function calculerAlertes(){
   return a;
 }
 
+/* ================= INDICATEURS DU BILAN ================= */
+function calculerKPI(){
+  const terminees = etat.saillies.filter(s => s.statut === 'misebas' || s.statut === 'echec');
+  const reussies = etat.saillies.filter(s => s.statut === 'misebas');
+  const fert = pct(reussies.length, terminees.length);
+  const totVivants = reussies.reduce((x,s)=>x+(s.vivants||0),0);
+  const totMorts = reussies.reduce((x,s)=>x+(s.morts||0),0);
+  const prol = reussies.length ? Math.round(totVivants / reussies.length * 10) / 10 : null;
+  const still = pct(totMorts, totVivants + totMorts);
+  const ventes = etat.transactions.filter(x=>x.type==='vente').reduce((x,y)=>x+y.montant,0);
+  const dep = etat.transactions.filter(x=>x.type==='depense').reduce((x,y)=>x+y.montant,0);
+  return { fert, prol, still, ventes, dep, marge: ventes - dep, nbPortees: reussies.length, nbTerminees: terminees.length };
+}
+function calculerDiagnostic(k){
+  const c = [];
+  if(k.fert !== null && k.fert < 70) c.push(fmt(t('d_fert'), {v:k.fert}));
+  if(k.prol !== null && k.prol < 6) c.push(fmt(t('d_prol'), {v:k.prol}));
+  if(k.still !== null && k.still > 10) c.push(fmt(t('d_still'), {v:k.still}));
+  if(etat.transactions.length && k.marge < 0) c.push(t('d_margin'));
+  if(!c.length && (k.nbTerminees > 0 || etat.transactions.length > 0)) c.push(t('d_ok'));
+  return c;
+}
+
 /* ================= VUES ================= */
 function rendre(){
   const c = document.getElementById('contenu');
   if(vueActive === 'tableau') c.innerHTML = vueTableau();
   else if(vueActive === 'cheptel') c.innerHTML = vueCheptel();
   else if(vueActive === 'repro') c.innerHTML = vueRepro();
-  else c.innerHTML = vueFinances();
+  else if(vueActive === 'sante') c.innerHTML = vueSante();
+  else if(vueActive === 'finances') c.innerHTML = vueFinances();
+  else if(vueActive === 'bilan') c.innerHTML = vueBilan();
+  else c.innerHTML = vueEcole();
 }
 
 function vueTableau(){
@@ -312,9 +535,7 @@ function vueTableau(){
   const mal = actifs.filter(l => l.sexe === 'M').length;
   const gest = etat.saillies.filter(s => s.statut === 'attente').length;
   const kits = etat.saillies.filter(s => s.statut==='misebas' && !s.sevre).reduce((x,s)=>x+(s.vivants||0),0);
-  const ventes = etat.transactions.filter(x=>x.type==='vente').reduce((x,y)=>x+y.montant,0);
-  const dep = etat.transactions.filter(x=>x.type==='depense').reduce((x,y)=>x+y.montant,0);
-  const solde = ventes - dep;
+  const k = calculerKPI();
   const alertes = calculerAlertes();
   const dateJour = new Date().toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
@@ -326,7 +547,8 @@ function vueTableau(){
       <div class="card stat leaf"><div class="val">${mal}</div><div class="lab">${t('st_males')}</div></div>
       <div class="card stat amber"><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
       <div class="card stat leaf"><div class="val">${kits}</div><div class="lab">${t('st_kits')}</div></div>
-      <div class="card stat ${solde>=0?'leaf':'red'}"><div class="val ${solde>=0?'solde-pos':'solde-neg'}" style="font-size:1.4rem">${fcfa(solde)}</div><div class="lab">${t('st_balance')}</div></div>
+      <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.4rem">${fcfa(k.marge)}</div><div class="lab">${t('st_balance')}</div></div>
+      <div class="card stat amber"><div class="val">${etat.ecole.validees.length}/6</div><div class="lab">${t('st_school')}</div></div>
     </div>
     <div class="card">
       <h3>${t('alerts_title')}</h3>
@@ -408,9 +630,43 @@ function vueRepro(){
     <div id="zone-misebas"></div>`;
 }
 
+function vueSante(){
+  const actifs = etat.lapins.filter(l=>l.statut==='actif');
+  const soinLbl = {vacc:t('care_vacc'), trait:t('care_treat'), verm:t('care_worm'), desinf:t('care_disinf')};
+  const lignes = etat.soins.slice().reverse().map(s=>`
+    <tr><td>${fdate(s.date)}</td>
+      <td><b>${s.animal==='tous' ? t('all_herd') : nom(s.animal)}</b></td>
+      <td><span class="tag ok">${soinLbl[s.type] || s.type}</span></td>
+      <td>${esc(s.produit)}</td>
+      <td>${esc(s.note)}</td>
+      <td style="text-align:right"><button class="btn mini danger" onclick="supprimerSoin('${s.id}')">✕</button></td></tr>`).join('');
+
+  return `
+    <h2 class="page-title">${t('health_title')}</h2>
+    <p class="page-sub">${t('health_sub')}</p>
+    <div class="card">
+      <h3>${t('health_add')}</h3>
+      <form class="ligne" onsubmit="ajouterSoin(event)">
+        <div class="champ"><label>${t('f_date')}</label><input type="date" id="so-date" value="${auj()}" required></div>
+        <div class="champ"><label>${t('f_animal')}</label><select id="so-animal">
+          <option value="tous">${t('all_herd')}</option>
+          ${actifs.map(l=>`<option value="${l.id}">${esc(l.nom)}</option>`).join('')}
+        </select></div>
+        <div class="champ"><label>${t('f_care')}</label><select id="so-type">
+          <option value="vacc">${t('care_vacc')}</option><option value="trait">${t('care_treat')}</option>
+          <option value="verm">${t('care_worm')}</option><option value="desinf">${t('care_disinf')}</option>
+        </select></div>
+        <div class="champ"><label>${t('f_product')}</label><input id="so-produit" required placeholder="${t('ph_product')}"></div>
+        <div class="champ"><label>${t('f_note')}</label><input id="so-note" placeholder="${t('ph_note')}"></div>
+        <button class="btn">${t('btn_save')}</button>
+      </form>
+      ${etat.soins.length ? `<table><thead><tr><th>${t('th_date')}</th><th>${t('th_animal')}</th><th>${t('th_care')}</th><th>${t('th_product')}</th><th>${t('th_note')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
+        : `<p class="vide">${t('health_empty')}</p>`}
+    </div>`;
+}
+
 function vueFinances(){
-  const ventes = etat.transactions.filter(x=>x.type==='vente').reduce((x,y)=>x+y.montant,0);
-  const dep = etat.transactions.filter(x=>x.type==='depense').reduce((x,y)=>x+y.montant,0);
+  const k = calculerKPI();
   const lignes = etat.transactions.slice().reverse().map(x=>`
     <tr><td>${fdate(x.date)}</td>
       <td><span class="tag ${x.type==='vente'?'vente':'dep'}">${x.type==='vente'?t('t_sale'):t('t_exp')}</span></td>
@@ -422,9 +678,9 @@ function vueFinances(){
     <h2 class="page-title">${t('fin_title')}</h2>
     <p class="page-sub">${t('fin_sub')}</p>
     <div class="grid stats">
-      <div class="card stat leaf"><div class="val solde-pos" style="font-size:1.4rem">${fcfa(ventes)}</div><div class="lab">${t('st_sales')}</div></div>
-      <div class="card stat red"><div class="val solde-neg" style="font-size:1.4rem">${fcfa(dep)}</div><div class="lab">${t('st_exp')}</div></div>
-      <div class="card stat ${ventes-dep>=0?'leaf':'red'}"><div class="val" style="font-size:1.4rem">${fcfa(ventes-dep)}</div><div class="lab">${t('st_profit')}</div></div>
+      <div class="card stat leaf"><div class="val solde-pos" style="font-size:1.4rem">${fcfa(k.ventes)}</div><div class="lab">${t('st_sales')}</div></div>
+      <div class="card stat red"><div class="val solde-neg" style="font-size:1.4rem">${fcfa(k.dep)}</div><div class="lab">${t('st_exp')}</div></div>
+      <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="val" style="font-size:1.4rem">${fcfa(k.marge)}</div><div class="lab">${t('st_profit')}</div></div>
     </div>
     <div class="card">
       <h3>${t('fin_add')}</h3>
@@ -432,12 +688,177 @@ function vueFinances(){
         <div class="champ"><label>${t('f_type')}</label><select id="t-type"><option value="vente">${t('t_sale')}</option><option value="depense">${t('t_exp')}</option></select></div>
         <div class="champ"><label>${t('f_desc')}</label><input id="t-desc" required placeholder="${t('ph_desc')}"></div>
         <div class="champ"><label>${t('f_amount')}</label><input type="number" id="t-mont" min="1" required placeholder="20000"></div>
-        <div class="champ"><label>${t('f_date')||t('th_date')}</label><input type="date" id="t-date" value="${auj()}" required></div>
+        <div class="champ"><label>${t('th_date')}</label><input type="date" id="t-date" value="${auj()}" required></div>
         <button class="btn">${t('btn_save')}</button>
       </form>
       ${etat.transactions.length ? `<table><thead><tr><th>${t('th_date')}</th><th>${t('th_type')}</th><th>${t('th_desc')}</th><th style="text-align:right">${t('th_amount')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
         : `<p class="vide">${t('fin_empty')}</p>`}
     </div>`;
+}
+
+/* ---------- Bilan ---------- */
+function vueBilan(){
+  const k = calculerKPI();
+  const conseils = calculerDiagnostic(k);
+  const v = x => x === null ? '—' : x;
+
+  return `
+    <h2 class="page-title">${t('rep_title')}</h2>
+    <p class="page-sub">${t('rep_sub')}</p>
+    <div class="grid stats">
+      <div class="card stat ${k.fert!==null&&k.fert<70?'red':'leaf'}"><div class="val">${v(k.fert)}${k.fert!==null?' %':''}</div>
+        <div class="lab">${t('kpi_fert')}</div><div class="kpi-note">${t('kpi_fert_note')}</div></div>
+      <div class="card stat ${k.prol!==null&&k.prol<6?'amber':'leaf'}"><div class="val">${v(k.prol)}</div>
+        <div class="lab">${t('kpi_prol')}</div><div class="kpi-note">${t('kpi_prol_note')}</div></div>
+      <div class="card stat ${k.still!==null&&k.still>10?'red':'leaf'}"><div class="val">${v(k.still)}${k.still!==null?' %':''}</div>
+        <div class="lab">${t('kpi_still')}</div><div class="kpi-note">${t('kpi_still_note')}</div></div>
+      <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.35rem">${fcfa(k.marge)}</div>
+        <div class="lab">${t('kpi_margin')}</div><div class="kpi-note">${t('kpi_margin_note')}</div></div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <h3>${t('diag_title')}</h3>
+      ${conseils.length ? conseils.map(c=>`<div class="diag">💡 <span>${c}</span></div>`).join('')
+        : `<p class="vide">${t('diag_none')}</p>`}
+    </div>
+    <button class="btn wa" onclick="partagerBilan()">🟢 ${t('btn_share_wa')}</button>`;
+}
+
+function partagerBilan(){
+  const k = calculerKPI();
+  const conseils = calculerDiagnostic(k);
+  const actifs = etat.lapins.filter(l => l.statut === 'actif');
+  const fem = actifs.filter(l=>l.sexe==='F').length, mal = actifs.filter(l=>l.sexe==='M').length;
+  const kits = etat.saillies.filter(s=>s.statut==='misebas' && !s.sevre).reduce((x,s)=>x+(s.vivants||0),0);
+  const v = x => x === null ? '—' : x;
+  const lignes = [
+    t('wa_report_title') + ' — ' + fdate(auj()),
+    t('wa_herd') + ' : ' + fem + ' ♀ · ' + mal + ' ♂ · ' + kits + ' 🐇',
+    t('kpi_fert') + ' : ' + v(k.fert) + (k.fert!==null?' %':''),
+    t('kpi_prol') + ' : ' + v(k.prol),
+    t('kpi_still') + ' : ' + v(k.still) + (k.still!==null?' %':''),
+    t('st_sales') + ' : ' + fcfa(k.ventes),
+    t('st_exp') + ' : ' + fcfa(k.dep),
+    '*' + t('kpi_margin') + ' : ' + fcfa(k.marge) + '*'
+  ];
+  if(conseils.length) lignes.push(t('wa_advice') + ' : ' + conseils[0]);
+  lignes.push('— KuniKribi 🐇');
+  partagerWhatsApp(lignes.join('\n'));
+}
+
+/* ---------- École ---------- */
+function vueEcole(){
+  if(leconOuverte !== null) return vueLecon(leconOuverte);
+  const n = etat.ecole.validees.length;
+  const tout = n === LECONS.length;
+
+  let certif = '';
+  if(tout){
+    certif = `
+    <div class="certif">
+      <h3>${t('certif_title')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom) || '…'}</div>
+      <p>${t('certif_body')}</p>
+      <p style="margin-top:6px">🐇 KuniKribi · ${fdate(auj())}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertif()">🟢 ${t('btn_share_certif')}</button>
+    </div>`;
+  }
+
+  return `
+    <h2 class="page-title">${t('school_title')}</h2>
+    <p class="page-sub">${t('school_sub')}</p>
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${fmt(t('school_progress'),{n})}</p>
+      <div class="progress-bar"><div style="width:${n/LECONS.length*100}%"></div></div>
+      <div style="margin-top:14px">
+      ${LECONS.map((l,i)=>{
+        const done = etat.ecole.validees.includes(i);
+        return `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLecon(${i})">
+          <div class="lecon-num">${done?'✓':i+1}</div>
+          <div class="lecon-titre">${l[langue].ti}</div>
+          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+        </div>`;
+      }).join('')}
+      </div>
+    </div>`;
+}
+
+function vueLecon(i){
+  const l = LECONS[i][langue];
+  const done = etat.ecole.validees.includes(i);
+  let feedback = '';
+  if(quizResultat === 'ok') feedback = `<div class="alerte info" style="margin-top:12px">🎉 <span><b>${t('quiz_pass')}</b></span></div>`;
+  if(quizResultat === 'ko') feedback = `<div class="alerte urgent" style="margin-top:12px">✋ <span>${t('quiz_fail')}</span>
+    <button class="btn mini" onclick="reessayerQuiz(${i})">${t('btn_retry')}</button></div>`;
+
+  return `
+    <button class="btn mini sec" onclick="fermerLecon()">${t('btn_back')}</button>
+    <h2 class="page-title" style="margin-top:14px">${i+1}. ${l.ti} ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}</h2>
+    <div class="card lecon-texte" style="margin-bottom:16px">
+      ${l.tx.map(p=>`<p>${p}</p>`).join('')}
+    </div>
+    <div class="card">
+      <h3>${fmt(t('quiz_title'),{n:2})}</h3>
+      <div id="quiz-zone">
+      ${l.qz.map((q,qi)=>`
+        <div class="quiz-q" data-q="${qi}">
+          <p>${qi+1}. ${q.q}</p>
+          ${q.o.map((o,oi)=>`
+            <label class="quiz-opt" data-o="${oi}">
+              <input type="radio" name="q${qi}" value="${oi}" ${quizResultat?'disabled':''}> ${o}
+            </label>`).join('')}
+        </div>`).join('')}
+      </div>
+      ${!quizResultat ? `<button class="btn" onclick="corrigerQuiz(${i})">${t('btn_check')}</button>` : ''}
+      ${feedback}
+    </div>`;
+}
+
+function ouvrirLecon(i){ leconOuverte = i; quizResultat = null; rendre(); window.scrollTo(0,0); }
+function fermerLecon(){ leconOuverte = null; quizResultat = null; rendre(); }
+function reessayerQuiz(i){ quizResultat = null; rendre(); }
+
+function corrigerQuiz(i){
+  const qz = LECONS[i][langue].qz;
+  let bonnes = 0;
+  qz.forEach((q,qi)=>{
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const rep = sel ? parseInt(sel.value) : -1;
+    if(rep === q.b) bonnes++;
+    document.querySelectorAll(`.quiz-q[data-q="${qi}"] .quiz-opt`).forEach(opt=>{
+      const oi = parseInt(opt.dataset.o);
+      if(oi === q.b) opt.classList.add('bonne');
+      else if(oi === rep) opt.classList.add('fausse');
+      opt.querySelector('input').disabled = true;
+    });
+  });
+  quizResultat = bonnes >= 2 ? 'ok' : 'ko';
+  if(quizResultat === 'ok' && !etat.ecole.validees.includes(i)){
+    etat.ecole.validees.push(i); sauver();
+  }
+  /* Réafficher uniquement le feedback sans re-rendre le quiz (pour garder les couleurs) */
+  const zone = document.getElementById('quiz-zone');
+  const bloc = zone.parentElement;
+  const btn = bloc.querySelector('button.btn:not(.mini)');
+  if(btn) btn.remove();
+  const div = document.createElement('div');
+  div.innerHTML = quizResultat === 'ok'
+    ? `<div class="alerte info" style="margin-top:12px">🎉 <span><b>${t('quiz_pass')}</b></span></div>
+       <button class="btn sec" style="margin-top:8px" onclick="fermerLecon()">${t('btn_back')}</button>`
+    : `<div class="alerte urgent" style="margin-top:12px">✋ <span>${t('quiz_fail')}</span></div>
+       <button class="btn" style="margin-top:8px" onclick="reessayerQuiz(${i})">${t('btn_retry')}</button>`;
+  bloc.appendChild(div);
+}
+
+function majNomCertif(v){
+  etat.ecole.nom = v; sauver();
+  const gn = document.querySelector('.certif .grand-nom');
+  if(gn) gn.textContent = v || '…';
+}
+function partagerCertif(){
+  const n = etat.ecole.nom ? ' — ' + etat.ecole.nom : '';
+  partagerWhatsApp(t('wa_certif') + n + '\n' + fdate(auj()) + ' · KuniKribi');
 }
 
 /* ================= ACTIONS ================= */
@@ -494,6 +915,19 @@ function validerMiseBas(e, id){
   sauver(); rendre();
 }
 function sevrer(id){ const s = etat.saillies.find(x=>x.id===id); if(!s) return; s.sevre = true; sauver(); rendre(); }
+function ajouterSoin(e){
+  e.preventDefault();
+  etat.soins.push({
+    id: uid(),
+    date: document.getElementById('so-date').value,
+    animal: document.getElementById('so-animal').value,
+    type: document.getElementById('so-type').value,
+    produit: document.getElementById('so-produit').value.trim(),
+    note: document.getElementById('so-note').value.trim()
+  });
+  sauver(); rendre();
+}
+function supprimerSoin(id){ etat.soins = etat.soins.filter(s=>s.id!==id); sauver(); rendre(); }
 function ajouterTrans(e){
   e.preventDefault();
   etat.transactions.push({
