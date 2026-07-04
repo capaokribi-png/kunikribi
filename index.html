@@ -113,8 +113,8 @@
   .certif{background:linear-gradient(135deg,#FDF6E3,#F5E7C1);border:3px double var(--or);border-radius:16px;
     padding:26px;text-align:center;margin-bottom:18px;}
   .certif h3{justify-content:center;color:var(--or);letter-spacing:1px;}
-  .certif .grand-nom{font-size:1.5rem;font-weight:700;color:var(--vert-foret);margin:10px 0;}
-  .certif p{font-size:.9rem;color:var(--gris);}
+  .certif .grand-nom{font-size:1.5rem;font-weight:700;color:var(--vert-foret);margin:10px 0;}  .certif p{font-size:.9rem;color:var(--gris);}
+  .pro-feat{background:#fff;border:1px solid #EBDFC7;border-radius:10px;padding:11px 14px;font-size:.95rem;color:var(--encre);}
   .certif input{margin:10px auto;display:block;text-align:center;padding:9px 14px;border:1.5px solid var(--or);
     border-radius:9px;font-size:1rem;max-width:280px;width:100%;}
 
@@ -159,6 +159,7 @@
     <button class="nav-btn" data-vue="sante" onclick="naviguer('sante')"><span class="ico">✚</span> <span data-i18n="nav_health"></span></button>
     <button class="nav-btn" data-vue="finances" onclick="naviguer('finances')"><span class="ico">₣</span> <span data-i18n="nav_fin"></span></button>
     <button class="nav-btn" data-vue="bilan" onclick="naviguer('bilan')"><span class="ico">📊</span> <span data-i18n="nav_report"></span></button>
+    <button class="nav-btn" data-vue="nutrition" onclick="naviguer('nutrition')"><span class="ico">🥣</span> <span data-i18n="nav_nutri"></span></button>
     <button class="nav-btn" data-vue="ecole" onclick="naviguer('ecole')"><span class="ico">🎓</span> <span data-i18n="nav_school"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
     <div class="foot">CuniSmart v2.0 · Kribi, Cameroun</div>
@@ -173,7 +174,7 @@ const I18N = {
   fr: {
     brand_tag:"ÉLEVAGE CUNICOLE INTELLIGENT", lang_btn:"🌍 English",
     nav_dash:"Tableau de bord", nav_herd:"Cheptel", nav_repro:"Reproduction",
-    nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_school:"École",
+    nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_nutri:"Nutrition", nav_school:"École",
     dash_title:"Tableau de bord", dash_sub:"Vue d’ensemble de l’élevage",
     st_females:"Lapines", st_males:"Mâles", st_gest:"Gestations en cours",
     st_kits:"Lapereaux sous la mère", st_balance:"Solde", st_school:"Leçons validées",
@@ -228,22 +229,53 @@ const I18N = {
     d_ok:"Bons indicateurs ! Continuez à enregistrer chaque événement pour garder cette précision.",
     btn_share_wa:"Partager le bilan sur WhatsApp",
     wa_report_title:"🐇 *BILAN CUNISMART*", wa_herd:"Cheptel", wa_advice:"💡 Conseil",
-    school_title:"École de cuniculture", school_sub:"6 leçons + quiz pour maîtriser l’élevage. Validez tout pour obtenir votre certificat !",
-    school_progress:"{n}/6 leçons validées",
+    school_title:"École de cuniculture", school_sub:"Parcours certifiant en 3 niveaux (16 leçons + quiz). Validez tout pour obtenir votre certificat vérifiable !",
+    school_progress:"{n}/16 leçons validées",
     lesson_done:"✓ Validée", lesson_todo:"À faire", btn_back:"← Retour aux leçons",
-    quiz_title:"✍️ Quiz de validation ({n} bonnes réponses sur 3 pour valider)",
+    quiz_title:"✍️ Quiz de validation ({n} bonnes réponses sur 5 pour valider)",
     btn_check:"Corriger", quiz_pass:"🎉 Bravo, leçon validée !",
     quiz_fail:"Presque ! Relisez la leçon et réessayez.", btn_retry:"Réessayer",
     certif_title:"🏆 CERTIFICAT DE FORMATION",
-    certif_body:"a suivi et validé avec succès les 6 leçons de l’École de cuniculture CuniSmart",
+    certif_body:"a suivi et validé avec succès le parcours certifiant de l’École de cuniculture CuniSmart",
     certif_name_ph:"Écrivez votre nom ici",
+    certif_num:"N° de certificat",
+    certif_verify:"Vérifiable sur cunismart.com/verifier",
     btn_share_certif:"Partager mon certificat sur WhatsApp",
-    wa_certif:"🏆 J’ai obtenu mon *Certificat de formation en cuniculture* après avoir validé les 6 leçons et quiz de l’École CuniSmart ! 🐇📚"
+    wa_certif:"🏆 J’ai obtenu mon *Certificat de formation en cuniculture* après avoir validé toutes les leçons et quiz de l’École CuniSmart ! 🐇📚",
+    lvl_1:"Niveau 1 · Débutant", lvl_2:"Niveau 2 · Confirmé", lvl_3:"Niveau 3 · Expert",
+    lvl_locked:"🔒 Terminez le niveau précédent pour débloquer",
+    nut_title:"Nutrition & provende", nut_sub:"Formulez votre aliment à partir des cultures locales du Cameroun.",
+    nut_calc:"Calculateur de sac", nut_bag:"Poids du sac (kg)",
+    nut_calc_note:"Choisissez le poids : les quantités de chaque ingrédient se recalculent automatiquement.",
+    nut_ing:"Ingrédient", nut_qty:"Quantité", nut_total:"Total", nut_free:"Gratuit",
+    nut_share:"Partager la recette sur WhatsApp",
+    nut_locked:"Formulation Pro verrouillée", 
+    nut_locked_desc:"La recette avancée (Moringa, Artemisia, prémix, calcium) est réservée à CuniSmart Pro. Elle optimise croissance, lactation et prévention naturelle de la coccidiose.",
+    nut_unlock:"Débloquer avec Pro",
+    nut_demo_confirm:"",
+    pro_soon:"Le paiement Mobile Money (Orange Money / MTN MoMo) sera disponible très bientôt.",
+    pro_soon_msg:"Merci de votre intérêt pour CuniSmart Pro ! 🐇\n\nLe paiement par Mobile Money (Orange Money / MTN MoMo) arrive très bientôt. En attendant, contactez-nous à hello@cunismart.com pour être parmi les premiers informés.",
+    nut_tip:"💡 Astuce Kribi : servez en « barbotine » à peine humidifiée pour éviter la poudre dans les narines, et stockez les sacs sur des palettes contre les moisissures.",
+    plants_title:"🌿 Reconnaître les plantes fourragères", plants_sub:"Touchez une plante pour voir à quoi elle ressemble (images web).",
+    plant_see:"Voir les feuilles",
+    pro_badge:"PRO", pro_lock_title:"🔒 Niveaux Confirmé & Expert — réservés à CuniSmart Pro",
+    pro_pitch:"Le niveau 1 pose les bases. Les niveaux Confirmé et Expert font la différence entre un éleveur qui survit et un éleveur qui prospère. Débloquez :",
+    pro_f1:"🧬 Génétique et sélection pour améliorer votre cheptel",
+    pro_f2:"🥣 Formulation de provende avec vos cultures (tourteau de coton, Moringa…)",
+    pro_f3:"💉 Protéger contre la VHD, la maladie qui décime un élevage",
+    pro_f4:"💰 Calcul de rentabilité et stratégie commerciale",
+    pro_f5:"🏆 Certificat Expert « Master » vérifiable, à présenter aux partenaires",
+    pro_price:"À partir de 1 000 FCFA/mois · payable par Mobile Money",
+    pro_cta:"Débloquer le niveau Expert",
+    master_title:"🏅 CERTIFICAT EXPERT — MASTER CUNISMART",
+    master_body:"a complété l’intégralité du parcours certifiant, jusqu’au niveau Expert, de l’École de cuniculture CuniSmart",
+    master_share:"Partager mon certificat Expert sur WhatsApp",
+    wa_master:"🏅 J’ai obtenu le *Certificat EXPERT (Master)* de cuniculture CuniSmart après avoir validé les 16 leçons et tous les quiz, jusqu’au niveau Expert ! 🐇🎓"
   },
   en: {
     brand_tag:"SMART RABBIT FARMING", lang_btn:"🌍 Français",
     nav_dash:"Dashboard", nav_herd:"Herd", nav_repro:"Breeding",
-    nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_school:"School",
+    nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_nutri:"Nutrition", nav_school:"School",
     dash_title:"Dashboard", dash_sub:"Overview of your rabbitry",
     st_females:"Does", st_males:"Bucks", st_gest:"Ongoing pregnancies",
     st_kits:"Kits with their mother", st_balance:"Balance", st_school:"Lessons completed",
@@ -298,17 +330,48 @@ const I18N = {
     d_ok:"Good indicators! Keep recording every event to maintain this accuracy.",
     btn_share_wa:"Share report on WhatsApp",
     wa_report_title:"🐇 *CUNISMART REPORT*", wa_herd:"Herd", wa_advice:"💡 Advice",
-    school_title:"Rabbit farming school", school_sub:"6 lessons + quizzes to master rabbit farming. Complete them all to earn your certificate!",
-    school_progress:"{n}/6 lessons completed",
+    school_title:"Rabbit farming school", school_sub:"Certifying path in 3 levels (16 lessons + quizzes). Complete it all to earn your verifiable certificate!",
+    school_progress:"{n}/16 lessons completed",
     lesson_done:"✓ Completed", lesson_todo:"To do", btn_back:"← Back to lessons",
-    quiz_title:"✍️ Validation quiz ({n} correct answers out of 3 to pass)",
+    quiz_title:"✍️ Validation quiz ({n} correct answers out of 5 to pass)",
     btn_check:"Check answers", quiz_pass:"🎉 Well done, lesson completed!",
     quiz_fail:"Almost! Re-read the lesson and try again.", btn_retry:"Try again",
     certif_title:"🏆 TRAINING CERTIFICATE",
-    certif_body:"has successfully completed the 6 lessons of the CuniSmart Rabbit Farming School",
+    certif_body:"has successfully completed the certifying path of the CuniSmart Rabbit Farming School",
     certif_name_ph:"Write your name here",
+    certif_num:"Certificate No.",
+    certif_verify:"Verifiable at cunismart.com/verify",
     btn_share_certif:"Share my certificate on WhatsApp",
-    wa_certif:"🏆 I earned my *Rabbit Farming Training Certificate* after completing all 6 lessons and quizzes of the CuniSmart School! 🐇📚"
+    wa_certif:"🏆 I earned my *Rabbit Farming Training Certificate* after completing all lessons and quizzes of the CuniSmart School! 🐇📚",
+    lvl_1:"Level 1 · Beginner", lvl_2:"Level 2 · Intermediate", lvl_3:"Level 3 · Expert",
+    lvl_locked:"🔒 Complete the previous level to unlock",
+    nut_title:"Nutrition & feed", nut_sub:"Formulate your feed from Cameroon's local crops.",
+    nut_calc:"Bag calculator", nut_bag:"Bag weight (kg)",
+    nut_calc_note:"Pick the weight: each ingredient's quantity recalculates automatically.",
+    nut_ing:"Ingredient", nut_qty:"Quantity", nut_total:"Total", nut_free:"Free",
+    nut_share:"Share recipe on WhatsApp",
+    nut_locked:"Pro formulation locked",
+    nut_locked_desc:"The advanced recipe (Moringa, Artemisia, premix, calcium) is reserved for CuniSmart Pro. It optimises growth, lactation and natural coccidiosis prevention.",
+    nut_unlock:"Unlock with Pro",
+    nut_demo_confirm:"",
+    pro_soon:"Mobile Money payment (Orange Money / MTN MoMo) will be available very soon.",
+    pro_soon_msg:"Thank you for your interest in CuniSmart Pro! 🐇\n\nMobile Money payment (Orange Money / MTN MoMo) is coming very soon. In the meantime, contact us at hello@cunismart.com to be among the first to know.",
+    nut_tip:"💡 Kribi tip: serve as a lightly moistened mash to keep powder out of the nostrils, and store bags on pallets against mould.",
+    plants_title:"🌿 Recognise the forage plants", plants_sub:"Tap a plant to see what it looks like (web images).",
+    plant_see:"See the leaves",
+    pro_badge:"PRO", pro_lock_title:"🔒 Intermediate & Expert levels — reserved for CuniSmart Pro",
+    pro_pitch:"Level 1 lays the foundations. The Intermediate and Expert levels make the difference between a farmer who survives and one who thrives. Unlock:",
+    pro_f1:"🧬 Genetics and selection to improve your herd",
+    pro_f2:"🥣 Feed formulation with your crops (cottonseed cake, Moringa…)",
+    pro_f3:"💉 Protect against VHD, the disease that wipes out a farm",
+    pro_f4:"💰 Profitability calculation and business strategy",
+    pro_f5:"🏆 Verifiable ‘Master’ Expert Certificate to show partners",
+    pro_price:"From 1,000 FCFA/month · payable by Mobile Money",
+    pro_cta:"Unlock the Expert level",
+    master_title:"🏅 EXPERT CERTIFICATE — CUNISMART MASTER",
+    master_body:"has completed the entire certifying path, up to Expert level, of the CuniSmart Rabbit Farming School",
+    master_share:"Share my Expert certificate on WhatsApp",
+    wa_master:"🏅 I earned the *EXPERT (Master) Certificate* in rabbit farming from CuniSmart after completing all 16 lessons and quizzes, up to Expert level! 🐇🎓"
   }
 };
 let langue = 'fr';
@@ -318,91 +381,297 @@ const locale = () => langue === 'fr' ? 'fr-FR' : 'en-GB';
 
 /* ================= LEÇONS DE L'ÉCOLE (contenu bilingue) ================= */
 const LECONS = [
- {fr:{ti:"L’habitat du lapin",tx:[
-   "Le clapier est la première clé de la réussite. Il doit être surélevé (60 cm minimum) pour protéger les lapins de l’humidité du sol, des serpents et des rats. Placez-le à l’ombre, car le lapin supporte mal la chaleur au-delà de 30 °C.",
-   "L’air doit circuler sans courants d’air directs : un clapier trop fermé accumule l’ammoniac des urines et provoque des maladies respiratoires. Chaque reproducteur (mâle ou femelle) vit dans sa propre cage ; les lapins d’engraissement peuvent être groupés (3-4 par m²).",
-   "Nettoyez les cages chaque semaine et grattez les déjections chaque jour : la propreté prévient 80 % des maladies."],
-  qz:[{q:"Un bon clapier doit être…",o:["Sec et aéré, sans courants d’air","Complètement fermé pour la chaleur","Placé en plein soleil"],b:0},
-      {q:"Les reproducteurs sont logés…",o:["Tous ensemble dans une grande cage","Chacun dans sa propre cage","Avec les lapereaux sevrés"],b:1},
-      {q:"Pourquoi surélever les cages ?",o:["Pour la décoration","Pour gagner de la place","Pour protéger de l’humidité et des prédateurs"],b:2}]},
-  en:{ti:"Rabbit housing",tx:[
-   "The hutch is the first key to success. It must be raised (at least 60 cm) to protect rabbits from ground moisture, snakes and rats. Place it in the shade: rabbits suffer above 30 °C.",
-   "Air must circulate without direct draughts: a hutch that is too closed accumulates ammonia from urine and causes respiratory diseases. Each breeder (buck or doe) lives in its own cage; fattening rabbits can be grouped (3-4 per m²).",
-   "Clean cages every week and scrape droppings daily: cleanliness prevents 80% of diseases."],
-  qz:[{q:"A good hutch must be…",o:["Dry and airy, without draughts","Fully closed to keep heat","Placed in direct sunlight"],b:0},
-      {q:"Breeders are housed…",o:["All together in one big cage","Each in its own cage","With weaned kits"],b:1},
-      {q:"Why raise the cages off the ground?",o:["For decoration","To save space","To protect from moisture and predators"],b:2}]}},
- {fr:{ti:"L’alimentation",tx:[
-   "Un lapin adulte consomme environ 100 à 150 g de granulés par jour, complétés par du fourrage sec (herbe fanée, feuilles de patate douce séchées). Attention : ne donnez JAMAIS d’herbe fraîchement coupée et mouillée — elle fermente et provoque des diarrhées mortelles. Fanez-la quelques heures au soleil.",
-   "L’eau propre doit être disponible en permanence : une lapine qui allaite boit jusqu’à 1 litre par jour ! Un abreuvoir sale ou vide fait chuter la production plus vite que tout le reste.",
-   "Tout changement d’aliment se fait progressivement sur 5 à 7 jours en mélangeant ancien et nouveau, sinon les troubles digestifs sont garantis."],
-  qz:[{q:"L’eau doit être disponible…",o:["Une fois par jour","En permanence et propre","Seulement le soir"],b:1},
-      {q:"L’herbe fraîchement coupée…",o:["Se donne immédiatement","Est interdite pour toujours","Doit être fanée (séchée) avant distribution"],b:2},
-      {q:"Un changement d’aliment se fait…",o:["Progressivement sur plusieurs jours","D’un seul coup","Sans aucune précaution"],b:0}]},
-  en:{ti:"Feeding",tx:[
-   "An adult rabbit eats about 100–150 g of pellets per day, plus dry forage (wilted grass, dried sweet-potato leaves). Warning: NEVER feed freshly cut wet grass — it ferments and causes deadly diarrhoea. Wilt it a few hours in the sun first.",
-   "Clean water must be available at all times: a nursing doe drinks up to 1 litre a day! A dirty or empty drinker cuts production faster than anything else.",
-   "Any feed change must be gradual, over 5–7 days, mixing old and new feed, otherwise digestive troubles are guaranteed."],
-  qz:[{q:"Water must be available…",o:["Once a day","At all times and clean","Only in the evening"],b:1},
-      {q:"Freshly cut grass…",o:["Can be fed immediately","Is forbidden forever","Must be wilted (dried) before feeding"],b:2},
-      {q:"A feed change is done…",o:["Gradually over several days","All at once","Without any precaution"],b:0}]}},
- {fr:{ti:"La reproduction",tx:[
-   "Une lapine est prête pour sa première saillie vers 5-6 mois, quand elle atteint 80 % de son poids adulte. Un mâle sert 8 à 10 femelles, avec 2-3 saillies maximum par semaine pour rester fécond.",
-   "Règle d’or : on amène TOUJOURS la femelle dans la cage du mâle, jamais l’inverse — sur son territoire, la femelle attaque le mâle. La gestation dure environ 31 jours ; la palpation du ventre à J+12 confirme la gestation.",
-   "Placez la boîte à nid garnie de paille vers J+28 : la lapine y ajoutera ses poils. Une femelle bien conduite peut produire 6 à 8 portées par an."],
-  qz:[{q:"La gestation de la lapine dure environ…",o:["15 jours","31 jours","60 jours"],b:1},
-      {q:"Pour la saillie, on amène…",o:["La femelle chez le mâle","Le mâle chez la femelle","Les deux dans une cage neutre"],b:0},
-      {q:"La boîte à nid se place…",o:["Le jour de la saillie","Après la mise bas","Vers le 28e jour de gestation"],b:2}]},
-  en:{ti:"Breeding",tx:[
-   "A doe is ready for her first mating at 5-6 months, once she reaches 80% of her adult weight. One buck serves 8 to 10 does, with a maximum of 2-3 matings per week to stay fertile.",
-   "Golden rule: ALWAYS bring the doe to the buck’s cage, never the opposite — on her own territory the doe attacks the buck. Pregnancy lasts about 31 days; belly palpation at D+12 confirms it.",
-   "Place the nest box filled with straw around D+28: the doe will add her own fur. A well-managed doe can produce 6 to 8 litters per year."],
-  qz:[{q:"A doe’s pregnancy lasts about…",o:["15 days","31 days","60 days"],b:1},
-      {q:"For mating, you bring…",o:["The doe to the buck","The buck to the doe","Both to a neutral cage"],b:0},
-      {q:"The nest box is placed…",o:["On mating day","After kindling","Around day 28 of pregnancy"],b:2}]}},
- {fr:{ti:"Les soins aux lapereaux",tx:[
-   "À la naissance, contrôlez le nid une fois par jour, mains propres : retirez les mort-nés et la paille souillée. Ne vous inquiétez pas de ne jamais voir la mère au nid : la lapine n’allaite que 1 à 2 fois par jour, quelques minutes, souvent la nuit — c’est normal.",
-   "Les lapereaux naissent nus et aveugles, ouvrent les yeux vers 10 jours et sortent du nid vers 18-21 jours pour goûter l’aliment de la mère.",
-   "Le sevrage se fait entre 28 et 35 jours. Séparez ensuite mâles et femelles vers 2,5-3 mois pour éviter les saillies incontrôlées et les bagarres."],
-  qz:[{q:"La lapine allaite ses petits…",o:["En continu toute la journée","1 à 2 fois par jour seulement","Jamais, ils se débrouillent"],b:1},
-      {q:"Le sevrage se fait vers…",o:["10 jours","28 à 35 jours","3 mois"],b:1},
-      {q:"À la naissance, il faut…",o:["Contrôler le nid et retirer les mort-nés","Ne jamais toucher au nid pendant un mois","Laver les lapereaux à l’eau"],b:0}]},
-  en:{ti:"Caring for the kits",tx:[
-   "After birth, check the nest once a day with clean hands: remove stillborn kits and soiled straw. Don’t worry if you never see the mother in the nest: a doe nurses only 1-2 times a day, for a few minutes, often at night — this is normal.",
-   "Kits are born naked and blind, open their eyes around day 10 and leave the nest around day 18-21 to taste the mother’s feed.",
-   "Weaning happens between 28 and 35 days. Then separate males and females around 2.5-3 months to avoid uncontrolled matings and fights."],
-  qz:[{q:"A doe nurses her kits…",o:["Continuously all day","Only 1-2 times a day","Never, they manage alone"],b:1},
-      {q:"Weaning happens around…",o:["10 days","28 to 35 days","3 months"],b:1},
-      {q:"At birth, you must…",o:["Check the nest and remove stillborn kits","Never touch the nest for a month","Wash the kits with water"],b:0}]}},
- {fr:{ti:"Santé et hygiène",tx:[
-   "Un lapin en bonne santé est vif, a le poil lisse et mange avec appétit. Les deux ennemis principaux : la gale des oreilles (croûtes brunes dans l’oreille, tête penchée) à traiter vite à l’ivermectine, et la coccidiose (diarrhée, ventre gonflé chez les jeunes) favorisée par la saleté.",
-   "La prévention n°1 reste l’hygiène : désinfection régulière des cages, abreuvoirs propres, mains lavées avant de manipuler les animaux.",
-   "Tout nouvel animal doit passer 2 semaines de quarantaine à l’écart du cheptel avant d’être introduit : c’est ainsi qu’on évite de contaminer tout l’élevage. Notez chaque traitement dans le carnet sanitaire de l’application."],
-  qz:[{q:"Un nouvel animal acheté doit…",o:["Rejoindre le cheptel immédiatement","Passer environ 2 semaines en quarantaine","Être vendu aussitôt"],b:1},
-      {q:"Une diarrhée chez les jeunes lapins évoque souvent…",o:["La coccidiose","Un excès d’eau","Le froid"],b:0},
-      {q:"La prévention n°1 des maladies, c’est…",o:["Les antibiotiques systématiques","L’hygiène et la désinfection","Donner moins à manger"],b:1}]},
-  en:{ti:"Health and hygiene",tx:[
-   "A healthy rabbit is lively, has smooth fur and eats with appetite. The two main enemies: ear mange (brown crusts in the ear, tilted head), to be treated quickly with ivermectin, and coccidiosis (diarrhoea, swollen belly in young rabbits), encouraged by dirt.",
-   "Prevention no. 1 is hygiene: regular cage disinfection, clean drinkers, washed hands before handling animals.",
-   "Any new animal must spend 2 weeks in quarantine away from the herd before joining it: this is how you avoid contaminating the whole farm. Record every treatment in the app’s health record."],
-  qz:[{q:"A newly bought animal must…",o:["Join the herd immediately","Spend about 2 weeks in quarantine","Be sold right away"],b:1},
-      {q:"Diarrhoea in young rabbits often suggests…",o:["Coccidiosis","Too much water","Cold weather"],b:0},
-      {q:"The no. 1 disease prevention is…",o:["Systematic antibiotics","Hygiene and disinfection","Feeding less"],b:1}]}},
- {fr:{ti:"Vendre et gérer son élevage",tx:[
-   "Le lapin de chair se vend généralement à 2-2,5 kg vifs, atteints vers 70-90 jours avec une bonne alimentation. Les reproducteurs sélectionnés (bonnes mères, belles portées) se vendent bien plus cher que le lapin de chair : c’est un second marché à développer.",
-   "L’aliment représente environ 70 % des coûts de production : c’est là que se joue votre rentabilité. Comparez les fournisseurs et valorisez les fourrages locaux séchés.",
-   "Enfin, on ne gère bien que ce que l’on mesure : notez CHAQUE vente et CHAQUE dépense dans l’application, et consultez votre Bilan chaque mois. Ciblez les périodes de forte demande (fêtes de fin d’année, cérémonies) pour planifier vos saillies en conséquence."],
-  qz:[{q:"L’aliment représente environ…",o:["10 % des coûts","30 % des coûts","70 % des coûts"],b:2},
-      {q:"Le lapin de chair se vend couramment à…",o:["1 kg","2 à 2,5 kg","5 kg"],b:1},
-      {q:"Pour connaître son vrai bénéfice, il faut…",o:["Noter toutes les ventes ET toutes les dépenses","Compter seulement les ventes","Faire une estimation de tête"],b:0}]},
-  en:{ti:"Selling and managing your farm",tx:[
-   "Meat rabbits usually sell at 2-2.5 kg live weight, reached around 70-90 days with good feeding. Selected breeders (good mothers, fine litters) sell for much more than meat rabbits: a second market worth developing.",
-   "Feed represents about 70% of production costs: that is where your profitability is decided. Compare suppliers and make use of dried local forages.",
-   "Finally, you can only manage what you measure: record EVERY sale and EVERY expense in the app, and check your Report every month. Target high-demand periods (end-of-year celebrations, ceremonies) to plan your matings accordingly."],
-  qz:[{q:"Feed represents about…",o:["10% of costs","30% of costs","70% of costs"],b:2},
-      {q:"Meat rabbits commonly sell at…",o:["1 kg","2 to 2.5 kg","5 kg"],b:1},
-      {q:"To know your real profit, you must…",o:["Record all sales AND all expenses","Count only the sales","Estimate in your head"],b:0}]}}
+ {fr:{ti:"Habitat en climat chaud et humide",tx:[
+   "En région tropicale, la chaleur est l’ennemi n°1 du lapin : au-delà de 30 °C il halète, mange moins et devient stérile (surtout le mâle, dont la fertilité chute après un coup de chaleur pendant plusieurs semaines). Le clapier doit être surélevé (60 cm minimum) contre l’humidité du sol, les serpents et les rats, et placé à l’ombre permanente d’un arbre ou d’un hangar bien ventilé.",
+   "L’orientation compte : ouvrez le clapier vers les vents dominants pour évacuer la chaleur et l’ammoniac des urines, sans courant d’air direct sur les animaux. Un toit en paille ou une double toiture avec lame d’air rafraîchit bien mieux qu’une simple tôle qui transforme le clapier en four.",
+   "Contre la chaleur : des bouteilles d’eau congelée dans les cages aux heures chaudes, un sol arrosé sous les cages, une bonne densité (jamais entassés). Chaque reproducteur a sa cage ; les jeunes à l’engraissement se groupent à 3-4 par m² maximum."],
+  qz:[{q:"Au-delà de quelle température le lapin souffre-t-il en tropical ?",o:["20 °C","30 °C","40 °C"],b:1},
+      {q:"Un coup de chaleur rend surtout stérile…",o:["La femelle uniquement","Le mâle pour plusieurs semaines","Personne"],b:1},
+      {q:"Le clapier doit être placé…",o:["En plein soleil","À l’ombre permanente et ventilé","Dans une pièce fermée"],b:1},
+      {q:"Une simple tôle comme toit…",o:["Rafraîchit le clapier","Transforme le clapier en four","N’a aucun effet"],b:1},
+      {q:"Pour rafraîchir aux heures chaudes, on peut mettre…",o:["Des bouteilles d’eau congelée","Une lampe","Rien du tout"],b:0}]},
+  en:{ti:"Housing in hot, humid climates",tx:[
+   "In tropical regions, heat is the rabbit’s enemy no. 1: above 30 °C it pants, eats less and becomes infertile (especially the buck, whose fertility drops for several weeks after a heat spell). The hutch must be raised (at least 60 cm) against ground moisture, snakes and rats, and placed in permanent shade under a tree or a well-ventilated shed.",
+   "Orientation matters: open the hutch toward prevailing winds to remove heat and urine ammonia, without a direct draught on the animals. A straw roof or a double roof with an air gap cools far better than a plain metal sheet, which turns the hutch into an oven.",
+   "Against heat: bottles of frozen water in the cages during hot hours, a watered floor under the cages, proper density (never crowded). Each breeder gets its own cage; fattening youngsters are grouped at 3-4 per m² maximum."],
+  qz:[{q:"Above which temperature does the rabbit suffer in the tropics?",o:["20 °C","30 °C","40 °C"],b:1},
+      {q:"A heat spell mainly causes infertility in…",o:["The doe only","The buck for several weeks","Nobody"],b:1},
+      {q:"The hutch must be placed…",o:["In full sun","In permanent shade and ventilated","In a closed room"],b:1},
+      {q:"A plain metal sheet as roof…",o:["Cools the hutch","Turns the hutch into an oven","Has no effect"],b:1},
+      {q:"To cool during hot hours, you can add…",o:["Bottles of frozen water","A lamp","Nothing at all"],b:0}]}},
+ {fr:{ti:"Nourrir avec les ressources locales",tx:[
+   "L’aliment industriel (granulés) est idéal mais coûteux : ~100 à 150 g/jour par adulte. En tropical, on le complète avec des fourrages locaux excellents et gratuits : feuilles de patate douce, de manioc (bien fanées, jamais fraîches), Stylosanthes, Tridax, Mucuna, Leucaena en petite quantité, tiges de bananier, drèches de brasserie séchées, son de maïs et de riz.",
+   "Règle vitale sous les tropiques : ne JAMAIS donner d’herbe fraîchement coupée, mouillée de pluie ou de rosée — elle fermente dans l’intestin et provoque des diarrhées et ballonnements mortels. Fanez toujours le fourrage quelques heures à l’ombre avant de le distribuer.",
+   "Tout changement d’aliment se fait progressivement sur 5 à 7 jours. Et surtout : l’eau propre et fraîche à volonté est plus importante que l’aliment lui-même — une lapine allaitante boit jusqu’à 1 litre par jour, et sous la chaleur tropicale la soif tue plus vite que la faim."],
+  qz:[{q:"L’herbe fraîchement coupée et mouillée…",o:["Est le meilleur aliment","Provoque diarrhées et ballonnements mortels","Se donne le matin seulement"],b:1},
+      {q:"Avant de distribuer le fourrage, il faut le…",o:["Faner quelques heures à l’ombre","Mouiller davantage","Congeler"],b:0},
+      {q:"Un adulte consomme environ … de granulés par jour.",o:["10 g","100 à 150 g","500 g"],b:1},
+      {q:"Une lapine allaitante peut boire jusqu’à…",o:["1 verre","1 litre par jour","10 litres"],b:1},
+      {q:"Un changement d’aliment se fait…",o:["D’un seul coup","Progressivement sur 5 à 7 jours","Sans précaution"],b:1}]},
+  en:{ti:"Feeding with local resources",tx:[
+   "Industrial feed (pellets) is ideal but costly: ~100 to 150 g/day per adult. In the tropics, supplement it with excellent free local forages: sweet potato and cassava leaves (well wilted, never fresh), Stylosanthes, Tridax, Mucuna, a little Leucaena, banana stems, dried brewers’ grains, maize and rice bran.",
+   "Vital tropical rule: NEVER give freshly cut grass wet with rain or dew — it ferments in the gut and causes deadly diarrhoea and bloat. Always wilt forage a few hours in the shade before feeding.",
+   "Any feed change is gradual over 5 to 7 days. Above all: clean fresh water at will matters more than the feed itself — a nursing doe drinks up to 1 litre a day, and in tropical heat thirst kills faster than hunger."],
+  qz:[{q:"Freshly cut, wet grass…",o:["Is the best feed","Causes deadly diarrhoea and bloat","Is fed in the morning only"],b:1},
+      {q:"Before feeding forage, you must…",o:["Wilt it a few hours in the shade","Wet it more","Freeze it"],b:0},
+      {q:"An adult eats about … of pellets per day.",o:["10 g","100 to 150 g","500 g"],b:1},
+      {q:"A nursing doe can drink up to…",o:["1 glass","1 litre per day","10 litres"],b:1},
+      {q:"A feed change is done…",o:["All at once","Gradually over 5 to 7 days","Without care"],b:1}]}},
+ {fr:{ti:"Choisir ses races et démarrer",tx:[
+   "Pour débuter en tropical, privilégiez la rusticité : les races locales et les croisés supportent mieux la chaleur et les maladies que les races importées pures. Le Néo-Zélandais et le Californien donnent une belle croissance et sont souvent croisés avec du sang local pour combiner rusticité et rendement en viande.",
+   "Achetez vos reproducteurs chez un éleveur sérieux, jamais malades : poil lisse, yeux vifs, nez sec, pas de croûtes aux oreilles, pas de diarrhée sous la queue. Une bonne lapine de départ a 5-6 mois et pèse ~80 % de son poids adulte. Comptez un mâle pour 8 à 10 femelles.",
+   "Démarrez petit (2-3 femelles, 1 mâle) pour apprendre sans trop risquer, puis agrandissez avec vos propres sujets sélectionnés. Enregistrez chaque animal dès le départ dans CuniSmart : sans registre, impossible de sélectionner ni de suivre les performances."],
+  qz:[{q:"Pour débuter en tropical, on privilégie…",o:["Les races importées pures","La rusticité (locales et croisés)","Les plus gros lapins seulement"],b:1},
+      {q:"Un signe de bonne santé à l’achat :",o:["Croûtes aux oreilles","Poil lisse, yeux vifs, nez sec","Diarrhée sous la queue"],b:1},
+      {q:"Une bonne lapine de départ a environ…",o:["1 mois","5-6 mois","2 ans"],b:1},
+      {q:"On compte un mâle pour…",o:["1 femelle","8 à 10 femelles","50 femelles"],b:1},
+      {q:"Pour débuter, il vaut mieux…",o:["Commencer avec 100 lapins","Commencer petit puis agrandir","Ne rien enregistrer"],b:1}]},
+  en:{ti:"Choosing breeds and starting out",tx:[
+   "To start in the tropics, favour hardiness: local breeds and crossbreds tolerate heat and disease better than pure imported breeds. The New Zealand and Californian give good growth and are often crossed with local blood to combine hardiness and meat yield.",
+   "Buy your breeders from a serious farmer, never sick ones: smooth coat, bright eyes, dry nose, no ear crusts, no diarrhoea under the tail. A good starter doe is 5-6 months old and weighs ~80% of its adult weight. Plan one buck for 8 to 10 does.",
+   "Start small (2-3 does, 1 buck) to learn without too much risk, then grow with your own selected animals. Record every animal from the start in CuniSmart: without a register, you can neither select nor track performance."],
+  qz:[{q:"To start in the tropics, favour…",o:["Pure imported breeds","Hardiness (local and crossbred)","Only the biggest rabbits"],b:1},
+      {q:"A sign of good health when buying:",o:["Ear crusts","Smooth coat, bright eyes, dry nose","Diarrhoea under the tail"],b:1},
+      {q:"A good starter doe is about…",o:["1 month","5-6 months","2 years"],b:1},
+      {q:"Plan one buck for…",o:["1 doe","8 to 10 does","50 does"],b:1},
+      {q:"To start, it is better to…",o:["Begin with 100 rabbits","Start small then grow","Record nothing"],b:1}]}},
+ {fr:{ti:"Eau, hygiène et gestes quotidiens",tx:[
+   "La propreté prévient 80 % des maladies. Chaque jour : grattez les déjections sous les cages, vérifiez et remplissez les abreuvoirs (nettoyés pour éviter les algues et bactéries qui prolifèrent sous la chaleur), observez chaque animal quelques secondes. Chaque semaine : nettoyage complet et désinfection des cages.",
+   "L’observation est votre meilleur outil de diagnostic : un lapin prostré dans un coin, qui ne mange pas, au poil hérissé, est déjà malade — isolez-le immédiatement. Repérer un problème tôt, c’est souvent sauver l’animal et protéger tout l’élevage.",
+   "La quarantaine est une règle d’or : tout nouvel animal acheté passe 2 semaines à l’écart avant de rejoindre le cheptel. Lavez-vous les mains entre les cages, surtout après avoir manipulé un animal malade, pour ne pas propager les infections."],
+  qz:[{q:"La propreté prévient environ…",o:["10 % des maladies","80 % des maladies","Aucune maladie"],b:1},
+      {q:"Un lapin prostré, poil hérissé, qui ne mange pas…",o:["Est en pleine forme","Est probablement malade, à isoler","Doit être nourri de force"],b:1},
+      {q:"Un nouvel animal acheté doit d’abord…",o:["Rejoindre le cheptel aussitôt","Passer 2 semaines en quarantaine","Être vendu"],b:1},
+      {q:"Les abreuvoirs doivent être…",o:["Nettoyés régulièrement","Jamais nettoyés","Remplis une fois par mois"],b:0},
+      {q:"Entre deux cages, surtout après un malade, il faut…",o:["Se laver les mains","Ne rien faire","Changer de vêtements chaque fois"],b:0}]},
+  en:{ti:"Water, hygiene and daily routines",tx:[
+   "Cleanliness prevents 80% of diseases. Every day: scrape droppings under the cages, check and refill drinkers (cleaned to avoid algae and bacteria that thrive in heat), observe each animal for a few seconds. Every week: full cleaning and disinfection of cages.",
+   "Observation is your best diagnostic tool: a rabbit huddled in a corner, not eating, with ruffled fur, is already sick — isolate it immediately. Spotting a problem early often saves the animal and protects the whole farm.",
+   "Quarantine is a golden rule: any newly bought animal spends 2 weeks apart before joining the herd. Wash your hands between cages, especially after handling a sick animal, to avoid spreading infections."],
+  qz:[{q:"Cleanliness prevents about…",o:["10% of diseases","80% of diseases","No disease"],b:1},
+      {q:"A rabbit huddled, ruffled fur, not eating…",o:["Is perfectly healthy","Is probably sick, isolate it","Must be force-fed"],b:1},
+      {q:"A newly bought animal must first…",o:["Join the herd at once","Spend 2 weeks in quarantine","Be sold"],b:1},
+      {q:"Drinkers must be…",o:["Cleaned regularly","Never cleaned","Filled once a month"],b:0},
+      {q:"Between two cages, especially after a sick one, you must…",o:["Wash your hands","Do nothing","Change clothes each time"],b:0}]}},
+  {fr:{ti:"Les bases de la ration",tx:[
+   "L’alimentation représente 60 à 70 % de vos dépenses : c’est ici que se joue la rentabilité. Base : 100 à 150 g de provende par jour pour un adulte, complétée par du fourrage fané. Le lapin est nocturne : donnez environ 70 % de la ration en fin d’après-midi ou le soir, car en journée, sous la chaleur, il mange peu.",
+   "Tout changement d’aliment (nouvelle provende, nouveau fourrage) se fait progressivement sur 5 à 7 jours : un changement brutal détruit la flore intestinale et provoque des diarrhées mortelles. Une femelle allaitante mange et boit presque le double d’un adulte normal — sa mangeoire et son abreuvoir ne doivent JAMAIS être vides.",
+   "L’eau est le premier aliment : un lapin sans eau ne mange plus. Propre, à volonté, renouvelée au moins 2 fois par jour. Astuce de Kribi : en forte chaleur, ajoutez une infusion légère de citronnelle refroidie dans l’eau 1 à 2 fois par semaine — elle apaise les animaux et stimule l’appétit."],
+  qz:[{q:"L’alimentation représente … de vos dépenses.",o:["10 à 20 %","60 à 70 %","5 %"],b:1},
+      {q:"Le lapin étant nocturne, on donne ~70 % de la ration…",o:["À midi","En fin d’après-midi ou le soir","À l’aube uniquement"],b:1},
+      {q:"Un changement d’aliment se fait…",o:["Progressivement sur 5 à 7 jours","D’un seul coup","En une nuit"],b:0},
+      {q:"Une femelle allaitante consomme…",o:["Deux fois moins qu’un adulte","Presque le double d’un adulte","La même chose"],b:1},
+      {q:"En forte chaleur, on peut ajouter à l’eau…",o:["Du sucre","Une infusion de citronnelle refroidie","De l’huile"],b:1}]},
+  en:{ti:"Ration basics",tx:[
+   "Feed accounts for 60 to 70% of your costs: this is where profitability is decided. Base: 100 to 150 g of feed per day for an adult, plus wilted forage. The rabbit is nocturnal: give about 70% of the ration in late afternoon or evening, as it eats little during the heat of the day.",
+   "Any feed change (new feed, new forage) is gradual over 5 to 7 days: an abrupt change destroys the gut flora and causes deadly diarrhoea. A nursing doe eats and drinks nearly twice as much as a normal adult — her feeder and drinker must NEVER be empty.",
+   "Water is the first feed: a rabbit with no water stops eating. Clean, at will, renewed at least twice a day. Kribi tip: in strong heat, add a light cooled lemongrass infusion to the water 1-2 times a week — it calms the animals and stimulates appetite."],
+  qz:[{q:"Feed accounts for … of your costs.",o:["10 to 20%","60 to 70%","5%"],b:1},
+      {q:"As the rabbit is nocturnal, ~70% of the ration is given…",o:["At noon","In late afternoon or evening","Only at dawn"],b:1},
+      {q:"A feed change is done…",o:["Gradually over 5 to 7 days","All at once","Overnight"],b:0},
+      {q:"A nursing doe consumes…",o:["Half as much as an adult","Nearly twice an adult","The same"],b:1},
+      {q:"In strong heat, you can add to the water…",o:["Sugar","A cooled lemongrass infusion","Oil"],b:1}]}},
+ {fr:{ti:"Reproduction maîtrisée",tx:[
+   "La lapine n’a pas de cycle fixe : l’ovulation est provoquée par la saillie elle-même. Elle est prête vers 5-6 mois. Règle d’or : on amène TOUJOURS la femelle dans la cage du mâle, jamais l’inverse — sur son territoire la femelle attaque le mâle. Laissez 2-3 saillies, puis retirez la femelle.",
+   "La gestation dure environ 31 jours. La palpation du ventre à J+12, entre les mains d’un éleveur exercé, permet de sentir les embryons (taille d’une olive) et de confirmer la gestation : une femelle vide est re-saillie sans attendre, ce qui évite de perdre un mois.",
+   "En tropical, évitez de saillir aux heures les plus chaudes (préférez tôt le matin ou en soirée) car la chaleur réduit la fécondité. Une femelle bien conduite produit 6 à 8 portées par an. CuniSmart calcule pour vous palpation, mise bas et sevrage à partir de la date de saillie."],
+  qz:[{q:"Chez la lapine, l’ovulation est provoquée par…",o:["La pleine lune","La saillie elle-même","L’alimentation"],b:1},
+      {q:"Pour la saillie, on amène…",o:["Le mâle chez la femelle","La femelle chez le mâle","Les deux dans une cage neuve"],b:1},
+      {q:"La gestation dure environ…",o:["15 jours","31 jours","60 jours"],b:1},
+      {q:"La palpation à J+12 permet de…",o:["Nourrir la femelle","Confirmer la gestation","Sevrer les petits"],b:1},
+      {q:"En tropical, mieux vaut saillir…",o:["Aux heures les plus chaudes","Tôt le matin ou en soirée","À midi"],b:1}]},
+  en:{ti:"Mastering reproduction",tx:[
+   "The doe has no fixed cycle: ovulation is triggered by mating itself. She is ready around 5-6 months. Golden rule: ALWAYS bring the doe to the buck’s cage, never the opposite — on her territory the doe attacks the buck. Allow 2-3 matings, then remove the doe.",
+   "Pregnancy lasts about 31 days. Belly palpation at D+12, by a trained farmer, lets you feel the embryos (olive-sized) and confirm pregnancy: an empty doe is re-mated without delay, avoiding a lost month.",
+   "In the tropics, avoid mating during the hottest hours (prefer early morning or evening) as heat reduces fertility. A well-managed doe produces 6 to 8 litters a year. CuniSmart computes palpation, kindling and weaning from the mating date."],
+  qz:[{q:"In the doe, ovulation is triggered by…",o:["The full moon","Mating itself","Feeding"],b:1},
+      {q:"For mating, you bring…",o:["The buck to the doe","The doe to the buck","Both to a new cage"],b:1},
+      {q:"Pregnancy lasts about…",o:["15 days","31 days","60 days"],b:1},
+      {q:"Palpation at D+12 allows you to…",o:["Feed the doe","Confirm pregnancy","Wean the kits"],b:1},
+      {q:"In the tropics, it is better to mate…",o:["During the hottest hours","Early morning or evening","At noon"],b:1}]}},
+ {fr:{ti:"De la mise bas au sevrage",tx:[
+   "Placez la boîte à nid garnie de paille propre vers J+28 ; la lapine y ajoutera ses poils. La mise bas a lieu souvent la nuit et dure peu. Le lendemain, contrôlez le nid mains propres : retirez les mort-nés et la paille souillée, comptez les vivants. Une portée compte 4 à 12 lapereaux (6-8 en moyenne).",
+   "Ne vous inquiétez pas de ne jamais voir la mère au nid : la lapine n’allaite que 1 à 2 fois par jour, quelques minutes, souvent à l’aube. Un ventre rond et une peau bien tendue chez les lapereaux prouvent qu’ils tètent bien. Les petits naissent nus et aveugles, ouvrent les yeux vers 10 jours, sortent du nid vers 18-21 jours.",
+   "Le sevrage se fait entre 28 et 35 jours. Séparez ensuite mâles et femelles vers 2,5-3 mois pour éviter les saillies incontrôlées et les bagarres. En tropical, surveillez le nid contre les fourmis et la chaleur excessive qui peuvent décimer une portée."],
+  qz:[{q:"La boîte à nid se place vers…",o:["Le jour de la saillie","Le 28e jour de gestation","Après le sevrage"],b:1},
+      {q:"La lapine allaite ses petits…",o:["En continu","1 à 2 fois par jour","Jamais"],b:1},
+      {q:"Les lapereaux ouvrent les yeux vers…",o:["10 jours","1 jour","1 mois"],b:0},
+      {q:"Le sevrage se fait entre…",o:["10 et 15 jours","28 et 35 jours","3 et 4 mois"],b:1},
+      {q:"En tropical, le nid doit être surveillé contre…",o:["Les fourmis et la chaleur","Le vent uniquement","Rien de particulier"],b:0}]},
+  en:{ti:"From kindling to weaning",tx:[
+   "Place the nest box with clean straw around D+28; the doe adds her fur. Kindling often happens at night and is quick. Next day, check the nest with clean hands: remove stillborn kits and soiled straw, count the live ones. A litter has 4 to 12 kits (6-8 on average).",
+   "Don’t worry if you never see the mother in the nest: the doe nurses only 1-2 times a day, for a few minutes, often at dawn. Round bellies and tight skin on the kits prove they suckle well. Kits are born naked and blind, open their eyes around day 10, leave the nest around day 18-21.",
+   "Weaning happens between 28 and 35 days. Then separate males and females around 2.5-3 months to avoid uncontrolled matings and fights. In the tropics, watch the nest against ants and excessive heat that can wipe out a litter."],
+  qz:[{q:"The nest box is placed around…",o:["Mating day","Day 28 of pregnancy","After weaning"],b:1},
+      {q:"The doe nurses her kits…",o:["Continuously","1 to 2 times a day","Never"],b:1},
+      {q:"Kits open their eyes around…",o:["10 days","1 day","1 month"],b:0},
+      {q:"Weaning happens between…",o:["10 and 15 days","28 and 35 days","3 and 4 months"],b:1},
+      {q:"In the tropics, the nest must be watched against…",o:["Ants and heat","Only wind","Nothing special"],b:0}]}},
+ {fr:{ti:"Maladies tropicales du lapin",tx:[
+   "La coccidiose est la maladie n°1 sous les tropiques, favorisée par la chaleur et l’humidité : diarrhée, ventre gonflé, amaigrissement, surtout chez les jeunes au sevrage. Prévention par une hygiène stricte (cages propres et sèches, éviter que les crottes tombent dans l’aliment) et traitement à l’anticoccidien vétérinaire.",
+   "La gale des oreilles (croûtes brunes dans l’oreille, tête penchée, grattage) se traite à l’ivermectine ; isolez l’animal car elle est très contagieuse. La pasteurellose (écoulement nasal, éternuements, ‘coryza’) est favorisée par l’ammoniac d’un clapier mal ventilé — d’où l’importance de l’aération.",
+   "Règle d’or : à la moindre diarrhée, isolez immédiatement l’animal, car en tropical une épidémie se propage en quelques jours. Consultez un vétérinaire ou un technicien pour le bon médicament et la bonne dose, et notez chaque traitement dans le carnet sanitaire de CuniSmart."],
+  qz:[{q:"La maladie n°1 sous les tropiques est…",o:["La coccidiose","La grippe","Rien"],b:0},
+      {q:"La coccidiose est favorisée par…",o:["Le froid sec","La chaleur et l’humidité + saleté","Le silence"],b:1},
+      {q:"La gale des oreilles se traite à…",o:["L’eau salée","L’ivermectine","L’aspirine"],b:1},
+      {q:"Le coryza (écoulement nasal) est favorisé par…",o:["Un clapier bien aéré","L’ammoniac d’un clapier mal ventilé","Trop d’eau"],b:1},
+      {q:"À la moindre diarrhée, il faut…",o:["Attendre une semaine","Isoler immédiatement l’animal","Donner plus d’herbe fraîche"],b:1}]},
+  en:{ti:"Tropical rabbit diseases",tx:[
+   "Coccidiosis is disease no. 1 in the tropics, favoured by heat and humidity: diarrhoea, swollen belly, weight loss, especially in young at weaning. Prevention through strict hygiene (clean dry cages, keeping droppings out of the feed) and treatment with a veterinary anticoccidial.",
+   "Ear mange (brown crusts in the ear, tilted head, scratching) is treated with ivermectin; isolate the animal as it is very contagious. Pasteurellosis (nasal discharge, sneezing, ‘snuffles’) is favoured by ammonia in a poorly ventilated hutch — hence the importance of airflow.",
+   "Golden rule: at the slightest diarrhoea, isolate the animal immediately, because in the tropics an outbreak spreads within days. Consult a vet or technician for the right drug and dose, and record every treatment in the CuniSmart health record."],
+  qz:[{q:"The no. 1 disease in the tropics is…",o:["Coccidiosis","The flu","Nothing"],b:0},
+      {q:"Coccidiosis is favoured by…",o:["Dry cold","Heat, humidity + dirt","Silence"],b:1},
+      {q:"Ear mange is treated with…",o:["Salt water","Ivermectin","Aspirin"],b:1},
+      {q:"Snuffles (nasal discharge) is favoured by…",o:["A well-aired hutch","Ammonia in a poorly ventilated hutch","Too much water"],b:1},
+      {q:"At the slightest diarrhoea, you must…",o:["Wait a week","Isolate the animal immediately","Give more fresh grass"],b:1}]}},
+ {fr:{ti:"Vaincre le stress thermique",tx:[
+   "Le stress thermique est LE défi de la cuniculture tropicale. Signes : le lapin s’allonge de tout son long, halète, oreilles très rouges (il évacue la chaleur par les oreilles), boit beaucoup, mange peu. Non maîtrisé, il cause infertilité, avortements, chute de croissance et morts subites aux heures les plus chaudes.",
+   "Les parades : ombre totale et ventilation maximale, eau fraîche renouvelée plusieurs fois par jour, bouteilles d’eau congelée ou carreaux de céramique frais dans les cages, brumisation légère et arrosage du sol, toiture isolante. Nourrissez aux heures fraîches (tôt le matin, tard le soir) quand l’appétit revient.",
+   "Adaptez la conduite : réduisez la densité en saison chaude, décalez les saillies vers les périodes plus fraîches de l’année, sélectionnez sur le long terme les sujets qui supportent le mieux la chaleur. Un élevage tropical prospère est d’abord un élevage qui a gagné la bataille contre la chaleur."],
+  qz:[{q:"Un signe de stress thermique :",o:["Le lapin se met en boule","Il s’allonge, halète, oreilles très rouges","Il mange beaucoup"],b:1},
+      {q:"Le lapin évacue la chaleur surtout par…",o:["La queue","Les oreilles","Les pattes"],b:1},
+      {q:"Pour rafraîchir, on peut utiliser…",o:["Bouteilles d’eau congelée, arrosage du sol","Une couverture","Un chauffage"],b:0},
+      {q:"On nourrit de préférence…",o:["À midi","Aux heures fraîches (matin/soir)","La nuit uniquement"],b:1},
+      {q:"En saison chaude, il vaut mieux…",o:["Augmenter la densité","Réduire la densité et décaler les saillies","Ne rien changer"],b:1}]},
+  en:{ti:"Overcoming heat stress",tx:[
+   "Heat stress is THE challenge of tropical rabbit farming. Signs: the rabbit lies fully stretched out, pants, ears very red (it sheds heat through the ears), drinks a lot, eats little. Uncontrolled, it causes infertility, abortions, growth drop and sudden deaths during the hottest hours.",
+   "The remedies: full shade and maximum ventilation, fresh water renewed several times a day, frozen water bottles or cool ceramic tiles in the cages, light misting and floor watering, insulating roof. Feed during cool hours (early morning, late evening) when appetite returns.",
+   "Adapt management: reduce density in the hot season, shift matings to the cooler periods of the year, select over the long term the animals that best tolerate heat. A thriving tropical farm is first a farm that won the battle against heat."],
+  qz:[{q:"A sign of heat stress:",o:["The rabbit curls up","It stretches out, pants, ears very red","It eats a lot"],b:1},
+      {q:"The rabbit sheds heat mainly through…",o:["The tail","The ears","The paws"],b:1},
+      {q:"To cool down, you can use…",o:["Frozen water bottles, floor watering","A blanket","A heater"],b:0},
+      {q:"Feeding is best done…",o:["At noon","During cool hours (morning/evening)","Only at night"],b:1},
+      {q:"In the hot season, it is better to…",o:["Increase density","Reduce density and shift matings","Change nothing"],b:1}]}},
+  {fr:{ti:"Fourrages et plantes locales",tx:[
+   "La règle d’or : ne donnez JAMAIS de fourrage mouillé (pluie ou rosée). Récoltez le matin, laissez faner à l’ombre 12 à 24 h. Diversité gratuite : Tridax, feuilles et fanes de patate douce, Stylosanthes, feuilles de manioc — mais celles-ci doivent impérativement sécher 48 h pour éliminer le cyanure, sinon elles sont toxiques.",
+   "Le Moringa est l’or vert : très riche en protéines, excellent pour les mères allaitantes et les lapereaux, mais donné modérément et toujours fané, car sa richesse provoque des diarrhées en excès. L’Artemisia est le bouclier naturel contre la coccidiose, premier tueur en zone humide : incorporez des branches fanées au fourrage 1 à 2 fois par semaine en prévention.",
+   "Les feuilles de papayer fanées facilitent la digestion et agissent comme un vermifuge naturel léger. Enfin, la dictature des fibres : le système digestif du lapin a besoin d’éléments durs et longs pour « pousser » les aliments. Une alimentation 100 % farine, sans fibres, bloque le transit — le fourrage est indispensable, pas optionnel."],
+  qz:[{q:"Les feuilles de manioc doivent sécher … avant d’être données.",o:["1 heure","48 heures (pour éliminer le cyanure)","Elles se donnent fraîches"],b:1},
+      {q:"Le Moringa est surtout précieux pour…",o:["Les mâles âgés","Les mères allaitantes et lapereaux","Personne"],b:1},
+      {q:"Contre la coccidiose en zone humide, on utilise…",o:["L’Artemisia fanée","Du sucre","De l’eau de javel"],b:0},
+      {q:"Les feuilles de papayer fanées agissent comme…",o:["Un poison","Un vermifuge naturel léger","Un engrais"],b:1},
+      {q:"Une alimentation 100 % farine sans fibres…",o:["Est idéale","Bloque le transit intestinal","Accélère la croissance"],b:1}]},
+  en:{ti:"Forages and local plants",tx:[
+   "Golden rule: NEVER give wet forage (rain or dew). Harvest in the morning, wilt in the shade for 12 to 24 h. Free diversity: Tridax, sweet-potato leaves and tops, Stylosanthes, cassava leaves — but cassava must dry for 48 h to remove the cyanide, otherwise it is toxic.",
+   "Moringa is green gold: very rich in protein, excellent for nursing does and kits, but fed moderately and always wilted, as its richness causes diarrhoea in excess. Artemisia is the natural shield against coccidiosis, the top killer in humid zones: add wilted branches to the forage 1-2 times a week as prevention.",
+   "Wilted papaya leaves aid digestion and act as a mild natural dewormer. Finally, the dictatorship of fibre: the rabbit’s gut needs hard, long material to ‘push’ food along. An all-mash diet with no fibre blocks the transit — forage is indispensable, not optional."],
+  qz:[{q:"Cassava leaves must dry … before feeding.",o:["1 hour","48 hours (to remove cyanide)","They are fed fresh"],b:1},
+      {q:"Moringa is most valuable for…",o:["Old bucks","Nursing does and kits","Nobody"],b:1},
+      {q:"Against coccidiosis in humid zones, you use…",o:["Wilted Artemisia","Sugar","Bleach"],b:0},
+      {q:"Wilted papaya leaves act as…",o:["A poison","A mild natural dewormer","A fertiliser"],b:1},
+      {q:"An all-mash diet with no fibre…",o:["Is ideal","Blocks the gut transit","Speeds up growth"],b:1}]}},
+ {fr:{ti:"Génétique et sélection",tx:[
+   "Améliorer son cheptel, c’est choisir ses reproducteurs sur des critères mesurables, pas sur l’apparence. Chez la lapine, sélectionnez d’abord la prolificité (nés vivants), les qualités maternelles (elle couvre le nid, allaite, ne mange pas ses petits) et la croissance de sa descendance. En tropical, ajoutez un critère décisif : la tolérance à la chaleur.",
+   "Évitez absolument la consanguinité : ne faites jamais reproduire un mâle avec sa mère, sa fille ou sa sœur, sous peine de portées fragiles et de malformations. Tenez la filiation à jour dans le registre pour repérer les liens de parenté, et renouvelez vos mâles par achat ou échange avec un autre éleveur sérieux.",
+   "Réformez sans état d’âme une femelle qui enchaîne deux mauvaises portées ou qui supporte mal la chaleur : garder une improductive coûte de l’aliment pour rien. En quelques générations, une sélection rigoureuse transforme un cheptel ordinaire en un troupeau performant et adapté à votre région."],
+  qz:[{q:"On sélectionne une lapine d’abord sur…",o:["Sa couleur","Prolificité et qualités maternelles","Son nom"],b:1},
+      {q:"En tropical, un critère de sélection décisif est…",o:["La tolérance à la chaleur","La longueur des oreilles","La couleur des yeux"],b:0},
+      {q:"La consanguinité (père × fille) provoque…",o:["De meilleures portées","Portées fragiles et malformations","Aucun effet"],b:1},
+      {q:"Pour apporter du sang neuf, on…",o:["Garde toujours le même mâle","Renouvelle les mâles (achat/échange)","Supprime le registre"],b:1},
+      {q:"Une femelle à deux mauvaises portées de suite doit être…",o:["Gardée des années","Réformée","Nourrie deux fois plus"],b:1}]},
+  en:{ti:"Genetics and selection",tx:[
+   "Improving your herd means choosing breeders on measurable criteria, not looks. In the doe, first select prolificacy (kits born alive), mothering ability (she covers the nest, nurses, doesn’t eat her young) and the growth of her offspring. In the tropics, add a decisive criterion: heat tolerance.",
+   "Absolutely avoid inbreeding: never breed a buck with his mother, daughter or sister, or you risk weak litters and malformations. Keep parentage up to date in the register to spot relationships, and renew your bucks by buying or swapping with another serious farmer.",
+   "Cull without hesitation a doe with two poor litters in a row or one that tolerates heat badly: keeping an unproductive one wastes feed. Within a few generations, rigorous selection turns an ordinary herd into a high-performing flock adapted to your region."],
+  qz:[{q:"You select a doe first on…",o:["Her colour","Prolificacy and mothering ability","Her name"],b:1},
+      {q:"In the tropics, a decisive selection criterion is…",o:["Heat tolerance","Ear length","Eye colour"],b:0},
+      {q:"Inbreeding (father × daughter) causes…",o:["Better litters","Weak litters and malformations","No effect"],b:1},
+      {q:"To bring fresh blood, you…",o:["Always keep the same buck","Renew bucks (buy/swap)","Delete the register"],b:1},
+      {q:"A doe with two poor litters in a row should be…",o:["Kept for years","Culled","Fed twice as much"],b:1}]}},
+ {fr:{ti:"Autonomie fourragère et formulation",tx:[
+   "L’aliment pèse ~70 % des coûts : produire une partie de son fourrage fait basculer un élevage du rouge au vert. Créez une parcelle fourragère avec des espèces tropicales riches en protéines : Stylosanthes, Mucuna, Leucaena, patate douce, arachide fourragère. Récoltez, fanez à l’ombre, stockez au sec à l’abri des moisissures.",
+   "Une ration équilibrée combine une source d’énergie (son de maïs, de riz), une source de protéines (tourteau, fourrages de légumineuses), des fibres (foin, fanes) et des minéraux (pierre à lécher, coquilles). Adaptez les quantités : une lapine gestante ou allaitante a besoin de plus de protéines qu’un adulte au repos.",
+   "Le ‘flushing’ — renforcer l’alimentation d’une femelle une semaine avant la saillie — améliore sensiblement la prolificité. Testez, pesez, notez : c’est en mesurant la croissance et la consommation que vous ajusterez la formule la plus rentable pour votre contexte."],
+  qz:[{q:"L’aliment représente environ…",o:["10 % des coûts","70 % des coûts","30 % des coûts"],b:1},
+      {q:"Des fourrages tropicaux riches en protéines :",o:["Stylosanthes, Mucuna, Leucaena","Sable et cailloux","Papier"],b:0},
+      {q:"Le fourrage récolté doit être…",o:["Donné mouillé","Fané et stocké au sec","Laissé pourrir"],b:1},
+      {q:"Le ‘flushing’ consiste à…",o:["Renforcer l’alimentation avant la saillie","Priver la femelle d’eau","Réduire la ration"],b:0},
+      {q:"Une lapine allaitante a besoin de…",o:["Moins de protéines","Plus de protéines qu’un adulte au repos","Aucun aliment"],b:1}]},
+  en:{ti:"Forage self-sufficiency and formulation",tx:[
+   "Feed is ~70% of costs: producing part of your forage shifts a farm from red to green. Create a forage plot with protein-rich tropical species: Stylosanthes, Mucuna, Leucaena, sweet potato, forage groundnut. Harvest, wilt in the shade, store dry away from mould.",
+   "A balanced ration combines an energy source (maize, rice bran), a protein source (oil cake, legume forages), fibre (hay, tops) and minerals (lick block, shells). Adjust quantities: a pregnant or nursing doe needs more protein than a resting adult.",
+   "‘Flushing’ — boosting a doe’s feeding one week before mating — noticeably improves prolificacy. Test, weigh, record: by measuring growth and intake you will tune the most profitable formula for your context."],
+  qz:[{q:"Feed represents about…",o:["10% of costs","70% of costs","30% of costs"],b:1},
+      {q:"Protein-rich tropical forages:",o:["Stylosanthes, Mucuna, Leucaena","Sand and stones","Paper"],b:0},
+      {q:"Harvested forage must be…",o:["Fed wet","Wilted and stored dry","Left to rot"],b:1},
+      {q:"‘Flushing’ means…",o:["Boosting feeding before mating","Depriving the doe of water","Cutting the ration"],b:0},
+      {q:"A nursing doe needs…",o:["Less protein","More protein than a resting adult","No feed"],b:1}]}},
+ {fr:{ti:"Rentabilité et calcul des coûts",tx:[
+   "La rentabilité se calcule, elle ne se devine pas. Le coût de production d’un lapin = part d’aliment consommé + part des frais (soins, eau, amortissement des cages) rapportée au nombre de lapins vendus. Si un lapin coûte 2 000 FCFA à produire et se vend 3 500 FCFA, la marge est de 1 500 FCFA — multipliée par le nombre de lapins, c’est votre revenu réel.",
+   "Suivez les bons indicateurs : le taux de fertilité (saillies réussies), la prolificité (nés vivants par portée), la mortinatalité et le taux de croissance. Une femelle doit produire assez de portées par an pour rembourser sa propre alimentation et dégager du bénéfice ; sinon elle est réformée.",
+   "Le module Bilan de CuniSmart calcule ces indicateurs automatiquement à partir de vos saisies, et vous donne des conseils personnalisés. Consultez-le chaque mois : on ne gère bien que ce que l’on mesure, et c’est la mesure régulière qui distingue l’éleveur amateur du professionnel rentable."],
+  qz:[{q:"Si un lapin coûte 2 000 et se vend 3 500 FCFA, la marge est…",o:["1 500 FCFA","3 500 FCFA","5 500 FCFA"],b:0},
+      {q:"Un bon indicateur technique à suivre :",o:["La couleur du pelage","La prolificité (nés vivants/portée)","Le nom des lapins"],b:1},
+      {q:"Une femelle qui ne rembourse pas son aliment doit être…",o:["Gardée à vie","Réformée","Nourrie davantage"],b:1},
+      {q:"Le module Bilan de CuniSmart…",o:["Calcule les indicateurs automatiquement","Ne sert à rien","Vend les lapins"],b:0},
+      {q:"On ne gère bien que…",o:["Ce que l’on mesure","Ce que l’on devine","Ce que disent les voisins"],b:0}]},
+  en:{ti:"Profitability and cost accounting",tx:[
+   "Profitability is calculated, not guessed. The production cost of a rabbit = share of feed eaten + share of costs (care, water, cage depreciation) per rabbit sold. If a rabbit costs 2,000 FCFA to produce and sells for 3,500 FCFA, the margin is 1,500 FCFA — times the number of rabbits, that’s your real income.",
+   "Track the right indicators: fertility rate (successful matings), prolificacy (kits born alive per litter), stillbirth rate and growth rate. A doe must produce enough litters a year to repay her own feed and yield a profit; otherwise she is culled.",
+   "CuniSmart’s Report module computes these indicators automatically from your entries and gives you personalised advice. Check it every month: you only manage well what you measure, and regular measurement is what separates the amateur from the profitable professional."],
+  qz:[{q:"If a rabbit costs 2,000 and sells for 3,500 FCFA, the margin is…",o:["1,500 FCFA","3,500 FCFA","5,500 FCFA"],b:0},
+      {q:"A good technical indicator to track:",o:["Coat colour","Prolificacy (kits born alive/litter)","The rabbits’ names"],b:1},
+      {q:"A doe that doesn’t repay her feed should be…",o:["Kept for life","Culled","Fed more"],b:1},
+      {q:"CuniSmart’s Report module…",o:["Computes indicators automatically","Is useless","Sells the rabbits"],b:0},
+      {q:"You only manage well…",o:["What you measure","What you guess","What neighbours say"],b:0}]}},
+ {fr:{ti:"Commercialisation et développement",tx:[
+   "Le lapin de chair se vend vers 2-2,5 kg vifs, atteints en 70-90 jours avec une bonne conduite. Planifiez vos saillies en fonction des pics de demande (fêtes de fin d’année, cérémonies, Ramadan, rentrée) : comptez ~90 jours à rebours pour saillir au bon moment et vendre quand les prix montent.",
+   "Diversifiez vos revenus : lapin de chair (volume), reproducteurs sélectionnés (marge élevée), fumier de lapin (excellent engrais très recherché par les maraîchers) et peaux. Structurer plusieurs sources de revenus sécurise l’élevage face aux aléas d’un seul marché.",
+   "Professionnalisez la relation client : tenez vos engagements de livraison, offrez une qualité régulière, gardez le contact par WhatsApp. Un client satisfait en amène trois. La coopérative et la vente groupée donnent accès à de plus gros acheteurs — hôtels, restaurants, grandes surfaces — et à un meilleur pouvoir de négociation."],
+  qz:[{q:"Le lapin de chair se vend couramment à…",o:["1 kg","2 à 2,5 kg","5 kg"],b:1},
+      {q:"Pour vendre plus cher, on planifie les saillies selon…",o:["Le hasard","Les pics de demande","La couleur du ciel"],b:1},
+      {q:"Le fumier de lapin est…",o:["Un déchet inutile","Un engrais recherché par les maraîchers","Toxique"],b:1},
+      {q:"Diversifier ses revenus permet de…",o:["Fragiliser l’élevage","Sécuriser face aux aléas d’un seul marché","Perdre du temps"],b:1},
+      {q:"La vente groupée en coopérative donne accès à…",o:["Moins de clients","De plus gros acheteurs (hôtels, restaurants)","Rien"],b:1}]},
+  en:{ti:"Marketing and business growth",tx:[
+   "Meat rabbits sell at 2-2.5 kg live weight, reached in 70-90 days with good management. Plan your matings around demand peaks (end-of-year celebrations, ceremonies, Ramadan, back-to-school): count back ~90 days to mate at the right time and sell when prices rise.",
+   "Diversify your income: meat rabbits (volume), selected breeders (high margin), rabbit manure (an excellent fertiliser much sought by market gardeners) and skins. Structuring several income sources secures the farm against the ups and downs of a single market.",
+   "Professionalise the customer relationship: keep your delivery commitments, offer consistent quality, stay in touch via WhatsApp. One happy customer brings three. Cooperatives and group selling open access to bigger buyers — hotels, restaurants, supermarkets — and better bargaining power."],
+  qz:[{q:"Meat rabbits commonly sell at…",o:["1 kg","2 to 2.5 kg","5 kg"],b:1},
+      {q:"To sell at higher prices, plan matings around…",o:["Chance","Demand peaks","The colour of the sky"],b:1},
+      {q:"Rabbit manure is…",o:["Useless waste","A fertiliser sought by market gardeners","Toxic"],b:1},
+      {q:"Diversifying income helps to…",o:["Weaken the farm","Secure against a single market’s swings","Waste time"],b:1},
+      {q:"Group selling through a cooperative gives access to…",o:["Fewer customers","Bigger buyers (hotels, restaurants)","Nothing"],b:1}]}},
+
+ {fr:{ti:"Formuler sa provende locale",tx:[
+   "Une bonne provende équilibre trois piliers : l’énergie (maïs broyé, ~40 % maximum pour éviter l’engraissement), les protéines (tourteau de soja ou d’arachide, farine de Moringa et de fanes séchées) et surtout les fibres (son de blé ou de maïs) indispensables au transit. On complète avec du calcium (coquilles d’huîtres broyées, poudre d’os), un prémix vitaminé et une pincée de sel.",
+   "En climat humide comme Kribi, la provende moisit vite et une provende moisie produit des mycotoxines mortelles : stockez les sacs sur des palettes en bois, jamais à même le sol ni collés au mur, et nettoyez les mangeoires chaque jour car un reste humide fermente à la chaleur. Si vous ne pouvez pas granuler, servez en « barbotine » (à peine humidifiée) pour éviter que la poudre n’entre dans les narines.",
+   "Votre vrai tableau de bord, ce sont les crottes : petites et dures = manque d’eau ; molles, collantes et malodorantes = danger digestif — stoppez la provende, ne donnez que de l’eau et du fourrage sec ou de l’Artemisia. Le formulateur de CuniSmart calcule pour vous les quantités exactes à partir de vos cultures locales."],
+  qz:[{q:"Les trois piliers d’une provende sont…",o:["Énergie, protéines, fibres","Eau, sel, sucre","Maïs seulement"],b:0},
+      {q:"En climat humide, on stocke les sacs…",o:["À même le sol","Sur des palettes en bois","Collés au mur"],b:1},
+      {q:"Une provende moisie produit…",o:["Des vitamines","Des mycotoxines mortelles","Rien"],b:1},
+      {q:"Des crottes molles et malodorantes signalent…",o:["Un manque d’eau","Un danger digestif","Une bonne santé"],b:1},
+      {q:"Le maïs broyé ne doit pas dépasser … de la ration.",o:["~40 %","90 %","5 %"],b:0}]},
+  en:{ti:"Formulating local feed",tx:[
+   "A good feed balances three pillars: energy (ground maize, ~40% max to avoid over-fattening), protein (soybean or groundnut cake, Moringa and dried-tops meal) and above all fibre (wheat or maize bran) essential for transit. Complete with calcium (crushed oyster shells, bone meal), a vitamin premix and a pinch of salt.",
+   "In a humid climate like Kribi, feed moulds fast and mouldy feed produces deadly mycotoxins: store bags on wooden pallets, never on the ground or against the wall, and clean feeders daily as a damp leftover ferments in the heat. If you can’t pellet, serve as a lightly moistened mash to keep powder out of the nostrils.",
+   "Your real dashboard is the droppings: small and hard = lack of water; soft, sticky and smelly = digestive danger — stop the feed, give only water and dry forage or Artemisia. CuniSmart’s formulator computes the exact quantities for you from your local crops."],
+  qz:[{q:"The three pillars of a feed are…",o:["Energy, protein, fibre","Water, salt, sugar","Maize only"],b:0},
+      {q:"In a humid climate, store bags…",o:["On the ground","On wooden pallets","Against the wall"],b:1},
+      {q:"Mouldy feed produces…",o:["Vitamins","Deadly mycotoxins","Nothing"],b:1},
+      {q:"Soft, smelly droppings signal…",o:["Lack of water","Digestive danger","Good health"],b:1},
+      {q:"Ground maize must not exceed … of the ration.",o:["~40%","90%","5%"],b:0}]}},
+ {fr:{ti:"La VHD : vacciner pour survivre",tx:[
+   "La VHD (Maladie Virale Hémorragique), causée par un Calicivirus, est l’une des menaces les plus redoutables pour un élevage. Ultra-contagieuse et quasi toujours mortelle, elle détruit le foie et provoque des hémorragies internes massives ; on retrouve souvent les lapins morts subitement, parfois avec un peu de sang au nez, sans signe préalable.",
+   "Le virus est extrêmement résistant : il survit plusieurs mois hors de l’animal et se transmet non seulement par contact direct, mais aussi indirectement par le foin, l’aliment, les cages, les vêtements, les mains et les insectes. Une seule introduction peut décimer tout un cheptel en quelques jours. Bonne nouvelle : la VHD ne touche que les lapins et lièvres, elle est sans danger pour l’humain.",
+   "Il n’existe AUCUN remède une fois la maladie déclarée : le seul moyen de protéger son élevage est la VACCINATION régulière (renseignez-vous auprès de votre vétérinaire sur le vaccin RHDV disponible dans votre région et le rythme de rappel), combinée à une hygiène et une quarantaine strictes. Notez chaque vaccination dans le carnet sanitaire de CuniSmart."],
+  qz:[{q:"Quel organe est principalement attaqué par le virus de la VHD ?",o:["Les poumons","Le foie","Le cœur"],b:1},
+      {q:"Comment ce virus se transmet-il principalement entre lapins ?",o:["Uniquement par contact direct nez à nez","Par les câlins et le toilettage","Par contact direct, mais aussi indirect (foin, vêtements, insectes)"],b:2},
+      {q:"La VHD est-elle dangereuse pour l’humain ?",o:["Oui, c’est une zoonose très grave","Non, elle touche exclusivement les lapins et lièvres","Oui, mais uniquement les immunodéprimés"],b:1},
+      {q:"Quelle est la particularité alarmante de ce virus dans l’environnement ?",o:["Il meurt en 2 heures à l’air libre","Il ne résiste pas au gel","Il est ultra-résistant et survit plusieurs mois hors d’un organisme"],b:2},
+      {q:"Quel est le seul moyen médical de protéger son lapin contre la VHD ?",o:["Des antibiotiques tous les mois","Le vacciner régulièrement (et le protéger)","Une alimentation riche en vitamines"],b:1}]},
+  en:{ti:"VHD: vaccinate to survive",tx:[
+   "VHD (Viral Haemorrhagic Disease), caused by a Calicivirus, is one of the most fearsome threats to a rabbitry. Ultra-contagious and almost always fatal, it destroys the liver and causes massive internal haemorrhage; rabbits are often found suddenly dead, sometimes with a little blood at the nose, with no prior sign.",
+   "The virus is extremely resistant: it survives several months outside the animal and spreads not only by direct contact but also indirectly through hay, feed, cages, clothes, hands and insects. A single introduction can wipe out a whole herd in days. Good news: VHD only affects rabbits and hares — it is harmless to humans.",
+   "There is NO cure once the disease appears: the only way to protect your farm is regular VACCINATION (ask your vet about the RHDV vaccine available in your region and the booster schedule), combined with strict hygiene and quarantine. Record every vaccination in the CuniSmart health record."],
+  qz:[{q:"Which organ is mainly attacked by the VHD virus?",o:["The lungs","The liver","The heart"],b:1},
+      {q:"How does this virus mainly spread between rabbits?",o:["Only by direct nose-to-nose contact","Through cuddling and grooming","By direct contact, but also indirectly (hay, clothes, insects)"],b:2},
+      {q:"Is VHD dangerous to humans?",o:["Yes, it is a very serious zoonosis","No, it affects only rabbits and hares","Yes, but only the immunocompromised"],b:1},
+      {q:"What is the alarming feature of this virus in the environment?",o:["It dies within 2 hours in open air","It does not survive frost","It is ultra-resistant and survives months outside a host"],b:2},
+      {q:"What is the only medical way to protect your rabbit against VHD?",o:["Antibiotics every month","Vaccinate it regularly (and protect it)","A vitamin-rich diet"],b:1}]}}
 ];
+const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
 let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [] };
@@ -542,6 +811,7 @@ function rendre(){
   else if(vueActive === 'sante') c.innerHTML = vueSante();
   else if(vueActive === 'finances') c.innerHTML = vueFinances();
   else if(vueActive === 'bilan') c.innerHTML = vueBilan();
+  else if(vueActive === 'nutrition') c.innerHTML = vueNutrition();
   else c.innerHTML = vueEcole();
 }
 
@@ -762,14 +1032,168 @@ function partagerBilan(){
   partagerWhatsApp(lignes.join('\n'));
 }
 
+/* ---------- Nutrition : formulateur de provende ---------- */
+const RECETTES = {
+  base: {
+    fr:{nom:"Provende de base", desc:"Recette simple à partir de vos cultures locales — pour démarrer.",
+        ing:[["Maïs broyé","Énergie (du champ)",40],["Son de blé ou de maïs","Fibres pour le transit",26],
+             ["Tourteau de soja ou d’arachide","Protéines",16],["Farine de fanes de patate douce séchées","Protéines + fibres",14],
+             ["Coquilles d’huîtres ou poudre d’os","Calcium",2],["Sel de cuisine","Électrolytes",2]]},
+    en:{nom:"Basic feed", desc:"Simple recipe from your local crops — to get started.",
+        ing:[["Ground maize","Energy (from the field)",40],["Wheat or maize bran","Fibre for transit",26],
+             ["Soybean or groundnut cake","Protein",16],["Dried sweet-potato tops meal","Protein + fibre",14],
+             ["Oyster shells or bone meal","Calcium",2],["Table salt","Electrolytes",2]]}
+  },
+  pro: {
+    fr:{nom:"Provende avancée (Pro)", desc:"Formulation complète optimisée pour Kribi : croissance, lactation et prévention naturelle.",
+        ing:[["Maïs broyé","Énergie principale (max 40 %)",40],["Son de blé ou de maïs","Fibres indispensables",22],
+             ["Tourteau de soja ou d’arachide","Protéines concentrées",10],
+             ["Tourteau de coton","Protéines bon marché — max 8 %, éviter chez les reproducteurs (gossypol)",8],
+             ["Farine de feuilles (Moringa + fanes de patate douce)","Protéines de qualité, vitamines",14],
+             ["Poudre santé (Artemisia + feuilles de papayer séchées)","Anti-coccidiose + vermifuge naturel",2],
+             ["Coquilles d’huîtres broyées / poudre d’os","Calcium (lactation, os)",2],
+             ["Prémix (CMAV Lapin)","Minéraux et vitamines",1.5],["Sel de cuisine","Électrolytes",0.5]]},
+    en:{nom:"Advanced feed (Pro)", desc:"Full formulation optimised for Kribi: growth, lactation and natural prevention.",
+        ing:[["Ground maize","Main energy (max 40%)",40],["Wheat or maize bran","Essential fibre",22],
+             ["Soybean or groundnut cake","Concentrated protein",10],
+             ["Cottonseed cake","Cheap protein — max 8%, avoid in breeders (gossypol)",8],
+             ["Leaf meal (Moringa + sweet-potato tops)","Quality protein, vitamins",14],
+             ["Health powder (Artemisia + dried papaya leaves)","Anti-coccidiosis + natural dewormer",2],
+             ["Crushed oyster shells / bone meal","Calcium (lactation, bones)",2],
+             ["Premix (Rabbit CMAV)","Minerals and vitamins",1.5],["Table salt","Electrolytes",0.5]]}
+  }
+};
+let sacKg = 50;
+function vueNutrition(){
+  const proActif = etat.pro === true;
+  const rBase = RECETTES.base[langue], rPro = RECETTES.pro[langue];
+  const tableau = (recette, verrou) => {
+    const lignes = recette.ing.map(([n,role,pc])=>{
+      const kg = Math.round(pc/100*sacKg*100)/100;
+      return `<tr><td><b>${esc(n)}</b><br><small style="color:var(--gris)">${esc(role)}</small></td>
+        <td style="text-align:right;white-space:nowrap">${verrou?'•••':kg+' kg'}</td>
+        <td style="text-align:right;color:var(--gris)">${pc} %</td></tr>`;
+    }).join('');
+    return `<table><thead><tr><th>${t('nut_ing')}</th><th style="text-align:right">${t('nut_qty')}</th><th style="text-align:right">%</th></tr></thead>
+      <tbody>${lignes}</tbody>
+      <tfoot><tr><td style="font-weight:700;color:var(--vert-foret)">${t('nut_total')}</td>
+        <td style="text-align:right;font-weight:700">${verrou?'•••':sacKg+' kg'}</td><td></td></tr></tfoot></table>`;
+  };
+
+  return `
+    <h2 class="page-title">${t('nut_title')}</h2>
+    <p class="page-sub">${t('nut_sub')}</p>
+
+    <div class="card" style="margin-bottom:16px">
+      <h3>🧮 ${t('nut_calc')}</h3>
+      <form class="ligne" onsubmit="return false" style="margin-bottom:6px">
+        <div class="champ"><label>${t('nut_bag')}</label>
+          <input type="number" id="nut-kg" min="1" max="1000" value="${sacKg}" oninput="majSac(this.value)"></div>
+        <div style="display:flex;gap:6px;align-items:flex-end">
+          <button type="button" class="btn mini sec" onclick="majSac(25)">25 kg</button>
+          <button type="button" class="btn mini sec" onclick="majSac(50)">50 kg</button>
+          <button type="button" class="btn mini sec" onclick="majSac(100)">100 kg</button>
+        </div>
+      </form>
+      <p class="vide" style="font-style:normal">${t('nut_calc_note')}</p>
+    </div>
+
+    <div class="card" style="margin-bottom:16px">
+      <h3>🌱 ${rBase.nom} <span class="tag ok">${t('nut_free')}</span></h3>
+      <p style="color:var(--gris);margin-bottom:12px">${rBase.desc}</p>
+      ${tableau(rBase, false)}
+      <button class="btn wa" style="margin-top:14px" onclick="partagerRecette('base')">🟢 ${t('nut_share')}</button>
+    </div>
+
+    <div class="card" style="border:2px solid var(--vert-moyen)">
+      <h3>⭐ ${rPro.nom} <span class="tag ${proActif?'ok':'gest'}">${proActif?t('nut_free'):'PRO'}</span></h3>
+      <p style="color:var(--gris);margin-bottom:12px">${rPro.desc}</p>
+      ${tableau(rPro, !proActif)}
+      ${proActif
+        ? `<button class="btn wa" style="margin-top:14px" onclick="partagerRecette('pro')">🟢 ${t('nut_share')}</button>`
+        : `<div style="margin-top:14px;padding:14px;background:#FCF3E2;border:1px solid #EAD2A4;border-radius:10px">
+             <p style="color:var(--terre-fonce,#6B2409);font-weight:600;margin-bottom:8px">🔒 ${t('nut_locked')}</p>
+             <p style="font-size:.9rem;color:var(--gris);margin-bottom:10px">${t('nut_locked_desc')}</p>
+             <button class="btn" onclick="demanderPro()">⭐ ${t('nut_unlock')}</button>
+             <p class="vide" style="margin-top:8px">${t('pro_soon')}</p>
+           </div>`}
+      <p class="vide" style="margin-top:12px">${t('nut_tip')}</p>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>${t('plants_title')}</h3>
+      <p style="color:var(--gris);margin-bottom:12px">${t('plants_sub')}</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${[
+          ['Stylosanthes','Stylosanthes+guianensis+plante+fourragère'],
+          ['Mucuna','Mucuna+pruriens+feuilles+plante'],
+          ['Leucaena','Leucaena+leucocephala+feuilles+arbre'],
+          ['Moringa','Moringa+oleifera+feuilles'],
+          ['Artemisia','Artemisia+annua+plante']
+        ].map(([nom,q])=>`
+          <div class="lecon-item" style="cursor:default">
+            <div class="lecon-titre">🌿 ${nom}</div>
+            <a class="btn mini sec" href="https://www.google.com/search?tbm=isch&q=${q}" target="_blank" rel="noopener">${t('plant_see')}</a>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+function majSac(v){
+  sacKg = Math.max(1, Math.min(1000, parseFloat(v)||50));
+  rendre();
+  const i = document.getElementById('nut-kg'); if(i){ i.value = sacKg; i.focus(); }
+}
+function demanderPro(){
+  alert(t('pro_soon_msg'));
+}
+function partagerRecette(type){
+  const r = RECETTES[type][langue];
+  const lignes = [ (type==='pro'?'⭐ ':'🌱 ') + r.nom + ' — ' + sacKg + ' kg', '' ];
+  r.ing.forEach(([n,role,pc])=> lignes.push('• ' + n + ' : ' + (Math.round(pc/100*sacKg*100)/100) + ' kg'));
+  lignes.push('', '— CuniSmart 🐇');
+  partagerWhatsApp(lignes.join('\n'));
+}
+
 /* ---------- École ---------- */
+function niveauValide(idxNiveau){
+  const nv = NIVEAUX[idxNiveau];
+  for(let i = nv.deb; i < nv.fin; i++) if(!etat.ecole.validees.includes(i)) return false;
+  return true;
+}
+function niveauAccessible(ni){
+  if(ni === 0) return true;              /* Niveau 1 Débutant = gratuit */
+  if(etat.pro !== true) return false;    /* Niveaux 2 et 3 = Pro */
+  if(ni === 2 && !niveauValide(1)) return false; /* progression dans le Pro */
+  return true;
+}
 function vueEcole(){
   if(leconOuverte !== null) return vueLecon(leconOuverte);
   const n = etat.ecole.validees.length;
-  const tout = n === LECONS.length;
+  const baseFait = niveauValide(0) && niveauValide(1);
+  const toutFait = n === LECONS.length;
 
   let certif = '';
-  if(tout){
+  if(toutFait){
+    if(!etat.ecole.numeroM){
+      etat.ecole.numeroM = 'CSM-' + auj().replace(/-/g,'') + '-' + uid().slice(-4).toUpperCase();
+      sauver();
+    }
+    certif = `
+    <div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${t('master_title')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom) || '…'}</div>
+      <p>${t('master_body')}</p>
+      <p style="margin-top:6px">🐇 CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numeroM}</p>
+      <p style="font-size:.72rem;color:var(--gris)">${t('certif_verify')}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertif('master')">🟢 ${t('master_share')}</button>
+    </div>`;
+  } else if(baseFait){
+    if(!etat.ecole.numero){
+      etat.ecole.numero = 'CS-' + auj().replace(/-/g,'') + '-' + uid().slice(-4).toUpperCase();
+      sauver();
+    }
     certif = `
     <div class="certif">
       <h3>${t('certif_title')}</h3>
@@ -777,9 +1201,55 @@ function vueEcole(){
       <div class="grand-nom">${esc(etat.ecole.nom) || '…'}</div>
       <p>${t('certif_body')}</p>
       <p style="margin-top:6px">🐇 CuniSmart · ${fdate(auj())}</p>
-      <button class="btn wa" style="margin-top:12px" onclick="partagerCertif()">🟢 ${t('btn_share_certif')}</button>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numero}</p>
+      <p style="font-size:.72rem;color:var(--gris)">${t('certif_verify')}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertif('base')">🟢 ${t('btn_share_certif')}</button>
     </div>`;
   }
+
+  const bloc = NIVEAUX.map((nv,ni)=>{
+    const accessible = niveauAccessible(ni);
+    /* Écran Pro unique affiché à la place des niveaux 2 & 3 quand pas Pro */
+    const premierVerrouPro = (ni === 1 && etat.pro !== true);
+    const deuxiemeVerrouPro = (ni === 2 && etat.pro !== true);
+
+    if(deuxiemeVerrouPro) return ''; /* couvert par l'écran unique du niveau 1 */
+
+    if(premierVerrouPro){
+      return `<div style="margin-top:18px">
+        <div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+          <h3 style="color:var(--terre-fonce,#6B2409)">${t('pro_lock_title')}</h3>
+          <p style="color:var(--gris);margin:6px 0 12px">${t('pro_pitch')}</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+            <div class="pro-feat">${t('pro_f1')}</div>
+            <div class="pro-feat">${t('pro_f2')}</div>
+            <div class="pro-feat">${t('pro_f3')}</div>
+            <div class="pro-feat">${t('pro_f4')}</div>
+            <div class="pro-feat">${t('pro_f5')}</div>
+          </div>
+          <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+          <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+          <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+        </div></div>`;
+    }
+
+    const lecons = LECONS.map((l,i)=>({l,i})).slice(nv.deb, nv.fin).map(({l,i})=>{
+      const done = etat.ecole.validees.includes(i);
+      if(!accessible){
+        return `<div class="lecon-item" style="opacity:.5;cursor:not-allowed">
+          <div class="lecon-num">🔒</div><div class="lecon-titre">${l[langue].ti}</div></div>`;
+      }
+      return `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLecon(${i})">
+        <div class="lecon-num">${done?'✓':i+1}</div>
+        <div class="lecon-titre">${l[langue].ti}</div>
+        <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+      </div>`;
+    }).join('');
+    const badgePro = (ni >= 1) ? ` <span class="tag gest">${t('pro_badge')}</span>` : ` <span class="tag ok">${t('nut_free')}</span>`;
+    return `<div style="margin-top:16px">
+      <p style="font-weight:700;color:var(--vert-foret);margin-bottom:8px">${t(nv.k)}${badgePro} ${niveauValide(ni)?'<span class="tag ok">✓</span>':''}</p>
+      ${lecons}</div>`;
+  }).join('');
 
   return `
     <h2 class="page-title">${t('school_title')}</h2>
@@ -788,16 +1258,7 @@ function vueEcole(){
     <div class="card">
       <p style="font-weight:600;color:var(--vert-foret)">${fmt(t('school_progress'),{n})}</p>
       <div class="progress-bar"><div style="width:${n/LECONS.length*100}%"></div></div>
-      <div style="margin-top:14px">
-      ${LECONS.map((l,i)=>{
-        const done = etat.ecole.validees.includes(i);
-        return `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLecon(${i})">
-          <div class="lecon-num">${done?'✓':i+1}</div>
-          <div class="lecon-titre">${l[langue].ti}</div>
-          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
-        </div>`;
-      }).join('')}
-      </div>
+      ${bloc}
     </div>`;
 }
 
@@ -816,7 +1277,7 @@ function vueLecon(i){
       ${l.tx.map(p=>`<p>${p}</p>`).join('')}
     </div>
     <div class="card">
-      <h3>${fmt(t('quiz_title'),{n:2})}</h3>
+      <h3>${fmt(t("quiz_title"),{n:4})}</h3>
       <div id="quiz-zone">
       ${l.qz.map((q,qi)=>`
         <div class="quiz-q" data-q="${qi}">
@@ -850,7 +1311,7 @@ function corrigerQuiz(i){
       opt.querySelector('input').disabled = true;
     });
   });
-  quizResultat = bonnes >= 2 ? 'ok' : 'ko';
+  quizResultat = bonnes >= 4 ? 'ok' : 'ko';
   if(quizResultat === 'ok' && !etat.ecole.validees.includes(i)){
     etat.ecole.validees.push(i); sauver();
   }
@@ -873,9 +1334,16 @@ function majNomCertif(v){
   const gn = document.querySelector('.certif .grand-nom');
   if(gn) gn.textContent = v || '…';
 }
-function partagerCertif(){
+function partagerCertif(type){
+  if(type === 'master'){
+    const nm = etat.ecole.nom ? ' — ' + etat.ecole.nom : '';
+    const num = etat.ecole.numeroM ? '\n' + t('certif_num') + ' : ' + etat.ecole.numeroM : '';
+    partagerWhatsApp(t('wa_master') + nm + num + '\n' + fdate(auj()) + ' · CuniSmart');
+    return;
+  }
   const n = etat.ecole.nom ? ' — ' + etat.ecole.nom : '';
-  partagerWhatsApp(t('wa_certif') + n + '\n' + fdate(auj()) + ' · CuniSmart');
+  const num = etat.ecole.numero ? '\n' + t('certif_num') + ' : ' + etat.ecole.numero : '';
+  partagerWhatsApp(t('wa_certif') + n + num + '\n' + fdate(auj()) + ' · CuniSmart');
 }
 
 /* ================= ACTIONS ================= */
