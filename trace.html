@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traçabilité — CuniSmart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1b2a1f;--green:#24512f;--gold:#e0a32e;--gold-ink:#7a5410;--paper:#eef2e7;--card:#fff;--sage:#66755f;--line:#e2e6da}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--ink);
+    background:radial-gradient(120% 60% at 50% -10%, #f7faf2 0%, var(--paper) 60%) fixed;
+    min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:20px;line-height:1.55}
+  .card{width:100%;max-width:460px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:0 16px 40px -24px rgba(27,42,31,.25)}
+  .head{background:linear-gradient(135deg,var(--green),#152e1b);color:#eef2e7;padding:20px 22px}
+  .brand{display:flex;align-items:center;gap:9px;font-family:"Bricolage Grotesque";font-weight:800;font-size:18px}
+  .seed{width:13px;height:13px;border-radius:50% 50% 50% 0;background:var(--gold);transform:rotate(45deg)}
+  .verif{margin-top:12px;display:inline-flex;align-items:center;gap:7px;background:rgba(224,163,46,.18);
+    border:1px solid rgba(224,163,46,.5);color:#f6e4bf;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px}
+  .body{padding:22px}
+  h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:24px;letter-spacing:-.02em;margin:0 0 4px}
+  .type{color:var(--green);font-weight:700;font-size:14px;margin:0 0 18px}
+  .row{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .row .k{flex:none;width:120px;color:var(--sage);font-size:13px;font-weight:600}
+  .row .v{flex:1;font-size:14.5px}
+  .foot{padding:14px 22px 20px;border-top:1px solid var(--line);color:var(--sage);font-size:12px;text-align:center}
+  .err{padding:40px 22px;text-align:center;color:var(--sage)}
+  a.home{color:var(--green);font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+<main class="card" id="card"></main>
+<script>
+  const L = {
+    fr:{verif:"Vérifié via CuniSmart",batch:"Lot",qty:"Quantité",date:"Date",origin:"Origine",feed:"Alimentation",care:"Soins / note",farm:"Producteur",issued:"Émis le",
+        types:{chair:"Lapins de chair",repro:"Reproducteurs",portee:"Portée",autre:"Produit"},
+        foot:"Traçabilité assurée par CuniSmart · Kribi, Cameroun",err:"QR invalide ou incomplet.",home:"Aller sur cunismart.com"},
+    en:{verif:"Verified via CuniSmart",batch:"Batch",qty:"Quantity",date:"Date",origin:"Origin",feed:"Feed",care:"Care / note",farm:"Producer",issued:"Issued on",
+        types:{chair:"Meat rabbits",repro:"Breeders",portee:"Litter",autre:"Product"},
+        foot:"Traceability by CuniSmart · Kribi, Cameroon",err:"Invalid or incomplete QR.",home:"Go to cunismart.com"}
+  };
+  const lang = (navigator.language||"fr").slice(0,2)==="en" ? "en" : "fr";
+  const T = L[lang];
+  const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fdate = d => { if(!d) return "—"; try{ return new Date(d+"T00:00:00").toLocaleDateString(lang,{day:"numeric",month:"long",year:"numeric"}); }catch(e){ return d; } };
+
+  function decode(){
+    const raw = location.hash.slice(1);
+    if(!raw) return null;
+    try{ return JSON.parse(decodeURIComponent(escape(atob(raw)))); }catch(e){ return null; }
+  }
+  function row(k,v){ return v ? '<div class="row"><div class="k">'+k+'</div><div class="v">'+esc(v)+'</div></div>' : ''; }
+
+  const d = decode();
+  const card = document.getElementById("card");
+  if(!d || !d.n){
+    card.innerHTML = '<div class="err">'+T.err+'<br><br><a class="home" href="https://cunismart.com">'+T.home+'</a></div>';
+  } else {
+    const typeLbl = (T.types[d.ty]||d.ty||"");
+    card.innerHTML =
+      '<div class="head"><div class="brand"><span class="seed"></span>CuniSmart</div>'+
+        '<span class="verif">✔ '+T.verif+'</span></div>'+
+      '<div class="body">'+
+        '<h1>'+esc(d.n)+'</h1>'+
+        '<p class="type">'+esc(typeLbl)+(d.q?' · '+esc(d.q):'')+'</p>'+
+        row(T.date, fdate(d.b))+
+        row(T.origin, d.o)+
+        row(T.feed, d.al)+
+        row(T.care, d.s)+
+        row(T.farm, d.e)+
+        row(T.issued, fdate(d.d))+
+      '</div>'+
+      '<div class="foot">'+T.foot+'</div>';
+  }
+</script>
+</body>
+</html>
