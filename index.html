@@ -2513,6 +2513,10 @@ const I18N = {
     repro_add:"＋ Enregistrer une saillie", f_doe:"Femelle", f_buck:"Mâle", f_matedate:"Date de saillie",
     repro_note:"→ L’application calculera automatiquement la date de palpation (J+{p}) et la mise bas prévue (J+{g}).",
     repro_need:"Il faut au moins une femelle disponible et un mâle actifs dans le cheptel pour enregistrer une saillie.",
+    repro_todo:"🔔 À faire maintenant", repro_cal:"🗓️ Calendrier à venir",
+    repro_todo_empty:"Rien d'urgent aujourd'hui. 👍", repro_cal_empty:"Aucune échéance à venir. Enregistrez une saillie pour remplir le calendrier.",
+    ev_palp:"Palpation (vérifier la gestation)", ev_mb:"Mise bas prévue", ev_sev:"Sevrage",
+    ev_late:"En retard · {n} j", ev_today:"Aujourd'hui", ev_in:"Dans {n} j",
     th_pair:"Couple", th_mating:"Saillie", th_track:"Suivi",
     tag_gest:"Gestation", palp_lbl:"Palpation", due_lbl:"Mise bas prévue",
     tag_kindled:"Mise bas", born_line:"{v} vivant(s), {m} mort-né(s)",
@@ -2630,6 +2634,10 @@ const I18N = {
     repro_add:"＋ Record a mating", f_doe:"Doe", f_buck:"Buck", f_matedate:"Mating date",
     repro_note:"→ The app will automatically compute the palpation date (D+{p}) and the expected kindling (D+{g}).",
     repro_need:"You need at least one available doe and one active buck in the herd to record a mating.",
+    repro_todo:"🔔 To do now", repro_cal:"🗓️ Upcoming calendar",
+    repro_todo_empty:"Nothing urgent today. 👍", repro_cal_empty:"No upcoming events. Record a mating to fill the calendar.",
+    ev_palp:"Palpation (check pregnancy)", ev_mb:"Expected kindling", ev_sev:"Weaning",
+    ev_late:"Overdue · {n}d", ev_today:"Today", ev_in:"In {n}d",
     th_pair:"Pair", th_mating:"Mating", th_track:"Tracking",
     tag_gest:"Pregnant", palp_lbl:"Palpation", due_lbl:"Kindling due",
     tag_kindled:"Kindled", born_line:"{v} born alive, {m} stillborn",
@@ -3215,6 +3223,61 @@ function vueCheptel(){
     </div>`;
 }
 
+
+/* ================= AGENDA REPRODUCTION ================= */
+const EV_ICON = { palp:'🔍', mb:'🍼', sev:'🌾' };
+function agendaRepro(){
+  const ev = [];
+  etat.saillies.forEach(s=>{
+    if(s.statut === 'attente'){
+      ev.push({ d: ajJours(s.date, PALPATION), type:'palp', s:s });
+      ev.push({ d: ajJours(s.date, GESTATION), type:'mb',   s:s });
+    } else if(s.statut === 'misebas' && !s.sevre){
+      ev.push({ d: ajJours(s.dateMiseBas, SEVRAGE), type:'sev', s:s });
+    }
+  });
+  ev.forEach(e=> e.j = diffJours(auj(), e.d));
+  ev.sort((a,b)=> a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+  return ev;
+}
+function evLabel(type){ return type==='palp'?t('ev_palp'):type==='mb'?t('ev_mb'):t('ev_sev'); }
+function evBadge(j){
+  if(j < 0)  return '<span class="tag" style="background:#fdeceb;color:#C0392B">'+fmt(t('ev_late'),{n:Math.abs(j)})+'</span>';
+  if(j === 0) return '<span class="tag" style="background:#fdeceb;color:#C0392B">'+t('ev_today')+'</span>';
+  const soon = j <= 3;
+  return '<span class="tag" style="background:'+(soon?'#fdf3d9':'#eef2e7')+';color:'+(soon?'#8A6400':'#4a5a44')+'">'+fmt(t('ev_in'),{n:j})+'</span>';
+}
+function evActions(e){
+  if(e.type==='mb') return '<button class="btn mini" onclick="formMiseBas(\''+e.s.id+'\')">'+t('btn_kindle')+'</button>';
+  if(e.type==='sev') return '<button class="btn mini sec" onclick="sevrer(\''+e.s.id+'\')">'+t('btn_wean')+'</button>';
+  return '';
+}
+function evRow(e, withAction){
+  return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--creme-2)">'+
+    '<span style="font-size:1.2rem;flex:none">'+(EV_ICON[e.type]||'•')+'</span>'+
+    '<div style="flex:1;min-width:0">'+
+      '<div style="font-weight:600">'+nom(e.s.femelle)+' — '+evLabel(e.type)+'</div>'+
+      '<div style="font-size:.8rem;color:var(--gris)">'+fdate(e.d)+'</div>'+
+    '</div>'+
+    evBadge(e.j)+
+    (withAction && evActions(e) ? '<span style="margin-left:6px;flex:none">'+evActions(e)+'</span>' : '')+
+  '</div>';
+}
+function blocAgenda(){
+  const ev = agendaRepro();
+  const maintenant = ev.filter(e=> e.j <= 0);
+  const avenir = ev.filter(e=> e.j > 0);
+  const cToDo = '<div class="card" style="margin-bottom:16px">'+
+    '<h3>'+t('repro_todo')+'</h3>'+
+    (maintenant.length ? maintenant.map(e=>evRow(e,true)).join('') : '<p class="vide">'+t('repro_todo_empty')+'</p>')+
+  '</div>';
+  const cCal = '<div class="card" style="margin-bottom:16px">'+
+    '<h3>'+t('repro_cal')+'</h3>'+
+    (avenir.length ? avenir.map(e=>evRow(e,false)).join('') : '<p class="vide">'+t('repro_cal_empty')+'</p>')+
+  '</div>';
+  return cToDo + cCal;
+}
+
 function vueRepro(){
   const femelles = etat.lapins.filter(l=>l.sexe==='F' && l.statut==='actif');
   const males = etat.lapins.filter(l=>l.sexe==='M' && l.statut==='actif');
@@ -3240,6 +3303,7 @@ function vueRepro(){
   return `
     <h2 class="page-title">${t('repro_title')}</h2>
     <p class="page-sub">${fmt(t('repro_sub'),{g:GESTATION,s:SEVRAGE})}</p>
+    ${blocAgenda()}
     <div class="card" style="margin-bottom:16px">
       <h3>${t('repro_add')}</h3>
       ${femDispo.length && males.length ? `
