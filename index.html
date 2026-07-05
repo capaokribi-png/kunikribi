@@ -162,6 +162,7 @@
     <button class="nav-btn" data-vue="nutrition" onclick="naviguer('nutrition')"><span class="ico">🥣</span> <span data-i18n="nav_nutri"></span></button>
     <button class="nav-btn" data-vue="ecole" onclick="naviguer('ecole')"><span class="ico">🎓</span> <span data-i18n="nav_school"></span></button>
     <button class="nav-btn" data-vue="tracabilite" onclick="naviguer('tracabilite')"><span class="ico">🔖</span> <span data-i18n="nav_trace"></span></button>
+    <button class="nav-btn" data-vue="compte" onclick="naviguer('compte')"><span class="ico">☁️</span> <span data-i18n="nav_compte"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
     <div class="foot">CuniSmart v2.0 · Kribi, Cameroun</div>
   </aside>
@@ -2477,6 +2478,21 @@ const I18N = {
     nav_dash:"Tableau de bord", nav_herd:"Cheptel", nav_repro:"Reproduction",
     nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_nutri:"Nutrition", nav_school:"CuniMaster",
     nav_trace:"Traçabilité",
+    nav_compte:"Mon compte",
+    cpt_title:"Mon compte & sauvegarde", cpt_sub:"Ne perdez jamais vos données, même en changeant de téléphone.",
+    cpt_file_title:"💾 Sauvegarde par fichier", cpt_file_note:"Marche sans internet. Téléchargez un fichier, gardez-le (ex : envoyez-le sur votre WhatsApp). Sur un nouveau téléphone, importez-le pour tout retrouver.",
+    cpt_export:"Télécharger mes données", cpt_import:"Importer un fichier",
+    cpt_import_confirm:"Importer ce fichier remplacera les données actuelles. Continuer ?",
+    cpt_import_ok:"✅ Données importées avec succès.", cpt_import_bad:"❌ Fichier invalide ou illisible.",
+    cpt_cloud_title:"☁️ Compte cloud", cpt_cloud_soon:"La sauvegarde cloud sera bientôt activée. En attendant, utilisez la sauvegarde par fichier ci-dessus.",
+    cpt_phone:"Numéro de téléphone", cpt_code:"Code secret",
+    cpt_login:"Créer / Se connecter", cpt_login_note:"Première fois : votre code est enregistré. Ensuite, ce numéro + ce code vous reconnectent partout.",
+    cpt_login_ok:"✅ Connecté ! Vous pouvez maintenant sauvegarder dans le cloud.", cpt_login_bad:"❌ Numéro ou code incorrect.",
+    cpt_bad_phone:"Entrez un numéro valide (au moins 8 chiffres).", cpt_bad_code:"Le code doit faire au moins 4 caractères.",
+    cpt_save:"☁️ Sauvegarder dans le cloud", cpt_restore:"⬇️ Restaurer depuis le cloud",
+    cpt_restore_confirm:"Restaurer remplacera les données de ce téléphone par celles du cloud. Continuer ?",
+    cpt_saved:"✅ Sauvegardé dans le cloud.", cpt_restored:"✅ Données restaurées depuis le cloud.",
+    cpt_logout:"Se déconnecter", cpt_net:"❌ Pas de connexion. Réessayez plus tard.", cpt_err:"❌ Une erreur est survenue.",
     trace_title:"Traçabilité & label qualité", trace_sub:"Créez un lot et son QR code : chaque produit devient traçable, de la ferme à l'assiette.",
     trace_add:"＋ Nouveau lot", tr_name:"Nom du lot", tr_name_ph:"Ex : Lapins de chair — juillet",
     tr_type:"Type", tr_t_meat:"Chair", tr_t_breed:"Reproducteurs", tr_t_litter:"Portée", tr_t_other:"Autre",
@@ -2598,6 +2614,21 @@ const I18N = {
     nav_dash:"Dashboard", nav_herd:"Herd", nav_repro:"Breeding",
     nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_nutri:"Nutrition", nav_school:"CuniMaster",
     nav_trace:"Traceability",
+    nav_compte:"My account",
+    cpt_title:"My account & backup", cpt_sub:"Never lose your data, even when you change phone.",
+    cpt_file_title:"💾 File backup", cpt_file_note:"Works without internet. Download a file and keep it (e.g. send it to your own WhatsApp). On a new phone, import it to get everything back.",
+    cpt_export:"Download my data", cpt_import:"Import a file",
+    cpt_import_confirm:"Importing this file will replace current data. Continue?",
+    cpt_import_ok:"✅ Data imported successfully.", cpt_import_bad:"❌ Invalid or unreadable file.",
+    cpt_cloud_title:"☁️ Cloud account", cpt_cloud_soon:"Cloud backup will be enabled soon. In the meantime, use the file backup above.",
+    cpt_phone:"Phone number", cpt_code:"Secret code",
+    cpt_login:"Create / Sign in", cpt_login_note:"First time: your code is saved. After that, this number + code sign you in anywhere.",
+    cpt_login_ok:"✅ Signed in! You can now back up to the cloud.", cpt_login_bad:"❌ Wrong number or code.",
+    cpt_bad_phone:"Enter a valid number (at least 8 digits).", cpt_bad_code:"The code must be at least 4 characters.",
+    cpt_save:"☁️ Back up to cloud", cpt_restore:"⬇️ Restore from cloud",
+    cpt_restore_confirm:"Restoring will replace this phone's data with the cloud copy. Continue?",
+    cpt_saved:"✅ Backed up to the cloud.", cpt_restored:"✅ Data restored from the cloud.",
+    cpt_logout:"Sign out", cpt_net:"❌ No connection. Please try again later.", cpt_err:"❌ Something went wrong.",
     trace_title:"Traceability & quality label", trace_sub:"Create a batch and its QR code: every product becomes traceable, from farm to plate.",
     trace_add:"＋ New batch", tr_name:"Batch name", tr_name_ph:"e.g. Meat rabbits — July",
     tr_type:"Type", tr_t_meat:"Meat", tr_t_breed:"Breeders", tr_t_litter:"Litter", tr_t_other:"Other",
@@ -3015,7 +3046,7 @@ const LECONS = [
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
-let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [] };
+let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [], compte: {ok:false} };
 let vueActive = 'tableau';
 let leconOuverte = null;
 let quizResultat = null;
@@ -3044,6 +3075,7 @@ async function charger(){
       if(!etat.ecole) etat.ecole = { validees: [], nom: '' };
       if(!etat.racesPerso) etat.racesPerso = [];
       if(!etat.lots) etat.lots = [];
+      if(!etat.compte) etat.compte = {ok:false};
     }
     const l = await store.get(CLE_LANG);
     if(l === 'en' || l === 'fr') langue = l;
@@ -3159,6 +3191,7 @@ function rendre(){
   else if(vueActive === 'bilan') c.innerHTML = vueBilan();
   else if(vueActive === 'nutrition') c.innerHTML = vueNutrition();
   else if(vueActive === 'tracabilite') c.innerHTML = vueTracabilite();
+  else if(vueActive === 'compte') c.innerHTML = vueCompte();
   else c.innerHTML = vueEcole();
 }
 
@@ -3869,6 +3902,120 @@ function qrSvg(lot){
   try{ const qr = qrcode(0,'M'); qr.addData(lienTrace(lot)); qr.make();
     return qr.createSvgTag({cellSize:4, margin:2, scalable:true}); }
   catch(e){ return '<div class="vide">QR ✕</div>'; }
+}
+
+
+/* ================= COMPTE & SAUVEGARDE ================= */
+/* Passez CLOUD_ACTIF à true APRÈS avoir déployé les fonctions api/account/*
+   et créé la base Supabase (voir GUIDE-COMPTE-CLOUD.md). Tant que c'est false,
+   seule la sauvegarde par fichier est proposée. */
+const CLOUD_ACTIF = true;
+
+/* ---- Sauvegarde par FICHIER (marche hors-ligne, sans serveur) ---- */
+function exportFichier(){
+  try{
+    const copie = Object.assign({}, etat); delete copie.compte;
+    const blob = new Blob([JSON.stringify(copie)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'cunismart-sauvegarde-'+auj()+'.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1500);
+  }catch(e){ alert(t('cpt_err')); }
+}
+function importFichier(input){
+  const f = input.files && input.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try{
+      const d = JSON.parse(r.result);
+      if(!d || typeof d !== 'object' || !Array.isArray(d.lapins)) throw 0;
+      if(!confirm(t('cpt_import_confirm'))) return;
+      Object.assign(etat, d);
+      if(!etat.lots) etat.lots = [];
+      sauver(); alert(t('cpt_import_ok')); naviguer('tableau');
+    }catch(e){ alert(t('cpt_import_bad')); }
+  };
+  r.readAsText(f);
+}
+
+/* ---- Compte CLOUD (Supabase via nos fonctions serveur) ---- */
+async function apiCompte(path, body){
+  const r = await fetch('/api/account/'+path, {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)
+  });
+  let data = {}; try{ data = await r.json(); }catch(e){}
+  return { status:r.status, data };
+}
+function compteLogin(){
+  const phone = (document.getElementById('cpt-phone').value||'').trim();
+  const code = (document.getElementById('cpt-code').value||'').trim();
+  if(!/^\d{8,}$/.test(phone)){ alert(t('cpt_bad_phone')); return; }
+  if(code.length < 4){ alert(t('cpt_bad_code')); return; }
+  apiCompte('login', {phone, code}).then(({status,data})=>{
+    if(status===200 && data.ok){
+      etat.compte = { phone, code, ok:true };
+      if(data.pro === true) etat.pro = true;
+      sauver(); alert(t('cpt_login_ok')); rendre();
+    } else { alert(data.error || t('cpt_login_bad')); }
+  }).catch(()=> alert(t('cpt_net')));
+}
+function cloudBackup(){
+  if(!etat.compte || !etat.compte.ok) return;
+  const copie = Object.assign({}, etat); delete copie.compte;
+  apiCompte('backup', {phone:etat.compte.phone, code:etat.compte.code, data:copie}).then(({status,data})=>{
+    alert(status===200 && data.ok ? t('cpt_saved') : (data.error||t('cpt_err')));
+  }).catch(()=> alert(t('cpt_net')));
+}
+function cloudRestore(){
+  if(!etat.compte || !etat.compte.ok) return;
+  if(!confirm(t('cpt_restore_confirm'))) return;
+  const sess = { phone: etat.compte.phone, code: etat.compte.code, ok:true };
+  apiCompte('restore', {phone:sess.phone, code:sess.code}).then(({status,data})=>{
+    if(status===200 && data.ok && data.data){
+      Object.assign(etat, data.data);
+      etat.compte = sess;
+      if(data.pro === true) etat.pro = true;
+      if(!etat.lots) etat.lots = [];
+      sauver(); alert(t('cpt_restored')); naviguer('tableau');
+    } else { alert(data.error || t('cpt_err')); }
+  }).catch(()=> alert(t('cpt_net')));
+}
+function compteDeco(){ etat.compte = {ok:false}; sauver(); rendre(); }
+
+function vueCompte(){
+  const co = etat.compte && etat.compte.ok;
+  let cloud;
+  if(!CLOUD_ACTIF){
+    cloud = '<p class="vide" style="font-style:normal">'+t('cpt_cloud_soon')+'</p>';
+  } else if(co){
+    cloud = '<p style="font-weight:600;color:var(--vert-foret);margin-bottom:10px">☁️ '+esc(etat.compte.phone)+'</p>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        '<button class="btn" onclick="cloudBackup()">'+t('cpt_save')+'</button>'+
+        '<button class="btn sec" onclick="cloudRestore()">'+t('cpt_restore')+'</button>'+
+        '<button class="btn mini danger" onclick="compteDeco()">'+t('cpt_logout')+'</button>'+
+      '</div>';
+  } else {
+    cloud = '<form class="ligne" onsubmit="event.preventDefault();compteLogin()">'+
+        '<div class="champ"><label>'+t('cpt_phone')+'</label><input id="cpt-phone" inputmode="numeric" placeholder="237XXXXXXXXX"></div>'+
+        '<div class="champ"><label>'+t('cpt_code')+'</label><input id="cpt-code" type="password" placeholder="••••"></div>'+
+        '<button class="btn">'+t('cpt_login')+'</button>'+
+      '</form><p class="vide" style="font-style:normal">'+t('cpt_login_note')+'</p>';
+  }
+  return '<h2 class="page-title">'+t('cpt_title')+'</h2>'+
+    '<p class="page-sub">'+t('cpt_sub')+'</p>'+
+    '<div class="card" style="margin-bottom:16px">'+
+      '<h3>'+t('cpt_file_title')+'</h3>'+
+      '<p class="vide" style="font-style:normal;margin-bottom:10px">'+t('cpt_file_note')+'</p>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">'+
+        '<button class="btn" onclick="exportFichier()">'+t('cpt_export')+'</button>'+
+        '<label class="btn sec" style="cursor:pointer">'+t('cpt_import')+'<input type="file" accept="application/json,.json" style="display:none" onchange="importFichier(this)"></label>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<h3>'+t('cpt_cloud_title')+'</h3>'+
+      cloud+
+    '</div>';
 }
 
 function vueTracabilite(){
