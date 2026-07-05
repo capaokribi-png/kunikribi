@@ -12,8 +12,10 @@ module.exports = async (req, res) => {
 
     let user = await getUser(phone);
     if (!user) {
-      user = await createUser(String(phone), String(code));
-      if (!user) return res.status(500).json({ error: 'Création impossible' });
+      const c = await createUser(String(phone), String(code));
+      if (!c.ok || !c.row) {
+        return res.status(500).json({ error: 'Création impossible — HTTP ' + c.status + ' : ' + String(c.raw).slice(0, 180) });
+      }
       return res.status(200).json({ ok: true, created: true, pro: false });
     }
     if (String(user.code) !== String(code))
