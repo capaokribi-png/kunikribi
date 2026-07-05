@@ -1,38 +1,60 @@
-/* CuniSmart — Service Worker : mode hors ligne / offline mode */
-const CACHE = 'cunismart-v4';
-const FICHIERS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './confidentialite.html',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/apple-touch-icon.png'
-];
+// CuniSmart PWA — service worker à mise à jour automatique.
+// Astuce : incrémentez CACHE_VERSION (v3 -> v4...) à chaque grosse mise à jour
+// pour forcer le nettoyage de l'ancien cache.
+const CACHE_VERSION = 'cunismart-v3';
+const CORE = ['/', '/index.html', '/manifest.json'];
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FICHIERS)));
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', e => {
+self.addEventListener('install', (e) => {
+  self.skipWaiting(); // le nouveau SW prend la main tout de suite
   e.waitUntil(
-    caches.keys().then(cles =>
-      Promise.all(cles.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+    caches.open(CACHE_VERSION).then((c) => c.addAll(CORE).catch(() => {}))
   );
-  self.clients.claim();
 });
 
-/* Stratégie : cache d'abord (l'app doit marcher sans réseau), réseau en secours */
-self.addEventListener('fetch', e => {
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(
+        keys.filter((k) => k !== CACHE_VERSION).map((k) => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', (e) => {
+  const req = e.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+
+  // Les appels API ne sont jamais mis en cache (toujours le réseau)
+  if (url.pathname.startsWith('/api/')) return;
+
+  // Pages (index.html, navigations) : RÉSEAU D'ABORD -> toujours la dernière version.
+  // Cache seulement en secours (hors-ligne).
+  if (req.mode === 'navigate' || req.destination === 'document') {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then((c) => c.put(req, copy));
+          return res;
+        })
+        .catch(() => caches.match(req).then((r) => r || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Autres ressources (icônes, etc.) : cache d'abord, mise à jour en arrière-plan.
   e.respondWith(
-    caches.match(e.request).then(rep =>
-      rep || fetch(e.request).then(r => {
-        const copie = r.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copie));
-        return r;
-      }).catch(() => caches.match('./index.html'))
-    )
+    caches.match(req).then((cached) => {
+      const network = fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then((c) => c.put(req, copy));
+          return res;
+        })
+        .catch(() => cached);
+      return cached || network;
+    })
   );
 });
