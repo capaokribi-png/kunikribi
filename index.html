@@ -174,7 +174,7 @@ const I18N = {
   fr: {
     brand_tag:"ÉLEVAGE CUNICOLE INTELLIGENT", lang_btn:"🌍 English",
     nav_dash:"Tableau de bord", nav_herd:"Cheptel", nav_repro:"Reproduction",
-    nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_nutri:"Nutrition", nav_school:"École",
+    nav_health:"Santé", nav_fin:"Finances", nav_report:"Bilan", nav_nutri:"Nutrition", nav_school:"CuniMaster",
     dash_title:"Tableau de bord", dash_sub:"Vue d’ensemble de l’élevage",
     st_females:"Lapines", st_males:"Mâles", st_gest:"Gestations en cours",
     st_kits:"Lapereaux sous la mère", st_balance:"Solde", st_school:"Leçons validées",
@@ -210,6 +210,7 @@ const I18N = {
     th_animal:"Animal", th_care:"Type", th_product:"Produit", th_note:"Note",
     health_empty:"Aucune intervention enregistrée. Un carnet sanitaire à jour, c’est un élevage protégé.",
     fin_title:"Finances", fin_sub:"Ventes de lapins, achats d’aliment, soins vétérinaires…",
+    pro_title:"CuniSmart Pro", pro_sub:"Débloquez le suivi complet de votre élevage : sauvegarde, bilans avancés et support prioritaire.", pro_btn:"S’abonner · 9 500 FCFA / an",
     st_sales:"Total ventes", st_exp:"Total dépenses", st_profit:"Bénéfice",
     fin_add:"＋ Nouvelle opération", f_type:"Type", t_sale:"Vente", t_exp:"Dépense",
     f_desc:"Description", ph_desc:"Ex : Vente 4 lapins de chair", f_amount:"Montant (FCFA)",
@@ -275,7 +276,7 @@ const I18N = {
   en: {
     brand_tag:"SMART RABBIT FARMING", lang_btn:"🌍 Français",
     nav_dash:"Dashboard", nav_herd:"Herd", nav_repro:"Breeding",
-    nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_nutri:"Nutrition", nav_school:"School",
+    nav_health:"Health", nav_fin:"Finances", nav_report:"Report", nav_nutri:"Nutrition", nav_school:"CuniMaster",
     dash_title:"Dashboard", dash_sub:"Overview of your rabbitry",
     st_females:"Does", st_males:"Bucks", st_gest:"Ongoing pregnancies",
     st_kits:"Kits with their mother", st_balance:"Balance", st_school:"Lessons completed",
@@ -311,6 +312,7 @@ const I18N = {
     th_animal:"Animal", th_care:"Type", th_product:"Product", th_note:"Note",
     health_empty:"No intervention recorded. An up-to-date health record means a protected farm.",
     fin_title:"Finances", fin_sub:"Rabbit sales, feed purchases, veterinary care…",
+    pro_title:"CuniSmart Pro", pro_sub:"Unlock full farm tracking: backup, advanced reports and priority support.", pro_btn:"Subscribe · 9,500 FCFA / year",
     st_sales:"Total sales", st_exp:"Total expenses", st_profit:"Profit",
     fin_add:"＋ New transaction", f_type:"Type", t_sale:"Sale", t_exp:"Expense",
     f_desc:"Description", ph_desc:"E.g. Sold 4 meat rabbits", f_amount:"Amount (FCFA)",
@@ -964,6 +966,11 @@ function vueFinances(){
   return `
     <h2 class="page-title">${t('fin_title')}</h2>
     <p class="page-sub">${t('fin_sub')}</p>
+    <div class="card" style="background:linear-gradient(135deg,var(--vert-moyen),var(--vert-fonce));color:var(--creme);border:0;margin-bottom:16px">
+      <h3 style="color:var(--creme);margin-bottom:4px">★ ${t('pro_title')}</h3>
+      <p style="color:rgba(251,243,224,.88);font-size:.92rem;margin-bottom:14px">${t('pro_sub')}</p>
+      <a href="/payer.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--feuille);color:var(--vert-fonce);text-decoration:none;font-weight:800;padding:13px 22px;border-radius:12px">${t('pro_btn')}</a>
+    </div>
     <div class="grid stats">
       <div class="card stat leaf"><div class="val solde-pos" style="font-size:1.4rem">${fcfa(k.ventes)}</div><div class="lab">${t('st_sales')}</div></div>
       <div class="card stat red"><div class="val solde-neg" style="font-size:1.4rem">${fcfa(k.dep)}</div><div class="lab">${t('st_exp')}</div></div>
