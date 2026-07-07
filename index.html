@@ -11,6 +11,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="CuniSmart">
 <title>CuniSmart — Gestion d'élevage cunicole · Rabbit farm manager</title>
+<script>
+(function(){
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&['u','s'].includes(e.key.toLowerCase())){e.preventDefault();}
+    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase()))){e.preventDefault();}
+  });
+  setInterval(function(){
+    var t=new Date(); debugger;
+    if(new Date()-t>100){var c=document.getElementById('contenu');if(c)c.innerHTML='';}
+  },4000);
+})();
+</script>
 <style>
   :root{
     --vert-foret:#9A3412; --vert-fonce:#6B2409; --vert-moyen:#E2711D;
@@ -3149,7 +3162,7 @@ async function charger(){
     const l = await store.get(CLE_LANG);
     if(l === 'en' || l === 'fr') langue = l;
   }catch(e){}
-  appliquerLangue(); rendre();
+  appliquerLangue(); verifierExpirations(); rendre();
 }
 async function sauver(){ try{ await store.set(CLE, JSON.stringify(etat)); }catch(e){} }
 
@@ -3171,6 +3184,22 @@ const GESTATION = 31, PALPATION = 12, SEVRAGE = 35;
    qui ont payé les 9 500 FCFA/an. Protection légère (le dépôt est public) ;
    la vérification automatique par paiement viendra avec le compte cloud. */
 const CODE_PRO = "CAPAO-PRO-2026";
+/* === Vérification de validité des codes (6 mois) === */
+function verifierExpirations(){
+  const auj_=auj();
+  if(etat.pro===true && etat.proExp && etat.proExp<auj_){
+    etat.pro=false; etat.proDepuis=null; etat.proExp=null; sauver();
+    alert(langue==='fr'
+      ?'⏰ Votre abonnement CuniSmart Pro a expiré. Renouvelez votre code pour continuer à profiter des fonctions Pro.'
+      :'⏰ Your CuniSmart Pro subscription has expired. Renew your code to keep using Pro features.');
+  }
+  if(etat.superpro===true && etat.spExp && etat.spExp<auj_){
+    etat.superpro=false; etat.especeActive='lapin'; etat.spDepuis=null; etat.spExp=null; sauver();
+    alert(langue==='fr'
+      ?'⏰ Votre abonnement Super PRO a expiré. Renouvelez votre code pour continuer à gérer plusieurs élevages.'
+      :'⏰ Your Super PRO subscription has expired. Renew your code to keep managing multiple species.');
+  }
+}
 const RACES = ['Néo-Zélandais blanc / New Zealand White','Californien / Californian','Bélier / Lop',
   'Rex','Fauve de Bourgogne','Géant des Flandres / Flemish Giant','Papillon / Checkered',
   'Chinchilla','Race locale / Local breed','Croisé / Crossbred'];
@@ -3288,9 +3317,12 @@ function vueTableau(){
     </div>
     ${animauxEsp().length===0 ? `<div class="card empty-state">
       <div class="em-ic">${espDef().icon}</div>
-      <h3>${t('start_title')}</h3>
-      <p>${t('start_txt')}</p>
-      <button class="btn" onclick="naviguer('cheptel')">${t('start_cta')}</button>
+      <h3>${langue==='fr'?'Bienvenue ! Votre élevage commence ici':'Welcome! Your farm starts here'}</h3>
+      <p>${langue==='fr'?'Ajoutez votre premier animal ('+espF(espActive())+') pour voir vos statistiques s\'animer, suivre la reproduction et calculer vos marges.':'Add your first animal ('+espF(espActive())+') to bring your dashboard to life, track breeding and compute your margins.'}</p>
+      <button class="btn" onclick="naviguer('cheptel')">${espDef().icon} ${langue==='fr'
+        ? '➕ Ajouter m' + (['Truie','Vache','Chèvre','Poule','Femelle'].some(f=>espF(espActive()).startsWith(f[0]))?'a première ':'on premier ') + espF(espActive()).toLowerCase()
+        : '➕ Add my first ' + espF(espActive()).toLowerCase()
+      }</button>
     </div>` : `<div class="card">
       <h3>${t('alerts_title')}</h3>
       ${alertes.length ? alertes.map(a=>`<div class="alerte ${a.t}">${a.t==='urgent'?'⚠️':a.t==='warn'?'✋':'ℹ️'} <span>${a.txt}</span></div>`).join('')
@@ -3360,7 +3392,7 @@ function demanderSuperPro(){
   const v = code.trim();
   if(v===''){ window.location.href = LIEN_SUPERPRO || 'payer.html'; return; }
   if(v.toUpperCase()===CODE_SUPERPRO.toUpperCase()){
-    etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); sauver(); alert(t('sp_ok')); rendre();
+    etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); etat.spExp=ajJours(auj(),182); sauver(); alert(t('sp_ok')); rendre();
   } else { alert(t('sp_bad')); }
 }
 
@@ -3611,6 +3643,114 @@ function guideSante(){
   </div>`;
 }
 
+
+/* ===== MODULE HYGIÈNE & PROPRETÉ (superviseur) ===== */
+const CHECKLIST_HYG = {
+  fr:[
+    ["Eau & abreuvoir","Abreuvoirs nettoyés et remplis d'eau propre","💧"],
+    ["Aliment & mangeoires","Mangeoires nettoyées, aliment frais distribué","🌾"],
+    ["Sol & litière","Sol gratté, litière changée ou complétée (sèche)","🧹"],
+    ["Cages & parcs","Excréments retirés, grillage inspecté (pas de blessures)","🏠"],
+    ["Ventilation","Bonne circulation d'air, pas d'ammoniaque, pas de courant d'air froid","💨"],
+    ["Animaux malades","Tour d'inspection : animaux isolés ou signes anormaux notés","🩺"],
+    ["Outils & équipements","Brouette, pelle, seau lavés et rangés","🔧"],
+    ["Extérieur & abords","Abords propres, pas d'ordures, rongeurs ou prédateurs","🌿"],
+  ],
+  en:[
+    ["Water & drinkers","Drinkers cleaned and refilled with fresh water","💧"],
+    ["Feed & feeders","Feeders cleaned, fresh feed distributed","🌾"],
+    ["Floor & bedding","Floor scraped, bedding changed or topped up (dry)","🧹"],
+    ["Cages & pens","Droppings removed, wire inspected (no injuries)","🏠"],
+    ["Ventilation","Good airflow, no ammonia smell, no cold draught","💨"],
+    ["Sick animals","Inspection tour: isolated animals or abnormal signs noted","🩺"],
+    ["Tools & equipment","Wheelbarrow, shovel, bucket washed and stored","🔧"],
+    ["Outside & surroundings","Surroundings clean, no waste, rodents or predators","🌿"],
+  ]
+};
+
+function hygItems(){ return CHECKLIST_HYG[langue]||CHECKLIST_HYG.fr; }
+function scoreHyg(ctrl){
+  const items=hygItems(); if(!items.length) return 0;
+  return Math.round(ctrl.filter(Boolean).length/items.length*100);
+}
+function vueHygiene(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(!etat.hygiene) etat.hygiene=[];
+  // contrôle du jour
+  const jourl = etat.hygiene.find(h=>h.date===auj());
+  const ctrl = jourl ? jourl.ctrl : Array(hygItems().length).fill(false);
+  const score = jourl ? scoreHyg(jourl.ctrl) : null;
+  // historique 7 derniers jours
+  const hist = etat.hygiene.slice().reverse().slice(0,7);
+  const coulScore=(s)=> s>=80?'var(--feuille-fonce,#1C4025)':s>=50?'var(--ambre)':'var(--rouge)';
+  const badgeScore=(s)=>`<span style="font-weight:800;color:${coulScore(s)}">${s}%</span>`;
+  const histHtml = hist.length
+    ? `<table><thead><tr><th>${L('Date','Date')}</th><th>${L('Points','Points')}</th><th>${L('Score','Score')}</th><th>${L('Signé par','Signed by')}</th></tr></thead><tbody>`
+      + hist.map(h=>`<tr>
+          <td>${fdate(h.date)}</td>
+          <td>${h.ctrl.filter(Boolean).length}/${hygItems().length}</td>
+          <td>${badgeScore(scoreHyg(h.ctrl))}</td>
+          <td><b>${esc(h.agent||'—')}</b></td>
+        </tr>`).join('')+'</tbody></table>'
+    : `<p class="vide">${L('Aucun contrôle enregistré.','No check recorded yet.')}</p>`;
+  const items=hygItems();
+  const checkboxes=items.map((itm,i)=>`
+    <label style="display:flex;gap:12px;align-items:flex-start;padding:10px 12px;
+      background:${(jourl&&jourl.ctrl[i])?'#EDF7ED':'#fff'};
+      border:1.5px solid ${(jourl&&jourl.ctrl[i])?'#81C784':'#E6E0D0'};
+      border-radius:10px;cursor:pointer;transition:background .15s">
+      <input type="checkbox" id="hyg${i}" ${(jourl&&jourl.ctrl[i])?'checked':''} onchange="majHyg(${i},this.checked)"
+        style="margin-top:3px;accent-color:var(--vert-foret);width:18px;height:18px;flex:none">
+      <span>
+        <span style="font-size:1.2rem">${itm[2]}</span>
+        <b style="margin-left:6px">${esc(itm[0])}</b>
+        <br><span style="font-size:.85rem;color:var(--gris)">${esc(itm[1])}</span>
+      </span>
+    </label>`).join('');
+  return `<div class="card" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <h3 style="margin:0">🧹 ${L('Hygiène & propreté du jour','Daily hygiene & cleanliness')} — ${fdate(auj())}</h3>
+      ${score!==null?`<span style="font-size:1.5rem;font-weight:800;color:${coulScore(score)}">${score}%</span>`:''}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">${checkboxes}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input id="hyg-agent" placeholder="${L('Votre nom / agent','Your name / agent')}"
+        style="border:1.5px solid #E6E0D0;border-radius:9px;padding:8px 12px;font-size:.92rem;flex:1;min-width:150px"
+        value="${jourl?esc(jourl.agent||''):''}">
+      <button class="btn" onclick="validerHyg()">${L('✅ Valider & signer','✅ Submit & sign')}</button>
+    </div>
+    <p class="vide" style="margin-top:8px">${L('Le superviseur voit le score et la signature dans l\'historique ci-dessous.','The supervisor sees the score and signature in the history below.')}</p>
+  </div>
+  <div class="card">
+    <h3>📋 ${L('Historique des contrôles (7 derniers jours)','Hygiene check history (last 7 days)')}</h3>
+    ${histHtml}
+  </div>`;
+}
+function majHyg(i, val){
+  if(!etat.hygiene) etat.hygiene=[];
+  let h=etat.hygiene.find(x=>x.date===auj());
+  if(!h){ h={id:uid(),date:auj(),ctrl:Array(hygItems().length).fill(false),agent:''}; etat.hygiene.push(h); }
+  h.ctrl[i]=val; sauver();
+  // mettre à jour le score affiché sans re-rendre toute la page
+  const score=scoreHyg(h.ctrl);
+  const sp=document.querySelector('[data-hygsc]');
+  if(sp) sp.textContent=score+'%';
+}
+function validerHyg(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(!etat.hygiene) etat.hygiene=[];
+  let h=etat.hygiene.find(x=>x.date===auj());
+  const agent=(document.getElementById('hyg-agent')||{}).value||'';
+  if(!h){ h={id:uid(),date:auj(),ctrl:Array(hygItems().length).fill(false),agent:''}; etat.hygiene.push(h); }
+  h.agent=agent.trim()||L('Inconnu','Unknown');
+  const score=scoreHyg(h.ctrl);
+  sauver(); rendre();
+  alert('✅ '+L('Contrôle enregistré','Check recorded')+' — '
+    +L('Score du jour :','Today\'s score:')+' '+score+'%'
+    +' — '+L('Signé :','Signed:')+' '+h.agent
+    +(score<80?'\n⚠️ '+L('Score insuffisant — rappeler l\'agent et faire un nouveau contrôle.','Insufficient score — remind the agent and do a new check.'):''));
+}
+
 function vueSante(){
   const actifs = etat.lapins.filter(l=>l.statut==='actif' && espDe(l)===espActive());
   const soinLbl = {vacc:t('care_vacc'), trait:t('care_treat'), verm:t('care_worm'), desinf:t('care_disinf')};
@@ -3626,6 +3766,7 @@ function vueSante(){
     <h2 class="page-title">${t('health_title')}</h2>
     <p class="page-sub">${t('health_sub')}</p>
     ${selecteurEspece()}
+    ${vueHygiene()}
     ${guideSante()}
     <div class="card">
       <h3>${t('health_add')}</h3>
@@ -3963,20 +4104,23 @@ function vueNutrition(){
       <button class="btn wa" style="margin-top:14px" onclick="partagerRecette('base')">🟢 ${t('nut_share')}</button>
     </div>
 
-    <div class="card" style="border:2px solid var(--vert-moyen)">
-      <h3>⭐ ${rPro.nom} <span class="tag ${proActif?'ok':'gest'}">${proActif?t('nut_free'):'PRO'}</span></h3>
-      <p style="color:var(--gris);margin-bottom:12px">${rPro.desc}</p>
-      ${tableau(rPro, !proActif)}
-      ${proActif
-        ? `<button class="btn wa" style="margin-top:14px" onclick="partagerRecette('pro')">🟢 ${t('nut_share')}</button>`
-        : `<div style="margin-top:14px;padding:14px;background:#FCF3E2;border:1px solid #EAD2A4;border-radius:10px">
-             <p style="color:var(--terre-fonce,#6B2409);font-weight:600;margin-bottom:8px">🔒 ${t('nut_locked')}</p>
-             <p style="font-size:.9rem;color:var(--gris);margin-bottom:10px">${t('nut_locked_desc')}</p>
-             <button class="btn" onclick="demanderPro()">⭐ ${t('nut_unlock')}</button>
-             <p class="vide" style="margin-top:8px">${t('pro_soon')}</p>
-           </div>`}
-      <p class="vide" style="margin-top:12px">${t('nut_tip')}</p>
-    </div>
+    ${proActif
+      ? `<div class="card" style="border:2px solid var(--vert-moyen)">
+          <h3>⭐ ${rPro.nom} <span class="tag ok">${t('nut_free')}</span></h3>
+          <p style="color:var(--gris);margin-bottom:12px">${rPro.desc}</p>
+          ${tableau(rPro, false)}
+          <button class="btn wa" style="margin-top:14px" onclick="partagerRecette('pro')">🟢 ${t('nut_share')}</button>
+          <p class="vide" style="margin-top:12px">${t('nut_tip')}</p>
+        </div>`
+      : `<div class="card" style="border:2px dashed var(--ambre);background:var(--creme);text-align:center;padding:22px">
+          <div style="font-size:2rem;margin-bottom:8px">🔒</div>
+          <h3 style="color:var(--vert-foret);margin-bottom:6px">⭐ ${langue==='fr'?'Formulation avancée Pro':'Advanced Pro formulation'}</h3>
+          <p style="color:var(--gris);margin-bottom:14px;max-width:36ch;margin-left:auto;margin-right:auto">
+            ${langue==='fr'?'Les ingrédients et les quantités de la recette Pro sont réservés aux abonnés CuniSmart Pro. Abonnez-vous pour débloquer cette formulation.':'Ingredients and quantities of the Pro recipe are for CuniSmart Pro subscribers only. Subscribe to unlock.'}
+          </p>
+          <button class="btn" onclick="demanderPro()">⭐ ${t('nut_unlock')}</button>
+          <p class="vide" style="margin-top:8px">${t('pro_soon')}</p>
+        </div>`}
 
     <div class="card" style="margin-top:16px">
       <h3>${t('plants_title')}</h3>
@@ -4007,7 +4151,7 @@ function demanderPro(){
   const v = code.trim();
   if(v === ''){ window.location.href = 'payer.html'; return; }  // vide -> page d'abonnement
   if(v.toUpperCase() === CODE_PRO.toUpperCase()){
-    etat.pro = true; etat.proDepuis = auj(); etat.proExp = ajJours(auj(), 365);
+    etat.pro = true; etat.proDepuis = auj(); etat.proExp = ajJours(auj(), 182);
     sauver(); alert(t('pro_ok')); rendre();
   } else {
     alert(t('pro_bad'));
