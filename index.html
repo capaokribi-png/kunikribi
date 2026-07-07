@@ -3489,10 +3489,121 @@ function vueRepro(){
     <div id="zone-misebas"></div>`;
 }
 
+
+/* ================= SANTÉ PAR ESPÈCE (préventif) ================= */
+const SANTE_ESP = {
+  lapin:{
+    fr:{intro:"Prévenir vaut mieux que guérir : hygiène, eau propre et quarantaine des nouveaux animaux évitent la plupart des pertes.",
+      maladies:[
+        ["VHD (maladie hémorragique virale)","Mort subite, parfois saignement au nez","Vaccination + biosécurité stricte"],
+        ["Coccidiose","Diarrhée, amaigrissement, ventre gonflé (jeunes)","Cages propres et sèches, éviter la surpopulation"],
+        ["Coryza / pasteurellose","Éternuements, écoulement nasal","Bonne ventilation, éviter courants d'air et ammoniac"],
+        ["Gale des oreilles","Croûtes dans l'oreille, grattage","Inspection régulière, isoler l'animal atteint"]],
+      vaccins:"VHD (et myxomatose selon la zone) — faites établir le calendrier par un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Prevention beats cure: hygiene, clean water and quarantine of new animals avoid most losses.",
+      maladies:[
+        ["RHD (viral haemorrhagic disease)","Sudden death, sometimes nose bleeding","Vaccination + strict biosecurity"],
+        ["Coccidiosis","Diarrhoea, weight loss, bloated belly (young)","Clean dry cages, avoid overcrowding"],
+        ["Snuffles / pasteurellosis","Sneezing, nasal discharge","Good ventilation, avoid draughts and ammonia"],
+        ["Ear mange","Crusts in the ear, scratching","Regular inspection, isolate affected animals"]],
+      vaccins:"RHD (and myxomatosis depending on area) — have a vet set the schedule.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  porc:{
+    fr:{intro:"La biosécurité est votre meilleure assurance : contrôlez les visiteurs, mettez les nouveaux animaux en quarantaine.",
+      maladies:[
+        ["Peste porcine africaine (PPA)","Forte fièvre, rougeurs, mort rapide","AUCUN vaccin ni traitement : biosécurité absolue, déclaration obligatoire. Ne pas donner de déchets de cuisine crus"],
+        ["Rouget","Taches rouges en losange, fièvre","Vaccination des reproducteurs"],
+        ["Diarrhée des porcelets","Selles liquides, déshydratation","Colostrum à la naissance, maternité propre et sèche"],
+        ["Parasites (vers, gale)","Amaigrissement, grattage","Vermifugation régulière, hygiène"]],
+      vaccins:"Rouget, parvovirose des reproducteurs ; déparasitage régulier — calendrier avec un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Biosecurity is your best insurance: control visitors, quarantine new animals.",
+      maladies:[
+        ["African Swine Fever (ASF)","High fever, skin redness, rapid death","NO vaccine or cure: absolute biosecurity, notifiable. Do not feed raw kitchen waste"],
+        ["Erysipelas","Diamond-shaped red patches, fever","Vaccinate breeding stock"],
+        ["Piglet diarrhoea","Watery stools, dehydration","Colostrum at birth, clean dry farrowing area"],
+        ["Parasites (worms, mange)","Weight loss, scratching","Regular deworming, hygiene"]],
+      vaccins:"Erysipelas, parvovirus for breeders; regular deworming — schedule with a vet.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  bovin:{
+    fr:{intro:"Un point d'eau propre, le détiquage et la vaccination protègent le troupeau au pâturage.",
+      maladies:[
+        ["Fièvre aphteuse","Bave, boiterie, ulcères bouche et pieds","Vaccination, limiter les mouvements d'animaux"],
+        ["Charbon (symptomatique/bactéridien)","Mort brutale, gonflements","Vaccination annuelle en zone à risque"],
+        ["Trypanosomose (mouche tsé-tsé)","Amaigrissement, anémie, faiblesse","Lutte anti-vectorielle, déplacer les zones infestées"],
+        ["Tiques et parasites","Anémie, perte d'état","Détiquage et vermifugation réguliers"]],
+      vaccins:"Fièvre aphteuse, charbon, péripneumonie (PPCB) selon la zone — calendrier vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Clean water, tick control and vaccination protect the grazing herd.",
+      maladies:[
+        ["Foot-and-mouth disease","Drooling, lameness, mouth and foot ulcers","Vaccination, limit animal movements"],
+        ["Anthrax / blackleg","Sudden death, swellings","Annual vaccination in risk areas"],
+        ["Trypanosomosis (tsetse fly)","Weight loss, anaemia, weakness","Vector control, move away from infested areas"],
+        ["Ticks and parasites","Anaemia, poor condition","Regular tick control and deworming"]],
+      vaccins:"FMD, anthrax/blackleg, CBPP depending on area — vet schedule.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  caprin:{
+    fr:{intro:"La PPR se prévient très bien par la vaccination ; les parasites internes sont le second ennemi.",
+      maladies:[
+        ["PPR (peste des petits ruminants)","Fièvre, écoulements, diarrhée, forte mortalité","Vaccination PPR (très efficace)"],
+        ["Parasites gastro-intestinaux","Anémie, amaigrissement","Vermifugation, rotation des pâturages"],
+        ["Pasteurellose","Toux, difficulté à respirer","Éviter le stress, abri ventilé et sec"],
+        ["Piétin / gale","Boiterie, croûtes","Parage des onglons, litière sèche"]],
+      vaccins:"PPR (rappel annuel), charbon selon la zone — calendrier vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"PPR is well prevented by vaccination; internal parasites are the second enemy.",
+      maladies:[
+        ["PPR (peste des petits ruminants)","Fever, discharges, diarrhoea, high mortality","PPR vaccination (very effective)"],
+        ["Gastro-intestinal parasites","Anaemia, weight loss","Deworming, pasture rotation"],
+        ["Pasteurellosis","Coughing, breathing difficulty","Avoid stress, ventilated dry shelter"],
+        ["Foot rot / mange","Lameness, crusts","Hoof trimming, dry bedding"]],
+      vaccins:"PPR (annual booster), anthrax depending on area — vet schedule.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  volaille:{
+    fr:{intro:"La vaccination des poussins et une litière sèche évitent l'essentiel des pertes ; respectez le vide sanitaire entre bandes.",
+      maladies:[
+        ["Maladie de Newcastle","Torticolis, paralysie, mortalité massive","Vaccination (essentielle, répétée)"],
+        ["Gumboro (bursite infectieuse)","Abattement, diarrhée chez les jeunes","Vaccination des poussins"],
+        ["Variole aviaire","Croûtes sur crête et barbillons","Vaccination"],
+        ["Coccidiose","Diarrhée sanglante, plumes ébouriffées","Litière sèche, anticoccidien dans l'aliment"]],
+      vaccins:"Newcastle (plusieurs rappels), Gumboro, variole — calendrier poussin avec un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Chick vaccination and dry litter prevent most losses; respect the empty period between batches.",
+      maladies:[
+        ["Newcastle disease","Twisted neck, paralysis, mass mortality","Vaccination (essential, repeated)"],
+        ["Gumboro (infectious bursal disease)","Dullness, diarrhoea in young birds","Vaccinate chicks"],
+        ["Fowl pox","Crusts on comb and wattles","Vaccination"],
+        ["Coccidiosis","Bloody diarrhoea, ruffled feathers","Dry litter, in-feed coccidiostat"]],
+      vaccins:"Newcastle (several boosters), Gumboro, fowl pox — chick schedule with a vet.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  }
+};
+function guideSante(){
+  const cfg = SANTE_ESP[espActive()]; if(!cfg) return '';
+  const g = cfg[langue] || cfg.fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const rows = g.maladies.map(([n,s,p])=>`<tr><td><b>${esc(n)}</b></td><td>${esc(s)}</td><td>${esc(p)}</td></tr>`).join('');
+  return `<div class="card" style="margin-bottom:16px">
+    <h3>🩺 ${L('Guide santé','Health guide')} — ${espLbl(espActive())}</h3>
+    <p style="color:var(--gris);margin-bottom:10px">${g.intro}</p>
+    <table><thead><tr><th>${L('Maladie fréquente','Common disease')}</th><th>${L('Signes','Signs')}</th><th>${L('Prévention','Prevention')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <div style="margin-top:12px;padding:12px;background:#FCF3E2;border:1px solid #EAD2A4;border-radius:10px">
+      <p style="font-weight:600;margin-bottom:5px">💉 ${L('Vaccination','Vaccination')}</p>
+      <p style="font-size:.9rem;color:var(--gris)">${g.vaccins}</p>
+    </div>
+    <p class="vide" style="font-style:normal;margin-top:12px">⚠️ ${g.avert}</p>
+  </div>`;
+}
+
 function vueSante(){
-  const actifs = etat.lapins.filter(l=>l.statut==='actif');
+  const actifs = etat.lapins.filter(l=>l.statut==='actif' && espDe(l)===espActive());
   const soinLbl = {vacc:t('care_vacc'), trait:t('care_treat'), verm:t('care_worm'), desinf:t('care_disinf')};
-  const lignes = etat.soins.slice().reverse().map(s=>`
+  const lignes = etat.soins.filter(s=> s.animal==='tous' || (lapin(s.animal) && espDe(lapin(s.animal))===espActive())).slice().reverse().map(s=>`
     <tr><td>${fdate(s.date)}</td>
       <td><b>${s.animal==='tous' ? t('all_herd') : nom(s.animal)}</b></td>
       <td><span class="tag ok">${soinLbl[s.type] || s.type}</span></td>
@@ -3503,6 +3614,8 @@ function vueSante(){
   return `
     <h2 class="page-title">${t('health_title')}</h2>
     <p class="page-sub">${t('health_sub')}</p>
+    ${selecteurEspece()}
+    ${guideSante()}
     <div class="card">
       <h3>${t('health_add')}</h3>
       <form class="ligne" onsubmit="ajouterSoin(event)">
