@@ -45,12 +45,19 @@
 
   .grid{display:grid;gap:16px;}
   .grid.stats{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:22px;}
-  .card{background:#fff;border:1px solid #E6E0D0;border-radius:14px;padding:18px;}
-  .stat .val{font-size:1.9rem;font-weight:700;color:var(--vert-foret);}
-  .stat .lab{font-size:.78rem;color:var(--gris);letter-spacing:.6px;text-transform:uppercase;margin-top:2px;}
+  .card{background:#fff;border:1px solid #E6E0D0;border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(42,28,16,.05);}
+  .stat{text-align:center;background:linear-gradient(180deg,#fff,#FCFAF4);transition:transform .12s ease,box-shadow .12s ease;}
+  .stat:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(42,28,16,.10);}
+  .stat .ico{font-size:1.55rem;line-height:1;margin-bottom:5px;}
+  .stat .val{font-size:1.95rem;font-weight:800;color:var(--vert-foret);}
+  .stat .lab{font-size:.72rem;color:var(--gris);letter-spacing:.6px;text-transform:uppercase;margin-top:2px;}
   .stat.leaf{border-top:4px solid var(--lime);}
   .stat.amber{border-top:4px solid var(--ambre);}
   .stat.red{border-top:4px solid var(--rouge);}
+  .empty-state{text-align:center;padding:26px 18px;}
+  .empty-state .em-ic{font-size:2.6rem;margin-bottom:8px;}
+  .empty-state h3{color:var(--vert-foret);margin-bottom:5px;}
+  .empty-state p{color:var(--gris);font-size:.9rem;margin:0 auto 14px;max-width:46ch;}
   .card h3{color:var(--vert-foret);font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
   .alerte{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:.9rem;}
@@ -66,15 +73,26 @@
   .champ input,.champ select{padding:9px 12px;border:1.5px solid #D8D1BE;border-radius:9px;background:#fff;
     font-size:.92rem;min-width:130px;color:var(--encre);}
   .champ input:focus,.champ select:focus{outline:2px solid var(--feuille);border-color:var(--feuille-fonce);}
-  .btn{background:var(--vert-foret);color:var(--creme);border:none;padding:10px 20px;border-radius:9px;
-    font-size:.92rem;font-weight:600;cursor:pointer;transition:.15s;}
-  .btn:hover{background:var(--vert-moyen);}
-  .btn.sec{background:var(--feuille);color:var(--vert-fonce);}
-  .btn.mini{padding:5px 12px;font-size:.8rem;border-radius:7px;}
-  .btn.danger{background:transparent;color:var(--rouge);border:1.5px solid var(--rouge);}
-  .btn.danger:hover{background:var(--rouge);color:#fff;}
-  .btn.wa{background:#25D366;color:#fff;}
-  .btn.wa:hover{background:#1EBE5B;}
+  .btn{background:linear-gradient(180deg,var(--vert-moyen),var(--vert-foret));color:var(--creme);border:none;
+    padding:11px 22px;border-radius:11px;font-size:.92rem;font-weight:700;cursor:pointer;
+    box-shadow:0 3px 0 var(--vert-fonce),0 5px 13px rgba(0,0,0,.18);
+    transition:transform .08s ease,box-shadow .08s ease,filter .15s ease;}
+  .btn:hover{filter:brightness(1.07);}
+  .btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--vert-fonce),0 2px 6px rgba(0,0,0,.15);}
+  .btn.sec{background:linear-gradient(180deg,var(--feuille),var(--ambre));color:var(--vert-fonce);
+    box-shadow:0 3px 0 #A96C08,0 5px 13px rgba(0,0,0,.15);}
+  .btn.sec:active{box-shadow:0 0 0 #A96C08,0 2px 6px rgba(0,0,0,.12);}
+  .btn.mini{padding:6px 13px;font-size:.8rem;border-radius:8px;
+    box-shadow:0 2px 0 var(--vert-fonce),0 3px 7px rgba(0,0,0,.14);}
+  .btn.mini.sec{box-shadow:0 2px 0 #A96C08,0 3px 7px rgba(0,0,0,.12);}
+  .btn.mini:active{transform:translateY(2px);box-shadow:0 0 0 var(--vert-fonce),0 1px 4px rgba(0,0,0,.12);}
+  .btn.danger{background:#fff;color:var(--rouge);border:1.6px solid var(--rouge);
+    box-shadow:0 2px 0 rgba(192,57,43,.35),0 3px 7px rgba(0,0,0,.08);}
+  .btn.danger:hover{background:var(--rouge);color:#fff;filter:none;}
+  .btn.danger:active{transform:translateY(2px);box-shadow:0 0 0 rgba(192,57,43,.35),0 1px 4px rgba(0,0,0,.08);}
+  .btn.wa{background:linear-gradient(180deg,#2BE479,#25D366);color:#fff;
+    box-shadow:0 3px 0 #1AA34C,0 5px 13px rgba(0,0,0,.15);}
+  .btn.wa:active{box-shadow:0 0 0 #1AA34C,0 2px 6px rgba(0,0,0,.12);}
 
   table{width:100%;border-collapse:collapse;font-size:.9rem;}
   th{text-align:left;padding:9px 10px;color:var(--gris);font-size:.72rem;letter-spacing:.8px;
@@ -2519,6 +2537,9 @@ const I18N = {
     al_wean_on:"prévu le {d}", al_wean_now:"à faire",
     herd_title:"Registre du cheptel", herd_sub:"Reproducteurs et reproductrices de l’élevage",
     herd_add:"＋ Enregistrer un lapin", herd_empty:"Aucun lapin enregistré. Commencez par ajouter vos reproducteurs.",
+    herd_empty_t:"Votre cheptel est vide",
+    start_title:"Bienvenue ! Votre élevage commence ici", start_cta:"➕ Ajouter mon premier lapin",
+    start_txt:"Ajoutez votre premier lapin pour voir vos statistiques s'animer, suivre la reproduction et calculer vos marges.",
     f_name:"Nom / N° boucle", ph_name:"Ex : F-001 ou Bella", f_sex:"Sexe", f_female:"♀ Femelle", f_male:"♂ Mâle",
     f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
@@ -2655,6 +2676,9 @@ const I18N = {
     al_wean_on:"due on {d}", al_wean_now:"is due now",
     herd_title:"Herd register", herd_sub:"Breeding does and bucks of the farm",
     herd_add:"＋ Register a rabbit", herd_empty:"No rabbit registered yet. Start by adding your breeders.",
+    herd_empty_t:"Your herd is empty",
+    start_title:"Welcome! Your farm starts here", start_cta:"➕ Add my first rabbit",
+    start_txt:"Add your first rabbit to bring your dashboard to life, track breeding and compute your margins.",
     f_name:"Name / Tag no.", ph_name:"E.g. F-001 or Bella", f_sex:"Sex", f_female:"♀ Doe", f_male:"♂ Buck",
     f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
@@ -3209,18 +3233,23 @@ function vueTableau(){
     <h2 class="page-title">${t('dash_title')}</h2>
     <p class="page-sub">${t('dash_sub')} — ${dateJour}</p>
     <div class="grid stats">
-      <div class="card stat leaf"><div class="val">${fem}</div><div class="lab">${t('st_females')}</div></div>
-      <div class="card stat leaf"><div class="val">${mal}</div><div class="lab">${t('st_males')}</div></div>
-      <div class="card stat amber"><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
-      <div class="card stat leaf"><div class="val">${kits}</div><div class="lab">${t('st_kits')}</div></div>
-      <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.4rem">${fcfa(k.marge)}</div><div class="lab">${t('st_balance')}</div></div>
-      <div class="card stat amber"><div class="val">${etat.ecole.validees.length}/6</div><div class="lab">${t('st_school')}</div></div>
+      <div class="card stat leaf"><div class="ico">🐰</div><div class="val">${fem}</div><div class="lab">${t('st_females')}</div></div>
+      <div class="card stat leaf"><div class="ico">🐇</div><div class="val">${mal}</div><div class="lab">${t('st_males')}</div></div>
+      <div class="card stat amber"><div class="ico">⏳</div><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
+      <div class="card stat leaf"><div class="ico">🐣</div><div class="val">${kits}</div><div class="lab">${t('st_kits')}</div></div>
+      <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="ico">💰</div><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.35rem">${fcfa(k.marge)}</div><div class="lab">${t('st_balance')}</div></div>
+      <div class="card stat amber"><div class="ico">🎓</div><div class="val">${etat.ecole.validees.length}/6</div><div class="lab">${t('st_school')}</div></div>
     </div>
-    <div class="card">
+    ${etat.lapins.length===0 ? `<div class="card empty-state">
+      <div class="em-ic">🐰</div>
+      <h3>${t('start_title')}</h3>
+      <p>${t('start_txt')}</p>
+      <button class="btn" onclick="naviguer('cheptel')">${t('start_cta')}</button>
+    </div>` : `<div class="card">
       <h3>${t('alerts_title')}</h3>
       ${alertes.length ? alertes.map(a=>`<div class="alerte ${a.t}">${a.t==='urgent'?'⚠️':a.t==='warn'?'✋':'ℹ️'} <span>${a.txt}</span></div>`).join('')
         : `<p class="vide">${t('alerts_none')}</p>`}
-    </div>`;
+    </div>`}`;
 }
 
 function vueCheptel(){
@@ -3252,7 +3281,7 @@ function vueCheptel(){
         <button class="btn">${t('btn_add')}</button>
       </form>
       ${etat.lapins.length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
-        : `<p class="vide">${t('herd_empty')}</p>`}
+        : `<div class="empty-state"><div class="em-ic">🐰</div><h3>${t('herd_empty_t')}</h3><p>${t('herd_empty')}</p></div>`}
     </div>`;
 }
 
