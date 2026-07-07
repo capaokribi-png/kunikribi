@@ -3111,6 +3111,7 @@ const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16
 let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [], compte: {ok:false} };
 let vueActive = 'tableau';
 let leconOuverte = null;
+let ficheOuverte = null;
 let quizResultat = null;
 const CLE = 'kunikribi-donnees';
 const CLE_LANG = 'kunikribi-langue';
@@ -3135,6 +3136,8 @@ async function charger(){
       etat = Object.assign(etat, anc);
       if(!etat.soins) etat.soins = [];
       if(!etat.ecole) etat.ecole = { validees: [], nom: '' };
+      if(!etat.ecole.valideesEsp) etat.ecole.valideesEsp = {};
+      if(!etat.ecole.numEsp) etat.ecole.numEsp = {};
       if(!etat.racesPerso) etat.racesPerso = [];
       if(!etat.lots) etat.lots = [];
       if(!etat.compte) etat.compte = {ok:false};
@@ -3192,7 +3195,7 @@ function nouvelleRace(){
   setTimeout(()=>{ const s = document.getElementById('l-race'); if(s) s.value = v; }, 0);
 }
 function naviguer(v){
-  vueActive = v; leconOuverte = null; quizResultat = null;
+  vueActive = v; leconOuverte = null; quizResultat = null; ficheOuverte = null;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.vue === v));
   rendre();
 }
@@ -4083,22 +4086,169 @@ const FICHES_ESP = {
       ["Getting it right: mistakes to avoid","Losses mostly come from damp housing, skipping PPR vaccination, neglected deworming and unsupervised kidding. A dry shelter and a simple but respected health calendar change everything."]]}
   }
 };
+/* ===== Quiz par espèce (1 question par fiche, dans l'ordre des fiches) ===== */
+const QUIZ_ESP = {
+  porc:{fr:[
+    {q:"Quelle surface prévoir environ par porc à l'engrais ?",o:["0,2 m²","1 m²","5 m²"],b:1},
+    {q:"Que ne faut-il jamais donner aux porcs ?",o:["De l'eau propre","Des déchets de cuisine crus","Du maïs"],b:1},
+    {q:"Combien de temps dure la gestation de la truie ?",o:["31 jours","114 jours","283 jours"],b:1},
+    {q:"Forte fièvre, rougeurs et mortalité rapide font suspecter…",o:["Un coup de chaleur","La peste porcine africaine","Une carence"],b:1},
+    {q:"L'aliment représente environ quelle part du coût ?",o:["10 %","30 %","65-70 %"],b:2},
+    {q:"Qu'est-ce qui protège le mieux l'élevage ?",o:["Beaucoup de médicaments","Biosécurité stricte + démarrage propre","Une forte densité"],b:1}],
+  en:[
+    {q:"About how much space per fattening pig?",o:["0.2 m²","1 m²","5 m²"],b:1},
+    {q:"What must you never feed pigs?",o:["Clean water","Raw kitchen waste","Maize"],b:1},
+    {q:"How long is the sow's gestation?",o:["31 days","114 days","283 days"],b:1},
+    {q:"High fever, redness and rapid death suggest…",o:["Heat stress","African Swine Fever","A deficiency"],b:1},
+    {q:"Feed is about what share of cost?",o:["10%","30%","65-70%"],b:2},
+    {q:"What best protects the farm?",o:["Lots of medicine","Strict biosecurity + clean start","High density"],b:1}]},
+  volaille:{fr:[
+    {q:"Température de la poussinière la 1ʳᵉ semaine ?",o:["15-18 °C","32-34 °C","45 °C"],b:1},
+    {q:"Que se passe-t-il si l'eau vient à manquer ?",o:["Rien","La croissance/ponte s'arrête aussitôt","Les poules grossissent"],b:1},
+    {q:"Le principe « tout plein / tout vide » signifie…",o:["Mélanger les âges","Un seul lot, puis vide sanitaire","Ne jamais nettoyer"],b:1},
+    {q:"Quel vaccin est essentiel en volaille ?",o:["Newcastle","Aucun","La PPR"],b:0},
+    {q:"Quels chiffres suivre pour piloter ?",o:["Aucun","Mortalité, aliment, poids/ponte","Seulement le prix"],b:1},
+    {q:"Un lot bien démarré et bien vacciné est…",o:["Perdu d'avance","À moitié gagné","Sans importance"],b:1}],
+  en:[
+    {q:"Brooder temperature in the first week?",o:["15-18 °C","32-34 °C","45 °C"],b:1},
+    {q:"What happens if water runs out?",o:["Nothing","Growth/laying stops at once","Birds gain weight"],b:1},
+    {q:"'All-in / all-out' means…",o:["Mixing ages","One batch, then an empty period","Never cleaning"],b:1},
+    {q:"Which vaccine is essential in poultry?",o:["Newcastle","None","PPR"],b:0},
+    {q:"Which numbers should you track?",o:["None","Mortality, feed, weight/lay","Only the price"],b:1},
+    {q:"A well-started, well-vaccinated batch is…",o:["Doomed","Half won","Irrelevant"],b:1}]},
+  bovin:{fr:[
+    {q:"À quoi sert la rotation des parcelles ?",o:["Fatiguer les vaches","Préserver l'herbe + casser les parasites","À rien"],b:1},
+    {q:"Quelle est la base de l'alimentation du bovin ?",o:["Le fourrage","La viande","Le sucre"],b:0},
+    {q:"La gestation de la vache dure environ…",o:["3 mois","9 mois (283 j)","1 an"],b:1},
+    {q:"Contre quoi vacciner en priorité ?",o:["Fièvre aphteuse et charbon","Rien","La grippe"],b:0},
+    {q:"La clé de rentabilité est souvent…",o:["L'alimentation de saison sèche","La couleur de l'animal","Le nom"],b:0},
+    {q:"Anticiper le fourrage de saison sèche évite…",o:["Rien","L'amaigrissement et les mortalités","Plus de lait"],b:1}],
+  en:[
+    {q:"What is plot rotation for?",o:["Tiring the cows","Preserving grass + breaking parasites","Nothing"],b:1},
+    {q:"What is the base of cattle feeding?",o:["Forage","Meat","Sugar"],b:0},
+    {q:"A cow's gestation lasts about…",o:["3 months","9 months (283 d)","1 year"],b:1},
+    {q:"What to vaccinate against first?",o:["Foot-and-mouth and anthrax","Nothing","Flu"],b:0},
+    {q:"The key to profit is often…",o:["Dry-season feeding","The animal's colour","The name"],b:0},
+    {q:"Planning dry-season forage prevents…",o:["Nothing","Weight loss and deaths","More milk"],b:1}]},
+  caprin:{fr:[
+    {q:"Les chèvres supportent mal…",o:["Le soleil","L'humidité","Le vent léger"],b:1},
+    {q:"Les chèvres sont surtout des…",o:["Carnivores","Brouteuses (feuilles, ligneux)","Granivores"],b:1},
+    {q:"La gestation de la chèvre dure environ…",o:["150 jours (5 mois)","31 jours","283 jours"],b:0},
+    {q:"Quelle vaccination est la priorité ?",o:["La PPR","Aucune","La rage seulement"],b:0},
+    {q:"Le petit ruminant est un troupeau…",o:["Lent et coûteux","À cycle rapide et peu coûteux","Impossible à vendre"],b:1},
+    {q:"Quel duo protège le mieux le capital ?",o:["Vaccination PPR + déparasitage","Rien","Beaucoup d'eau seulement"],b:0}],
+  en:[
+    {q:"Goats tolerate poorly…",o:["Sun","Damp","Light wind"],b:1},
+    {q:"Goats are mainly…",o:["Carnivores","Browsers (leaves, woody)","Grain-eaters"],b:1},
+    {q:"A goat's gestation lasts about…",o:["150 days (5 months)","31 days","283 days"],b:0},
+    {q:"Which vaccination is the priority?",o:["PPR","None","Rabies only"],b:0},
+    {q:"Small ruminants are a herd that is…",o:["Slow and costly","Fast-cycling and cheap","Impossible to sell"],b:1},
+    {q:"Which pair best protects the capital?",o:["PPR vaccination + deworming","Nothing","Only lots of water"],b:0}]}
+};
+
+/* ===== Parcours certifiant par espèce ===== */
+function fichesFaites(k){ return (etat.ecole.valideesEsp && etat.ecole.valideesEsp[k]) || []; }
+
 function vueFiches(){
-  const cfg = FICHES_ESP[espActive()]; if(!cfg) return '';
+  const k = espActive();
+  const cfg = FICHES_ESP[k]; if(!cfg) return '';
+  if(ficheOuverte && ficheOuverte.esp===k) return vueFicheDetail(k, ficheOuverte.i);
   const g = cfg[langue] || cfg.fr;
   const L = (fr,en)=> langue==='fr'?fr:en;
   const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
-  const cards = g.fiches.map(([ti,txt],i)=>`
-    <div class="card" style="margin-bottom:12px">
-      <h3>${ic[i]||'•'} ${esc(ti)}</h3>
-      <p style="color:#444;line-height:1.6">${esc(txt)}</p>
-    </div>`).join('');
+  const faites = fichesFaites(k);
+  const total = g.fiches.length;
+
+  let certif = '';
+  if(faites.length === total){
+    if(!etat.ecole.numEsp) etat.ecole.numEsp = {};
+    if(!etat.ecole.numEsp[k]){ etat.ecole.numEsp[k] = 'CSM-' + k.toUpperCase().slice(0,3) + '-' + auj().replace(/-/g,'') + '-' + uid().slice(-4).toUpperCase(); sauver(); }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — ${espLbl(k)} ${ESPECES[k].icon}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom) || '…'}</div>
+      <p>${L('a validé le parcours essentiel de gestion de cet élevage.','has completed the essential management path for this species.')}</p>
+      <p style="margin-top:6px">${ESPECES[k].icon} CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numEsp[k]}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifEsp('${k}')">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+
+  const items = g.fiches.map(([ti],i)=>{
+    const done = faites.includes(i);
+    return `<div class="lecon-item ${done?'done':''}" onclick="ouvrirFiche('${k}',${i})">
+      <div class="lecon-num">${done?'✓':i+1}</div>
+      <div class="lecon-titre">${ic[i]||'•'} ${esc(ti)}</div>
+      <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+    </div>`;
+  }).join('');
+
   return `
     <h2 class="page-title">${t('school_title')}</h2>
-    <p class="page-sub">${L('Fiches essentielles','Key essentials')} — ${espLbl(espActive())}</p>
+    <p class="page-sub">${L('Parcours certifiant','Certifying path')} — ${espLbl(k)}</p>
     ${selecteurEspece()}
-    <p class="vide" style="font-style:normal;margin-bottom:12px">${L("L'essentiel pour bien maîtriser cet élevage. Le parcours certifiant avec quiz arrivera dans une prochaine mise à jour.","The essentials to master this farming. The certifying path with quizzes will come in a future update.")}</p>
-    ${cards}`;
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${faites.length} / ${total} ${L('fiches validées','cards completed')}</p>
+      <div class="progress-bar"><div style="width:${faites.length/total*100}%"></div></div>
+      <div style="margin-top:12px">${items}</div>
+    </div>`;
+}
+
+function vueFicheDetail(k,i){
+  const g = FICHES_ESP[k][langue] || FICHES_ESP[k].fr;
+  const f = g.fiches[i]; const ti = f[0], txt = f[1];
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
+  const done = fichesFaites(k).includes(i);
+  const qz = (QUIZ_ESP[k] && QUIZ_ESP[k][langue]) ? QUIZ_ESP[k][langue][i] : null;
+  let quizHtml = '';
+  if(qz){
+    const opts = qz.o.map((o,oi)=>`<label style="display:flex;gap:9px;align-items:center;padding:9px 11px;border:1.5px solid #E6E0D0;border-radius:9px;cursor:pointer">
+      <input type="radio" name="qf" value="${oi}"> <span>${esc(o)}</span></label>`).join('');
+    quizHtml = `<div class="card" style="margin-top:14px">
+      <h3>❓ ${L('Quiz','Quiz')}</h3>
+      <p style="font-weight:600;margin:6px 0 10px">${esc(qz.q)}</p>
+      <div style="display:flex;flex-direction:column;gap:8px">${opts}</div>
+      <div id="qf-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerQuizFiche('${k}',${i})">${L('Valider','Check')}</button>
+    </div>`;
+  }
+  return `
+    <button class="btn sec" onclick="fermerFiche()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">${ic[i]||'•'} ${esc(ti)} ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}</h2>
+      <p style="color:#444;line-height:1.75;margin-top:8px">${esc(txt)}</p>
+    </div>
+    ${quizHtml}`;
+}
+
+function ouvrirFiche(k,i){ ficheOuverte = {esp:k, i:i}; rendre(); window.scrollTo(0,0); }
+function fermerFiche(){ ficheOuverte = null; rendre(); window.scrollTo(0,0); }
+function validerQuizFiche(k,i){
+  const sel = document.querySelector('input[name="qf"]:checked');
+  const res = document.getElementById('qf-res');
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  if(!sel){ if(res) res.innerHTML = '<span style="color:var(--rouge)">'+L('Choisissez une réponse.','Pick an answer.')+'</span>'; return; }
+  const qz = QUIZ_ESP[k][langue][i];
+  if(parseInt(sel.value) === qz.b){
+    if(!etat.ecole.valideesEsp) etat.ecole.valideesEsp = {};
+    if(!etat.ecole.valideesEsp[k]) etat.ecole.valideesEsp[k] = [];
+    if(!etat.ecole.valideesEsp[k].includes(i)) etat.ecole.valideesEsp[k].push(i);
+    sauver();
+    if(res) res.innerHTML = '<span style="color:var(--feuille-fonce);font-weight:700">✓ '+L('Bonne réponse ! Fiche validée.','Correct! Card completed.')+'</span>';
+    setTimeout(()=>{ ficheOuverte = null; rendre(); window.scrollTo(0,0); }, 900);
+  } else {
+    if(res) res.innerHTML = '<span style="color:var(--rouge)">✗ '+L('Pas tout à fait — relisez la fiche et réessayez.','Not quite — re-read the card and try again.')+'</span>';
+  }
+}
+function partagerCertifEsp(k){
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const num = (etat.ecole.numEsp && etat.ecole.numEsp[k]) ? ('N° '+etat.ecole.numEsp[k]) : '';
+  const txt = [ '🎓 '+L('Certificat CuniMaster','CuniMaster Certificate')+' — '+espLbl(k),
+    (etat.ecole.nom||'—'),
+    L('Parcours essentiel validé.','Essential path completed.'), num, '— CuniSmart' ].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
 }
 
 function vueEcole(){
