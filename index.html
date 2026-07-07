@@ -2557,11 +2557,18 @@ const I18N = {
     cpt_saved:"✅ Sauvegardé dans le cloud.", cpt_restored:"✅ Données restaurées depuis le cloud.",
     cpt_logout:"Se déconnecter", cpt_net:"❌ Pas de connexion. Réessayez plus tard.", cpt_err:"❌ Une erreur est survenue.",
     trace_title:"Traçabilité & label qualité", trace_sub:"Créez un lot et son QR code : chaque produit devient traçable, de la ferme à l'assiette.",
-    trace_add:"＋ Nouveau lot", tr_name:"Nom du lot", tr_name_ph:"Ex : Lapins de chair — juillet",
-    tr_type:"Type", tr_t_meat:"Chair", tr_t_breed:"Reproducteurs", tr_t_litter:"Portée", tr_t_other:"Autre",
-    tr_qty:"Quantité", tr_date:"Date", tr_litter:"Portée d'origine (option)", tr_none:"— Aucune —",
-    tr_origin:"Origine", tr_origin_ph:"Élevage, parents…", tr_feed:"Alimentation", tr_feed_ph:"Ex : granulés + fourrage local",
-    tr_note:"Note / soins", tr_note_ph:"Ex : vacciné, élevé en plein air", tr_create:"Créer le lot + QR",
+    trace_add:"＋ Nouveau lot", tr_name:"Nom du lot", tr_name_ph:"Ex : Lot-LaFerme-Juil2026",
+    tr_type:"Catégorie", tr_t_meat:"Chair", tr_t_breed:"Reproducteurs", tr_t_litter:"Portée", tr_t_other:"Autre",
+    tr_qty:"Quantité (têtes)", tr_poids:"Poids moyen par animal (kg)", tr_poids_ph:"Ex : 2,4 kg",
+    tr_date:"Date de création du lot", tr_litter:"Portée d'origine (option)", tr_none:"— Aucune —",
+    tr_race:"Race / souche", tr_race_ph:"Ex : Néo-Zélandais blanc, Local amélioré",
+    tr_origin:"Origine / lieu d'élevage", tr_origin_ph:"Ex : Élevage rural, Ferme CAPAO — Bidou I",
+    tr_feed:"Alimentation fournie", tr_feed_ph:"Ex : Provende CuniSmart BIO + fourrage local",
+    tr_sante:"Santé & vaccinations", tr_sante_ph:"Ex : Vaccinés VHD, vermifugés, hébergés en espace sain",
+    tr_hyg:"Grade hygiène de l'élevage", tr_hyg_ph:"Sélectionner",
+    tr_acheteur:"Destinataire / acheteur (optionnel)", tr_acheteur_ph:"Ex : Hôtel La Côte, ONG CARE",
+    tr_note:"Note complémentaire / soins spéciaux", tr_note_ph:"Ex : Élevés en plein air, sans antibiotiques",
+    tr_create:"Créer le lot + QR certifié",
     tr_empty:"Aucun lot pour l'instant. Créez votre premier lot certifié.", tr_view:"Voir la page", tr_dl:"Télécharger le QR",
     tr_born_from:"Née de {p}, mise bas le {d}", tr_confirm:"Supprimer ce lot ?",
     trace_lock_title:"🔒 Traçabilité — réservée à CuniSmart Pro",
@@ -2701,11 +2708,18 @@ const I18N = {
     cpt_saved:"✅ Backed up to the cloud.", cpt_restored:"✅ Data restored from the cloud.",
     cpt_logout:"Sign out", cpt_net:"❌ No connection. Please try again later.", cpt_err:"❌ Something went wrong.",
     trace_title:"Traceability & quality label", trace_sub:"Create a batch and its QR code: every product becomes traceable, from farm to plate.",
-    trace_add:"＋ New batch", tr_name:"Batch name", tr_name_ph:"e.g. Meat rabbits — July",
-    tr_type:"Type", tr_t_meat:"Meat", tr_t_breed:"Breeders", tr_t_litter:"Litter", tr_t_other:"Other",
-    tr_qty:"Quantity", tr_date:"Date", tr_litter:"Origin litter (optional)", tr_none:"— None —",
-    tr_origin:"Origin", tr_origin_ph:"Farm, parents…", tr_feed:"Feed", tr_feed_ph:"e.g. pellets + local forage",
-    tr_note:"Note / care", tr_note_ph:"e.g. vaccinated, free-range", tr_create:"Create batch + QR",
+    trace_add:"＋ New batch", tr_name:"Batch name", tr_name_ph:"e.g. Lot-Farm-Jul2026",
+    tr_type:"Category", tr_t_meat:"Meat", tr_t_breed:"Breeders", tr_t_litter:"Litter", tr_t_other:"Other",
+    tr_qty:"Quantity (head)", tr_poids:"Average weight per animal (kg)", tr_poids_ph:"e.g. 2.4 kg",
+    tr_date:"Batch creation date", tr_litter:"Origin litter (optional)", tr_none:"— None —",
+    tr_race:"Breed / strain", tr_race_ph:"e.g. New Zealand White, Improved local",
+    tr_origin:"Origin / farm location", tr_origin_ph:"e.g. Rural farm, CAPAO Farm — Bidou I",
+    tr_feed:"Feed provided", tr_feed_ph:"e.g. CuniSmart BIO feed + local forage",
+    tr_sante:"Health & vaccinations", tr_sante_ph:"e.g. RHD-vaccinated, dewormed, housed in clean space",
+    tr_hyg:"Farm hygiene grade", tr_hyg_ph:"Select",
+    tr_acheteur:"Buyer / recipient (optional)", tr_acheteur_ph:"e.g. Hotel La Côte, NGO CARE",
+    tr_note:"Additional note / special care", tr_note_ph:"e.g. Free-range, antibiotic-free",
+    tr_create:"Create batch + certified QR",
     tr_empty:"No batch yet. Create your first certified batch.", tr_view:"View page", tr_dl:"Download QR",
     tr_born_from:"Born from {p}, kindled on {d}", tr_confirm:"Delete this batch?",
     trace_lock_title:"🔒 Traceability — reserved for CuniSmart Pro",
@@ -4707,8 +4721,11 @@ function lotOrigineOptions(){
   }).join('');
 }
 function lotPayload(lot){
-  const data = { v:1, i:lot.id, n:lot.nom, ty:lot.type, q:lot.qte, b:lot.date,
-    o:lot.origine||'', al:lot.alim||'', s:lot.note||'', e:'SCOOPS CAPAO', d:lot.cree };
+  const data = { v:1, i:lot.id, n:lot.nom, ty:lot.type, q:lot.qte, pw:lot.poids,
+    b:lot.date, o:lot.origine||'', rc:lot.race||'', al:lot.alim||'',
+    sa:lot.sante||'', hyg:lot.hygGrade||'', hygsc:lot.hygScore||'',
+    s:lot.note||'', ach:lot.acheteur||'',
+    e:lot.producteur||'SCOOPS CAPAO', esp:lot.espece||'lapin', d:lot.cree };
   return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 }
 function lienTrace(lot){ return location.origin + '/trace.html#' + lotPayload(lot); }
@@ -4875,10 +4892,17 @@ function vueTracabilite(){
           '<option value="chair">'+t('tr_t_meat')+'</option><option value="repro">'+t('tr_t_breed')+'</option>'+
           '<option value="portee">'+t('tr_t_litter')+'</option><option value="autre">'+t('tr_t_other')+'</option></select></div>'+
         '<div class="champ"><label>'+t('tr_qty')+'</label><input id="lot-qte" type="number" min="1" placeholder="10"></div>'+
+        '<div class="champ"><label>'+t('tr_poids')+'</label><input id="lot-poids" placeholder="'+t('tr_poids_ph')+'"></div>'+
         '<div class="champ"><label>'+t('tr_date')+'</label><input id="lot-date" type="date" value="'+auj()+'"></div>'+
         '<div class="champ"><label>'+t('tr_litter')+'</label><select id="lot-portee"><option value="">'+t('tr_none')+'</option>'+lotOrigineOptions()+'</select></div>'+
         '<div class="champ"><label>'+t('tr_origin')+'</label><input id="lot-origine" placeholder="'+t('tr_origin_ph')+'"></div>'+
+        '<div class="champ"><label>'+t('tr_race')+'</label><input id="lot-race" placeholder="'+t('tr_race_ph')+'"></div>'+
         '<div class="champ"><label>'+t('tr_feed')+'</label><input id="lot-alim" placeholder="'+t('tr_feed_ph')+'"></div>'+
+        '<div class="champ"><label>'+t('tr_sante')+'</label><input id="lot-sante" placeholder="'+t('tr_sante_ph')+'"></div>'+
+        '<div class="champ"><label>'+t('tr_hyg')+'</label><select id="lot-hyg">'+
+          '<option value="">'+t('tr_hyg_ph')+'</option>'+
+          ['A','B','C'].map(g=>`<option value="${g}">${g}</option>`).join('')+'</select></div>'+
+        '<div class="champ"><label>'+t('tr_acheteur')+'</label><input id="lot-acheteur" placeholder="'+t('tr_acheteur_ph')+'"></div>'+
         '<div class="champ"><label>'+t('tr_note')+'</label><input id="lot-note" placeholder="'+t('tr_note_ph')+'"></div>'+
         '<button class="btn">'+t('tr_create')+'</button>'+
       '</form>'+
@@ -4895,10 +4919,24 @@ function creerLot(e){
     const s = etat.saillies.find(x=>x.id===pid);
     if(s) origine = fmt(t('tr_born_from'), {p: nom(s.femelle)+' × '+nom(s.male), d: fdate(s.dateMiseBas)});
   }
+  // score d'hygiène du dernier contrôle
+  let hygScore=''; if(etat.hygiene && etat.hygiene.length){
+    const h=etat.hygiene.slice().sort((a,b)=>b.date.localeCompare(a.date))[0];
+    const it=hygItems(); if(it.length) hygScore=Math.round(h.ctrl.filter(Boolean).length/it.length*100)+'%';
+  }
+  const gradeHyg = g('lot-hyg').value;
   const lot = { id: uid(), nom: g('lot-nom').value.trim(), type: g('lot-type').value,
     qte: g('lot-qte').value ? parseInt(g('lot-qte').value,10) : null,
+    poids: g('lot-poids').value.trim(),
     date: g('lot-date').value || auj(), origine,
-    alim: g('lot-alim').value.trim(), note: g('lot-note').value.trim(), cree: auj() };
+    race: g('lot-race').value.trim(),
+    alim: g('lot-alim').value.trim(),
+    sante: g('lot-sante').value.trim(),
+    hygGrade: gradeHyg, hygScore: hygScore,
+    acheteur: g('lot-acheteur').value.trim(),
+    note: g('lot-note').value.trim(), cree: auj(),
+    producteur: (etat.ecole&&etat.ecole.nom)||'SCOOPS CAPAO',
+    espece: espActive() };
   etat.lots.push(lot); sauver(); naviguer('tracabilite');
 }
 function supprimerLot(id){

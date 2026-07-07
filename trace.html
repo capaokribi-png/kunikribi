@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#1b2a1f;--green:#24512f;--gold:#e0a32e;--gold-ink:#7a5410;--paper:#eef2e7;--card:#fff;--sage:#66755f;--line:#e2e6da}
+  :root{--ink:#1b2a1f;--green:#24512f;--gold:#e0a32e;--gold-ink:#7a5410;--paper:#eef2e7;--card:#fff;--sage:#66755f;--line:#e2e6da;--red:#c0392b;--amber:#d4a017}
   *{box-sizing:border-box}
   body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--ink);
     background:radial-gradient(120% 60% at 50% -10%, #f7faf2 0%, var(--paper) 60%) fixed;
@@ -23,10 +23,16 @@
   .body{padding:22px}
   h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:24px;letter-spacing:-.02em;margin:0 0 4px}
   .type{color:var(--green);font-weight:700;font-size:14px;margin:0 0 18px}
-  .row{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
-  .row .k{flex:none;width:120px;color:var(--sage);font-size:13px;font-weight:600}
-  .row .v{flex:1;font-size:14.5px}
+  .row{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+  .row .k{flex:none;width:130px;color:var(--sage);font-size:13px;font-weight:600}
+  .row .v{flex:1;font-size:14px}
+  .grade{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:13px}
+  .grade-A{background:#e6f4ea;color:#1C4025}.grade-B{background:#fff8e1;color:#8a6400}.grade-C{background:#fdecea;color:var(--red)}
+  .sect{font-family:"Bricolage Grotesque";font-weight:800;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--sage);padding:14px 22px 4px;border-top:1px solid var(--line);background:#fafcf8}
   .foot{padding:14px 22px 20px;border-top:1px solid var(--line);color:var(--sage);font-size:12px;text-align:center}
+  .cunismart-badge{display:inline-flex;align-items:center;gap:6px;margin-top:8px;
+    background:var(--green);color:#fff;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:999px}
   .err{padding:40px 22px;text-align:center;color:var(--sage)}
   a.home{color:var(--green);font-weight:600;text-decoration:none}
 </style>
@@ -34,47 +40,80 @@
 <body>
 <main class="card" id="card"></main>
 <script>
-  const L = {
-    fr:{verif:"Vérifié via CuniSmart",batch:"Lot",qty:"Quantité",date:"Date",origin:"Origine",feed:"Alimentation",care:"Soins / note",farm:"Producteur",issued:"Émis le",
-        types:{chair:"Lapins de chair",repro:"Reproducteurs",portee:"Portée",autre:"Produit"},
-        foot:"Traçabilité assurée par CuniSmart · Kribi, Cameroun",err:"QR invalide ou incomplet.",home:"Aller sur cunismart.com"},
-    en:{verif:"Verified via CuniSmart",batch:"Batch",qty:"Quantity",date:"Date",origin:"Origin",feed:"Feed",care:"Care / note",farm:"Producer",issued:"Issued on",
-        types:{chair:"Meat rabbits",repro:"Breeders",portee:"Litter",autre:"Product"},
-        foot:"Traceability by CuniSmart · Kribi, Cameroon",err:"Invalid or incomplete QR.",home:"Go to cunismart.com"}
-  };
-  const lang = (navigator.language||"fr").slice(0,2)==="en" ? "en" : "fr";
-  const T = L[lang];
-  const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const fdate = d => { if(!d) return "—"; try{ return new Date(d+"T00:00:00").toLocaleDateString(lang,{day:"numeric",month:"long",year:"numeric"}); }catch(e){ return d; } };
+const L={
+  fr:{verif:"Vérifié via CuniSmart",label:"Label qualité CuniSmart",
+    f_batch:"Lot",f_qty:"Quantité",f_poids:"Poids moyen",f_date:"Date de création",
+    f_origin:"Lieu d'élevage",f_race:"Race / souche",f_feed:"Alimentation",
+    f_sante:"Santé & vaccinations",f_hyg:"Grade hygiène",f_note:"Note",
+    f_acheteur:"Destinataire",f_farm:"Producteur",f_issued:"Émis le",f_esp:"Espèce",
+    g_A:"A — Excellent",g_B:"B — Bon",g_C:"C — Passable",
+    types:{chair:"Lapins de chair",repro:"Reproducteurs",portee:"Portée",autre:"Produit"},
+    esp:{lapin:"Lapin",porc:"Porc",bovin:"Bovin",caprin:"Chèvre",volaille:"Volaille"},
+    sect_id:"Identification",sect_elev:"Conditions d'élevage",sect_prod:"Producteur",
+    foot:"Traçabilité & label qualité assurés par CuniSmart · Cameroun · Afrique francophone",
+    err:"QR invalide ou incomplet.",home:"Aller sur cunismart.com"},
+  en:{verif:"Verified via CuniSmart",label:"CuniSmart Quality Label",
+    f_batch:"Batch",f_qty:"Quantity",f_poids:"Avg weight",f_date:"Created on",
+    f_origin:"Farm location",f_race:"Breed / strain",f_feed:"Feed",
+    f_sante:"Health & vaccinations",f_hyg:"Hygiene grade",f_note:"Note",
+    f_acheteur:"Buyer",f_farm:"Producer",f_issued:"Issued on",f_esp:"Species",
+    g_A:"A — Excellent",g_B:"B — Good",g_C:"C — Fair",
+    types:{chair:"Meat",repro:"Breeders",portee:"Litter",autre:"Product"},
+    esp:{lapin:"Rabbit",porc:"Pig",bovin:"Cattle",caprin:"Goat",volaille:"Poultry"},
+    sect_id:"Identification",sect_elev:"Farming conditions",sect_prod:"Producer",
+    foot:"Traceability & quality label by CuniSmart · Cameroon · Francophone Africa",
+    err:"Invalid or incomplete QR.",home:"Go to cunismart.com"}
+};
+const lang=(navigator.language||"fr").slice(0,2)==="en"?"en":"fr";
+const T=L[lang];
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate=d=>{if(!d)return"—";try{return new Date(d+"T00:00:00").toLocaleDateString(lang,{day:"numeric",month:"long",year:"numeric"});}catch(e){return d;}};
+function decode(){const raw=location.hash.slice(1);if(!raw)return null;try{return JSON.parse(decodeURIComponent(escape(atob(raw))));}catch(e){return null;}}
+function row(k,v,extra=""){return v?'<div class="row"><div class="k">'+k+'</div><div class="v">'+extra+esc(v)+'</div></div>':"";}
+function sect(t){return'<div class="sect">'+t+'</div>';}
 
-  function decode(){
-    const raw = location.hash.slice(1);
-    if(!raw) return null;
-    try{ return JSON.parse(decodeURIComponent(escape(atob(raw)))); }catch(e){ return null; }
-  }
-  function row(k,v){ return v ? '<div class="row"><div class="k">'+k+'</div><div class="v">'+esc(v)+'</div></div>' : ''; }
-
-  const d = decode();
-  const card = document.getElementById("card");
-  if(!d || !d.n){
-    card.innerHTML = '<div class="err">'+T.err+'<br><br><a class="home" href="https://cunismart.com">'+T.home+'</a></div>';
-  } else {
-    const typeLbl = (T.types[d.ty]||d.ty||"");
-    card.innerHTML =
-      '<div class="head"><div class="brand"><span class="seed"></span>CuniSmart</div>'+
-        '<span class="verif">✔ '+T.verif+'</span></div>'+
-      '<div class="body">'+
-        '<h1>'+esc(d.n)+'</h1>'+
-        '<p class="type">'+esc(typeLbl)+(d.q?' · '+esc(d.q):'')+'</p>'+
-        row(T.date, fdate(d.b))+
-        row(T.origin, d.o)+
-        row(T.feed, d.al)+
-        row(T.care, d.s)+
-        row(T.farm, d.e)+
-        row(T.issued, fdate(d.d))+
-      '</div>'+
-      '<div class="foot">'+T.foot+'</div>';
-  }
+const d=decode();
+const card=document.getElementById("card");
+if(!d||!d.n){
+  card.innerHTML='<div class="err">'+T.err+'<br><br><a class="home" href="https://cunismart.com">'+T.home+'</a></div>';
+} else {
+  const typeLbl=(T.types[d.ty]||d.ty||"");
+  const espLbl=(T.esp[d.esp]||"");
+  const gradeClass=d.hyg?'grade grade-'+d.hyg:'';
+  const gradeLabel=d.hyg?(T['g_'+d.hyg]||(d.hyg+(d.hygsc?' ('+d.hygsc+')':[]))):d.hygsc||'';
+  card.innerHTML=
+    '<div class="head">'+
+      '<div class="brand"><span class="seed"></span>CuniSmart</div>'+
+      '<span class="verif">✔ '+T.verif+'</span>'+
+    '</div>'+
+    '<div class="body">'+
+      '<h1>'+esc(d.n)+'</h1>'+
+      '<p class="type">'+esc(typeLbl)+(espLbl?' · '+esc(espLbl):'')+(d.q?' · '+esc(d.q)+(lang==='fr'?' têtes':' head'):'')+'</p>'+
+    '</div>'+
+    sect(T.sect_id)+
+    '<div class="body" style="padding-top:0;padding-bottom:4px">'+
+      row(T.f_date, fdate(d.b))+
+      row(T.f_race, d.rc)+
+      row(T.f_poids, d.pw)+
+    '</div>'+
+    sect(T.sect_elev)+
+    '<div class="body" style="padding-top:0;padding-bottom:4px">'+
+      row(T.f_origin, d.o)+
+      row(T.f_feed, d.al)+
+      row(T.f_sante, d.sa)+
+      (d.hyg?'<div class="row"><div class="k">'+T.f_hyg+'</div><div class="v"><span class="'+gradeClass+'">'+esc(gradeLabel)+'</span></div></div>':'')+
+      row(T.f_note, d.s)+
+      (d.ach?row(T.f_acheteur, d.ach):'')+
+    '</div>'+
+    sect(T.sect_prod)+
+    '<div class="body" style="padding-top:0">'+
+      row(T.f_farm, d.e)+
+      row(T.f_issued, fdate(d.d))+
+      '<div class="row"><div class="k">'+T.label+'</div><div class="v">'+
+        '<span class="cunismart-badge">✔ CuniSmart</span></div></div>'+
+    '</div>'+
+    '<div class="foot">'+T.foot+'<br><a class="home" href="https://cunismart.com">cunismart.com</a></div>';
+}
 </script>
 </body>
 </html>
