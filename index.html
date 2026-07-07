@@ -65,6 +65,29 @@
   .esp-tab:active{transform:translateY(2px);box-shadow:0 0 0 #E0D8C6;}
   .esp-tab.on{background:linear-gradient(180deg,var(--vert-moyen),var(--vert-foret));color:var(--creme);
     border-color:var(--vert-fonce);box-shadow:0 2px 0 var(--vert-fonce);}
+  .rf-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .rf-doc{max-width:720px;margin:0 auto;color:#1a1a1a;}
+  .rf-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--vert-foret);padding-bottom:10px;margin-bottom:14px;}
+  .rf-mark{font-weight:800;font-size:1.35rem;color:var(--vert-foret);}
+  .rf-sub{font-size:.78rem;color:var(--gris);}
+  .rf-logo{width:64px;height:64px;border:1px dashed #bbb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#aaa;flex:none;}
+  .rf-doc h1{font-size:1.15rem;color:var(--vert-foret);margin:6px 0 10px;letter-spacing:.5px;}
+  .rf-meta{font-size:.86rem;color:#333;margin-bottom:14px;line-height:1.55;}
+  .rf-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+  .rf-table td{padding:7px 9px;border-bottom:1px solid #eee;}
+  .rf-r{text-align:right;white-space:nowrap;}
+  .rf-section td{background:#F3EFE6;font-weight:800;color:var(--vert-foret);text-transform:uppercase;font-size:.78rem;letter-spacing:.5px;}
+  .rf-total td{font-weight:700;border-top:1px solid #ccc;}
+  .rf-result td{font-weight:800;font-size:1.05rem;background:#FBF3E0;border-top:2px solid var(--vert-foret);}
+  .rf-sign{margin-top:20px;font-size:.85rem;color:#333;}
+  .rf-foot{margin-top:14px;font-size:.72rem;color:var(--gris);line-height:1.5;border-top:1px solid #eee;padding-top:8px;}
+  @media print{
+    .sidebar{display:none !important;}
+    .rf-noprint{display:none !important;}
+    .app{display:block !important;}
+    #contenu{padding:0 !important;}
+    .card{box-shadow:none !important;border:none !important;}
+  }
   .card h3{color:var(--vert-foret);font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
   .alerte{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:.9rem;}
@@ -2551,6 +2574,7 @@ const I18N = {
     f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
     sp_ask:"Entrez votre code Super PRO (multi-élevage). Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
+    rf_btn:"Rapport financier (banque)",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
     confirm_del:"Supprimer définitivement cet enregistrement ?",
@@ -2692,6 +2716,7 @@ const I18N = {
     f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
     sp_ask:"Enter your Super PRO code (multi-species). Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
+    rf_btn:"Financial report (bank)",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
     confirm_del:"Permanently delete this record?",
@@ -3557,7 +3582,10 @@ function vueBilan(){
       ${conseils.length ? conseils.map(c=>`<div class="diag">💡 <span>${c}</span></div>`).join('')
         : `<p class="vide">${t('diag_none')}</p>`}
     </div>
-    <button class="btn wa" onclick="partagerBilan()">🟢 ${t('btn_share_wa')}</button>`;
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" onclick="rapportFinancier()">🏦 ${t('rf_btn')}</button>
+      <button class="btn wa" onclick="partagerBilan()">🟢 ${t('btn_share_wa')}</button>
+    </div>`;
 }
 
 function partagerBilan(){
@@ -3580,6 +3608,64 @@ function partagerBilan(){
   if(conseils.length) lignes.push(t('wa_advice') + ' : ' + conseils[0]);
   lignes.push('— CuniSmart 🐇');
   partagerWhatsApp(lignes.join('\n'));
+}
+
+
+/* ================= RAPPORT FINANCIER (OHADA / banques) ================= */
+function rapportFinancier(){
+  const L = (fr,en) => langue==='fr' ? fr : en;
+  const tx = etat.transactions.slice();
+  const ventes = tx.filter(x=>x.type==='vente');
+  const depenses = tx.filter(x=>x.type==='depense');
+  const totV = ventes.reduce((s,x)=>s+(x.montant||0),0);
+  const totD = depenses.reduce((s,x)=>s+(x.montant||0),0);
+  const resultat = totV - totD;
+  const dates = tx.map(x=>x.date).filter(Boolean).sort();
+  const periode = dates.length ? (fdate(dates[0]) + '  →  ' + fdate(dates[dates.length-1])) : L('Toutes opérations','All records');
+  const nb = etat.lapins.filter(l=>l.statut==='actif').length;
+  const parEsp = ORDRE_ESP.map(k=>{
+    const n = etat.lapins.filter(l=>l.statut==='actif' && espDe(l)===k).length;
+    return n>0 ? (ESPECES[k].icon+' '+espLbl(k)+' : '+n) : null;
+  }).filter(Boolean).join('  ·  ');
+  const nom = (etat.ecole && etat.ecole.nom) ? esc(etat.ecole.nom) : L('(à compléter)','(to complete)');
+
+  const rows = arr => arr.length
+    ? arr.slice().sort((a,b)=>(a.date||'')<(b.date||'')?-1:1)
+        .map(x=>`<tr><td>${fdate(x.date)}</td><td>${esc(x.desc||'—')}</td><td class="rf-r">${fcfa(x.montant||0)}</td></tr>`).join('')
+    : `<tr><td colspan="3" style="color:#999;font-style:italic">${L('Aucune opération enregistrée.','No record yet.')}</td></tr>`;
+
+  const doc =
+   `<div class="rf-actions rf-noprint">
+      <button class="btn" onclick="window.print()">🖨️ ${L('Imprimer / Enregistrer en PDF','Print / Save as PDF')}</button>
+      <button class="btn sec" onclick="naviguer('bilan')">← ${L('Retour','Back')}</button>
+    </div>
+    <div class="rf-doc card">
+      <div class="rf-head">
+        <div><div class="rf-mark">CuniSmart</div><div class="rf-sub">SCOOPS CAPAO · Kribi, Cameroun · cunismart.com</div></div>
+        <div class="rf-logo">${L('Logo','Logo')}</div>
+      </div>
+      <h1>${L('ÉTAT DE RÉSULTAT SIMPLIFIÉ','SIMPLIFIED INCOME STATEMENT')}</h1>
+      <div class="rf-meta">
+        ${L('Exploitation','Farm')} : <b>${nom}</b><br>
+        ${L('Période','Period')} : ${periode} &nbsp;·&nbsp; ${L('Édité le','Issued on')} : ${fdate(auj())}<br>
+        ${L('Cheptel actif','Active herd')} : <b>${nb}</b> ${L('animaux','animals')}${parEsp?(' &nbsp;('+parEsp+')'):''} &nbsp;·&nbsp; ${L('Devise','Currency')} : FCFA
+      </div>
+      <table class="rf-table">
+        <tr class="rf-section"><td colspan="3">${L('PRODUITS (Recettes)','INCOME (Revenue)')}</td></tr>
+        ${rows(ventes)}
+        <tr class="rf-total"><td colspan="2">${L('Total des produits','Total income')}</td><td class="rf-r">${fcfa(totV)}</td></tr>
+        <tr class="rf-section"><td colspan="3">${L('CHARGES (Dépenses)','EXPENSES')}</td></tr>
+        ${rows(depenses)}
+        <tr class="rf-total"><td colspan="2">${L('Total des charges','Total expenses')}</td><td class="rf-r">${fcfa(totD)}</td></tr>
+        <tr class="rf-result"><td colspan="2">${L('RÉSULTAT NET','NET RESULT')}</td><td class="rf-r" style="color:${resultat>=0?'#1C4025':'#C0392B'}">${fcfa(resultat)}</td></tr>
+      </table>
+      <div class="rf-sign">${L('Fait à Kribi, le','Done in Kribi, on')} ${fdate(auj())} &nbsp;—&nbsp; ${L('Signature','Signature')} : ______________________</div>
+      <div class="rf-foot">${L(
+        'Document généré par CuniSmart. État simplifié des recettes et dépenses (trésorerie), présentation inspirée du référentiel SYSCOHADA. Ne constitue pas un bilan comptable audité.',
+        'Generated by CuniSmart. Simplified cash-based income/expense statement, presentation inspired by the SYSCOHADA framework. Not an audited financial statement.')}</div>
+    </div>`;
+  document.getElementById('contenu').innerHTML = doc;
+  window.scrollTo(0,0);
 }
 
 /* ---------- Nutrition : formulateur de provende ---------- */
