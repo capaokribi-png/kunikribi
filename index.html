@@ -58,6 +58,13 @@
   .empty-state .em-ic{font-size:2.6rem;margin-bottom:8px;}
   .empty-state h3{color:var(--vert-foret);margin-bottom:5px;}
   .empty-state p{color:var(--gris);font-size:.9rem;margin:0 auto 14px;max-width:46ch;}
+  .esp-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .esp-tab{background:#fff;border:1.5px solid #E0D8C6;color:var(--gris);padding:8px 14px;border-radius:11px;
+    font-weight:700;font-size:.86rem;cursor:pointer;box-shadow:0 2px 0 #E0D8C6;transition:transform .08s,filter .12s;}
+  .esp-tab:hover{filter:brightness(.97);}
+  .esp-tab:active{transform:translateY(2px);box-shadow:0 0 0 #E0D8C6;}
+  .esp-tab.on{background:linear-gradient(180deg,var(--vert-moyen),var(--vert-foret));color:var(--creme);
+    border-color:var(--vert-fonce);box-shadow:0 2px 0 var(--vert-fonce);}
   .card h3{color:var(--vert-foret);font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
   .alerte{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:.9rem;}
@@ -2536,13 +2543,14 @@ const I18N = {
     al_wean:"<b>Sevrage</b> de la portée de <b>{f}</b> {q} ({n} lapereaux).",
     al_wean_on:"prévu le {d}", al_wean_now:"à faire",
     herd_title:"Registre du cheptel", herd_sub:"Reproducteurs et reproductrices de l’élevage",
-    herd_add:"＋ Enregistrer un lapin", herd_empty:"Aucun lapin enregistré. Commencez par ajouter vos reproducteurs.",
+    herd_add:"＋ Enregistrer un animal", herd_empty:"Aucun animal enregistré. Commencez par ajouter vos reproducteurs.",
     herd_empty_t:"Votre cheptel est vide",
     start_title:"Bienvenue ! Votre élevage commence ici", start_cta:"➕ Ajouter mon premier lapin",
     start_txt:"Ajoutez votre premier lapin pour voir vos statistiques s'animer, suivre la reproduction et calculer vos marges.",
     f_name:"Nom / N° boucle", ph_name:"Ex : F-001 ou Bella", f_sex:"Sexe", f_female:"♀ Femelle", f_male:"♂ Mâle",
     f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
+    sp_ask:"Entrez votre code Super PRO (multi-élevage). Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
     confirm_del:"Supprimer définitivement cet enregistrement ?",
@@ -2676,13 +2684,14 @@ const I18N = {
     al_wean:"<b>Weaning</b> of <b>{f}</b>’s litter {q} ({n} kits).",
     al_wean_on:"due on {d}", al_wean_now:"is due now",
     herd_title:"Herd register", herd_sub:"Breeding does and bucks of the farm",
-    herd_add:"＋ Register a rabbit", herd_empty:"No rabbit registered yet. Start by adding your breeders.",
+    herd_add:"＋ Register an animal", herd_empty:"No animal registered yet. Start by adding your breeders.",
     herd_empty_t:"Your herd is empty",
     start_title:"Welcome! Your farm starts here", start_cta:"➕ Add my first rabbit",
     start_txt:"Add your first rabbit to bring your dashboard to life, track breeding and compute your margins.",
     f_name:"Name / Tag no.", ph_name:"E.g. F-001 or Bella", f_sex:"Sex", f_female:"♀ Doe", f_male:"♂ Buck",
     f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
+    sp_ask:"Enter your Super PRO code (multi-species). Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
     confirm_del:"Permanently delete this record?",
@@ -3166,16 +3175,16 @@ function calculerAlertes(){
   const a = [];
   etat.saillies.forEach(s => {
     if(s.statut === 'attente'){
-      const jp = diffJours(auj(), ajJours(s.date, PALPATION));
+      const jp = diffJours(auj(), ajJours(s.date, espSaillie(s).palpation));
       if(jp <= 0) a.push({t:'warn', txt: fmt(t('al_palp'), {f:nom(s.femelle), d:fdate(s.date)})});
-      const jmb = diffJours(auj(), ajJours(s.date, GESTATION));
-      if(jmb <= 3 && jmb >= 0) a.push({t:'urgent', txt: fmt(t('al_soon'), {f:nom(s.femelle), d:fdate(ajJours(s.date,GESTATION)), n:jmb})});
-      if(jmb < 0) a.push({t:'urgent', txt: fmt(t('al_over'), {f:nom(s.femelle), d:fdate(ajJours(s.date,GESTATION))})});
+      const jmb = diffJours(auj(), ajJours(s.date, espSaillie(s).gestation));
+      if(jmb <= 3 && jmb >= 0) a.push({t:'urgent', txt: fmt(t('al_soon'), {f:nom(s.femelle), d:fdate(ajJours(s.date,espSaillie(s).gestation)), n:jmb})});
+      if(jmb < 0) a.push({t:'urgent', txt: fmt(t('al_over'), {f:nom(s.femelle), d:fdate(ajJours(s.date,espSaillie(s).gestation))})});
     }
     if(s.statut === 'misebas' && !s.sevre){
-      const js = diffJours(auj(), ajJours(s.dateMiseBas, SEVRAGE));
+      const js = diffJours(auj(), ajJours(s.dateMiseBas, espSaillie(s).sevrage));
       if(js <= 2){
-        const q = js >= 0 ? fmt(t('al_wean_on'), {d:fdate(ajJours(s.dateMiseBas,SEVRAGE))}) : t('al_wean_now');
+        const q = js >= 0 ? fmt(t('al_wean_on'), {d:fdate(ajJours(s.dateMiseBas,espSaillie(s).sevrage))}) : t('al_wean_now');
         a.push({t:'info', txt: fmt(t('al_wean'), {f:nom(s.femelle), q, n:s.vivants})});
       }
     }
@@ -3222,11 +3231,11 @@ function rendre(){
 }
 
 function vueTableau(){
-  const actifs = etat.lapins.filter(l => l.statut === 'actif');
+  const actifs = etat.lapins.filter(l => l.statut === 'actif' && espDe(l)===espActive());
   const fem = actifs.filter(l => l.sexe === 'F').length;
   const mal = actifs.filter(l => l.sexe === 'M').length;
-  const gest = etat.saillies.filter(s => s.statut === 'attente').length;
-  const kits = etat.saillies.filter(s => s.statut==='misebas' && !s.sevre).reduce((x,s)=>x+(s.vivants||0),0);
+  const gest = etat.saillies.filter(s => s.statut === 'attente' && espSaillie(s)===espDef()).length;
+  const kits = etat.saillies.filter(s => s.statut==='misebas' && !s.sevre && espSaillie(s)===espDef()).reduce((x,s)=>x+(s.vivants||0),0);
   const k = calculerKPI();
   const alertes = calculerAlertes();
   const dateJour = new Date().toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -3234,16 +3243,17 @@ function vueTableau(){
   return `
     <h2 class="page-title">${t('dash_title')}</h2>
     <p class="page-sub">${t('dash_sub')} — ${dateJour}</p>
+    ${selecteurEspece()}
     <div class="grid stats">
-      <div class="card stat leaf"><div class="ico">🐰</div><div class="val">${fem}</div><div class="lab">${t('st_females')}</div></div>
-      <div class="card stat leaf"><div class="ico">🐇</div><div class="val">${mal}</div><div class="lab">${t('st_males')}</div></div>
+      <div class="card stat leaf"><div class="ico">${espDef().icon}</div><div class="val">${fem}</div><div class="lab">${espF(espActive())}</div></div>
+      <div class="card stat leaf"><div class="ico">♂️</div><div class="val">${mal}</div><div class="lab">${espM(espActive())}</div></div>
       <div class="card stat amber"><div class="ico">⏳</div><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
-      <div class="card stat leaf"><div class="ico">🐣</div><div class="val">${kits}</div><div class="lab">${t('st_kits')}</div></div>
+      <div class="card stat leaf"><div class="ico">🐣</div><div class="val">${kits}</div><div class="lab">${espPetit(espActive())}</div></div>
       <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="ico">💰</div><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.35rem">${fcfa(k.marge)}</div><div class="lab">${t('st_balance')}</div></div>
       <div class="card stat amber"><div class="ico">🎓</div><div class="val">${etat.ecole.validees.length}/6</div><div class="lab">${t('st_school')}</div></div>
     </div>
-    ${etat.lapins.length===0 ? `<div class="card empty-state">
-      <div class="em-ic">🐰</div>
+    ${animauxEsp().length===0 ? `<div class="card empty-state">
+      <div class="em-ic">${espDef().icon}</div>
       <h3>${t('start_title')}</h3>
       <p>${t('start_txt')}</p>
       <button class="btn" onclick="naviguer('cheptel')">${t('start_cta')}</button>
@@ -3254,8 +3264,70 @@ function vueTableau(){
     </div>`}`;
 }
 
+
+/* ================= MULTI-ÉLEVAGE (Super PRO) ================= */
+/* ⭐ Code d'activation Super PRO — CHANGEZ-LE, donnez-le aux abonnés multi-élevage. */
+const CODE_SUPERPRO = "CAPAO-SUPER-2026";
+
+const ESPECES = {
+  lapin:   {icon:'🐰', fr:'Lapins',  en:'Rabbits', gestation:31,  palpation:12, sevrage:35,
+            f_fr:'Femelle', f_en:'Doe',    m_fr:'Mâle', m_en:'Buck',
+            petit_fr:'Lapereaux', petit_en:'Kits',
+            races:['Néo-Zélandais blanc / New Zealand White','Californien','Fauve de Bourgogne','Géant des Flandres','Papillon anglais','Local']},
+  porc:    {icon:'🐖', fr:'Porcs',   en:'Pigs', gestation:114, palpation:21, sevrage:28,
+            f_fr:'Truie', f_en:'Sow',   m_fr:'Verrat', m_en:'Boar',
+            petit_fr:'Porcelets', petit_en:'Piglets',
+            races:['Large White','Landrace','Duroc','Piétrain','Local']},
+  bovin:   {icon:'🐄', fr:'Bovins',  en:'Cattle', gestation:283, palpation:60, sevrage:210,
+            f_fr:'Vache', f_en:'Cow',   m_fr:'Taureau', m_en:'Bull',
+            petit_fr:'Veaux', petit_en:'Calves',
+            races:["Zébu","N'Dama","Holstein","Charolais","Brahman","Local"]},
+  caprin:  {icon:'🐐', fr:'Chèvres', en:'Goats', gestation:150, palpation:30, sevrage:75,
+            f_fr:'Chèvre', f_en:'Doe',  m_fr:'Bouc', m_en:'Buck',
+            petit_fr:'Chevreaux', petit_en:'Kids',
+            races:['Naine de Guinée','Boer','Saanen','Alpine','Local']},
+  volaille:{icon:'🐔', fr:'Poules',  en:'Poultry', gestation:21, palpation:0, sevrage:0,
+            f_fr:'Poule', f_en:'Hen',   m_fr:'Coq', m_en:'Rooster',
+            petit_fr:'Poussins', petit_en:'Chicks',
+            races:['Poulet local','Cobb 500','Ross 308','ISA Brown (pondeuse)','Wyandotte']},
+};
+const ORDRE_ESP = ['lapin','porc','bovin','caprin','volaille'];
+
+function espActive(){ return (etat.especeActive && ESPECES[etat.especeActive]) ? etat.especeActive : 'lapin'; }
+function espDef(){ return ESPECES[espActive()]; }
+function espLbl(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.fr:e.en; }
+function espF(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.f_fr:e.f_en; }
+function espM(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.m_fr:e.m_en; }
+function espPetit(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.petit_fr:e.petit_en; }
+function espDe(l){ return (l && l.espece) || 'lapin'; }
+function animauxEsp(){ return etat.lapins.filter(l => espDe(l)===espActive()); }
+function racesEsp(){ const base = espDef().races || []; return espActive()==='lapin' ? [...base, ...(etat.racesPerso||[])] : base; }
+function espSaillie(s){ const f=lapin(s.femelle); return ESPECES[(f&&f.espece)||s.espece||'lapin'] || ESPECES.lapin; }
+
+function setEspece(k){
+  if(k!=='lapin' && etat.superpro!==true){ demanderSuperPro(); return; }
+  etat.especeActive = k; sauver(); rendre();
+}
+function selecteurEspece(){
+  return '<div class="esp-tabs">'+ORDRE_ESP.map(k=>{
+    const on = espActive()===k;
+    const lock = (k!=='lapin' && etat.superpro!==true);
+    return '<button class="esp-tab'+(on?' on':'')+'" onclick="setEspece(\''+k+'\')">'+
+      ESPECES[k].icon+' '+espLbl(k)+(lock?' 🔒':'')+'</button>';
+  }).join('')+'</div>';
+}
+function demanderSuperPro(){
+  const code = prompt(t('sp_ask'));
+  if(code===null) return;
+  const v = code.trim();
+  if(v===''){ window.location.href='payer.html'; return; }
+  if(v.toUpperCase()===CODE_SUPERPRO.toUpperCase()){
+    etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); sauver(); alert(t('sp_ok')); rendre();
+  } else { alert(t('sp_bad')); }
+}
+
 function vueCheptel(){
-  const lignes = etat.lapins.slice().reverse().map(l => `
+  const lignes = animauxEsp().slice().reverse().map(l => `
     <tr>
       <td><b>${esc(l.nom)}</b></td>
       <td><span class="tag ${l.sexe==='F'?'f':'m'}">${l.sexe==='F'?t('f_female'):t('f_male')}</span></td>
@@ -3274,19 +3346,20 @@ function vueCheptel(){
   return `
     <h2 class="page-title">${t('herd_title')}</h2>
     <p class="page-sub">${t('herd_sub')}</p>
+    ${selecteurEspece()}
     <div class="card">
-      <h3>${t('herd_add')}</h3>
+      <h3>${t('herd_add')} — ${espLbl(espActive())}</h3>
       <form class="ligne" onsubmit="ajouterLapin(event)">
         <div class="champ"><label>${t('f_name')}</label><input id="l-nom" required placeholder="${t('ph_name')}"></div>
-        <div class="champ"><label>${t('f_sex')}</label><select id="l-sexe"><option value="F">${t('f_female')}</option><option value="M">${t('f_male')}</option></select></div>
-        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${toutesRaces().map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>
+        <div class="champ"><label>${t('f_sex')}</label><select id="l-sexe"><option value="F">${espF(espActive())}</option><option value="M">${espM(espActive())}</option></select></div>
+        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${racesEsp().map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>
         <button type="button" class="btn mini sec" style="margin-bottom:2px" onclick="nouvelleRace()">${t('btn_new_breed')}</button>
         <div class="champ"><label>${t('f_birth')}</label><input type="date" id="l-naiss"></div>
         <div class="champ"><label>${t('f_weight')}</label><input type="number" step="0.1" min="0" id="l-poids" placeholder="${t('ph_weight')}"></div>
         <button class="btn">${t('btn_add')}</button>
       </form>
-      ${etat.lapins.length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_weight')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
-        : `<div class="empty-state"><div class="em-ic">🐰</div><h3>${t('herd_empty_t')}</h3><p>${t('herd_empty')}</p></div>`}
+      ${animauxEsp().length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_weight')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
+        : `<div class="empty-state"><div class="em-ic">${espDef().icon}</div><h3>${t('herd_empty_t')}</h3><p>${t('herd_empty')}</p></div>`}
     </div>`;
 }
 
@@ -3297,10 +3370,11 @@ function agendaRepro(){
   const ev = [];
   etat.saillies.forEach(s=>{
     if(s.statut === 'attente'){
-      ev.push({ d: ajJours(s.date, PALPATION), type:'palp', s:s });
-      ev.push({ d: ajJours(s.date, GESTATION), type:'mb',   s:s });
-    } else if(s.statut === 'misebas' && !s.sevre){
-      ev.push({ d: ajJours(s.dateMiseBas, SEVRAGE), type:'sev', s:s });
+      const E = espSaillie(s);
+      if(E.palpation>0) ev.push({ d: ajJours(s.date, E.palpation), type:'palp', s:s });
+      ev.push({ d: ajJours(s.date, E.gestation), type:'mb',   s:s });
+    } else if(s.statut === 'misebas' && !s.sevre && espSaillie(s).sevrage>0){
+      ev.push({ d: ajJours(s.dateMiseBas, espSaillie(s).sevrage), type:'sev', s:s });
     }
   });
   ev.forEach(e=> e.j = diffJours(auj(), e.d));
@@ -3346,20 +3420,20 @@ function blocAgenda(){
 }
 
 function vueRepro(){
-  const femelles = etat.lapins.filter(l=>l.sexe==='F' && l.statut==='actif');
-  const males = etat.lapins.filter(l=>l.sexe==='M' && l.statut==='actif');
+  const femelles = etat.lapins.filter(l=>l.sexe==='F' && l.statut==='actif' && espDe(l)===espActive());
+  const males = etat.lapins.filter(l=>l.sexe==='M' && l.statut==='actif' && espDe(l)===espActive());
   const occupees = new Set(etat.saillies.filter(s=>s.statut==='attente').map(s=>s.femelle));
   const femDispo = femelles.filter(f=>!occupees.has(f.id));
 
-  const lignes = etat.saillies.slice().reverse().map(s => {
+  const lignes = etat.saillies.filter(s=>espSaillie(s)===espDef()).slice().reverse().map(s => {
     let etape = '', actions = '';
     if(s.statut === 'attente'){
-      etape = `<span class="tag gest">${t('tag_gest')}</span><br><small>${t('palp_lbl')} : ${fdate(ajJours(s.date,PALPATION))}<br>${t('due_lbl')} : <b>${fdate(ajJours(s.date,GESTATION))}</b></small>`;
+      etape = `<span class="tag gest">${t('tag_gest')}</span><br><small>${t('palp_lbl')} : ${fdate(ajJours(s.date,espSaillie(s).palpation))}<br>${t('due_lbl')} : <b>${fdate(ajJours(s.date,espSaillie(s).gestation))}</b></small>`;
       actions = `<button class="btn mini" onclick="formMiseBas('${s.id}')">${t('btn_kindle')}</button>
                  <button class="btn mini danger" onclick="echecSaillie('${s.id}')">${t('btn_fail')}</button>`;
     } else if(s.statut === 'misebas'){
       etape = `<span class="tag ok">${t('tag_kindled')} ${fdate(s.dateMiseBas)}</span><br>
-        <small>${fmt(t('born_line'),{v:s.vivants,m:s.morts})}${s.sevre ? ' · <b>'+t('weaned_lbl')+'</b>' : ' · '+t('wean_due_lbl')+' : <b>'+fdate(ajJours(s.dateMiseBas,SEVRAGE))+'</b>'}</small>`;
+        <small>${fmt(t('born_line'),{v:s.vivants,m:s.morts})}${s.sevre ? ' · <b>'+t('weaned_lbl')+'</b>' : ' · '+t('wean_due_lbl')+' : <b>'+fdate(ajJours(s.dateMiseBas,espSaillie(s).sevrage))+'</b>'}</small>`;
       if(!s.sevre) actions = `<button class="btn mini sec" onclick="sevrer('${s.id}')">${t('btn_wean')}</button>`;
     } else {
       etape = `<span class="tag fin">${t('tag_fail')}</span>`;
@@ -3369,7 +3443,8 @@ function vueRepro(){
 
   return `
     <h2 class="page-title">${t('repro_title')}</h2>
-    <p class="page-sub">${fmt(t('repro_sub'),{g:GESTATION,s:SEVRAGE})}</p>
+    <p class="page-sub">${fmt(t('repro_sub'),{g:espDef().gestation,s:espDef().sevrage})}</p>
+    ${selecteurEspece()}
     ${blocAgenda()}
     <div class="card" style="margin-bottom:16px">
       <h3>${t('repro_add')}</h3>
@@ -3380,7 +3455,7 @@ function vueRepro(){
         <div class="champ"><label>${t('f_matedate')}</label><input type="date" id="s-date" value="${auj()}" required></div>
         <button class="btn">${t('btn_save')}</button>
       </form>
-      <p class="vide" style="font-style:normal">${fmt(t('repro_note'),{p:PALPATION,g:GESTATION})}</p>`
+      <p class="vide" style="font-style:normal">${fmt(t('repro_note'),{p:espDef().palpation,g:espDef().gestation})}</p>`
       : `<p class="vide">${t('repro_need')}</p>`}
       ${etat.saillies.length ? `<table><thead><tr><th>${t('th_pair')}</th><th>${t('th_mating')}</th><th>${t('th_track')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>` : ''}
     </div>
@@ -3838,6 +3913,7 @@ function ajouterLapin(e){
   const poids = (p && p>0) ? p : null;
   etat.lapins.push({
     id: uid(),
+    espece: espActive(),
     nom: document.getElementById('l-nom').value.trim(),
     sexe: document.getElementById('l-sexe').value,
     race: document.getElementById('l-race').value,
@@ -3868,6 +3944,7 @@ function ajouterSaillie(e){
   e.preventDefault();
   etat.saillies.push({
     id: uid(),
+    espece: espActive(),
     femelle: document.getElementById('s-fem').value,
     male: document.getElementById('s-mal').value,
     date: document.getElementById('s-date').value,
