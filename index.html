@@ -2573,7 +2573,7 @@ const I18N = {
     f_name:"Nom / N° boucle", ph_name:"Ex : F-001 ou Bella", f_sex:"Sexe", f_female:"♀ Femelle", f_male:"♂ Mâle",
     f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
-    sp_ask:"Entrez votre code Super PRO (multi-élevage). Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
+    sp_ask:"Code Super PRO — multi-élevage (porc, bœuf, chèvre, poules), 30 000 FCFA/an. Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
     rf_btn:"Rapport financier (banque)",
     nut_disc:"⚖️ Rations indicatives, à ajuster avec un technicien d\u0027élevage selon l\u0027âge, le stade (croissance, gestation, lactation) et les ingrédients disponibles. Pour les ruminants (bovins, chèvres), la base reste un bon fourrage.",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
@@ -2716,7 +2716,7 @@ const I18N = {
     f_name:"Name / Tag no.", ph_name:"E.g. F-001 or Bella", f_sex:"Sex", f_female:"♀ Doe", f_male:"♂ Buck",
     f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
-    sp_ask:"Enter your Super PRO code (multi-species). Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
+    sp_ask:"Super PRO code — multi-species (pigs, cattle, goats, poultry), 30,000 FCFA/year. Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
     rf_btn:"Financial report (bank)",
     nut_disc:"⚖️ Indicative rations — adjust with a livestock technician according to age, stage (growth, gestation, lactation) and available ingredients. For ruminants (cattle, goats), good forage remains the base.",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
@@ -3295,6 +3295,10 @@ function vueTableau(){
 /* ================= MULTI-ÉLEVAGE (Super PRO) ================= */
 /* ⭐ Code d'activation Super PRO — CHANGEZ-LE, donnez-le aux abonnés multi-élevage. */
 const CODE_SUPERPRO = "CAPAO-SUPER-2026";
+/* 💰 Prix Super PRO (multi-élevage) et lien de paiement AfribaPay dédié (à 30 000 FCFA/an).
+   Collez ici votre lien AfribaPay « Cunismart Super PRO » quand il sera créé ; sinon, renvoie vers payer.html. */
+const PRIX_SUPERPRO = 30000;
+const LIEN_SUPERPRO = "";
 
 const ESPECES = {
   lapin:   {icon:'🐰', fr:'Lapins',  en:'Rabbits', gestation:31,  palpation:12, sevrage:35,
@@ -3347,7 +3351,7 @@ function demanderSuperPro(){
   const code = prompt(t('sp_ask'));
   if(code===null) return;
   const v = code.trim();
-  if(v===''){ window.location.href='payer.html'; return; }
+  if(v===''){ window.location.href = LIEN_SUPERPRO || 'payer.html'; return; }
   if(v.toUpperCase()===CODE_SUPERPRO.toUpperCase()){
     etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); sauver(); alert(t('sp_ok')); rendre();
   } else { alert(t('sp_bad')); }
@@ -4016,66 +4020,74 @@ function niveauAccessible(ni){
 const FICHES_ESP = {
   porc:{
     fr:{fiches:[
-      ["Logement & installation","Porcherie sur sol bétonné avec pente pour l'écoulement, zone d'ombre et point d'eau pour la fraîcheur (le porc supporte mal la chaleur). Séparez maternité, engraissement et reproducteurs, et nettoyez chaque jour."],
-      ["Alimentation","Ration équilibrée énergie/protéines (maïs, son, tourteau) + minéraux, adaptée au stade (croissance, gestation, lactation). Eau propre à volonté. Ne donnez jamais de déchets de cuisine crus (risque de peste porcine africaine)."],
-      ["Reproduction & conduite","La truie revient en chaleur tous les ~21 jours ; la gestation dure ~114 jours (3 mois, 3 semaines, 3 jours). Préparez une maternité propre avant la mise bas : le colostrum des premières heures est vital. Sevrage vers 28 jours."],
-      ["Santé & biosécurité","Biosécurité stricte : quarantaine des nouveaux animaux, contrôle des visiteurs. Vaccinez (rouget), déparasitez. Toute forte fièvre avec rougeurs et mortalité rapide fait suspecter la PPA : isolez et prévenez le vétérinaire."],
-      ["Gestion & rentabilité","L'aliment représente 65-70 % du coût : suivez l'indice de consommation (kg d'aliment par kg de gain). Vendez au bon poids et tenez vos comptes (Finances) pour connaître votre marge réelle."]]},
+      ["Logement & installation","Sol bétonné avec pente et caniveau pour évacuer lisier et eau de lavage ; loges séparées (maternité, post-sevrage, engraissement, verrat). Le porc ne transpire pas et souffre au-dessus de 30 °C : prévoyez ombre et point d'eau/bauge. Comptez environ 1 m² par porc à l'engrais, plus pour une truie suitée, et gardez le sol sec, nettoyé chaque jour."],
+      ["Alimentation","Adaptez la ration au stade : démarrage riche en protéines pour les porcelets, maïs-son-tourteau en croissance/finition, truie sobre en gestation puis très nourrie en lactation. Le porc valorise bien les sous-produits (drêche de brasserie, son de riz, épluchures cuites). Eau propre à volonté (un porc boit 5 à 10 L/jour) ; jamais de déchets de cuisine crus (risque de PPA)."],
+      ["Reproduction & conduite","La cochette est saillie vers 8 mois / 120 kg ; chaleurs tous les ~21 jours (signe clé : elle s'immobilise à la pression sur le dos). Gestation de 114 jours ; une bonne truie fait 2 portées par an de 8 à 12 porcelets. Maternité propre, colostrum dans les 6 premières heures, sevrage vers 28 jours."],
+      ["Santé & biosécurité","Quarantaine des nouveaux animaux, pédiluve à l'entrée, visiteurs limités : la peste porcine africaine se transmet par contact et par aliments contaminés. Vaccinez (rouget) et déparasitez (interne + externe). Toute fièvre avec rougeurs et mortalité rapide fait suspecter la PPA : isolez et prévenez le vétérinaire."],
+      ["Gestion & rentabilité","L'aliment représente 65 à 70 % du coût : suivez l'indice de consommation (viser environ 3 kg d'aliment par kg de gain). Pesez régulièrement et vendez au bon poids (souvent 90 à 110 kg selon le marché). Tenez le module Finances pour connaître votre marge réelle par porc."],
+      ["Réussir : erreurs à éviter","Les pertes viennent surtout de la surpopulation, de la chaleur mal gérée, de l'aliment moisi, de l'absence de quarantaine et des restes crus. Un démarrage propre et une biosécurité stricte protègent mieux votre élevage que n'importe quel médicament."]]},
     en:{fiches:[
-      ["Housing & setup","Concrete-floored pen with drainage slope, shade and a water/wallow for cooling (pigs tolerate heat poorly). Separate farrowing, fattening and breeders, and clean daily."],
-      ["Feeding","Balanced energy/protein ration (maize, bran, cake) + minerals, matched to stage (growth, gestation, lactation). Clean water at will. Never feed raw kitchen waste (African Swine Fever risk)."],
-      ["Breeding & management","The sow returns to heat every ~21 days; gestation lasts ~114 days (3 months, 3 weeks, 3 days). Prepare a clean farrowing area: first-hours colostrum is vital. Wean around 28 days."],
-      ["Health & biosecurity","Strict biosecurity: quarantine new animals, control visitors. Vaccinate (erysipelas), deworm. High fever with skin redness and rapid death suggests ASF: isolate and call the vet."],
-      ["Management & profit","Feed is 65-70% of cost: track feed conversion (kg feed per kg gain). Sell at the right weight and keep your books (Finances) to know your real margin."]]}
+      ["Housing & setup","Concrete floor with slope and channel to drain slurry and wash water; separate pens (farrowing, post-weaning, fattening, boar). Pigs don't sweat and suffer above 30 °C: provide shade and a water/wallow. Allow about 1 m² per fattening pig, more for a nursing sow, and keep the floor dry and cleaned daily."],
+      ["Feeding","Match the ration to the stage: protein-rich starter for piglets, maize-bran-cake for growth/finishing, a lean gestating sow then heavy feeding in lactation. Pigs use by-products well (brewer's grains, rice bran, cooked peelings). Clean water at will (5-10 L/day); never raw kitchen waste (ASF risk)."],
+      ["Breeding & management","The gilt is mated around 8 months / 120 kg; heat every ~21 days (key sign: she stands still under back pressure). Gestation 114 days; a good sow gives 2 litters a year of 8-12 piglets. Clean farrowing area, colostrum within the first 6 hours, weaning around 28 days."],
+      ["Health & biosecurity","Quarantine new animals, footbath at entry, limited visitors: African Swine Fever spreads by contact and contaminated feed. Vaccinate (erysipelas) and deworm (internal + external). Any fever with skin redness and rapid death suggests ASF: isolate and call the vet."],
+      ["Management & profit","Feed is 65-70% of cost: track feed conversion (aim for about 3 kg feed per kg gain). Weigh regularly and sell at the right weight (often 90-110 kg by market). Use the Finances module to know your real margin per pig."],
+      ["Getting it right: mistakes to avoid","Losses mostly come from overcrowding, poorly managed heat, mouldy feed, no quarantine and raw scraps. A clean start and strict biosecurity protect your farm better than any medicine."]]}
   },
   volaille:{
     fr:{fiches:[
-      ["Logement & poussinière","Poulailler sec, bien ventilé, protégé des prédateurs, avec une litière sèche (copeaux). Prévoyez une poussinière chauffée les premiers jours et une densité raisonnable pour éviter stress et maladies."],
-      ["Alimentation","Aliment démarrage puis croissance (poulet de chair) ou ponte (pondeuse, riche en calcium pour la coquille). Eau propre en permanence ; nettoyez mangeoires et abreuvoirs chaque jour."],
-      ["Conduite en bandes","Travaillez en « tout plein / tout vide » : une seule bande à la fois, puis vide sanitaire et désinfection avant la suivante. Choisissez des poussins de qualité et soignez le démarrage (chaleur, eau, aliment dès l'arrivée)."],
-      ["Santé & biosécurité","Vaccinez : Newcastle (essentiel, avec rappels), Gumboro, variole aviaire. Limitez les entrées, installez un pédiluve, gardez la litière sèche. Isolez ou éliminez vite les malades (contagion très rapide)."],
-      ["Gestion & rentabilité","Suivez la mortalité, la consommation d'aliment et le poids (ou la ponte). La mortalité et le gaspillage d'aliment détruisent la marge : comparez le coût poussin + aliment au prix de vente."]]},
+      ["Logement & poussinière","Poulailler sec, bien ventilé mais sans courant d'air, protégé des prédateurs, avec une litière sèche (copeaux, balle de riz). Pour les poussins, une poussinière chauffée à ~32-34 °C la première semaine, réduite progressivement. Densité raisonnable (souvent 8 à 10 poulets/m²) pour éviter stress, picage et maladies."],
+      ["Alimentation","Servez un aliment démarrage, puis croissance (chair) ou ponte (pondeuse, enrichi en calcium pour la coquille). Aliment et eau propres en permanence, mangeoires nettoyées ; un manque d'eau coupe aussitôt la croissance ou la ponte. Évitez de gaspiller : des mangeoires bien réglées limitent les pertes qui grèvent la marge."],
+      ["Conduite en bandes","Travaillez en « tout plein / tout vide » : une seule bande à la fois, puis vide sanitaire (nettoyage, désinfection, repos du bâtiment) avant la suivante. Choisissez des poussins de qualité et soignez les 3 premiers jours (chaleur, eau sucrée légère, aliment dès l'arrivée) qui décident du lot."],
+      ["Santé & biosécurité","Vaccinez : Newcastle (essentiel, avec rappels), Gumboro, variole aviaire, selon un calendrier vétérinaire. Biosécurité : entrées limitées, pédiluve, litière sèche, pas de mélange d'âges. La contagion est très rapide : isolez ou éliminez vite les sujets malades."],
+      ["Gestion & rentabilité","Suivez trois chiffres : la mortalité, la consommation d'aliment et le poids (chair) ou le taux de ponte. Mortalité et gaspillage détruisent la marge ; comparez le coût poussin + aliment au prix de vente pour piloter votre rentabilité."],
+      ["Réussir : erreurs à éviter","Les échecs viennent surtout d'un démarrage raté (froid, eau tardive), d'une litière humide, d'un oubli de vaccination Newcastle et du mélange de bandes d'âges différents. Un lot bien démarré et bien vacciné est déjà à moitié gagné."]]},
     en:{fiches:[
-      ["Housing & brooder","Dry, well-ventilated house, predator-proof, with dry litter (shavings). Provide a heated brooder for the first days and a reasonable density to avoid stress and disease."],
-      ["Feeding","Starter then grower feed (broilers) or layer feed (hens, calcium-rich for shells). Permanent clean water; clean feeders and drinkers daily."],
-      ["Batch management","Work all-in/all-out: one batch at a time, then an empty period and disinfection before the next. Choose quality chicks and nail the start (heat, water, feed on arrival)."],
-      ["Health & biosecurity","Vaccinate: Newcastle (essential, with boosters), Gumboro, fowl pox. Limit entries, set up a footbath, keep litter dry. Isolate or cull sick birds fast (very rapid spread)."],
-      ["Management & profit","Track mortality, feed intake and weight (or lay rate). Mortality and feed waste destroy the margin: compare chick + feed cost to selling price."]]}
+      ["Housing & brooder","Dry, well-ventilated but draught-free house, predator-proof, with dry litter (shavings, rice husk). For chicks, a brooder at ~32-34 °C the first week, reduced gradually. Reasonable density (often 8-10 birds/m²) to avoid stress, pecking and disease."],
+      ["Feeding","Serve starter, then grower (broilers) or layer feed (calcium-enriched for shells). Clean feed and water at all times, cleaned feeders; a lack of water instantly stops growth or laying. Avoid waste: well-set feeders limit losses that eat the margin."],
+      ["Batch management","Work all-in/all-out: one batch at a time, then an empty period (cleaning, disinfection, house rest) before the next. Choose quality chicks and nail the first 3 days (heat, light sugar water, feed on arrival) that decide the batch."],
+      ["Health & biosecurity","Vaccinate: Newcastle (essential, with boosters), Gumboro, fowl pox, on a vet schedule. Biosecurity: limited entries, footbath, dry litter, no mixing of ages. Spread is very fast: isolate or cull sick birds quickly."],
+      ["Management & profit","Track three numbers: mortality, feed intake and weight (broilers) or lay rate. Mortality and waste destroy the margin; compare chick + feed cost to selling price to steer profitability."],
+      ["Getting it right: mistakes to avoid","Failures mostly come from a poor start (cold, late water), damp litter, skipping Newcastle vaccination and mixing different-age batches. A well-started, well-vaccinated batch is already half won."]]}
   },
   bovin:{
     fr:{fiches:[
-      ["Logement & pâturage","Accès à un bon pâturage, eau propre à volonté et zone d'ombre. Prévoyez un parc/étable propre pour la nuit et faites tourner les parcelles pour préserver l'herbe et casser le cycle des parasites."],
-      ["Alimentation","La base est le fourrage (herbe, foin) ; complétez en énergie, protéines et minéraux (son, tourteau, pierre à lécher), surtout en saison sèche et en lactation. Eau abondante indispensable."],
-      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 9 mois (283 jours). Détectez bien les chaleurs, notez les saillies et préparez le vêlage. Le veau doit recevoir le colostrum rapidement après la naissance."],
-      ["Santé","Vaccinez (fièvre aphteuse, charbon), détiquez et vermifugez régulièrement. Surveillez la trypanosomose en zone à mouche tsé-tsé. Isolez tout animal malade et appelez le vétérinaire."],
-      ["Gestion & rentabilité","Un bovin est un capital : suivez l'état corporel, la production (lait, poids) et les coûts. Bien nourrir en saison sèche fait toute la différence de rentabilité."]]},
+      ["Logement & pâturage","Assurez un bon pâturage, de l'eau propre à volonté et de l'ombre. Prévoyez un parc ou une étable propre pour la nuit, et faites tourner les parcelles : la rotation préserve l'herbe et casse le cycle des parasites (vers, tiques)."],
+      ["Alimentation","La base reste le fourrage (herbe, foin, résidus de culture) ; complétez en énergie, protéines et minéraux (son, tourteau, pierre à lécher), surtout en saison sèche et en lactation. Une vache boit 30 à 50 L/jour, bien plus en lactation : l'eau ne doit jamais manquer."],
+      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 9 mois (283 jours). Détectez bien les chaleurs (agitation, chevauchements), notez chaque saillie et préparez le vêlage dans un endroit propre. Le veau doit téter le colostrum dans les 2 premières heures."],
+      ["Santé","Vaccinez (fièvre aphteuse, charbon), détiquez et vermifugez régulièrement ; surveillez la trypanosomose en zone à mouche tsé-tsé. Observez chaque jour l'appétit et la démarche : un animal isolé, qui rumine peu ou boite, doit être vu par le vétérinaire."],
+      ["Gestion & rentabilité","Un bovin est un capital important : suivez l'état corporel, la production (lait, croissance) et les coûts. La clé de la rentabilité est souvent la conduite d'alimentation en saison sèche, quand le fourrage manque."],
+      ["Réussir : erreurs à éviter","Les pertes viennent surtout du manque d'eau, d'un déficit alimentaire en saison sèche, de l'absence de détiquage et d'un vêlage mal suivi. Anticiper le fourrage de saison sèche (foin, ensilage, réserves) évite l'amaigrissement et les mortalités."]]},
     en:{fiches:[
-      ["Housing & grazing","Access to good pasture, clean water at will and shade. Provide a clean night paddock/barn and rotate plots to preserve grass and break the parasite cycle."],
-      ["Feeding","Forage is the base (grass, hay); top up with energy, protein and minerals (bran, cake, lick block), especially in the dry season and lactation. Plenty of water is essential."],
-      ["Breeding","~21-day cycle; gestation about 9 months (283 days). Detect heats well, record matings and prepare calving. The calf must get colostrum quickly after birth."],
-      ["Health","Vaccinate (foot-and-mouth, anthrax/blackleg), control ticks and deworm regularly. Watch for trypanosomosis in tsetse areas. Isolate sick animals and call the vet."],
-      ["Management & profit","Cattle are capital: track body condition, output (milk, weight) and costs. Feeding well in the dry season makes all the difference to profitability."]]}
+      ["Housing & grazing","Ensure good pasture, clean water at will and shade. Provide a clean night paddock or barn, and rotate plots: rotation preserves grass and breaks the parasite cycle (worms, ticks)."],
+      ["Feeding","Forage is the base (grass, hay, crop residues); top up with energy, protein and minerals (bran, cake, lick block), especially in the dry season and lactation. A cow drinks 30-50 L/day, far more in lactation: water must never run out."],
+      ["Breeding","~21-day cycle; gestation about 9 months (283 days). Detect heats well (restlessness, mounting), record every mating and prepare calving in a clean spot. The calf must suckle colostrum within the first 2 hours."],
+      ["Health","Vaccinate (foot-and-mouth, anthrax/blackleg), control ticks and deworm regularly; watch for trypanosomosis in tsetse areas. Observe appetite and gait daily: an animal that stands apart, ruminates little or limps needs the vet."],
+      ["Management & profit","Cattle are major capital: track body condition, output (milk, growth) and costs. The key to profit is often dry-season feeding management, when forage is scarce."],
+      ["Getting it right: mistakes to avoid","Losses mostly come from lack of water, a dry-season feed gap, no tick control and poorly supervised calving. Planning dry-season forage (hay, silage, reserves) prevents weight loss and deaths."]]}
   },
   caprin:{
     fr:{fiches:[
-      ["Logement","Chèvrerie sèche, bien ventilée, à l'abri de la pluie — si possible sur plancher surélevé à claire-voie. Les chèvres supportent mal l'humidité (parasites, piétin). Prévoyez une aire d'exercice."],
-      ["Alimentation","Ce sont des brouteuses : feuilles et fourrages ligneux (Leucaena), herbe, plus un complément (son, tourteau, minéraux). Eau propre, ration renforcée en gestation et lactation."],
-      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 150 jours (5 mois), souvent avec des jumeaux. Préparez une case propre pour la mise bas ; le colostrum est vital pour les chevreaux."],
-      ["Santé","Vaccinez contre la PPR (peste des petits ruminants) : c'est la priorité, très efficace. Vermifugez régulièrement (les parasites sont le 1er problème), parez les onglons, isolez les malades."],
-      ["Gestion & rentabilité","Troupeau à cycle rapide et peu coûteux à démarrer. Suivez la prolificité, la mortalité des chevreaux et les coûts. La vaccination PPR et le déparasitage protègent votre capital."]]},
+      ["Logement","Chèvrerie sèche, bien ventilée et à l'abri de la pluie, idéalement sur un plancher surélevé à claire-voie (les crottes tombent, les pattes restent au sec). Les chèvres supportent mal l'humidité, qui favorise parasites et piétin. Prévoyez une aire d'exercice et des points en hauteur, qu'elles adorent."],
+      ["Alimentation","Ce sont des brouteuses : feuilles et fourrages ligneux (Leucaena, Gliricidia), herbe, plus un complément (son, tourteau d'arachide, minéraux). Introduisez tout nouvel aliment progressivement. Renforcez la ration en fin de gestation et en lactation, avec eau propre en permanence."],
+      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 150 jours (5 mois), souvent avec des jumeaux. Préparez une case propre pour la mise bas et surveillez-la ; le colostrum est vital pour les chevreaux dans les premières heures. Un intervalle bien géré permet jusqu'à 3 mises bas en 2 ans."],
+      ["Santé & biosécurité","La priorité absolue est la vaccination contre la PPR (peste des petits ruminants), très efficace. Vermifugez régulièrement — les parasites gastro-intestinaux sont le premier problème — parez les onglons et isolez tout animal malade."],
+      ["Gestion & rentabilité","Le petit ruminant est un troupeau à cycle rapide, peu coûteux à démarrer et facile à vendre. Suivez la prolificité, la mortalité des chevreaux et les coûts ; la vaccination PPR et le déparasitage régulier sont les meilleurs investissements pour protéger votre capital."],
+      ["Réussir : erreurs à éviter","Les pertes viennent surtout de l'humidité du logement, de l'oubli de la vaccination PPR, d'un déparasitage négligé et d'une mise bas non surveillée. Un abri sec et un calendrier sanitaire simple mais respecté changent tout."]]},
     en:{fiches:[
-      ["Housing","Dry, well-ventilated goat house, sheltered from rain — ideally on a raised slatted floor. Goats tolerate damp poorly (parasites, foot rot). Provide an exercise area."],
-      ["Feeding","They are browsers: leaves and woody forage (Leucaena), grass, plus a supplement (bran, cake, minerals). Clean water; richer ration in gestation and lactation."],
-      ["Breeding","~21-day cycle; gestation about 150 days (5 months), often twins. Prepare a clean pen for kidding; colostrum is vital for the kids."],
-      ["Health","Vaccinate against PPR (peste des petits ruminants): it is the priority and very effective. Deworm regularly (parasites are the top problem), trim hooves, isolate sick animals."],
-      ["Management & profit","A fast-cycling, low-cost herd to start. Track prolificacy, kid mortality and costs. PPR vaccination and deworming protect your capital."]]}
+      ["Housing","Dry, well-ventilated goat house sheltered from rain, ideally on a raised slatted floor (droppings fall through, feet stay dry). Goats tolerate damp poorly, which favours parasites and foot rot. Provide an exercise area and raised perches, which they love."],
+      ["Feeding","They are browsers: leaves and woody forage (Leucaena, Gliricidia), grass, plus a supplement (bran, groundnut cake, minerals). Introduce any new feed gradually. Strengthen the ration in late gestation and lactation, with clean water always available."],
+      ["Breeding","~21-day cycle; gestation about 150 days (5 months), often twins. Prepare a clean pen for kidding and watch it; colostrum is vital for kids in the first hours. A well-managed interval allows up to 3 kiddings in 2 years."],
+      ["Health & biosecurity","The absolute priority is PPR (peste des petits ruminants) vaccination, which is very effective. Deworm regularly — gastro-intestinal parasites are the top problem — trim hooves and isolate any sick animal."],
+      ["Management & profit","Small ruminants are a fast-cycling herd, cheap to start and easy to sell. Track prolificacy, kid mortality and costs; PPR vaccination and regular deworming are the best investments to protect your capital."],
+      ["Getting it right: mistakes to avoid","Losses mostly come from damp housing, skipping PPR vaccination, neglected deworming and unsupervised kidding. A dry shelter and a simple but respected health calendar change everything."]]}
   }
 };
 function vueFiches(){
   const cfg = FICHES_ESP[espActive()]; if(!cfg) return '';
   const g = cfg[langue] || cfg.fr;
   const L = (fr,en)=> langue==='fr'?fr:en;
-  const ic = ['🏠','🌾','🍼','🩺','📊'];
+  const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
   const cards = g.fiches.map(([ti,txt],i)=>`
     <div class="card" style="margin-bottom:12px">
       <h3>${ic[i]||'•'} ${esc(ti)}</h3>
