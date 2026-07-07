@@ -2542,6 +2542,7 @@ const I18N = {
     start_txt:"Ajoutez votre premier lapin pour voir vos statistiques s'animer, suivre la reproduction et calculer vos marges.",
     f_name:"Nom / N° boucle", ph_name:"Ex : F-001 ou Bella", f_sex:"Sexe", f_female:"♀ Femelle", f_male:"♂ Mâle",
     f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
+    f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
     confirm_del:"Supprimer définitivement cet enregistrement ?",
@@ -2681,6 +2682,7 @@ const I18N = {
     start_txt:"Add your first rabbit to bring your dashboard to life, track breeding and compute your margins.",
     f_name:"Name / Tag no.", ph_name:"E.g. F-001 or Bella", f_sex:"Sex", f_female:"♀ Doe", f_male:"♂ Buck",
     f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
+    f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
     confirm_del:"Permanently delete this record?",
@@ -3259,9 +3261,11 @@ function vueCheptel(){
       <td><span class="tag ${l.sexe==='F'?'f':'m'}">${l.sexe==='F'?t('f_female'):t('f_male')}</span></td>
       <td>${esc(l.race)}</td>
       <td>${fdate(l.naissance)}</td>
+      <td>${l.poids ? (''+l.poids).replace('.',',')+' kg' : '—'}</td>
       <td><span class="tag ${l.statut==='actif'?'ok':'fin'}">${l.statut==='actif'?t('s_active'):l.statut==='vendu'?t('s_sold'):t('s_dead')}</span></td>
       <td style="text-align:right">
-        ${l.statut==='actif' ? `<button class="btn mini sec" onclick="changerStatut('${l.id}','vendu')">${t('btn_sold')}</button>
+        ${l.statut==='actif' ? `<button class="btn mini sec" onclick="peserLapin('${l.id}')" title="${t('btn_weigh')}">⚖️</button>
+        <button class="btn mini sec" onclick="changerStatut('${l.id}','vendu')">${t('btn_sold')}</button>
         <button class="btn mini danger" onclick="changerStatut('${l.id}','decede')">${t('btn_dead')}</button>` : ''}
         <button class="btn mini danger" onclick="supprimerLapin('${l.id}')">✕</button>
       </td>
@@ -3278,9 +3282,10 @@ function vueCheptel(){
         <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${toutesRaces().map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>
         <button type="button" class="btn mini sec" style="margin-bottom:2px" onclick="nouvelleRace()">${t('btn_new_breed')}</button>
         <div class="champ"><label>${t('f_birth')}</label><input type="date" id="l-naiss"></div>
+        <div class="champ"><label>${t('f_weight')}</label><input type="number" step="0.1" min="0" id="l-poids" placeholder="${t('ph_weight')}"></div>
         <button class="btn">${t('btn_add')}</button>
       </form>
-      ${etat.lapins.length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
+      ${etat.lapins.length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_weight')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
         : `<div class="empty-state"><div class="em-ic">🐰</div><h3>${t('herd_empty_t')}</h3><p>${t('herd_empty')}</p></div>`}
     </div>`;
 }
@@ -3828,14 +3833,30 @@ function partagerCertif(type){
 /* ================= ACTIONS ================= */
 function ajouterLapin(e){
   e.preventDefault();
+  const pv = document.getElementById('l-poids').value;
+  const p = pv ? parseFloat((''+pv).replace(',','.')) : null;
+  const poids = (p && p>0) ? p : null;
   etat.lapins.push({
     id: uid(),
     nom: document.getElementById('l-nom').value.trim(),
     sexe: document.getElementById('l-sexe').value,
     race: document.getElementById('l-race').value,
     naissance: document.getElementById('l-naiss').value || null,
-    statut: 'actif'
+    statut: 'actif',
+    poids: poids,
+    pesees: poids ? [{ date: auj(), poids: poids }] : []
   });
+  sauver(); rendre();
+}
+function peserLapin(id){
+  const l = lapin(id); if(!l) return;
+  const v = prompt(t('weigh_prompt'), l.poids || '');
+  if(v === null) return;
+  const p = parseFloat((''+v).replace(',','.'));
+  if(isNaN(p) || p <= 0){ alert(t('weigh_bad')); return; }
+  if(!Array.isArray(l.pesees)) l.pesees = [];
+  l.pesees.push({ date: auj(), poids: p });
+  l.poids = p;
   sauver(); rendre();
 }
 function changerStatut(id, st){ const l = lapin(id); if(!l) return; l.statut = st; sauver(); rendre(); }
