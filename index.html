@@ -4849,9 +4849,26 @@ function vueCompte(){
     '</div>';
 }
 
+function logoLabel(petit){
+  const s=petit?32:40;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;flex:none">
+    <path d="M100 18L152 38L152 110Q152 158 100 176Q48 158 48 110L48 38Z" fill="#1C4025" stroke="#D4A017" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M100 32L140 48L140 110Q140 148 100 164Q60 148 60 110L60 48Z" fill="#24512f"/>
+    <path d="M100 54C117 63 123 80 114 98C105 116 83 112 78 94C72 73 83 55 100 54Z" fill="#FBF3E0" opacity=".96"/>
+    <path d="M100 54C97 72 94 88 92 104" fill="none" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M98 76C106 80 112 86 114 92" fill="none" stroke="#D4A017" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
+    <path d="M80 132L92 148L122 124" fill="none" stroke="#D4A017" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+function titreTrac(){
+  return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+    ${logoLabel(false)}
+    <h2 class="page-title" style="margin:0">${t('trace_title')}</h2>
+  </div>`;
+}
 function vueTracabilite(){
   if(etat.pro !== true){
-    return '<h2 class="page-title">'+t('trace_title')+'</h2>'+
+    return titreTrac()+
       '<p class="page-sub">'+t('trace_sub')+'</p>'+
       '<div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
         '<h3 style="color:#6B2409">'+t('trace_lock_title')+'</h3>'+
@@ -4882,7 +4899,7 @@ function vueTracabilite(){
   }).join('');
 
   return ''+
-    '<h2 class="page-title">'+t('trace_title')+'</h2>'+
+    titreTrac()+
     '<p class="page-sub">'+t('trace_sub')+'</p>'+
     '<div class="card">'+
       '<h3>'+t('trace_add')+'</h3>'+
