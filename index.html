@@ -2575,6 +2575,7 @@ const I18N = {
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
     sp_ask:"Code Super PRO — multi-élevage (porc, bœuf, chèvre, poules), 30 000 FCFA/an. Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
     rf_btn:"Rapport financier (banque)",
+    sp_fin_title:"Multi-Élevage Super PRO", sp_fin_pitch:"Gérez porc, bœuf, chèvre et poules, avec formations certifiantes et rapport financier pour la banque.", sp_fin_price:"30 000 FCFA / an", sp_fin_cta:"S'abonner", sp_fin_active:"Actif",
     nut_disc:"⚖️ Rations indicatives, à ajuster avec un technicien d\u0027élevage selon l\u0027âge, le stade (croissance, gestation, lactation) et les ingrédients disponibles. Pour les ruminants (bovins, chèvres), la base reste un bon fourrage.",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
@@ -2718,6 +2719,7 @@ const I18N = {
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
     sp_ask:"Super PRO code — multi-species (pigs, cattle, goats, poultry), 30,000 FCFA/year. Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
     rf_btn:"Financial report (bank)",
+    sp_fin_title:"Multi-species Super PRO", sp_fin_pitch:"Manage pigs, cattle, goats and poultry, with certifying courses and a bank financial report.", sp_fin_price:"30,000 FCFA / year", sp_fin_cta:"Subscribe", sp_fin_active:"Active",
     nut_disc:"⚖️ Indicative rations — adjust with a livestock technician according to age, stage (growth, gestation, lactation) and available ingredients. For ruminants (cattle, goats), good forage remains the base.",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
@@ -3661,6 +3663,17 @@ function vueFinances(){
       <p style="color:rgba(251,243,224,.88);font-size:.92rem;margin-bottom:14px">${t('pro_sub')}</p>
       <a href="payer.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--feuille);color:var(--vert-fonce);text-decoration:none;font-weight:800;padding:13px 22px;border-radius:12px">${t('pro_btn')}</a>
     </div>
+    ${etat.superpro===true
+      ? `<div class="card" style="border:2px solid var(--vert-moyen);margin-bottom:16px">
+          <h3 style="color:var(--vert-foret);margin-bottom:2px">⭐ ${t('sp_fin_title')} <span class="tag ok">${t('sp_fin_active')}</span></h3>
+          <p style="color:var(--gris);font-size:.9rem">${t('sp_fin_pitch')}</p>
+        </div>`
+      : `<div class="card" style="border:2px solid var(--or,#D4A017);background:linear-gradient(135deg,#FFF9EE,#FCF3E2);margin-bottom:16px">
+          <h3 style="color:var(--vert-foret);margin-bottom:4px">⭐ ${t('sp_fin_title')}</h3>
+          <p style="color:var(--gris);font-size:.92rem;margin-bottom:6px">${t('sp_fin_pitch')}</p>
+          <p style="font-weight:800;color:var(--vert-foret);margin-bottom:12px">${t('sp_fin_price')}</p>
+          <button class="btn" onclick="demanderSuperPro()">⭐ ${t('sp_fin_cta')}</button>
+        </div>`}
     <div class="grid stats">
       <div class="card stat leaf"><div class="val solde-pos" style="font-size:1.4rem">${fcfa(k.ventes)}</div><div class="lab">${t('st_sales')}</div></div>
       <div class="card stat red"><div class="val solde-neg" style="font-size:1.4rem">${fcfa(k.dep)}</div><div class="lab">${t('st_exp')}</div></div>
