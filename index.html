@@ -212,7 +212,7 @@
     <button class="nav-btn" data-vue="tracabilite" onclick="naviguer('tracabilite')"><span class="ico">🔖</span> <span data-i18n="nav_trace"></span></button>
     <button class="nav-btn" data-vue="compte" onclick="naviguer('compte')"><span class="ico">☁️</span> <span data-i18n="nav_compte"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
-    <div class="foot">CuniSmart v2.0 · Kribi, Cameroun</div>
+    <div class="foot">CuniSmart v2.0 · Cameroun · Afrique francophone</div>
   </aside>
 
   <main id="contenu"></main>
@@ -2575,6 +2575,7 @@ const I18N = {
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
     sp_ask:"Entrez votre code Super PRO (multi-élevage). Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
     rf_btn:"Rapport financier (banque)",
+    nut_disc:"⚖️ Rations indicatives, à ajuster avec un technicien d\u0027élevage selon l\u0027âge, le stade (croissance, gestation, lactation) et les ingrédients disponibles. Pour les ruminants (bovins, chèvres), la base reste un bon fourrage.",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
     confirm_del:"Supprimer définitivement cet enregistrement ?",
@@ -2646,7 +2647,7 @@ const I18N = {
     nut_demo_confirm:"",
     pro_soon:"Le paiement Mobile Money (Orange Money / MTN MoMo) sera disponible très bientôt.",
     pro_soon_msg:"Merci de votre intérêt pour CuniSmart Pro ! 🐇\n\nLe paiement par Mobile Money (Orange Money / MTN MoMo) arrive très bientôt. En attendant, contactez-nous à hello@cunismart.com pour être parmi les premiers informés.",
-    nut_tip:"💡 Astuce Kribi : servez en « barbotine » à peine humidifiée pour éviter la poudre dans les narines, et stockez les sacs sur des palettes contre les moisissures.",
+    nut_tip:"💡 Astuce de terrain : servez en « barbotine » à peine humidifiée pour éviter la poudre dans les narines, et stockez les sacs sur des palettes contre les moisissures.",
     plants_title:"🌿 Reconnaître les plantes fourragères", plants_sub:"Touchez une plante pour voir à quoi elle ressemble (images web).",
     plant_see:"Voir les feuilles",
     pro_badge:"PRO", pro_lock_title:"🔒 Niveaux Confirmé & Expert — réservés à CuniSmart Pro",
@@ -2717,6 +2718,7 @@ const I18N = {
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
     sp_ask:"Enter your Super PRO code (multi-species). Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
     rf_btn:"Financial report (bank)",
+    nut_disc:"⚖️ Indicative rations — adjust with a livestock technician according to age, stage (growth, gestation, lactation) and available ingredients. For ruminants (cattle, goats), good forage remains the base.",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
     confirm_del:"Permanently delete this record?",
@@ -2788,7 +2790,7 @@ const I18N = {
     nut_demo_confirm:"",
     pro_soon:"Mobile Money payment (Orange Money / MTN MoMo) will be available very soon.",
     pro_soon_msg:"Thank you for your interest in CuniSmart Pro! 🐇\n\nMobile Money payment (Orange Money / MTN MoMo) is coming very soon. In the meantime, contact us at hello@cunismart.com to be among the first to know.",
-    nut_tip:"💡 Kribi tip: serve as a lightly moistened mash to keep powder out of the nostrils, and store bags on pallets against mould.",
+    nut_tip:"💡 Field tip: serve as a lightly moistened mash to keep powder out of the nostrils, and store bags on pallets against mould.",
     plants_title:"🌿 Recognise the forage plants", plants_sub:"Tap a plant to see what it looks like (web images).",
     plant_see:"See the leaves",
     pro_badge:"PRO", pro_lock_title:"🔒 Intermediate & Expert levels — reserved for CuniSmart Pro",
@@ -2888,7 +2890,7 @@ const LECONS = [
   {fr:{ti:"Les bases de la ration",tx:[
    "L’alimentation représente 60 à 70 % de vos dépenses : c’est ici que se joue la rentabilité. Base : 100 à 150 g de provende par jour pour un adulte, complétée par du fourrage fané. Le lapin est nocturne : donnez environ 70 % de la ration en fin d’après-midi ou le soir, car en journée, sous la chaleur, il mange peu.",
    "Tout changement d’aliment (nouvelle provende, nouveau fourrage) se fait progressivement sur 5 à 7 jours : un changement brutal détruit la flore intestinale et provoque des diarrhées mortelles. Une femelle allaitante mange et boit presque le double d’un adulte normal — sa mangeoire et son abreuvoir ne doivent JAMAIS être vides.",
-   "L’eau est le premier aliment : un lapin sans eau ne mange plus. Propre, à volonté, renouvelée au moins 2 fois par jour. Astuce de Kribi : en forte chaleur, ajoutez une infusion légère de citronnelle refroidie dans l’eau 1 à 2 fois par semaine — elle apaise les animaux et stimule l’appétit."],
+   "L’eau est le premier aliment : un lapin sans eau ne mange plus. Propre, à volonté, renouvelée au moins 2 fois par jour. Astuce de terrain : en forte chaleur, ajoutez une infusion légère de citronnelle refroidie dans l’eau 1 à 2 fois par semaine — elle apaise les animaux et stimule l’appétit."],
   qz:[{q:"L’alimentation représente … de vos dépenses.",o:["10 à 20 %","60 à 70 %","5 %"],b:1},
       {q:"Le lapin étant nocturne, on donne ~70 % de la ration…",o:["À midi","En fin d’après-midi ou le soir","À l’aube uniquement"],b:1},
       {q:"Un changement d’aliment se fait…",o:["Progressivement sur 5 à 7 jours","D’un seul coup","En une nuit"],b:0},
@@ -2897,7 +2899,7 @@ const LECONS = [
   en:{ti:"Ration basics",tx:[
    "Feed accounts for 60 to 70% of your costs: this is where profitability is decided. Base: 100 to 150 g of feed per day for an adult, plus wilted forage. The rabbit is nocturnal: give about 70% of the ration in late afternoon or evening, as it eats little during the heat of the day.",
    "Any feed change (new feed, new forage) is gradual over 5 to 7 days: an abrupt change destroys the gut flora and causes deadly diarrhoea. A nursing doe eats and drinks nearly twice as much as a normal adult — her feeder and drinker must NEVER be empty.",
-   "Water is the first feed: a rabbit with no water stops eating. Clean, at will, renewed at least twice a day. Kribi tip: in strong heat, add a light cooled lemongrass infusion to the water 1-2 times a week — it calms the animals and stimulates appetite."],
+   "Water is the first feed: a rabbit with no water stops eating. Clean, at will, renewed at least twice a day. Field tip: in strong heat, add a light cooled lemongrass infusion to the water 1-2 times a week — it calms the animals and stimulates appetite."],
   qz:[{q:"Feed accounts for … of your costs.",o:["10 to 20%","60 to 70%","5%"],b:1},
       {q:"As the rabbit is nocturnal, ~70% of the ration is given…",o:["At noon","In late afternoon or evening","Only at dawn"],b:1},
       {q:"A feed change is done…",o:["Gradually over 5 to 7 days","All at once","Overnight"],b:0},
@@ -3068,7 +3070,7 @@ const LECONS = [
 
  {fr:{ti:"Formuler sa provende locale",tx:[
    "Une bonne provende équilibre trois piliers : l’énergie (maïs broyé, ~40 % maximum pour éviter l’engraissement), les protéines (tourteau de soja ou d’arachide, farine de Moringa et de fanes séchées) et surtout les fibres (son de blé ou de maïs) indispensables au transit. On complète avec du calcium (coquilles d’huîtres broyées, poudre d’os), un prémix vitaminé et une pincée de sel.",
-   "En climat humide comme Kribi, la provende moisit vite et une provende moisie produit des mycotoxines mortelles : stockez les sacs sur des palettes en bois, jamais à même le sol ni collés au mur, et nettoyez les mangeoires chaque jour car un reste humide fermente à la chaleur. Si vous ne pouvez pas granuler, servez en « barbotine » (à peine humidifiée) pour éviter que la poudre n’entre dans les narines.",
+   "En climat chaud et humide, la provende moisit vite et une provende moisie produit des mycotoxines mortelles : stockez les sacs sur des palettes en bois, jamais à même le sol ni collés au mur, et nettoyez les mangeoires chaque jour car un reste humide fermente à la chaleur. Si vous ne pouvez pas granuler, servez en « barbotine » (à peine humidifiée) pour éviter que la poudre n’entre dans les narines.",
    "Votre vrai tableau de bord, ce sont les crottes : petites et dures = manque d’eau ; molles, collantes et malodorantes = danger digestif — stoppez la provende, ne donnez que de l’eau et du fourrage sec ou de l’Artemisia. Le formulateur de CuniSmart calcule pour vous les quantités exactes à partir de vos cultures locales."],
   qz:[{q:"Les trois piliers d’une provende sont…",o:["Énergie, protéines, fibres","Eau, sel, sucre","Maïs seulement"],b:0},
       {q:"En climat humide, on stocke les sacs…",o:["À même le sol","Sur des palettes en bois","Collés au mur"],b:1},
@@ -3077,7 +3079,7 @@ const LECONS = [
       {q:"Le maïs broyé ne doit pas dépasser … de la ration.",o:["~40 %","90 %","5 %"],b:0}]},
   en:{ti:"Formulating local feed",tx:[
    "A good feed balances three pillars: energy (ground maize, ~40% max to avoid over-fattening), protein (soybean or groundnut cake, Moringa and dried-tops meal) and above all fibre (wheat or maize bran) essential for transit. Complete with calcium (crushed oyster shells, bone meal), a vitamin premix and a pinch of salt.",
-   "In a humid climate like Kribi, feed moulds fast and mouldy feed produces deadly mycotoxins: store bags on wooden pallets, never on the ground or against the wall, and clean feeders daily as a damp leftover ferments in the heat. If you can’t pellet, serve as a lightly moistened mash to keep powder out of the nostrils.",
+   "In a hot, humid climate, feed moulds fast and mouldy feed produces deadly mycotoxins: store bags on wooden pallets, never on the ground or against the wall, and clean feeders daily as a damp leftover ferments in the heat. If you can’t pellet, serve as a lightly moistened mash to keep powder out of the nostrils.",
    "Your real dashboard is the droppings: small and hard = lack of water; soft, sticky and smelly = digestive danger — stop the feed, give only water and dry forage or Artemisia. CuniSmart’s formulator computes the exact quantities for you from your local crops."],
   qz:[{q:"The three pillars of a feed are…",o:["Energy, protein, fibre","Water, salt, sugar","Maize only"],b:0},
       {q:"In a humid climate, store bags…",o:["On the ground","On wooden pallets","Against the wall"],b:1},
@@ -3641,7 +3643,7 @@ function rapportFinancier(){
     </div>
     <div class="rf-doc card">
       <div class="rf-head">
-        <div><div class="rf-mark">CuniSmart</div><div class="rf-sub">SCOOPS CAPAO · Kribi, Cameroun · cunismart.com</div></div>
+        <div><div class="rf-mark">CuniSmart</div><div class="rf-sub">SCOOPS CAPAO · Cameroun · cunismart.com</div></div>
         <div class="rf-logo">${L('Logo','Logo')}</div>
       </div>
       <h1>${L('ÉTAT DE RÉSULTAT SIMPLIFIÉ','SIMPLIFIED INCOME STATEMENT')}</h1>
@@ -3659,7 +3661,7 @@ function rapportFinancier(){
         <tr class="rf-total"><td colspan="2">${L('Total des charges','Total expenses')}</td><td class="rf-r">${fcfa(totD)}</td></tr>
         <tr class="rf-result"><td colspan="2">${L('RÉSULTAT NET','NET RESULT')}</td><td class="rf-r" style="color:${resultat>=0?'#1C4025':'#C0392B'}">${fcfa(resultat)}</td></tr>
       </table>
-      <div class="rf-sign">${L('Fait à Kribi, le','Done in Kribi, on')} ${fdate(auj())} &nbsp;—&nbsp; ${L('Signature','Signature')} : ______________________</div>
+      <div class="rf-sign">${L('Fait le','Done on')} ${fdate(auj())} &nbsp;—&nbsp; ${L('Signature','Signature')} : ______________________</div>
       <div class="rf-foot">${L(
         'Document généré par CuniSmart. État simplifié des recettes et dépenses (trésorerie), présentation inspirée du référentiel SYSCOHADA. Ne constitue pas un bilan comptable audité.',
         'Generated by CuniSmart. Simplified cash-based income/expense statement, presentation inspired by the SYSCOHADA framework. Not an audited financial statement.')}</div>
@@ -3681,7 +3683,7 @@ const RECETTES = {
              ["Oyster shells or bone meal","Calcium",2],["Table salt","Electrolytes",2]]}
   },
   pro: {
-    fr:{nom:"Provende avancée (Pro)", desc:"Formulation complète optimisée pour Kribi : croissance, lactation et prévention naturelle.",
+    fr:{nom:"Provende avancée (Pro)", desc:"Formulation complète pour climat chaud et humide : croissance, lactation et prévention naturelle.",
         ing:[["Maïs broyé","Énergie principale (max 40 %)",40],["Son de blé ou de maïs","Fibres indispensables",22],
              ["Tourteau de soja ou d’arachide","Protéines concentrées",10],
              ["Tourteau de coton","Protéines bon marché — max 8 %, éviter chez les reproducteurs (gossypol)",8],
@@ -3689,7 +3691,7 @@ const RECETTES = {
              ["Poudre santé (Artemisia + feuilles de papayer séchées)","Anti-coccidiose + vermifuge naturel",2],
              ["Coquilles d’huîtres broyées / poudre d’os","Calcium (lactation, os)",2],
              ["Prémix (CMAV Lapin)","Minéraux et vitamines",1.5],["Sel de cuisine","Électrolytes",0.5]]},
-    en:{nom:"Advanced feed (Pro)", desc:"Full formulation optimised for Kribi: growth, lactation and natural prevention.",
+    en:{nom:"Advanced feed (Pro)", desc:"Full formulation for hot, humid climates: growth, lactation and natural prevention.",
         ing:[["Ground maize","Main energy (max 40%)",40],["Wheat or maize bran","Essential fibre",22],
              ["Soybean or groundnut cake","Concentrated protein",10],
              ["Cottonseed cake","Cheap protein — max 8%, avoid in breeders (gossypol)",8],
@@ -3699,10 +3701,93 @@ const RECETTES = {
              ["Premix (Rabbit CMAV)","Minerals and vitamins",1.5],["Table salt","Electrolytes",0.5]]}
   }
 };
+
+/* ================= NUTRITION PAR ESPÈCE ================= */
+const RECETTES_ESP = {
+  porc: {
+    base:{fr:{nom:"Aliment porc — croissance", desc:"Ration simple d'engraissement à partir de vos cultures locales.",
+        ing:[["Maïs broyé","Énergie principale",45],["Son de blé ou de maïs","Fibres et énergie",25],
+             ["Tourteau de soja ou d'arachide","Protéines",18],["Farine de poisson","Protéines animales",5],
+             ["Coquilles ou poudre d'os","Calcium et phosphore",4],["Prémix vitamines-minéraux","Compléments",1.5],["Sel de cuisine","Électrolytes",1.5]]},
+      en:{nom:"Pig feed — growth", desc:"Simple fattening ration from your local crops.",
+        ing:[["Ground maize","Main energy",45],["Wheat or maize bran","Fibre and energy",25],
+             ["Soybean or groundnut cake","Protein",18],["Fish meal","Animal protein",5],
+             ["Shells or bone meal","Calcium and phosphorus",4],["Vitamin-mineral premix","Supplements",1.5],["Table salt","Electrolytes",1.5]]}},
+    pro:{fr:{nom:"Aliment porc avancé (Pro)", desc:"Formulation optimisée : meilleure croissance et valorisation des sous-produits locaux.",
+        ing:[["Maïs broyé","Énergie",50],["Son de blé ou de maïs","Fibres",18],["Tourteau de soja","Protéines concentrées",16],
+             ["Farine de poisson","Protéines animales",6],["Drêche de brasserie séchée","Protéines + appétence",5],
+             ["Coquilles ou poudre d'os","Minéraux",2.5],["Prémix + acides aminés","Équilibre",1.5],["Sel","Électrolytes",1]]},
+      en:{nom:"Advanced pig feed (Pro)", desc:"Optimised formulation: better growth and use of local by-products.",
+        ing:[["Ground maize","Energy",50],["Wheat or maize bran","Fibre",18],["Soybean cake","Concentrated protein",16],
+             ["Fish meal","Animal protein",6],["Dried brewer's grains","Protein + palatability",5],
+             ["Shells or bone meal","Minerals",2.5],["Premix + amino acids","Balance",1.5],["Salt","Electrolytes",1]]}}
+  },
+  volaille: {
+    base:{fr:{nom:"Aliment volaille — chair (croissance)", desc:"Ration de croissance pour poulets de chair, à base de maïs et tourteau.",
+        ing:[["Maïs broyé","Énergie principale",55],["Tourteau de soja","Protéines",25],["Son de blé","Fibres",8],
+             ["Farine de poisson","Protéines animales",5],["Coquilles ou carbonate de calcium","Calcium (os)",4],
+             ["Prémix + sel","Vitamines et minéraux",2],["Méthionine / lysine","Acides aminés",1]]},
+      en:{nom:"Poultry feed — broiler (growth)", desc:"Growth ration for broilers, maize- and cake-based.",
+        ing:[["Ground maize","Main energy",55],["Soybean cake","Protein",25],["Wheat bran","Fibre",8],
+             ["Fish meal","Animal protein",5],["Shells or calcium carbonate","Calcium (bones)",4],
+             ["Premix + salt","Vitamins and minerals",2],["Methionine / lysine","Amino acids",1]]}},
+    pro:{fr:{nom:"Aliment pondeuse (Pro)", desc:"Formulation pour poules pondeuses : plus de calcium pour la coquille des œufs.",
+        ing:[["Maïs broyé","Énergie",55],["Tourteau de soja","Protéines",22],["Son de blé","Fibres",5],
+             ["Farine de poisson","Protéines animales",4],["Coquilles / calcaire","Calcium coquille d'œuf",10],
+             ["Prémix + sel","Vitamines et minéraux",3],["Acides aminés","Équilibre",1]]},
+      en:{nom:"Layer feed (Pro)", desc:"Formulation for laying hens: more calcium for eggshell quality.",
+        ing:[["Ground maize","Energy",55],["Soybean cake","Protein",22],["Wheat bran","Fibre",5],
+             ["Fish meal","Animal protein",4],["Shells / limestone","Eggshell calcium",10],
+             ["Premix + salt","Vitamins and minerals",3],["Amino acids","Balance",1]]}}
+  },
+  bovin: {
+    base:{fr:{nom:"Complément bovin (fourrage + concentré)", desc:"Base = pâturage/foin. Ce complément couvre énergie, protéines et minéraux.",
+        ing:[["Fourrage vert ou foin","Base de la ration (fibres)",60],["Son de blé ou de maïs","Énergie",18],
+             ["Tourteau de coton ou d'arachide","Protéines",12],["Mélasse","Appétence + énergie",5],
+             ["Poudre d'os / CMV","Minéraux",3],["Sel / pierre à lécher","Électrolytes",2]]},
+      en:{nom:"Cattle supplement (forage + concentrate)", desc:"Base = grazing/hay. This supplement covers energy, protein and minerals.",
+        ing:[["Green forage or hay","Ration base (fibre)",60],["Wheat or maize bran","Energy",18],
+             ["Cottonseed or groundnut cake","Protein",12],["Molasses","Palatability + energy",5],
+             ["Bone meal / mineral mix","Minerals",3],["Salt / lick block","Electrolytes",2]]}},
+    pro:{fr:{nom:"Complément bovin avancé (Pro)", desc:"Complément renforcé pour production laitière ou embouche.",
+        ing:[["Fourrage vert ou foin","Fibres",55],["Son de blé ou de maïs","Énergie",20],
+             ["Tourteau de coton","Protéines",14],["Mélasse","Énergie + appétence",6],
+             ["CMV / poudre d'os","Minéraux",3],["Sel","Électrolytes",2]]},
+      en:{nom:"Advanced cattle supplement (Pro)", desc:"Reinforced supplement for milk production or fattening.",
+        ing:[["Green forage or hay","Fibre",55],["Wheat or maize bran","Energy",20],
+             ["Cottonseed cake","Protein",14],["Molasses","Energy + palatability",6],
+             ["Mineral mix / bone meal","Minerals",3],["Salt","Electrolytes",2]]}}
+  },
+  caprin: {
+    base:{fr:{nom:"Complément chèvre (fourrage + concentré)", desc:"Base = feuilles et fourrage. Ce complément équilibre la ration.",
+        ing:[["Fourrage / feuilles (Leucaena, herbe)","Base fibreuse",62],["Son de blé ou de maïs","Énergie",16],
+             ["Tourteau d'arachide ou de soja","Protéines",12],["Mélasse","Appétence",4],
+             ["Poudre d'os / CMV","Minéraux",4],["Sel","Électrolytes",2]]},
+      en:{nom:"Goat supplement (forage + concentrate)", desc:"Base = leaves and forage. This supplement balances the ration.",
+        ing:[["Forage / leaves (Leucaena, grass)","Fibre base",62],["Wheat or maize bran","Energy",16],
+             ["Groundnut or soybean cake","Protein",12],["Molasses","Palatability",4],
+             ["Bone meal / mineral mix","Minerals",4],["Salt","Electrolytes",2]]}},
+    pro:{fr:{nom:"Complément chèvre avancé (Pro)", desc:"Complément renforcé pour lactation ou croissance des chevreaux.",
+        ing:[["Fourrage / feuilles","Fibres",55],["Son de blé ou de maïs","Énergie",18],
+             ["Tourteau d'arachide","Protéines",15],["Maïs broyé","Énergie concentrée",5],
+             ["Mélasse","Appétence",4],["CMV / poudre d'os","Minéraux",2],["Sel","Électrolytes",1]]},
+      en:{nom:"Advanced goat supplement (Pro)", desc:"Reinforced supplement for lactation or kid growth.",
+        ing:[["Forage / leaves","Fibre",55],["Wheat or maize bran","Energy",18],
+             ["Groundnut cake","Protein",15],["Ground maize","Concentrated energy",5],
+             ["Molasses","Palatability",4],["Mineral mix / bone meal","Minerals",2],["Salt","Electrolytes",1]]}}
+  }
+};
+function recettesEsp(){
+  const k = espActive();
+  if(k==='lapin') return RECETTES;
+  return RECETTES_ESP[k] || RECETTES;
+}
+
 let sacKg = 50;
 function vueNutrition(){
   const proActif = etat.pro === true;
-  const rBase = RECETTES.base[langue], rPro = RECETTES.pro[langue];
+  const R = recettesEsp();
+  const rBase = R.base[langue], rPro = R.pro[langue];
   const tableau = (recette, verrou) => {
     const lignes = recette.ing.map(([n,role,pc])=>{
       const kg = Math.round(pc/100*sacKg*100)/100;
@@ -3719,6 +3804,8 @@ function vueNutrition(){
   return `
     <h2 class="page-title">${t('nut_title')}</h2>
     <p class="page-sub">${t('nut_sub')}</p>
+    ${selecteurEspece()}
+    <p class="vide" style="font-style:normal;margin-bottom:12px">${t('nut_disc')}</p>
 
     <div class="card" style="margin-bottom:16px">
       <h3>🧮 ${t('nut_calc')}</h3>
@@ -3792,7 +3879,7 @@ function demanderPro(){
   }
 }
 function partagerRecette(type){
-  const r = RECETTES[type][langue];
+  const r = recettesEsp()[type][langue];
   const lignes = [ (type==='pro'?'⭐ ':'🌱 ') + r.nom + ' — ' + sacKg + ' kg', '' ];
   r.ing.forEach(([n,role,pc])=> lignes.push('• ' + n + ' : ' + (Math.round(pc/100*sacKg*100)/100) + ' kg'));
   lignes.push('', '— CuniSmart 🐇');
