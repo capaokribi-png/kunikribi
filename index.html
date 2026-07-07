@@ -4011,8 +4011,87 @@ function niveauAccessible(ni){
   if(ni === 2 && !niveauValide(1)) return false; /* progression dans le Pro */
   return true;
 }
+
+/* ================= CUNIMASTER — FICHES ESSENTIELLES PAR ESPÈCE ================= */
+const FICHES_ESP = {
+  porc:{
+    fr:{fiches:[
+      ["Logement & installation","Porcherie sur sol bétonné avec pente pour l'écoulement, zone d'ombre et point d'eau pour la fraîcheur (le porc supporte mal la chaleur). Séparez maternité, engraissement et reproducteurs, et nettoyez chaque jour."],
+      ["Alimentation","Ration équilibrée énergie/protéines (maïs, son, tourteau) + minéraux, adaptée au stade (croissance, gestation, lactation). Eau propre à volonté. Ne donnez jamais de déchets de cuisine crus (risque de peste porcine africaine)."],
+      ["Reproduction & conduite","La truie revient en chaleur tous les ~21 jours ; la gestation dure ~114 jours (3 mois, 3 semaines, 3 jours). Préparez une maternité propre avant la mise bas : le colostrum des premières heures est vital. Sevrage vers 28 jours."],
+      ["Santé & biosécurité","Biosécurité stricte : quarantaine des nouveaux animaux, contrôle des visiteurs. Vaccinez (rouget), déparasitez. Toute forte fièvre avec rougeurs et mortalité rapide fait suspecter la PPA : isolez et prévenez le vétérinaire."],
+      ["Gestion & rentabilité","L'aliment représente 65-70 % du coût : suivez l'indice de consommation (kg d'aliment par kg de gain). Vendez au bon poids et tenez vos comptes (Finances) pour connaître votre marge réelle."]]},
+    en:{fiches:[
+      ["Housing & setup","Concrete-floored pen with drainage slope, shade and a water/wallow for cooling (pigs tolerate heat poorly). Separate farrowing, fattening and breeders, and clean daily."],
+      ["Feeding","Balanced energy/protein ration (maize, bran, cake) + minerals, matched to stage (growth, gestation, lactation). Clean water at will. Never feed raw kitchen waste (African Swine Fever risk)."],
+      ["Breeding & management","The sow returns to heat every ~21 days; gestation lasts ~114 days (3 months, 3 weeks, 3 days). Prepare a clean farrowing area: first-hours colostrum is vital. Wean around 28 days."],
+      ["Health & biosecurity","Strict biosecurity: quarantine new animals, control visitors. Vaccinate (erysipelas), deworm. High fever with skin redness and rapid death suggests ASF: isolate and call the vet."],
+      ["Management & profit","Feed is 65-70% of cost: track feed conversion (kg feed per kg gain). Sell at the right weight and keep your books (Finances) to know your real margin."]]}
+  },
+  volaille:{
+    fr:{fiches:[
+      ["Logement & poussinière","Poulailler sec, bien ventilé, protégé des prédateurs, avec une litière sèche (copeaux). Prévoyez une poussinière chauffée les premiers jours et une densité raisonnable pour éviter stress et maladies."],
+      ["Alimentation","Aliment démarrage puis croissance (poulet de chair) ou ponte (pondeuse, riche en calcium pour la coquille). Eau propre en permanence ; nettoyez mangeoires et abreuvoirs chaque jour."],
+      ["Conduite en bandes","Travaillez en « tout plein / tout vide » : une seule bande à la fois, puis vide sanitaire et désinfection avant la suivante. Choisissez des poussins de qualité et soignez le démarrage (chaleur, eau, aliment dès l'arrivée)."],
+      ["Santé & biosécurité","Vaccinez : Newcastle (essentiel, avec rappels), Gumboro, variole aviaire. Limitez les entrées, installez un pédiluve, gardez la litière sèche. Isolez ou éliminez vite les malades (contagion très rapide)."],
+      ["Gestion & rentabilité","Suivez la mortalité, la consommation d'aliment et le poids (ou la ponte). La mortalité et le gaspillage d'aliment détruisent la marge : comparez le coût poussin + aliment au prix de vente."]]},
+    en:{fiches:[
+      ["Housing & brooder","Dry, well-ventilated house, predator-proof, with dry litter (shavings). Provide a heated brooder for the first days and a reasonable density to avoid stress and disease."],
+      ["Feeding","Starter then grower feed (broilers) or layer feed (hens, calcium-rich for shells). Permanent clean water; clean feeders and drinkers daily."],
+      ["Batch management","Work all-in/all-out: one batch at a time, then an empty period and disinfection before the next. Choose quality chicks and nail the start (heat, water, feed on arrival)."],
+      ["Health & biosecurity","Vaccinate: Newcastle (essential, with boosters), Gumboro, fowl pox. Limit entries, set up a footbath, keep litter dry. Isolate or cull sick birds fast (very rapid spread)."],
+      ["Management & profit","Track mortality, feed intake and weight (or lay rate). Mortality and feed waste destroy the margin: compare chick + feed cost to selling price."]]}
+  },
+  bovin:{
+    fr:{fiches:[
+      ["Logement & pâturage","Accès à un bon pâturage, eau propre à volonté et zone d'ombre. Prévoyez un parc/étable propre pour la nuit et faites tourner les parcelles pour préserver l'herbe et casser le cycle des parasites."],
+      ["Alimentation","La base est le fourrage (herbe, foin) ; complétez en énergie, protéines et minéraux (son, tourteau, pierre à lécher), surtout en saison sèche et en lactation. Eau abondante indispensable."],
+      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 9 mois (283 jours). Détectez bien les chaleurs, notez les saillies et préparez le vêlage. Le veau doit recevoir le colostrum rapidement après la naissance."],
+      ["Santé","Vaccinez (fièvre aphteuse, charbon), détiquez et vermifugez régulièrement. Surveillez la trypanosomose en zone à mouche tsé-tsé. Isolez tout animal malade et appelez le vétérinaire."],
+      ["Gestion & rentabilité","Un bovin est un capital : suivez l'état corporel, la production (lait, poids) et les coûts. Bien nourrir en saison sèche fait toute la différence de rentabilité."]]},
+    en:{fiches:[
+      ["Housing & grazing","Access to good pasture, clean water at will and shade. Provide a clean night paddock/barn and rotate plots to preserve grass and break the parasite cycle."],
+      ["Feeding","Forage is the base (grass, hay); top up with energy, protein and minerals (bran, cake, lick block), especially in the dry season and lactation. Plenty of water is essential."],
+      ["Breeding","~21-day cycle; gestation about 9 months (283 days). Detect heats well, record matings and prepare calving. The calf must get colostrum quickly after birth."],
+      ["Health","Vaccinate (foot-and-mouth, anthrax/blackleg), control ticks and deworm regularly. Watch for trypanosomosis in tsetse areas. Isolate sick animals and call the vet."],
+      ["Management & profit","Cattle are capital: track body condition, output (milk, weight) and costs. Feeding well in the dry season makes all the difference to profitability."]]}
+  },
+  caprin:{
+    fr:{fiches:[
+      ["Logement","Chèvrerie sèche, bien ventilée, à l'abri de la pluie — si possible sur plancher surélevé à claire-voie. Les chèvres supportent mal l'humidité (parasites, piétin). Prévoyez une aire d'exercice."],
+      ["Alimentation","Ce sont des brouteuses : feuilles et fourrages ligneux (Leucaena), herbe, plus un complément (son, tourteau, minéraux). Eau propre, ration renforcée en gestation et lactation."],
+      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 150 jours (5 mois), souvent avec des jumeaux. Préparez une case propre pour la mise bas ; le colostrum est vital pour les chevreaux."],
+      ["Santé","Vaccinez contre la PPR (peste des petits ruminants) : c'est la priorité, très efficace. Vermifugez régulièrement (les parasites sont le 1er problème), parez les onglons, isolez les malades."],
+      ["Gestion & rentabilité","Troupeau à cycle rapide et peu coûteux à démarrer. Suivez la prolificité, la mortalité des chevreaux et les coûts. La vaccination PPR et le déparasitage protègent votre capital."]]},
+    en:{fiches:[
+      ["Housing","Dry, well-ventilated goat house, sheltered from rain — ideally on a raised slatted floor. Goats tolerate damp poorly (parasites, foot rot). Provide an exercise area."],
+      ["Feeding","They are browsers: leaves and woody forage (Leucaena), grass, plus a supplement (bran, cake, minerals). Clean water; richer ration in gestation and lactation."],
+      ["Breeding","~21-day cycle; gestation about 150 days (5 months), often twins. Prepare a clean pen for kidding; colostrum is vital for the kids."],
+      ["Health","Vaccinate against PPR (peste des petits ruminants): it is the priority and very effective. Deworm regularly (parasites are the top problem), trim hooves, isolate sick animals."],
+      ["Management & profit","A fast-cycling, low-cost herd to start. Track prolificacy, kid mortality and costs. PPR vaccination and deworming protect your capital."]]}
+  }
+};
+function vueFiches(){
+  const cfg = FICHES_ESP[espActive()]; if(!cfg) return '';
+  const g = cfg[langue] || cfg.fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ic = ['🏠','🌾','🍼','🩺','📊'];
+  const cards = g.fiches.map(([ti,txt],i)=>`
+    <div class="card" style="margin-bottom:12px">
+      <h3>${ic[i]||'•'} ${esc(ti)}</h3>
+      <p style="color:#444;line-height:1.6">${esc(txt)}</p>
+    </div>`).join('');
+  return `
+    <h2 class="page-title">${t('school_title')}</h2>
+    <p class="page-sub">${L('Fiches essentielles','Key essentials')} — ${espLbl(espActive())}</p>
+    ${selecteurEspece()}
+    <p class="vide" style="font-style:normal;margin-bottom:12px">${L("L'essentiel pour bien maîtriser cet élevage. Le parcours certifiant avec quiz arrivera dans une prochaine mise à jour.","The essentials to master this farming. The certifying path with quizzes will come in a future update.")}</p>
+    ${cards}`;
+}
+
 function vueEcole(){
   if(leconOuverte !== null) return vueLecon(leconOuverte);
+  if(espActive() !== 'lapin') return vueFiches();
   const n = etat.ecole.validees.length;
   const baseFait = niveauValide(0) && niveauValide(1);
   const toutFait = n === LECONS.length;
@@ -4099,6 +4178,7 @@ function vueEcole(){
   return `
     <h2 class="page-title">${t('school_title')}</h2>
     <p class="page-sub">${t('school_sub')}</p>
+    ${selecteurEspece()}
     ${certif}
     <div class="card">
       <p style="font-weight:600;color:var(--vert-foret)">${fmt(t('school_progress'),{n})}</p>
