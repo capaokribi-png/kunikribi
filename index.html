@@ -11,6 +11,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="CuniSmart">
 <title>CuniSmart — Gestion d'élevage cunicole · Rabbit farm manager</title>
+<script>
+(function(){
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&['u','s'].includes(e.key.toLowerCase())){e.preventDefault();}
+    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase()))){e.preventDefault();}
+  });
+  setInterval(function(){
+    var t=new Date(); debugger;
+    if(new Date()-t>100){var c=document.getElementById('contenu');if(c)c.innerHTML='';}
+  },4000);
+})();
+</script>
 <style>
   :root{
     --vert-foret:#9A3412; --vert-fonce:#6B2409; --vert-moyen:#E2711D;
@@ -58,6 +71,36 @@
   .empty-state .em-ic{font-size:2.6rem;margin-bottom:8px;}
   .empty-state h3{color:var(--vert-foret);margin-bottom:5px;}
   .empty-state p{color:var(--gris);font-size:.9rem;margin:0 auto 14px;max-width:46ch;}
+  .esp-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .esp-tab{background:#fff;border:1.5px solid #E0D8C6;color:var(--gris);padding:8px 14px;border-radius:11px;
+    font-weight:700;font-size:.86rem;cursor:pointer;box-shadow:0 2px 0 #E0D8C6;transition:transform .08s,filter .12s;}
+  .esp-tab:hover{filter:brightness(.97);}
+  .esp-tab:active{transform:translateY(2px);box-shadow:0 0 0 #E0D8C6;}
+  .esp-tab.on{background:linear-gradient(180deg,var(--vert-moyen),var(--vert-foret));color:var(--creme);
+    border-color:var(--vert-fonce);box-shadow:0 2px 0 var(--vert-fonce);}
+  .rf-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .rf-doc{max-width:720px;margin:0 auto;color:#1a1a1a;}
+  .rf-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--vert-foret);padding-bottom:10px;margin-bottom:14px;}
+  .rf-mark{font-weight:800;font-size:1.35rem;color:var(--vert-foret);}
+  .rf-sub{font-size:.78rem;color:var(--gris);}
+  .rf-logo{width:64px;height:64px;border:1px dashed #bbb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#aaa;flex:none;}
+  .rf-doc h1{font-size:1.15rem;color:var(--vert-foret);margin:6px 0 10px;letter-spacing:.5px;}
+  .rf-meta{font-size:.86rem;color:#333;margin-bottom:14px;line-height:1.55;}
+  .rf-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+  .rf-table td{padding:7px 9px;border-bottom:1px solid #eee;}
+  .rf-r{text-align:right;white-space:nowrap;}
+  .rf-section td{background:#F3EFE6;font-weight:800;color:var(--vert-foret);text-transform:uppercase;font-size:.78rem;letter-spacing:.5px;}
+  .rf-total td{font-weight:700;border-top:1px solid #ccc;}
+  .rf-result td{font-weight:800;font-size:1.05rem;background:#FBF3E0;border-top:2px solid var(--vert-foret);}
+  .rf-sign{margin-top:20px;font-size:.85rem;color:#333;}
+  .rf-foot{margin-top:14px;font-size:.72rem;color:var(--gris);line-height:1.5;border-top:1px solid #eee;padding-top:8px;}
+  @media print{
+    .sidebar{display:none !important;}
+    .rf-noprint{display:none !important;}
+    .app{display:block !important;}
+    #contenu{padding:0 !important;}
+    .card{box-shadow:none !important;border:none !important;}
+  }
   .card h3{color:var(--vert-foret);font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
   .alerte{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:.9rem;}
@@ -180,9 +223,12 @@
     <button class="nav-btn" data-vue="nutrition" onclick="naviguer('nutrition')"><span class="ico">🥣</span> <span data-i18n="nav_nutri"></span></button>
     <button class="nav-btn" data-vue="ecole" onclick="naviguer('ecole')"><span class="ico">🎓</span> <span data-i18n="nav_school"></span></button>
     <button class="nav-btn" data-vue="tracabilite" onclick="naviguer('tracabilite')"><span class="ico">🔖</span> <span data-i18n="nav_trace"></span></button>
+    <button class="nav-btn" data-vue="consanguinite" onclick="naviguer('consanguinite')"><span class="ico">🧬</span> <span data-i18n="nav_consang"></span></button>
     <button class="nav-btn" data-vue="compte" onclick="naviguer('compte')"><span class="ico">☁️</span> <span data-i18n="nav_compte"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
-    <div class="foot">CuniSmart v2.0 · Kribi, Cameroun</div>
+    <div class="foot">CuniSmart v2.0 · Cameroun · Afrique francophone<br>
+      <a href="cgu.html" style="color:inherit;text-decoration:underline">CGU/CGV</a> ·
+      <a href="confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a></div>
   </aside>
 
   <main id="contenu"></main>
@@ -2512,11 +2558,18 @@ const I18N = {
     cpt_saved:"✅ Sauvegardé dans le cloud.", cpt_restored:"✅ Données restaurées depuis le cloud.",
     cpt_logout:"Se déconnecter", cpt_net:"❌ Pas de connexion. Réessayez plus tard.", cpt_err:"❌ Une erreur est survenue.",
     trace_title:"Traçabilité & label qualité", trace_sub:"Créez un lot et son QR code : chaque produit devient traçable, de la ferme à l'assiette.",
-    trace_add:"＋ Nouveau lot", tr_name:"Nom du lot", tr_name_ph:"Ex : Lapins de chair — juillet",
-    tr_type:"Type", tr_t_meat:"Chair", tr_t_breed:"Reproducteurs", tr_t_litter:"Portée", tr_t_other:"Autre",
-    tr_qty:"Quantité", tr_date:"Date", tr_litter:"Portée d'origine (option)", tr_none:"— Aucune —",
-    tr_origin:"Origine", tr_origin_ph:"Élevage, parents…", tr_feed:"Alimentation", tr_feed_ph:"Ex : granulés + fourrage local",
-    tr_note:"Note / soins", tr_note_ph:"Ex : vacciné, élevé en plein air", tr_create:"Créer le lot + QR",
+    trace_add:"＋ Nouveau lot", tr_name:"Nom du lot", tr_name_ph:"Ex : Lot-LaFerme-Juil2026",
+    tr_type:"Catégorie", tr_t_meat:"Chair", tr_t_breed:"Reproducteurs", tr_t_litter:"Portée", tr_t_other:"Autre",
+    tr_qty:"Quantité (têtes)", tr_poids:"Poids moyen par animal (kg)", tr_poids_ph:"Ex : 2,4 kg",
+    tr_date:"Date de création du lot", tr_litter:"Portée d'origine (option)", tr_none:"— Aucune —",
+    tr_race:"Race / souche", tr_race_ph:"Ex : Néo-Zélandais blanc, Local amélioré",
+    tr_origin:"Origine / lieu d'élevage", tr_origin_ph:"Ex : Élevage rural, Ferme CAPAO — Bidou I",
+    tr_feed:"Alimentation fournie", tr_feed_ph:"Ex : Provende CuniSmart BIO + fourrage local",
+    tr_sante:"Santé & vaccinations", tr_sante_ph:"Ex : Vaccinés VHD, vermifugés, hébergés en espace sain",
+    tr_hyg:"Grade hygiène de l'élevage", tr_hyg_ph:"Sélectionner",
+    tr_acheteur:"Destinataire / acheteur (optionnel)", tr_acheteur_ph:"Ex : Hôtel La Côte, ONG CARE",
+    tr_note:"Note complémentaire / soins spéciaux", tr_note_ph:"Ex : Élevés en plein air, sans antibiotiques",
+    tr_create:"Créer le lot + QR certifié",
     tr_empty:"Aucun lot pour l'instant. Créez votre premier lot certifié.", tr_view:"Voir la page", tr_dl:"Télécharger le QR",
     tr_born_from:"Née de {p}, mise bas le {d}", tr_confirm:"Supprimer ce lot ?",
     trace_lock_title:"🔒 Traçabilité — réservée à CuniSmart Pro",
@@ -2536,13 +2589,19 @@ const I18N = {
     al_wean:"<b>Sevrage</b> de la portée de <b>{f}</b> {q} ({n} lapereaux).",
     al_wean_on:"prévu le {d}", al_wean_now:"à faire",
     herd_title:"Registre du cheptel", herd_sub:"Reproducteurs et reproductrices de l’élevage",
-    herd_add:"＋ Enregistrer un lapin", herd_empty:"Aucun lapin enregistré. Commencez par ajouter vos reproducteurs.",
+    herd_add:"＋ Enregistrer un animal", herd_empty:"Aucun animal enregistré. Commencez par ajouter vos reproducteurs.",
     herd_empty_t:"Votre cheptel est vide",
     start_title:"Bienvenue ! Votre élevage commence ici", start_cta:"➕ Ajouter mon premier lapin",
     start_txt:"Ajoutez votre premier lapin pour voir vos statistiques s'animer, suivre la reproduction et calculer vos marges.",
     f_name:"Nom / N° boucle", ph_name:"Ex : F-001 ou Bella", f_sex:"Sexe", f_female:"♀ Femelle", f_male:"♂ Mâle",
     f_breed:"Race", f_birth:"Date de naissance", btn_add:"Ajouter",
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
+    f_pere:"Père (mâle reproducteur)", f_mere:"Mère (femelle reproductrice)",
+    nav_consang:"🧬 Consanguinité",
+    sp_ask:"Code Super PRO — multi-élevage (porc, bœuf, chèvre, poules), 30 000 FCFA/an. Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
+    rf_btn:"Rapport financier (banque)",
+    sp_fin_title:"Multi-Élevage Super PRO", sp_fin_pitch:"Gérez porc, bœuf, chèvre et poules, avec formations certifiantes et rapport financier pour la banque.", sp_fin_price:"30 000 FCFA / an", sp_fin_cta:"S'abonner", sp_fin_active:"Actif",
+    nut_disc:"⚖️ Rations indicatives, à ajuster avec un technicien d\u0027élevage selon l\u0027âge, le stade (croissance, gestation, lactation) et les ingrédients disponibles. Pour les ruminants (bovins, chèvres), la base reste un bon fourrage.",
     th_name:"Nom", th_sex:"Sexe", th_breed:"Race", th_birth:"Naissance", th_status:"Statut",
     s_active:"Actif", s_sold:"Vendu", s_dead:"Décédé", btn_sold:"Vendu", btn_dead:"Décès",
     confirm_del:"Supprimer définitivement cet enregistrement ?",
@@ -2614,7 +2673,7 @@ const I18N = {
     nut_demo_confirm:"",
     pro_soon:"Le paiement Mobile Money (Orange Money / MTN MoMo) sera disponible très bientôt.",
     pro_soon_msg:"Merci de votre intérêt pour CuniSmart Pro ! 🐇\n\nLe paiement par Mobile Money (Orange Money / MTN MoMo) arrive très bientôt. En attendant, contactez-nous à hello@cunismart.com pour être parmi les premiers informés.",
-    nut_tip:"💡 Astuce Kribi : servez en « barbotine » à peine humidifiée pour éviter la poudre dans les narines, et stockez les sacs sur des palettes contre les moisissures.",
+    nut_tip:"💡 Astuce de terrain : servez en « barbotine » à peine humidifiée pour éviter la poudre dans les narines, et stockez les sacs sur des palettes contre les moisissures.",
     plants_title:"🌿 Reconnaître les plantes fourragères", plants_sub:"Touchez une plante pour voir à quoi elle ressemble (images web).",
     plant_see:"Voir les feuilles",
     pro_badge:"PRO", pro_lock_title:"🔒 Niveaux Confirmé & Expert — réservés à CuniSmart Pro",
@@ -2652,11 +2711,18 @@ const I18N = {
     cpt_saved:"✅ Backed up to the cloud.", cpt_restored:"✅ Data restored from the cloud.",
     cpt_logout:"Sign out", cpt_net:"❌ No connection. Please try again later.", cpt_err:"❌ Something went wrong.",
     trace_title:"Traceability & quality label", trace_sub:"Create a batch and its QR code: every product becomes traceable, from farm to plate.",
-    trace_add:"＋ New batch", tr_name:"Batch name", tr_name_ph:"e.g. Meat rabbits — July",
-    tr_type:"Type", tr_t_meat:"Meat", tr_t_breed:"Breeders", tr_t_litter:"Litter", tr_t_other:"Other",
-    tr_qty:"Quantity", tr_date:"Date", tr_litter:"Origin litter (optional)", tr_none:"— None —",
-    tr_origin:"Origin", tr_origin_ph:"Farm, parents…", tr_feed:"Feed", tr_feed_ph:"e.g. pellets + local forage",
-    tr_note:"Note / care", tr_note_ph:"e.g. vaccinated, free-range", tr_create:"Create batch + QR",
+    trace_add:"＋ New batch", tr_name:"Batch name", tr_name_ph:"e.g. Lot-Farm-Jul2026",
+    tr_type:"Category", tr_t_meat:"Meat", tr_t_breed:"Breeders", tr_t_litter:"Litter", tr_t_other:"Other",
+    tr_qty:"Quantity (head)", tr_poids:"Average weight per animal (kg)", tr_poids_ph:"e.g. 2.4 kg",
+    tr_date:"Batch creation date", tr_litter:"Origin litter (optional)", tr_none:"— None —",
+    tr_race:"Breed / strain", tr_race_ph:"e.g. New Zealand White, Improved local",
+    tr_origin:"Origin / farm location", tr_origin_ph:"e.g. Rural farm, CAPAO Farm — Bidou I",
+    tr_feed:"Feed provided", tr_feed_ph:"e.g. CuniSmart BIO feed + local forage",
+    tr_sante:"Health & vaccinations", tr_sante_ph:"e.g. RHD-vaccinated, dewormed, housed in clean space",
+    tr_hyg:"Farm hygiene grade", tr_hyg_ph:"Select",
+    tr_acheteur:"Buyer / recipient (optional)", tr_acheteur_ph:"e.g. Hotel La Côte, NGO CARE",
+    tr_note:"Additional note / special care", tr_note_ph:"e.g. Free-range, antibiotic-free",
+    tr_create:"Create batch + certified QR",
     tr_empty:"No batch yet. Create your first certified batch.", tr_view:"View page", tr_dl:"Download QR",
     tr_born_from:"Born from {p}, kindled on {d}", tr_confirm:"Delete this batch?",
     trace_lock_title:"🔒 Traceability — reserved for CuniSmart Pro",
@@ -2676,13 +2742,19 @@ const I18N = {
     al_wean:"<b>Weaning</b> of <b>{f}</b>’s litter {q} ({n} kits).",
     al_wean_on:"due on {d}", al_wean_now:"is due now",
     herd_title:"Herd register", herd_sub:"Breeding does and bucks of the farm",
-    herd_add:"＋ Register a rabbit", herd_empty:"No rabbit registered yet. Start by adding your breeders.",
+    herd_add:"＋ Register an animal", herd_empty:"No animal registered yet. Start by adding your breeders.",
     herd_empty_t:"Your herd is empty",
     start_title:"Welcome! Your farm starts here", start_cta:"➕ Add my first rabbit",
     start_txt:"Add your first rabbit to bring your dashboard to life, track breeding and compute your margins.",
     f_name:"Name / Tag no.", ph_name:"E.g. F-001 or Bella", f_sex:"Sex", f_female:"♀ Doe", f_male:"♂ Buck",
     f_breed:"Breed", f_birth:"Date of birth", btn_add:"Add",
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
+    f_pere:"Sire (breeding male)", f_mere:"Dam (breeding female)",
+    nav_consang:"🧬 Inbreeding",
+    sp_ask:"Super PRO code — multi-species (pigs, cattle, goats, poultry), 30,000 FCFA/year. Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
+    rf_btn:"Financial report (bank)",
+    sp_fin_title:"Multi-species Super PRO", sp_fin_pitch:"Manage pigs, cattle, goats and poultry, with certifying courses and a bank financial report.", sp_fin_price:"30,000 FCFA / year", sp_fin_cta:"Subscribe", sp_fin_active:"Active",
+    nut_disc:"⚖️ Indicative rations — adjust with a livestock technician according to age, stage (growth, gestation, lactation) and available ingredients. For ruminants (cattle, goats), good forage remains the base.",
     th_name:"Name", th_sex:"Sex", th_breed:"Breed", th_birth:"Born", th_status:"Status",
     s_active:"Active", s_sold:"Sold", s_dead:"Deceased", btn_sold:"Sold", btn_dead:"Death",
     confirm_del:"Permanently delete this record?",
@@ -2754,7 +2826,7 @@ const I18N = {
     nut_demo_confirm:"",
     pro_soon:"Mobile Money payment (Orange Money / MTN MoMo) will be available very soon.",
     pro_soon_msg:"Thank you for your interest in CuniSmart Pro! 🐇\n\nMobile Money payment (Orange Money / MTN MoMo) is coming very soon. In the meantime, contact us at hello@cunismart.com to be among the first to know.",
-    nut_tip:"💡 Kribi tip: serve as a lightly moistened mash to keep powder out of the nostrils, and store bags on pallets against mould.",
+    nut_tip:"💡 Field tip: serve as a lightly moistened mash to keep powder out of the nostrils, and store bags on pallets against mould.",
     plants_title:"🌿 Recognise the forage plants", plants_sub:"Tap a plant to see what it looks like (web images).",
     plant_see:"See the leaves",
     pro_badge:"PRO", pro_lock_title:"🔒 Intermediate & Expert levels — reserved for CuniSmart Pro",
@@ -2854,7 +2926,7 @@ const LECONS = [
   {fr:{ti:"Les bases de la ration",tx:[
    "L’alimentation représente 60 à 70 % de vos dépenses : c’est ici que se joue la rentabilité. Base : 100 à 150 g de provende par jour pour un adulte, complétée par du fourrage fané. Le lapin est nocturne : donnez environ 70 % de la ration en fin d’après-midi ou le soir, car en journée, sous la chaleur, il mange peu.",
    "Tout changement d’aliment (nouvelle provende, nouveau fourrage) se fait progressivement sur 5 à 7 jours : un changement brutal détruit la flore intestinale et provoque des diarrhées mortelles. Une femelle allaitante mange et boit presque le double d’un adulte normal — sa mangeoire et son abreuvoir ne doivent JAMAIS être vides.",
-   "L’eau est le premier aliment : un lapin sans eau ne mange plus. Propre, à volonté, renouvelée au moins 2 fois par jour. Astuce de Kribi : en forte chaleur, ajoutez une infusion légère de citronnelle refroidie dans l’eau 1 à 2 fois par semaine — elle apaise les animaux et stimule l’appétit."],
+   "L’eau est le premier aliment : un lapin sans eau ne mange plus. Propre, à volonté, renouvelée au moins 2 fois par jour. Astuce de terrain : en forte chaleur, ajoutez une infusion légère de citronnelle refroidie dans l’eau 1 à 2 fois par semaine — elle apaise les animaux et stimule l’appétit."],
   qz:[{q:"L’alimentation représente … de vos dépenses.",o:["10 à 20 %","60 à 70 %","5 %"],b:1},
       {q:"Le lapin étant nocturne, on donne ~70 % de la ration…",o:["À midi","En fin d’après-midi ou le soir","À l’aube uniquement"],b:1},
       {q:"Un changement d’aliment se fait…",o:["Progressivement sur 5 à 7 jours","D’un seul coup","En une nuit"],b:0},
@@ -2863,7 +2935,7 @@ const LECONS = [
   en:{ti:"Ration basics",tx:[
    "Feed accounts for 60 to 70% of your costs: this is where profitability is decided. Base: 100 to 150 g of feed per day for an adult, plus wilted forage. The rabbit is nocturnal: give about 70% of the ration in late afternoon or evening, as it eats little during the heat of the day.",
    "Any feed change (new feed, new forage) is gradual over 5 to 7 days: an abrupt change destroys the gut flora and causes deadly diarrhoea. A nursing doe eats and drinks nearly twice as much as a normal adult — her feeder and drinker must NEVER be empty.",
-   "Water is the first feed: a rabbit with no water stops eating. Clean, at will, renewed at least twice a day. Kribi tip: in strong heat, add a light cooled lemongrass infusion to the water 1-2 times a week — it calms the animals and stimulates appetite."],
+   "Water is the first feed: a rabbit with no water stops eating. Clean, at will, renewed at least twice a day. Field tip: in strong heat, add a light cooled lemongrass infusion to the water 1-2 times a week — it calms the animals and stimulates appetite."],
   qz:[{q:"Feed accounts for … of your costs.",o:["10 to 20%","60 to 70%","5%"],b:1},
       {q:"As the rabbit is nocturnal, ~70% of the ration is given…",o:["At noon","In late afternoon or evening","Only at dawn"],b:1},
       {q:"A feed change is done…",o:["Gradually over 5 to 7 days","All at once","Overnight"],b:0},
@@ -3034,7 +3106,7 @@ const LECONS = [
 
  {fr:{ti:"Formuler sa provende locale",tx:[
    "Une bonne provende équilibre trois piliers : l’énergie (maïs broyé, ~40 % maximum pour éviter l’engraissement), les protéines (tourteau de soja ou d’arachide, farine de Moringa et de fanes séchées) et surtout les fibres (son de blé ou de maïs) indispensables au transit. On complète avec du calcium (coquilles d’huîtres broyées, poudre d’os), un prémix vitaminé et une pincée de sel.",
-   "En climat humide comme Kribi, la provende moisit vite et une provende moisie produit des mycotoxines mortelles : stockez les sacs sur des palettes en bois, jamais à même le sol ni collés au mur, et nettoyez les mangeoires chaque jour car un reste humide fermente à la chaleur. Si vous ne pouvez pas granuler, servez en « barbotine » (à peine humidifiée) pour éviter que la poudre n’entre dans les narines.",
+   "En climat chaud et humide, la provende moisit vite et une provende moisie produit des mycotoxines mortelles : stockez les sacs sur des palettes en bois, jamais à même le sol ni collés au mur, et nettoyez les mangeoires chaque jour car un reste humide fermente à la chaleur. Si vous ne pouvez pas granuler, servez en « barbotine » (à peine humidifiée) pour éviter que la poudre n’entre dans les narines.",
    "Votre vrai tableau de bord, ce sont les crottes : petites et dures = manque d’eau ; molles, collantes et malodorantes = danger digestif — stoppez la provende, ne donnez que de l’eau et du fourrage sec ou de l’Artemisia. Le formulateur de CuniSmart calcule pour vous les quantités exactes à partir de vos cultures locales."],
   qz:[{q:"Les trois piliers d’une provende sont…",o:["Énergie, protéines, fibres","Eau, sel, sucre","Maïs seulement"],b:0},
       {q:"En climat humide, on stocke les sacs…",o:["À même le sol","Sur des palettes en bois","Collés au mur"],b:1},
@@ -3043,7 +3115,7 @@ const LECONS = [
       {q:"Le maïs broyé ne doit pas dépasser … de la ration.",o:["~40 %","90 %","5 %"],b:0}]},
   en:{ti:"Formulating local feed",tx:[
    "A good feed balances three pillars: energy (ground maize, ~40% max to avoid over-fattening), protein (soybean or groundnut cake, Moringa and dried-tops meal) and above all fibre (wheat or maize bran) essential for transit. Complete with calcium (crushed oyster shells, bone meal), a vitamin premix and a pinch of salt.",
-   "In a humid climate like Kribi, feed moulds fast and mouldy feed produces deadly mycotoxins: store bags on wooden pallets, never on the ground or against the wall, and clean feeders daily as a damp leftover ferments in the heat. If you can’t pellet, serve as a lightly moistened mash to keep powder out of the nostrils.",
+   "In a hot, humid climate, feed moulds fast and mouldy feed produces deadly mycotoxins: store bags on wooden pallets, never on the ground or against the wall, and clean feeders daily as a damp leftover ferments in the heat. If you can’t pellet, serve as a lightly moistened mash to keep powder out of the nostrils.",
    "Your real dashboard is the droppings: small and hard = lack of water; soft, sticky and smelly = digestive danger — stop the feed, give only water and dry forage or Artemisia. CuniSmart’s formulator computes the exact quantities for you from your local crops."],
   qz:[{q:"The three pillars of a feed are…",o:["Energy, protein, fibre","Water, salt, sugar","Maize only"],b:0},
       {q:"In a humid climate, store bags…",o:["On the ground","On wooden pallets","Against the wall"],b:1},
@@ -3075,6 +3147,7 @@ const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16
 let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [], compte: {ok:false} };
 let vueActive = 'tableau';
 let leconOuverte = null;
+let ficheOuverte = null;
 let quizResultat = null;
 const CLE = 'kunikribi-donnees';
 const CLE_LANG = 'kunikribi-langue';
@@ -3099,6 +3172,8 @@ async function charger(){
       etat = Object.assign(etat, anc);
       if(!etat.soins) etat.soins = [];
       if(!etat.ecole) etat.ecole = { validees: [], nom: '' };
+      if(!etat.ecole.valideesEsp) etat.ecole.valideesEsp = {};
+      if(!etat.ecole.numEsp) etat.ecole.numEsp = {};
       if(!etat.racesPerso) etat.racesPerso = [];
       if(!etat.lots) etat.lots = [];
       if(!etat.compte) etat.compte = {ok:false};
@@ -3106,7 +3181,7 @@ async function charger(){
     const l = await store.get(CLE_LANG);
     if(l === 'en' || l === 'fr') langue = l;
   }catch(e){}
-  appliquerLangue(); rendre();
+  appliquerLangue(); verifierExpirations(); rendre();
 }
 async function sauver(){ try{ await store.set(CLE, JSON.stringify(etat)); }catch(e){} }
 
@@ -3128,6 +3203,22 @@ const GESTATION = 31, PALPATION = 12, SEVRAGE = 35;
    qui ont payé les 9 500 FCFA/an. Protection légère (le dépôt est public) ;
    la vérification automatique par paiement viendra avec le compte cloud. */
 const CODE_PRO = "CAPAO-PRO-2026";
+/* === Vérification de validité des codes (6 mois) === */
+function verifierExpirations(){
+  const auj_=auj();
+  if(etat.pro===true && etat.proExp && etat.proExp<auj_){
+    etat.pro=false; etat.proDepuis=null; etat.proExp=null; sauver();
+    alert(langue==='fr'
+      ?'⏰ Votre abonnement CuniSmart Pro a expiré. Renouvelez votre code pour continuer à profiter des fonctions Pro.'
+      :'⏰ Your CuniSmart Pro subscription has expired. Renew your code to keep using Pro features.');
+  }
+  if(etat.superpro===true && etat.spExp && etat.spExp<auj_){
+    etat.superpro=false; etat.especeActive='lapin'; etat.spDepuis=null; etat.spExp=null; sauver();
+    alert(langue==='fr'
+      ?'⏰ Votre abonnement Super PRO a expiré. Renouvelez votre code pour continuer à gérer plusieurs élevages.'
+      :'⏰ Your Super PRO subscription has expired. Renew your code to keep managing multiple species.');
+  }
+}
 const RACES = ['Néo-Zélandais blanc / New Zealand White','Californien / Californian','Bélier / Lop',
   'Rex','Fauve de Bourgogne','Géant des Flandres / Flemish Giant','Papillon / Checkered',
   'Chinchilla','Race locale / Local breed','Croisé / Crossbred'];
@@ -3156,7 +3247,7 @@ function nouvelleRace(){
   setTimeout(()=>{ const s = document.getElementById('l-race'); if(s) s.value = v; }, 0);
 }
 function naviguer(v){
-  vueActive = v; leconOuverte = null; quizResultat = null;
+  vueActive = v; leconOuverte = null; quizResultat = null; ficheOuverte = null;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.vue === v));
   rendre();
 }
@@ -3166,16 +3257,16 @@ function calculerAlertes(){
   const a = [];
   etat.saillies.forEach(s => {
     if(s.statut === 'attente'){
-      const jp = diffJours(auj(), ajJours(s.date, PALPATION));
+      const jp = diffJours(auj(), ajJours(s.date, espSaillie(s).palpation));
       if(jp <= 0) a.push({t:'warn', txt: fmt(t('al_palp'), {f:nom(s.femelle), d:fdate(s.date)})});
-      const jmb = diffJours(auj(), ajJours(s.date, GESTATION));
-      if(jmb <= 3 && jmb >= 0) a.push({t:'urgent', txt: fmt(t('al_soon'), {f:nom(s.femelle), d:fdate(ajJours(s.date,GESTATION)), n:jmb})});
-      if(jmb < 0) a.push({t:'urgent', txt: fmt(t('al_over'), {f:nom(s.femelle), d:fdate(ajJours(s.date,GESTATION))})});
+      const jmb = diffJours(auj(), ajJours(s.date, espSaillie(s).gestation));
+      if(jmb <= 3 && jmb >= 0) a.push({t:'urgent', txt: fmt(t('al_soon'), {f:nom(s.femelle), d:fdate(ajJours(s.date,espSaillie(s).gestation)), n:jmb})});
+      if(jmb < 0) a.push({t:'urgent', txt: fmt(t('al_over'), {f:nom(s.femelle), d:fdate(ajJours(s.date,espSaillie(s).gestation))})});
     }
     if(s.statut === 'misebas' && !s.sevre){
-      const js = diffJours(auj(), ajJours(s.dateMiseBas, SEVRAGE));
+      const js = diffJours(auj(), ajJours(s.dateMiseBas, espSaillie(s).sevrage));
       if(js <= 2){
-        const q = js >= 0 ? fmt(t('al_wean_on'), {d:fdate(ajJours(s.dateMiseBas,SEVRAGE))}) : t('al_wean_now');
+        const q = js >= 0 ? fmt(t('al_wean_on'), {d:fdate(ajJours(s.dateMiseBas,espSaillie(s).sevrage))}) : t('al_wean_now');
         a.push({t:'info', txt: fmt(t('al_wean'), {f:nom(s.femelle), q, n:s.vivants})});
       }
     }
@@ -3217,16 +3308,17 @@ function rendre(){
   else if(vueActive === 'bilan') c.innerHTML = vueBilan();
   else if(vueActive === 'nutrition') c.innerHTML = vueNutrition();
   else if(vueActive === 'tracabilite') c.innerHTML = vueTracabilite();
+  else if(vueActive === 'consanguinite') c.innerHTML = vueConsanguinite();
   else if(vueActive === 'compte') c.innerHTML = vueCompte();
   else c.innerHTML = vueEcole();
 }
 
 function vueTableau(){
-  const actifs = etat.lapins.filter(l => l.statut === 'actif');
+  const actifs = etat.lapins.filter(l => l.statut === 'actif' && espDe(l)===espActive());
   const fem = actifs.filter(l => l.sexe === 'F').length;
   const mal = actifs.filter(l => l.sexe === 'M').length;
-  const gest = etat.saillies.filter(s => s.statut === 'attente').length;
-  const kits = etat.saillies.filter(s => s.statut==='misebas' && !s.sevre).reduce((x,s)=>x+(s.vivants||0),0);
+  const gest = etat.saillies.filter(s => s.statut === 'attente' && espSaillie(s)===espDef()).length;
+  const kits = etat.saillies.filter(s => s.statut==='misebas' && !s.sevre && espSaillie(s)===espDef()).reduce((x,s)=>x+(s.vivants||0),0);
   const k = calculerKPI();
   const alertes = calculerAlertes();
   const dateJour = new Date().toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -3234,19 +3326,23 @@ function vueTableau(){
   return `
     <h2 class="page-title">${t('dash_title')}</h2>
     <p class="page-sub">${t('dash_sub')} — ${dateJour}</p>
+    ${selecteurEspece()}
     <div class="grid stats">
-      <div class="card stat leaf"><div class="ico">🐰</div><div class="val">${fem}</div><div class="lab">${t('st_females')}</div></div>
-      <div class="card stat leaf"><div class="ico">🐇</div><div class="val">${mal}</div><div class="lab">${t('st_males')}</div></div>
+      <div class="card stat leaf"><div class="ico">${espDef().icon}</div><div class="val">${fem}</div><div class="lab">${espF(espActive())}</div></div>
+      <div class="card stat leaf"><div class="ico">♂️</div><div class="val">${mal}</div><div class="lab">${espM(espActive())}</div></div>
       <div class="card stat amber"><div class="ico">⏳</div><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
-      <div class="card stat leaf"><div class="ico">🐣</div><div class="val">${kits}</div><div class="lab">${t('st_kits')}</div></div>
+      <div class="card stat leaf"><div class="ico">🐣</div><div class="val">${kits}</div><div class="lab">${espPetit(espActive())}</div></div>
       <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="ico">💰</div><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.35rem">${fcfa(k.marge)}</div><div class="lab">${t('st_balance')}</div></div>
       <div class="card stat amber"><div class="ico">🎓</div><div class="val">${etat.ecole.validees.length}/6</div><div class="lab">${t('st_school')}</div></div>
     </div>
-    ${etat.lapins.length===0 ? `<div class="card empty-state">
-      <div class="em-ic">🐰</div>
-      <h3>${t('start_title')}</h3>
-      <p>${t('start_txt')}</p>
-      <button class="btn" onclick="naviguer('cheptel')">${t('start_cta')}</button>
+    ${animauxEsp().length===0 ? `<div class="card empty-state">
+      <div class="em-ic">${espDef().icon}</div>
+      <h3>${langue==='fr'?'Bienvenue ! Votre élevage commence ici':'Welcome! Your farm starts here'}</h3>
+      <p>${langue==='fr'?'Ajoutez votre premier animal ('+espF(espActive())+') pour voir vos statistiques s\'animer, suivre la reproduction et calculer vos marges.':'Add your first animal ('+espF(espActive())+') to bring your dashboard to life, track breeding and compute your margins.'}</p>
+      <button class="btn" onclick="naviguer('cheptel')">${espDef().icon} ${langue==='fr'
+        ? '➕ Ajouter m' + (['Truie','Vache','Chèvre','Poule','Femelle'].some(f=>espF(espActive()).startsWith(f[0]))?'a première ':'on premier ') + espF(espActive()).toLowerCase()
+        : '➕ Add my first ' + espF(espActive()).toLowerCase()
+      }</button>
     </div>` : `<div class="card">
       <h3>${t('alerts_title')}</h3>
       ${alertes.length ? alertes.map(a=>`<div class="alerte ${a.t}">${a.t==='urgent'?'⚠️':a.t==='warn'?'✋':'ℹ️'} <span>${a.txt}</span></div>`).join('')
@@ -3254,8 +3350,74 @@ function vueTableau(){
     </div>`}`;
 }
 
+
+/* ================= MULTI-ÉLEVAGE (Super PRO) ================= */
+/* ⭐ Code d'activation Super PRO — CHANGEZ-LE, donnez-le aux abonnés multi-élevage. */
+const CODE_SUPERPRO = "CAPAO-SUPER-2026";
+/* 💰 Prix Super PRO (multi-élevage) et lien de paiement AfribaPay dédié (à 30 000 FCFA/an).
+   Collez ici votre lien AfribaPay « Cunismart Super PRO » quand il sera créé ; sinon, renvoie vers payer.html. */
+const PRIX_SUPERPRO = 30000;
+const LIEN_SUPERPRO = "https://checkout-sandbox.afribapay.com/ck/AFPAY260707061057569APM6510465YyR";
+
+const ESPECES = {
+  lapin:   {icon:'🐰', fr:'Lapins',  en:'Rabbits', gestation:31,  palpation:12, sevrage:35,
+            f_fr:'Femelle', f_en:'Doe',    m_fr:'Mâle', m_en:'Buck',
+            petit_fr:'Lapereaux', petit_en:'Kits',
+            races:['Néo-Zélandais blanc / New Zealand White','Californien','Fauve de Bourgogne','Géant des Flandres','Papillon anglais','Local']},
+  porc:    {icon:'🐖', fr:'Porcs',   en:'Pigs', gestation:114, palpation:21, sevrage:28,
+            f_fr:'Truie', f_en:'Sow',   m_fr:'Verrat', m_en:'Boar',
+            petit_fr:'Porcelets', petit_en:'Piglets',
+            races:['Large White','Landrace','Duroc','Piétrain','Local']},
+  bovin:   {icon:'🐄', fr:'Bovins',  en:'Cattle', gestation:283, palpation:60, sevrage:210,
+            f_fr:'Vache', f_en:'Cow',   m_fr:'Taureau', m_en:'Bull',
+            petit_fr:'Veaux', petit_en:'Calves',
+            races:["Zébu","N'Dama","Holstein","Charolais","Brahman","Local"]},
+  caprin:  {icon:'🐐', fr:'Chèvres', en:'Goats', gestation:150, palpation:30, sevrage:75,
+            f_fr:'Chèvre', f_en:'Doe',  m_fr:'Bouc', m_en:'Buck',
+            petit_fr:'Chevreaux', petit_en:'Kids',
+            races:['Naine de Guinée','Boer','Saanen','Alpine','Local']},
+  volaille:{icon:'🐔', fr:'Poules',  en:'Poultry', gestation:21, palpation:0, sevrage:0,
+            f_fr:'Poule', f_en:'Hen',   m_fr:'Coq', m_en:'Rooster',
+            petit_fr:'Poussins', petit_en:'Chicks',
+            races:['Poulet local','Cobb 500','Ross 308','ISA Brown (pondeuse)','Wyandotte']},
+};
+const ORDRE_ESP = ['lapin','porc','bovin','caprin','volaille'];
+
+function espActive(){ return (etat.especeActive && ESPECES[etat.especeActive]) ? etat.especeActive : 'lapin'; }
+function espDef(){ return ESPECES[espActive()]; }
+function espLbl(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.fr:e.en; }
+function espF(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.f_fr:e.f_en; }
+function espM(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.m_fr:e.m_en; }
+function espPetit(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.petit_fr:e.petit_en; }
+function espDe(l){ return (l && l.espece) || 'lapin'; }
+function animauxEsp(){ return etat.lapins.filter(l => espDe(l)===espActive()); }
+function racesEsp(){ const base = espDef().races || []; return espActive()==='lapin' ? [...base, ...(etat.racesPerso||[])] : base; }
+function espSaillie(s){ const f=lapin(s.femelle); return ESPECES[(f&&f.espece)||s.espece||'lapin'] || ESPECES.lapin; }
+
+function setEspece(k){
+  if(k!=='lapin' && etat.superpro!==true){ demanderSuperPro(); return; }
+  etat.especeActive = k; sauver(); rendre();
+}
+function selecteurEspece(){
+  return '<div class="esp-tabs">'+ORDRE_ESP.map(k=>{
+    const on = espActive()===k;
+    const lock = (k!=='lapin' && etat.superpro!==true);
+    return '<button class="esp-tab'+(on?' on':'')+'" onclick="setEspece(\''+k+'\')">'+
+      ESPECES[k].icon+' '+espLbl(k)+(lock?' 🔒':'')+'</button>';
+  }).join('')+'</div>';
+}
+function demanderSuperPro(){
+  const code = prompt(t('sp_ask'));
+  if(code===null) return;
+  const v = code.trim();
+  if(v===''){ window.location.href = LIEN_SUPERPRO || 'payer.html'; return; }
+  if(v.toUpperCase()===CODE_SUPERPRO.toUpperCase()){
+    etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); etat.spExp=ajJours(auj(),182); sauver(); alert(t('sp_ok')); rendre();
+  } else { alert(t('sp_bad')); }
+}
+
 function vueCheptel(){
-  const lignes = etat.lapins.slice().reverse().map(l => `
+  const lignes = animauxEsp().slice().reverse().map(l => `
     <tr>
       <td><b>${esc(l.nom)}</b></td>
       <td><span class="tag ${l.sexe==='F'?'f':'m'}">${l.sexe==='F'?t('f_female'):t('f_male')}</span></td>
@@ -3274,19 +3436,22 @@ function vueCheptel(){
   return `
     <h2 class="page-title">${t('herd_title')}</h2>
     <p class="page-sub">${t('herd_sub')}</p>
+    ${selecteurEspece()}
     <div class="card">
-      <h3>${t('herd_add')}</h3>
+      <h3>${t('herd_add')} — ${espLbl(espActive())}</h3>
       <form class="ligne" onsubmit="ajouterLapin(event)">
         <div class="champ"><label>${t('f_name')}</label><input id="l-nom" required placeholder="${t('ph_name')}"></div>
-        <div class="champ"><label>${t('f_sex')}</label><select id="l-sexe"><option value="F">${t('f_female')}</option><option value="M">${t('f_male')}</option></select></div>
-        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${toutesRaces().map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>
+        <div class="champ"><label>${t('f_sex')}</label><select id="l-sexe"><option value="F">${espF(espActive())}</option><option value="M">${espM(espActive())}</option></select></div>
+        <div class="champ"><label>${t('f_breed')}</label><select id="l-race">${racesEsp().map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>
         <button type="button" class="btn mini sec" style="margin-bottom:2px" onclick="nouvelleRace()">${t('btn_new_breed')}</button>
         <div class="champ"><label>${t('f_birth')}</label><input type="date" id="l-naiss"></div>
         <div class="champ"><label>${t('f_weight')}</label><input type="number" step="0.1" min="0" id="l-poids" placeholder="${t('ph_weight')}"></div>
+        <div class="champ"><label>${t('f_pere')}</label><select id="l-pere">${parentOptions('M')}</select></div>
+        <div class="champ"><label>${t('f_mere')}</label><select id="l-mere">${parentOptions('F')}</select></div>
         <button class="btn">${t('btn_add')}</button>
       </form>
-      ${etat.lapins.length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_weight')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
-        : `<div class="empty-state"><div class="em-ic">🐰</div><h3>${t('herd_empty_t')}</h3><p>${t('herd_empty')}</p></div>`}
+      ${animauxEsp().length ? `<table><thead><tr><th>${t('th_name')}</th><th>${t('th_sex')}</th><th>${t('th_breed')}</th><th>${t('th_birth')}</th><th>${t('th_weight')}</th><th>${t('th_status')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`
+        : `<div class="empty-state"><div class="em-ic">${espDef().icon}</div><h3>${t('herd_empty_t')}</h3><p>${t('herd_empty')}</p></div>`}
     </div>`;
 }
 
@@ -3297,10 +3462,11 @@ function agendaRepro(){
   const ev = [];
   etat.saillies.forEach(s=>{
     if(s.statut === 'attente'){
-      ev.push({ d: ajJours(s.date, PALPATION), type:'palp', s:s });
-      ev.push({ d: ajJours(s.date, GESTATION), type:'mb',   s:s });
-    } else if(s.statut === 'misebas' && !s.sevre){
-      ev.push({ d: ajJours(s.dateMiseBas, SEVRAGE), type:'sev', s:s });
+      const E = espSaillie(s);
+      if(E.palpation>0) ev.push({ d: ajJours(s.date, E.palpation), type:'palp', s:s });
+      ev.push({ d: ajJours(s.date, E.gestation), type:'mb',   s:s });
+    } else if(s.statut === 'misebas' && !s.sevre && espSaillie(s).sevrage>0){
+      ev.push({ d: ajJours(s.dateMiseBas, espSaillie(s).sevrage), type:'sev', s:s });
     }
   });
   ev.forEach(e=> e.j = diffJours(auj(), e.d));
@@ -3345,21 +3511,188 @@ function blocAgenda(){
   return cToDo + cCal;
 }
 
+
+/* ===== MODULE CONSANGUINITÉ & GÉNÉALOGIE ===== */
+
+// ─── 1. ENREGISTRER PÈRE/MÈRE À LA NAISSANCE ───────────────────────────────
+// On ajoute deux champs optionnels dans le formulaire cheptel : père et mère.
+// Ils pointent vers les IDs d'animaux enregistrés — ou restent vides si inconnus.
+// Les saillies servent aussi d'ancêtres : quand une mise bas est enregistrée,
+// on peut lier automatiquement les lapereaux aux parents (femelle + mâle de la saillie).
+
+function parentOptions(sexe){
+  // Liste des animaux (actifs + inactifs) du bon sexe pour le menu déroulant
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const tous=etat.lapins.filter(l=>l.sexe===sexe && espDe(l)===espActive());
+  return '<option value="">'+L('— Inconnu —','— Unknown —')+'</option>'+
+    tous.map(l=>`<option value="${l.id}">${esc(l.nom)}</option>`).join('');
+}
+
+// ─── 2. COEFFICIENT DE CONSANGUINITÉ (Wright simplifié, 3 générations) ───────
+function ancetres(id, gen, memo={}){
+  // Retourne un Map { ancestorId -> [list of paths length] }
+  if(gen<0 || !id) return;
+  if(!memo[id]) memo[id]=[];
+  memo[id].push(gen);
+  const l=lapin(id); if(!l) return memo;
+  ancetres(l.pere||null, gen-1, memo);
+  ancetres(l.mere||null, gen-1, memo);
+  return memo;
+}
+
+function coefConsanguinite(idFemelle, idMale){
+  // Calcule F (coefficient de Wright) pour le produit potentiel de ces deux parents.
+  // F = Σ (1/2)^(n1+n2+1) pour chaque ancêtre commun, sur 3 générations.
+  if(!idFemelle || !idMale) return 0;
+  const anceF = ancetres(idFemelle, 3, {});
+  const anceM = ancetres(idMale, 3, {});
+  let F = 0;
+  for(const id in anceF){
+    if(anceM[id]){
+      // Ancêtre commun trouvé : combinaison des chemins
+      for(const gF of anceF[id]){
+        for(const gM of anceM[id]){
+          F += Math.pow(0.5, gF + gM + 1);
+        }
+      }
+    }
+  }
+  return Math.round(F * 10000) / 100; // en %
+}
+
+function riskLabel(F){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(F===0) return {lbl:L('Aucun risque','No risk'),cls:'ok',icon:'✅'};
+  if(F<=3.125) return {lbl:L('Très faible ('+F+'%)','Very low ('+F+'%)'),cls:'ok',icon:'✅'};
+  if(F<=6.25)  return {lbl:L('Faible ('+F+'%)','Low ('+F+'%)'),cls:'gest',icon:'🟡'};
+  if(F<=12.5)  return {lbl:L('Attention ('+F+'%)','Caution ('+F+'%)'),cls:'amber',icon:'⚠️'};
+  if(F<=25)    return {lbl:L('Élevé — déconseillé ('+F+'%)','High — not advised ('+F+'%)'),cls:'dep',icon:'🔴'};
+  return       {lbl:L('Critique — ne pas croiser ('+F+'%)','Critical — do not mate ('+F+'%)'),cls:'dep',icon:'🛑'};
+}
+
+// ─── 3. VUE PRINCIPALE ───────────────────────────────────────────────────────
+function vueConsanguinite(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const femelles=etat.lapins.filter(l=>l.sexe==='F'&&l.statut==='actif'&&espDe(l)===espActive());
+  const males   =etat.lapins.filter(l=>l.sexe==='M'&&l.statut==='actif'&&espDe(l)===espActive());
+
+  if(!femelles.length||!males.length){
+    return `<div class="card" style="text-align:center;padding:28px">
+      <div style="font-size:2.2rem;margin-bottom:8px">🧬</div>
+      <h3 style="color:var(--vert-foret)">${L('Suivi de consanguinité','Inbreeding tracker')}</h3>
+      <p style="color:var(--gris)">${L('Enregistrez au moins une femelle et un mâle actifs pour utiliser cet outil.','Register at least one active female and one active male to use this tool.')}</p>
+    </div>`;
+  }
+
+  // Tableau de toutes les combinaisons
+  let rows='';
+  for(const f of femelles){
+    for(const m of males){
+      const F=coefConsanguinite(f.id,m.id);
+      const r=riskLabel(F);
+      // ancêtres communs pour l'affichage
+      const anceF=ancetres(f.id,3,{});
+      const anceM=ancetres(m.id,3,{});
+      const communs=Object.keys(anceF).filter(id=>anceM[id]&&id!==f.id&&id!==m.id)
+        .map(id=>lapin(id)).filter(Boolean).map(a=>esc(a.nom)).join(', ')||'—';
+      rows+=`<tr>
+        <td><b>${esc(f.nom)}</b></td>
+        <td><b>${esc(m.nom)}</b></td>
+        <td><span class="tag ${r.cls}">${r.icon} ${r.lbl}</span></td>
+        <td style="font-size:.82rem;color:var(--gris)">${communs}</td>
+        <td><button class="btn mini" onclick="planifierSaillie('${f.id}','${m.id}')">${L('Planifier','Plan')}</button></td>
+      </tr>`;
+    }
+  }
+
+  // Recommandations prioritaires
+  const bons=[];
+  for(const f of femelles){
+    let bestF=Infinity,bestM=null;
+    for(const m of males){
+      const F=coefConsanguinite(f.id,m.id);
+      if(F<bestF){bestF=F;bestM=m;}
+    }
+    if(bestM) bons.push({f,m:bestM,F:bestF});
+  }
+  const recos=bons.sort((a,b)=>a.F-b.F).slice(0,3).map(x=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ligne,#E6E0D0)">
+      <span style="font-size:1.3rem">💑</span>
+      <div style="flex:1">
+        <b>${esc(x.f.nom)}</b> × <b>${esc(x.m.nom)}</b>
+        <span class="tag ${riskLabel(x.F).cls}" style="margin-left:6px">${riskLabel(x.F).icon} ${x.F===0?L('Aucun risque','No risk'):x.F+'%'}</span>
+      </div>
+      <button class="btn mini sec" onclick="planifierSaillie('${x.f.id}','${x.m.id}')">${L('Choisir','Select')}</button>
+    </div>`).join('');
+
+  return `
+    <h2 class="page-title">🧬 ${L('Suivi de consanguinité','Inbreeding tracker')}</h2>
+    <p class="page-sub">${L('Évitez les croisements à risque. Coefficient de Wright calculé sur 3 générations.','Avoid risky matings. Wright coefficient calculated over 3 generations.')}</p>
+
+    <div class="card" style="margin-bottom:16px;border-left:4px solid var(--feuille,#F4B41A)">
+      <h3 style="margin-bottom:10px">⭐ ${L('Croisements recommandés','Recommended matings')}</h3>
+      ${recos||`<p class="vide">${L('Ajoutez les pères et mères dans la fiche de chaque animal pour afficher les recommandations.','Add parents to each animal\'s record to display recommendations.')}</p>`}
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:12px">📊 ${L('Matrice de consanguinité — toutes les combinaisons','Inbreeding matrix — all combinations')}</h3>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>${L('Femelle','Female')}</th>
+            <th>${L('Mâle','Male')}</th>
+            <th>${L('Risque','Risk')}</th>
+            <th>${L('Ancêtres communs','Common ancestors')}</th>
+            <th></th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <p class="vide" style="margin-top:12px;font-style:normal">
+        ${L('Les risques ne sont calculés que si les père et mère ont été renseignés dans la fiche de chaque animal (menu Cheptel → fiche de l\'animal → Modifier).','Risks are only calculated if the sire and dam have been filled in each animal\'s record (Herd menu → animal record → Edit).')}
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:16px;background:var(--creme,#FBF3E0)">
+      <h3>📖 ${L('Comprendre le coefficient (F)','Understanding the coefficient (F)')}</h3>
+      <table style="margin-top:10px">
+        <tbody>
+          <tr><td><span class="tag ok">✅ F = 0 %</span></td><td style="padding-left:10px">${L('Aucun ancêtre commun — idéal','No common ancestor — ideal')}</td></tr>
+          <tr><td><span class="tag ok">✅ F ≤ 3,1 %</span></td><td style="padding-left:10px">${L('Très faible — cousins éloignés','Very low — distant cousins')}</td></tr>
+          <tr><td><span class="tag gest">🟡 F ≤ 6,25 %</span></td><td style="padding-left:10px">${L('Acceptable — à surveiller','Acceptable — monitor carefully')}</td></tr>
+          <tr><td><span class="tag dep">⚠️ F ≤ 12,5 %</span></td><td style="padding-left:10px">${L('Élevé — demi-frères/sœurs','High — half siblings')}</td></tr>
+          <tr><td><span class="tag dep">🛑 F > 12,5 %</span></td><td style="padding-left:10px">${L('Critique — frère/sœur, parent/enfant','Critical — siblings, parent/offspring')}</td></tr>
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ─── 4. PLANIFIER UNE SAILLIE DEPUIS LA MATRICE ──────────────────────────────
+function planifierSaillie(idF, idM){
+  naviguer('reproduction');
+  setTimeout(()=>{
+    const sf=document.getElementById('s-fem');
+    const sm=document.getElementById('s-mal');
+    if(sf) sf.value=idF;
+    if(sm) sm.value=idM;
+  },200);
+}
+
 function vueRepro(){
-  const femelles = etat.lapins.filter(l=>l.sexe==='F' && l.statut==='actif');
-  const males = etat.lapins.filter(l=>l.sexe==='M' && l.statut==='actif');
+  const femelles = etat.lapins.filter(l=>l.sexe==='F' && l.statut==='actif' && espDe(l)===espActive());
+  const males = etat.lapins.filter(l=>l.sexe==='M' && l.statut==='actif' && espDe(l)===espActive());
   const occupees = new Set(etat.saillies.filter(s=>s.statut==='attente').map(s=>s.femelle));
   const femDispo = femelles.filter(f=>!occupees.has(f.id));
 
-  const lignes = etat.saillies.slice().reverse().map(s => {
+  const lignes = etat.saillies.filter(s=>espSaillie(s)===espDef()).slice().reverse().map(s => {
     let etape = '', actions = '';
     if(s.statut === 'attente'){
-      etape = `<span class="tag gest">${t('tag_gest')}</span><br><small>${t('palp_lbl')} : ${fdate(ajJours(s.date,PALPATION))}<br>${t('due_lbl')} : <b>${fdate(ajJours(s.date,GESTATION))}</b></small>`;
+      etape = `<span class="tag gest">${t('tag_gest')}</span><br><small>${t('palp_lbl')} : ${fdate(ajJours(s.date,espSaillie(s).palpation))}<br>${t('due_lbl')} : <b>${fdate(ajJours(s.date,espSaillie(s).gestation))}</b></small>`;
       actions = `<button class="btn mini" onclick="formMiseBas('${s.id}')">${t('btn_kindle')}</button>
                  <button class="btn mini danger" onclick="echecSaillie('${s.id}')">${t('btn_fail')}</button>`;
     } else if(s.statut === 'misebas'){
       etape = `<span class="tag ok">${t('tag_kindled')} ${fdate(s.dateMiseBas)}</span><br>
-        <small>${fmt(t('born_line'),{v:s.vivants,m:s.morts})}${s.sevre ? ' · <b>'+t('weaned_lbl')+'</b>' : ' · '+t('wean_due_lbl')+' : <b>'+fdate(ajJours(s.dateMiseBas,SEVRAGE))+'</b>'}</small>`;
+        <small>${fmt(t('born_line'),{v:s.vivants,m:s.morts})}${s.sevre ? ' · <b>'+t('weaned_lbl')+'</b>' : ' · '+t('wean_due_lbl')+' : <b>'+fdate(ajJours(s.dateMiseBas,espSaillie(s).sevrage))+'</b>'}</small>`;
       if(!s.sevre) actions = `<button class="btn mini sec" onclick="sevrer('${s.id}')">${t('btn_wean')}</button>`;
     } else {
       etape = `<span class="tag fin">${t('tag_fail')}</span>`;
@@ -3369,7 +3702,8 @@ function vueRepro(){
 
   return `
     <h2 class="page-title">${t('repro_title')}</h2>
-    <p class="page-sub">${fmt(t('repro_sub'),{g:GESTATION,s:SEVRAGE})}</p>
+    <p class="page-sub">${fmt(t('repro_sub'),{g:espDef().gestation,s:espDef().sevrage})}</p>
+    ${selecteurEspece()}
     ${blocAgenda()}
     <div class="card" style="margin-bottom:16px">
       <h3>${t('repro_add')}</h3>
@@ -3380,17 +3714,236 @@ function vueRepro(){
         <div class="champ"><label>${t('f_matedate')}</label><input type="date" id="s-date" value="${auj()}" required></div>
         <button class="btn">${t('btn_save')}</button>
       </form>
-      <p class="vide" style="font-style:normal">${fmt(t('repro_note'),{p:PALPATION,g:GESTATION})}</p>`
+      <p class="vide" style="font-style:normal">${fmt(t('repro_note'),{p:espDef().palpation,g:espDef().gestation})}</p>`
       : `<p class="vide">${t('repro_need')}</p>`}
       ${etat.saillies.length ? `<table><thead><tr><th>${t('th_pair')}</th><th>${t('th_mating')}</th><th>${t('th_track')}</th><th></th></tr></thead><tbody>${lignes}</tbody></table>` : ''}
     </div>
     <div id="zone-misebas"></div>`;
 }
 
+
+/* ================= SANTÉ PAR ESPÈCE (préventif) ================= */
+const SANTE_ESP = {
+  lapin:{
+    fr:{intro:"Prévenir vaut mieux que guérir : hygiène, eau propre et quarantaine des nouveaux animaux évitent la plupart des pertes.",
+      maladies:[
+        ["VHD (maladie hémorragique virale)","Mort subite, parfois saignement au nez","Vaccination + biosécurité stricte"],
+        ["Coccidiose","Diarrhée, amaigrissement, ventre gonflé (jeunes)","Cages propres et sèches, éviter la surpopulation"],
+        ["Coryza / pasteurellose","Éternuements, écoulement nasal","Bonne ventilation, éviter courants d'air et ammoniac"],
+        ["Gale des oreilles","Croûtes dans l'oreille, grattage","Inspection régulière, isoler l'animal atteint"]],
+      vaccins:"VHD (et myxomatose selon la zone) — faites établir le calendrier par un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Prevention beats cure: hygiene, clean water and quarantine of new animals avoid most losses.",
+      maladies:[
+        ["RHD (viral haemorrhagic disease)","Sudden death, sometimes nose bleeding","Vaccination + strict biosecurity"],
+        ["Coccidiosis","Diarrhoea, weight loss, bloated belly (young)","Clean dry cages, avoid overcrowding"],
+        ["Snuffles / pasteurellosis","Sneezing, nasal discharge","Good ventilation, avoid draughts and ammonia"],
+        ["Ear mange","Crusts in the ear, scratching","Regular inspection, isolate affected animals"]],
+      vaccins:"RHD (and myxomatosis depending on area) — have a vet set the schedule.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  porc:{
+    fr:{intro:"La biosécurité est votre meilleure assurance : contrôlez les visiteurs, mettez les nouveaux animaux en quarantaine.",
+      maladies:[
+        ["Peste porcine africaine (PPA)","Forte fièvre, rougeurs, mort rapide","AUCUN vaccin ni traitement : biosécurité absolue, déclaration obligatoire. Ne pas donner de déchets de cuisine crus"],
+        ["Rouget","Taches rouges en losange, fièvre","Vaccination des reproducteurs"],
+        ["Diarrhée des porcelets","Selles liquides, déshydratation","Colostrum à la naissance, maternité propre et sèche"],
+        ["Parasites (vers, gale)","Amaigrissement, grattage","Vermifugation régulière, hygiène"]],
+      vaccins:"Rouget, parvovirose des reproducteurs ; déparasitage régulier — calendrier avec un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Biosecurity is your best insurance: control visitors, quarantine new animals.",
+      maladies:[
+        ["African Swine Fever (ASF)","High fever, skin redness, rapid death","NO vaccine or cure: absolute biosecurity, notifiable. Do not feed raw kitchen waste"],
+        ["Erysipelas","Diamond-shaped red patches, fever","Vaccinate breeding stock"],
+        ["Piglet diarrhoea","Watery stools, dehydration","Colostrum at birth, clean dry farrowing area"],
+        ["Parasites (worms, mange)","Weight loss, scratching","Regular deworming, hygiene"]],
+      vaccins:"Erysipelas, parvovirus for breeders; regular deworming — schedule with a vet.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  bovin:{
+    fr:{intro:"Un point d'eau propre, le détiquage et la vaccination protègent le troupeau au pâturage.",
+      maladies:[
+        ["Fièvre aphteuse","Bave, boiterie, ulcères bouche et pieds","Vaccination, limiter les mouvements d'animaux"],
+        ["Charbon (symptomatique/bactéridien)","Mort brutale, gonflements","Vaccination annuelle en zone à risque"],
+        ["Trypanosomose (mouche tsé-tsé)","Amaigrissement, anémie, faiblesse","Lutte anti-vectorielle, déplacer les zones infestées"],
+        ["Tiques et parasites","Anémie, perte d'état","Détiquage et vermifugation réguliers"]],
+      vaccins:"Fièvre aphteuse, charbon, péripneumonie (PPCB) selon la zone — calendrier vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Clean water, tick control and vaccination protect the grazing herd.",
+      maladies:[
+        ["Foot-and-mouth disease","Drooling, lameness, mouth and foot ulcers","Vaccination, limit animal movements"],
+        ["Anthrax / blackleg","Sudden death, swellings","Annual vaccination in risk areas"],
+        ["Trypanosomosis (tsetse fly)","Weight loss, anaemia, weakness","Vector control, move away from infested areas"],
+        ["Ticks and parasites","Anaemia, poor condition","Regular tick control and deworming"]],
+      vaccins:"FMD, anthrax/blackleg, CBPP depending on area — vet schedule.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  caprin:{
+    fr:{intro:"La PPR se prévient très bien par la vaccination ; les parasites internes sont le second ennemi.",
+      maladies:[
+        ["PPR (peste des petits ruminants)","Fièvre, écoulements, diarrhée, forte mortalité","Vaccination PPR (très efficace)"],
+        ["Parasites gastro-intestinaux","Anémie, amaigrissement","Vermifugation, rotation des pâturages"],
+        ["Pasteurellose","Toux, difficulté à respirer","Éviter le stress, abri ventilé et sec"],
+        ["Piétin / gale","Boiterie, croûtes","Parage des onglons, litière sèche"]],
+      vaccins:"PPR (rappel annuel), charbon selon la zone — calendrier vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"PPR is well prevented by vaccination; internal parasites are the second enemy.",
+      maladies:[
+        ["PPR (peste des petits ruminants)","Fever, discharges, diarrhoea, high mortality","PPR vaccination (very effective)"],
+        ["Gastro-intestinal parasites","Anaemia, weight loss","Deworming, pasture rotation"],
+        ["Pasteurellosis","Coughing, breathing difficulty","Avoid stress, ventilated dry shelter"],
+        ["Foot rot / mange","Lameness, crusts","Hoof trimming, dry bedding"]],
+      vaccins:"PPR (annual booster), anthrax depending on area — vet schedule.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
+  volaille:{
+    fr:{intro:"La vaccination des poussins et une litière sèche évitent l'essentiel des pertes ; respectez le vide sanitaire entre bandes.",
+      maladies:[
+        ["Maladie de Newcastle","Torticolis, paralysie, mortalité massive","Vaccination (essentielle, répétée)"],
+        ["Gumboro (bursite infectieuse)","Abattement, diarrhée chez les jeunes","Vaccination des poussins"],
+        ["Variole aviaire","Croûtes sur crête et barbillons","Vaccination"],
+        ["Coccidiose","Diarrhée sanglante, plumes ébouriffées","Litière sèche, anticoccidien dans l'aliment"]],
+      vaccins:"Newcastle (plusieurs rappels), Gumboro, variole — calendrier poussin avec un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Chick vaccination and dry litter prevent most losses; respect the empty period between batches.",
+      maladies:[
+        ["Newcastle disease","Twisted neck, paralysis, mass mortality","Vaccination (essential, repeated)"],
+        ["Gumboro (infectious bursal disease)","Dullness, diarrhoea in young birds","Vaccinate chicks"],
+        ["Fowl pox","Crusts on comb and wattles","Vaccination"],
+        ["Coccidiosis","Bloody diarrhoea, ruffled feathers","Dry litter, in-feed coccidiostat"]],
+      vaccins:"Newcastle (several boosters), Gumboro, fowl pox — chick schedule with a vet.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  }
+};
+function guideSante(){
+  const cfg = SANTE_ESP[espActive()]; if(!cfg) return '';
+  const g = cfg[langue] || cfg.fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const rows = g.maladies.map(([n,s,p])=>`<tr><td><b>${esc(n)}</b></td><td>${esc(s)}</td><td>${esc(p)}</td></tr>`).join('');
+  return `<div class="card" style="margin-bottom:16px">
+    <h3>🩺 ${L('Guide santé','Health guide')} — ${espLbl(espActive())}</h3>
+    <p style="color:var(--gris);margin-bottom:10px">${g.intro}</p>
+    <table><thead><tr><th>${L('Maladie fréquente','Common disease')}</th><th>${L('Signes','Signs')}</th><th>${L('Prévention','Prevention')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <div style="margin-top:12px;padding:12px;background:#FCF3E2;border:1px solid #EAD2A4;border-radius:10px">
+      <p style="font-weight:600;margin-bottom:5px">💉 ${L('Vaccination','Vaccination')}</p>
+      <p style="font-size:.9rem;color:var(--gris)">${g.vaccins}</p>
+    </div>
+    <p class="vide" style="font-style:normal;margin-top:12px">⚠️ ${g.avert}</p>
+  </div>`;
+}
+
+
+/* ===== MODULE HYGIÈNE & PROPRETÉ (superviseur) ===== */
+const CHECKLIST_HYG = {
+  fr:[
+    ["Eau & abreuvoir","Abreuvoirs nettoyés et remplis d'eau propre","💧"],
+    ["Aliment & mangeoires","Mangeoires nettoyées, aliment frais distribué","🌾"],
+    ["Sol & litière","Sol gratté, litière changée ou complétée (sèche)","🧹"],
+    ["Cages & parcs","Excréments retirés, grillage inspecté (pas de blessures)","🏠"],
+    ["Ventilation","Bonne circulation d'air, pas d'ammoniaque, pas de courant d'air froid","💨"],
+    ["Animaux malades","Tour d'inspection : animaux isolés ou signes anormaux notés","🩺"],
+    ["Outils & équipements","Brouette, pelle, seau lavés et rangés","🔧"],
+    ["Extérieur & abords","Abords propres, pas d'ordures, rongeurs ou prédateurs","🌿"],
+  ],
+  en:[
+    ["Water & drinkers","Drinkers cleaned and refilled with fresh water","💧"],
+    ["Feed & feeders","Feeders cleaned, fresh feed distributed","🌾"],
+    ["Floor & bedding","Floor scraped, bedding changed or topped up (dry)","🧹"],
+    ["Cages & pens","Droppings removed, wire inspected (no injuries)","🏠"],
+    ["Ventilation","Good airflow, no ammonia smell, no cold draught","💨"],
+    ["Sick animals","Inspection tour: isolated animals or abnormal signs noted","🩺"],
+    ["Tools & equipment","Wheelbarrow, shovel, bucket washed and stored","🔧"],
+    ["Outside & surroundings","Surroundings clean, no waste, rodents or predators","🌿"],
+  ]
+};
+
+function hygItems(){ return CHECKLIST_HYG[langue]||CHECKLIST_HYG.fr; }
+function scoreHyg(ctrl){
+  const items=hygItems(); if(!items.length) return 0;
+  return Math.round(ctrl.filter(Boolean).length/items.length*100);
+}
+function vueHygiene(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(!etat.hygiene) etat.hygiene=[];
+  // contrôle du jour
+  const jourl = etat.hygiene.find(h=>h.date===auj());
+  const ctrl = jourl ? jourl.ctrl : Array(hygItems().length).fill(false);
+  const score = jourl ? scoreHyg(jourl.ctrl) : null;
+  // historique 7 derniers jours
+  const hist = etat.hygiene.slice().reverse().slice(0,7);
+  const coulScore=(s)=> s>=80?'var(--feuille-fonce,#1C4025)':s>=50?'var(--ambre)':'var(--rouge)';
+  const badgeScore=(s)=>`<span style="font-weight:800;color:${coulScore(s)}">${s}%</span>`;
+  const histHtml = hist.length
+    ? `<table><thead><tr><th>${L('Date','Date')}</th><th>${L('Points','Points')}</th><th>${L('Score','Score')}</th><th>${L('Signé par','Signed by')}</th></tr></thead><tbody>`
+      + hist.map(h=>`<tr>
+          <td>${fdate(h.date)}</td>
+          <td>${h.ctrl.filter(Boolean).length}/${hygItems().length}</td>
+          <td>${badgeScore(scoreHyg(h.ctrl))}</td>
+          <td><b>${esc(h.agent||'—')}</b></td>
+        </tr>`).join('')+'</tbody></table>'
+    : `<p class="vide">${L('Aucun contrôle enregistré.','No check recorded yet.')}</p>`;
+  const items=hygItems();
+  const checkboxes=items.map((itm,i)=>`
+    <label style="display:flex;gap:12px;align-items:flex-start;padding:10px 12px;
+      background:${(jourl&&jourl.ctrl[i])?'#EDF7ED':'#fff'};
+      border:1.5px solid ${(jourl&&jourl.ctrl[i])?'#81C784':'#E6E0D0'};
+      border-radius:10px;cursor:pointer;transition:background .15s">
+      <input type="checkbox" id="hyg${i}" ${(jourl&&jourl.ctrl[i])?'checked':''} onchange="majHyg(${i},this.checked)"
+        style="margin-top:3px;accent-color:var(--vert-foret);width:18px;height:18px;flex:none">
+      <span>
+        <span style="font-size:1.2rem">${itm[2]}</span>
+        <b style="margin-left:6px">${esc(itm[0])}</b>
+        <br><span style="font-size:.85rem;color:var(--gris)">${esc(itm[1])}</span>
+      </span>
+    </label>`).join('');
+  return `<div class="card" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <h3 style="margin:0">🧹 ${L('Hygiène & propreté du jour','Daily hygiene & cleanliness')} — ${fdate(auj())}</h3>
+      ${score!==null?`<span style="font-size:1.5rem;font-weight:800;color:${coulScore(score)}">${score}%</span>`:''}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">${checkboxes}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input id="hyg-agent" placeholder="${L('Votre nom / agent','Your name / agent')}"
+        style="border:1.5px solid #E6E0D0;border-radius:9px;padding:8px 12px;font-size:.92rem;flex:1;min-width:150px"
+        value="${jourl?esc(jourl.agent||''):''}">
+      <button class="btn" onclick="validerHyg()">${L('✅ Valider & signer','✅ Submit & sign')}</button>
+    </div>
+    <p class="vide" style="margin-top:8px">${L('Le superviseur voit le score et la signature dans l\'historique ci-dessous.','The supervisor sees the score and signature in the history below.')}</p>
+  </div>
+  <div class="card">
+    <h3>📋 ${L('Historique des contrôles (7 derniers jours)','Hygiene check history (last 7 days)')}</h3>
+    ${histHtml}
+  </div>`;
+}
+function majHyg(i, val){
+  if(!etat.hygiene) etat.hygiene=[];
+  let h=etat.hygiene.find(x=>x.date===auj());
+  if(!h){ h={id:uid(),date:auj(),ctrl:Array(hygItems().length).fill(false),agent:''}; etat.hygiene.push(h); }
+  h.ctrl[i]=val; sauver();
+  // mettre à jour le score affiché sans re-rendre toute la page
+  const score=scoreHyg(h.ctrl);
+  const sp=document.querySelector('[data-hygsc]');
+  if(sp) sp.textContent=score+'%';
+}
+function validerHyg(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(!etat.hygiene) etat.hygiene=[];
+  let h=etat.hygiene.find(x=>x.date===auj());
+  const agent=(document.getElementById('hyg-agent')||{}).value||'';
+  if(!h){ h={id:uid(),date:auj(),ctrl:Array(hygItems().length).fill(false),agent:''}; etat.hygiene.push(h); }
+  h.agent=agent.trim()||L('Inconnu','Unknown');
+  const score=scoreHyg(h.ctrl);
+  sauver(); rendre();
+  alert('✅ '+L('Contrôle enregistré','Check recorded')+' — '
+    +L('Score du jour :','Today\'s score:')+' '+score+'%'
+    +' — '+L('Signé :','Signed:')+' '+h.agent
+    +(score<80?'\n⚠️ '+L('Score insuffisant — rappeler l\'agent et faire un nouveau contrôle.','Insufficient score — remind the agent and do a new check.'):''));
+}
+
 function vueSante(){
-  const actifs = etat.lapins.filter(l=>l.statut==='actif');
+  const actifs = etat.lapins.filter(l=>l.statut==='actif' && espDe(l)===espActive());
   const soinLbl = {vacc:t('care_vacc'), trait:t('care_treat'), verm:t('care_worm'), desinf:t('care_disinf')};
-  const lignes = etat.soins.slice().reverse().map(s=>`
+  const lignes = etat.soins.filter(s=> s.animal==='tous' || (lapin(s.animal) && espDe(lapin(s.animal))===espActive())).slice().reverse().map(s=>`
     <tr><td>${fdate(s.date)}</td>
       <td><b>${s.animal==='tous' ? t('all_herd') : nom(s.animal)}</b></td>
       <td><span class="tag ok">${soinLbl[s.type] || s.type}</span></td>
@@ -3401,6 +3954,9 @@ function vueSante(){
   return `
     <h2 class="page-title">${t('health_title')}</h2>
     <p class="page-sub">${t('health_sub')}</p>
+    ${selecteurEspece()}
+    ${vueHygiene()}
+    ${guideSante()}
     <div class="card">
       <h3>${t('health_add')}</h3>
       <form class="ligne" onsubmit="ajouterSoin(event)">
@@ -3439,6 +3995,17 @@ function vueFinances(){
       <p style="color:rgba(251,243,224,.88);font-size:.92rem;margin-bottom:14px">${t('pro_sub')}</p>
       <a href="payer.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--feuille);color:var(--vert-fonce);text-decoration:none;font-weight:800;padding:13px 22px;border-radius:12px">${t('pro_btn')}</a>
     </div>
+    ${etat.superpro===true
+      ? `<div class="card" style="border:2px solid var(--vert-moyen);margin-bottom:16px">
+          <h3 style="color:var(--vert-foret);margin-bottom:2px">⭐ ${t('sp_fin_title')} <span class="tag ok">${t('sp_fin_active')}</span></h3>
+          <p style="color:var(--gris);font-size:.9rem">${t('sp_fin_pitch')}</p>
+        </div>`
+      : `<div class="card" style="border:2px solid var(--or,#D4A017);background:linear-gradient(135deg,#FFF9EE,#FCF3E2);margin-bottom:16px">
+          <h3 style="color:var(--vert-foret);margin-bottom:4px">⭐ ${t('sp_fin_title')}</h3>
+          <p style="color:var(--gris);font-size:.92rem;margin-bottom:6px">${t('sp_fin_pitch')}</p>
+          <p style="font-weight:800;color:var(--vert-foret);margin-bottom:12px">${t('sp_fin_price')}</p>
+          <button class="btn" onclick="demanderSuperPro()">⭐ ${t('sp_fin_cta')}</button>
+        </div>`}
     <div class="grid stats">
       <div class="card stat leaf"><div class="val solde-pos" style="font-size:1.4rem">${fcfa(k.ventes)}</div><div class="lab">${t('st_sales')}</div></div>
       <div class="card stat red"><div class="val solde-neg" style="font-size:1.4rem">${fcfa(k.dep)}</div><div class="lab">${t('st_exp')}</div></div>
@@ -3482,7 +4049,10 @@ function vueBilan(){
       ${conseils.length ? conseils.map(c=>`<div class="diag">💡 <span>${c}</span></div>`).join('')
         : `<p class="vide">${t('diag_none')}</p>`}
     </div>
-    <button class="btn wa" onclick="partagerBilan()">🟢 ${t('btn_share_wa')}</button>`;
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" onclick="rapportFinancier()">🏦 ${t('rf_btn')}</button>
+      <button class="btn wa" onclick="partagerBilan()">🟢 ${t('btn_share_wa')}</button>
+    </div>`;
 }
 
 function partagerBilan(){
@@ -3507,6 +4077,64 @@ function partagerBilan(){
   partagerWhatsApp(lignes.join('\n'));
 }
 
+
+/* ================= RAPPORT FINANCIER (OHADA / banques) ================= */
+function rapportFinancier(){
+  const L = (fr,en) => langue==='fr' ? fr : en;
+  const tx = etat.transactions.slice();
+  const ventes = tx.filter(x=>x.type==='vente');
+  const depenses = tx.filter(x=>x.type==='depense');
+  const totV = ventes.reduce((s,x)=>s+(x.montant||0),0);
+  const totD = depenses.reduce((s,x)=>s+(x.montant||0),0);
+  const resultat = totV - totD;
+  const dates = tx.map(x=>x.date).filter(Boolean).sort();
+  const periode = dates.length ? (fdate(dates[0]) + '  →  ' + fdate(dates[dates.length-1])) : L('Toutes opérations','All records');
+  const nb = etat.lapins.filter(l=>l.statut==='actif').length;
+  const parEsp = ORDRE_ESP.map(k=>{
+    const n = etat.lapins.filter(l=>l.statut==='actif' && espDe(l)===k).length;
+    return n>0 ? (ESPECES[k].icon+' '+espLbl(k)+' : '+n) : null;
+  }).filter(Boolean).join('  ·  ');
+  const nom = (etat.ecole && etat.ecole.nom) ? esc(etat.ecole.nom) : L('(à compléter)','(to complete)');
+
+  const rows = arr => arr.length
+    ? arr.slice().sort((a,b)=>(a.date||'')<(b.date||'')?-1:1)
+        .map(x=>`<tr><td>${fdate(x.date)}</td><td>${esc(x.desc||'—')}</td><td class="rf-r">${fcfa(x.montant||0)}</td></tr>`).join('')
+    : `<tr><td colspan="3" style="color:#999;font-style:italic">${L('Aucune opération enregistrée.','No record yet.')}</td></tr>`;
+
+  const doc =
+   `<div class="rf-actions rf-noprint">
+      <button class="btn" onclick="window.print()">🖨️ ${L('Imprimer / Enregistrer en PDF','Print / Save as PDF')}</button>
+      <button class="btn sec" onclick="naviguer('bilan')">← ${L('Retour','Back')}</button>
+    </div>
+    <div class="rf-doc card">
+      <div class="rf-head">
+        <div><div class="rf-mark">CuniSmart</div><div class="rf-sub">SCOOPS CAPAO · Cameroun · cunismart.com</div></div>
+        <div class="rf-logo">${L('Logo','Logo')}</div>
+      </div>
+      <h1>${L('ÉTAT DE RÉSULTAT SIMPLIFIÉ','SIMPLIFIED INCOME STATEMENT')}</h1>
+      <div class="rf-meta">
+        ${L('Exploitation','Farm')} : <b>${nom}</b><br>
+        ${L('Période','Period')} : ${periode} &nbsp;·&nbsp; ${L('Édité le','Issued on')} : ${fdate(auj())}<br>
+        ${L('Cheptel actif','Active herd')} : <b>${nb}</b> ${L('animaux','animals')}${parEsp?(' &nbsp;('+parEsp+')'):''} &nbsp;·&nbsp; ${L('Devise','Currency')} : FCFA
+      </div>
+      <table class="rf-table">
+        <tr class="rf-section"><td colspan="3">${L('PRODUITS (Recettes)','INCOME (Revenue)')}</td></tr>
+        ${rows(ventes)}
+        <tr class="rf-total"><td colspan="2">${L('Total des produits','Total income')}</td><td class="rf-r">${fcfa(totV)}</td></tr>
+        <tr class="rf-section"><td colspan="3">${L('CHARGES (Dépenses)','EXPENSES')}</td></tr>
+        ${rows(depenses)}
+        <tr class="rf-total"><td colspan="2">${L('Total des charges','Total expenses')}</td><td class="rf-r">${fcfa(totD)}</td></tr>
+        <tr class="rf-result"><td colspan="2">${L('RÉSULTAT NET','NET RESULT')}</td><td class="rf-r" style="color:${resultat>=0?'#1C4025':'#C0392B'}">${fcfa(resultat)}</td></tr>
+      </table>
+      <div class="rf-sign">${L('Fait le','Done on')} ${fdate(auj())} &nbsp;—&nbsp; ${L('Signature','Signature')} : ______________________</div>
+      <div class="rf-foot">${L(
+        'Document généré par CuniSmart. État simplifié des recettes et dépenses (trésorerie), présentation inspirée du référentiel SYSCOHADA. Ne constitue pas un bilan comptable audité.',
+        'Generated by CuniSmart. Simplified cash-based income/expense statement, presentation inspired by the SYSCOHADA framework. Not an audited financial statement.')}</div>
+    </div>`;
+  document.getElementById('contenu').innerHTML = doc;
+  window.scrollTo(0,0);
+}
+
 /* ---------- Nutrition : formulateur de provende ---------- */
 const RECETTES = {
   base: {
@@ -3520,7 +4148,7 @@ const RECETTES = {
              ["Oyster shells or bone meal","Calcium",2],["Table salt","Electrolytes",2]]}
   },
   pro: {
-    fr:{nom:"Provende avancée (Pro)", desc:"Formulation complète optimisée pour Kribi : croissance, lactation et prévention naturelle.",
+    fr:{nom:"Provende avancée (Pro)", desc:"Formulation complète pour climat chaud et humide : croissance, lactation et prévention naturelle.",
         ing:[["Maïs broyé","Énergie principale (max 40 %)",40],["Son de blé ou de maïs","Fibres indispensables",22],
              ["Tourteau de soja ou d’arachide","Protéines concentrées",10],
              ["Tourteau de coton","Protéines bon marché — max 8 %, éviter chez les reproducteurs (gossypol)",8],
@@ -3528,7 +4156,7 @@ const RECETTES = {
              ["Poudre santé (Artemisia + feuilles de papayer séchées)","Anti-coccidiose + vermifuge naturel",2],
              ["Coquilles d’huîtres broyées / poudre d’os","Calcium (lactation, os)",2],
              ["Prémix (CMAV Lapin)","Minéraux et vitamines",1.5],["Sel de cuisine","Électrolytes",0.5]]},
-    en:{nom:"Advanced feed (Pro)", desc:"Full formulation optimised for Kribi: growth, lactation and natural prevention.",
+    en:{nom:"Advanced feed (Pro)", desc:"Full formulation for hot, humid climates: growth, lactation and natural prevention.",
         ing:[["Ground maize","Main energy (max 40%)",40],["Wheat or maize bran","Essential fibre",22],
              ["Soybean or groundnut cake","Concentrated protein",10],
              ["Cottonseed cake","Cheap protein — max 8%, avoid in breeders (gossypol)",8],
@@ -3538,10 +4166,93 @@ const RECETTES = {
              ["Premix (Rabbit CMAV)","Minerals and vitamins",1.5],["Table salt","Electrolytes",0.5]]}
   }
 };
+
+/* ================= NUTRITION PAR ESPÈCE ================= */
+const RECETTES_ESP = {
+  porc: {
+    base:{fr:{nom:"Aliment porc — croissance", desc:"Ration simple d'engraissement à partir de vos cultures locales.",
+        ing:[["Maïs broyé","Énergie principale",45],["Son de blé ou de maïs","Fibres et énergie",25],
+             ["Tourteau de soja ou d'arachide","Protéines",18],["Farine de poisson","Protéines animales",5],
+             ["Coquilles ou poudre d'os","Calcium et phosphore",4],["Prémix vitamines-minéraux","Compléments",1.5],["Sel de cuisine","Électrolytes",1.5]]},
+      en:{nom:"Pig feed — growth", desc:"Simple fattening ration from your local crops.",
+        ing:[["Ground maize","Main energy",45],["Wheat or maize bran","Fibre and energy",25],
+             ["Soybean or groundnut cake","Protein",18],["Fish meal","Animal protein",5],
+             ["Shells or bone meal","Calcium and phosphorus",4],["Vitamin-mineral premix","Supplements",1.5],["Table salt","Electrolytes",1.5]]}},
+    pro:{fr:{nom:"Aliment porc avancé (Pro)", desc:"Formulation optimisée : meilleure croissance et valorisation des sous-produits locaux.",
+        ing:[["Maïs broyé","Énergie",50],["Son de blé ou de maïs","Fibres",18],["Tourteau de soja","Protéines concentrées",16],
+             ["Farine de poisson","Protéines animales",6],["Drêche de brasserie séchée","Protéines + appétence",5],
+             ["Coquilles ou poudre d'os","Minéraux",2.5],["Prémix + acides aminés","Équilibre",1.5],["Sel","Électrolytes",1]]},
+      en:{nom:"Advanced pig feed (Pro)", desc:"Optimised formulation: better growth and use of local by-products.",
+        ing:[["Ground maize","Energy",50],["Wheat or maize bran","Fibre",18],["Soybean cake","Concentrated protein",16],
+             ["Fish meal","Animal protein",6],["Dried brewer's grains","Protein + palatability",5],
+             ["Shells or bone meal","Minerals",2.5],["Premix + amino acids","Balance",1.5],["Salt","Electrolytes",1]]}}
+  },
+  volaille: {
+    base:{fr:{nom:"Aliment volaille — chair (croissance)", desc:"Ration de croissance pour poulets de chair, à base de maïs et tourteau.",
+        ing:[["Maïs broyé","Énergie principale",55],["Tourteau de soja","Protéines",25],["Son de blé","Fibres",8],
+             ["Farine de poisson","Protéines animales",5],["Coquilles ou carbonate de calcium","Calcium (os)",4],
+             ["Prémix + sel","Vitamines et minéraux",2],["Méthionine / lysine","Acides aminés",1]]},
+      en:{nom:"Poultry feed — broiler (growth)", desc:"Growth ration for broilers, maize- and cake-based.",
+        ing:[["Ground maize","Main energy",55],["Soybean cake","Protein",25],["Wheat bran","Fibre",8],
+             ["Fish meal","Animal protein",5],["Shells or calcium carbonate","Calcium (bones)",4],
+             ["Premix + salt","Vitamins and minerals",2],["Methionine / lysine","Amino acids",1]]}},
+    pro:{fr:{nom:"Aliment pondeuse (Pro)", desc:"Formulation pour poules pondeuses : plus de calcium pour la coquille des œufs.",
+        ing:[["Maïs broyé","Énergie",55],["Tourteau de soja","Protéines",22],["Son de blé","Fibres",5],
+             ["Farine de poisson","Protéines animales",4],["Coquilles / calcaire","Calcium coquille d'œuf",10],
+             ["Prémix + sel","Vitamines et minéraux",3],["Acides aminés","Équilibre",1]]},
+      en:{nom:"Layer feed (Pro)", desc:"Formulation for laying hens: more calcium for eggshell quality.",
+        ing:[["Ground maize","Energy",55],["Soybean cake","Protein",22],["Wheat bran","Fibre",5],
+             ["Fish meal","Animal protein",4],["Shells / limestone","Eggshell calcium",10],
+             ["Premix + salt","Vitamins and minerals",3],["Amino acids","Balance",1]]}}
+  },
+  bovin: {
+    base:{fr:{nom:"Complément bovin (fourrage + concentré)", desc:"Base = pâturage/foin. Ce complément couvre énergie, protéines et minéraux.",
+        ing:[["Fourrage vert ou foin","Base de la ration (fibres)",60],["Son de blé ou de maïs","Énergie",18],
+             ["Tourteau de coton ou d'arachide","Protéines",12],["Mélasse","Appétence + énergie",5],
+             ["Poudre d'os / CMV","Minéraux",3],["Sel / pierre à lécher","Électrolytes",2]]},
+      en:{nom:"Cattle supplement (forage + concentrate)", desc:"Base = grazing/hay. This supplement covers energy, protein and minerals.",
+        ing:[["Green forage or hay","Ration base (fibre)",60],["Wheat or maize bran","Energy",18],
+             ["Cottonseed or groundnut cake","Protein",12],["Molasses","Palatability + energy",5],
+             ["Bone meal / mineral mix","Minerals",3],["Salt / lick block","Electrolytes",2]]}},
+    pro:{fr:{nom:"Complément bovin avancé (Pro)", desc:"Complément renforcé pour production laitière ou embouche.",
+        ing:[["Fourrage vert ou foin","Fibres",55],["Son de blé ou de maïs","Énergie",20],
+             ["Tourteau de coton","Protéines",14],["Mélasse","Énergie + appétence",6],
+             ["CMV / poudre d'os","Minéraux",3],["Sel","Électrolytes",2]]},
+      en:{nom:"Advanced cattle supplement (Pro)", desc:"Reinforced supplement for milk production or fattening.",
+        ing:[["Green forage or hay","Fibre",55],["Wheat or maize bran","Energy",20],
+             ["Cottonseed cake","Protein",14],["Molasses","Energy + palatability",6],
+             ["Mineral mix / bone meal","Minerals",3],["Salt","Electrolytes",2]]}}
+  },
+  caprin: {
+    base:{fr:{nom:"Complément chèvre (fourrage + concentré)", desc:"Base = feuilles et fourrage. Ce complément équilibre la ration.",
+        ing:[["Fourrage / feuilles (Leucaena, herbe)","Base fibreuse",62],["Son de blé ou de maïs","Énergie",16],
+             ["Tourteau d'arachide ou de soja","Protéines",12],["Mélasse","Appétence",4],
+             ["Poudre d'os / CMV","Minéraux",4],["Sel","Électrolytes",2]]},
+      en:{nom:"Goat supplement (forage + concentrate)", desc:"Base = leaves and forage. This supplement balances the ration.",
+        ing:[["Forage / leaves (Leucaena, grass)","Fibre base",62],["Wheat or maize bran","Energy",16],
+             ["Groundnut or soybean cake","Protein",12],["Molasses","Palatability",4],
+             ["Bone meal / mineral mix","Minerals",4],["Salt","Electrolytes",2]]}},
+    pro:{fr:{nom:"Complément chèvre avancé (Pro)", desc:"Complément renforcé pour lactation ou croissance des chevreaux.",
+        ing:[["Fourrage / feuilles","Fibres",55],["Son de blé ou de maïs","Énergie",18],
+             ["Tourteau d'arachide","Protéines",15],["Maïs broyé","Énergie concentrée",5],
+             ["Mélasse","Appétence",4],["CMV / poudre d'os","Minéraux",2],["Sel","Électrolytes",1]]},
+      en:{nom:"Advanced goat supplement (Pro)", desc:"Reinforced supplement for lactation or kid growth.",
+        ing:[["Forage / leaves","Fibre",55],["Wheat or maize bran","Energy",18],
+             ["Groundnut cake","Protein",15],["Ground maize","Concentrated energy",5],
+             ["Molasses","Palatability",4],["Mineral mix / bone meal","Minerals",2],["Salt","Electrolytes",1]]}}
+  }
+};
+function recettesEsp(){
+  const k = espActive();
+  if(k==='lapin') return RECETTES;
+  return RECETTES_ESP[k] || RECETTES;
+}
+
 let sacKg = 50;
 function vueNutrition(){
   const proActif = etat.pro === true;
-  const rBase = RECETTES.base[langue], rPro = RECETTES.pro[langue];
+  const R = recettesEsp();
+  const rBase = R.base[langue], rPro = R.pro[langue];
   const tableau = (recette, verrou) => {
     const lignes = recette.ing.map(([n,role,pc])=>{
       const kg = Math.round(pc/100*sacKg*100)/100;
@@ -3558,6 +4269,8 @@ function vueNutrition(){
   return `
     <h2 class="page-title">${t('nut_title')}</h2>
     <p class="page-sub">${t('nut_sub')}</p>
+    ${selecteurEspece()}
+    <p class="vide" style="font-style:normal;margin-bottom:12px">${t('nut_disc')}</p>
 
     <div class="card" style="margin-bottom:16px">
       <h3>🧮 ${t('nut_calc')}</h3>
@@ -3580,20 +4293,23 @@ function vueNutrition(){
       <button class="btn wa" style="margin-top:14px" onclick="partagerRecette('base')">🟢 ${t('nut_share')}</button>
     </div>
 
-    <div class="card" style="border:2px solid var(--vert-moyen)">
-      <h3>⭐ ${rPro.nom} <span class="tag ${proActif?'ok':'gest'}">${proActif?t('nut_free'):'PRO'}</span></h3>
-      <p style="color:var(--gris);margin-bottom:12px">${rPro.desc}</p>
-      ${tableau(rPro, !proActif)}
-      ${proActif
-        ? `<button class="btn wa" style="margin-top:14px" onclick="partagerRecette('pro')">🟢 ${t('nut_share')}</button>`
-        : `<div style="margin-top:14px;padding:14px;background:#FCF3E2;border:1px solid #EAD2A4;border-radius:10px">
-             <p style="color:var(--terre-fonce,#6B2409);font-weight:600;margin-bottom:8px">🔒 ${t('nut_locked')}</p>
-             <p style="font-size:.9rem;color:var(--gris);margin-bottom:10px">${t('nut_locked_desc')}</p>
-             <button class="btn" onclick="demanderPro()">⭐ ${t('nut_unlock')}</button>
-             <p class="vide" style="margin-top:8px">${t('pro_soon')}</p>
-           </div>`}
-      <p class="vide" style="margin-top:12px">${t('nut_tip')}</p>
-    </div>
+    ${proActif
+      ? `<div class="card" style="border:2px solid var(--vert-moyen)">
+          <h3>⭐ ${rPro.nom} <span class="tag ok">${t('nut_free')}</span></h3>
+          <p style="color:var(--gris);margin-bottom:12px">${rPro.desc}</p>
+          ${tableau(rPro, false)}
+          <button class="btn wa" style="margin-top:14px" onclick="partagerRecette('pro')">🟢 ${t('nut_share')}</button>
+          <p class="vide" style="margin-top:12px">${t('nut_tip')}</p>
+        </div>`
+      : `<div class="card" style="border:2px dashed var(--ambre);background:var(--creme);text-align:center;padding:22px">
+          <div style="font-size:2rem;margin-bottom:8px">🔒</div>
+          <h3 style="color:var(--vert-foret);margin-bottom:6px">⭐ ${langue==='fr'?'Formulation avancée Pro':'Advanced Pro formulation'}</h3>
+          <p style="color:var(--gris);margin-bottom:14px;max-width:36ch;margin-left:auto;margin-right:auto">
+            ${langue==='fr'?'Les ingrédients et les quantités de la recette Pro sont réservés aux abonnés CuniSmart Pro. Abonnez-vous pour débloquer cette formulation.':'Ingredients and quantities of the Pro recipe are for CuniSmart Pro subscribers only. Subscribe to unlock.'}
+          </p>
+          <button class="btn" onclick="demanderPro()">⭐ ${t('nut_unlock')}</button>
+          <p class="vide" style="margin-top:8px">${t('pro_soon')}</p>
+        </div>`}
 
     <div class="card" style="margin-top:16px">
       <h3>${t('plants_title')}</h3>
@@ -3624,14 +4340,14 @@ function demanderPro(){
   const v = code.trim();
   if(v === ''){ window.location.href = 'payer.html'; return; }  // vide -> page d'abonnement
   if(v.toUpperCase() === CODE_PRO.toUpperCase()){
-    etat.pro = true; etat.proDepuis = auj(); etat.proExp = ajJours(auj(), 365);
+    etat.pro = true; etat.proDepuis = auj(); etat.proExp = ajJours(auj(), 182);
     sauver(); alert(t('pro_ok')); rendre();
   } else {
     alert(t('pro_bad'));
   }
 }
 function partagerRecette(type){
-  const r = RECETTES[type][langue];
+  const r = recettesEsp()[type][langue];
   const lignes = [ (type==='pro'?'⭐ ':'🌱 ') + r.nom + ' — ' + sacKg + ' kg', '' ];
   r.ing.forEach(([n,role,pc])=> lignes.push('• ' + n + ' : ' + (Math.round(pc/100*sacKg*100)/100) + ' kg'));
   lignes.push('', '— CuniSmart 🐇');
@@ -3650,8 +4366,242 @@ function niveauAccessible(ni){
   if(ni === 2 && !niveauValide(1)) return false; /* progression dans le Pro */
   return true;
 }
+
+/* ================= CUNIMASTER — FICHES ESSENTIELLES PAR ESPÈCE ================= */
+const FICHES_ESP = {
+  porc:{
+    fr:{fiches:[
+      ["Logement & installation","Sol bétonné avec pente et caniveau pour évacuer lisier et eau de lavage ; loges séparées (maternité, post-sevrage, engraissement, verrat). Le porc ne transpire pas et souffre au-dessus de 30 °C : prévoyez ombre et point d'eau/bauge. Comptez environ 1 m² par porc à l'engrais, plus pour une truie suitée, et gardez le sol sec, nettoyé chaque jour."],
+      ["Alimentation","Adaptez la ration au stade : démarrage riche en protéines pour les porcelets, maïs-son-tourteau en croissance/finition, truie sobre en gestation puis très nourrie en lactation. Le porc valorise bien les sous-produits (drêche de brasserie, son de riz, épluchures cuites). Eau propre à volonté (un porc boit 5 à 10 L/jour) ; jamais de déchets de cuisine crus (risque de PPA)."],
+      ["Reproduction & conduite","La cochette est saillie vers 8 mois / 120 kg ; chaleurs tous les ~21 jours (signe clé : elle s'immobilise à la pression sur le dos). Gestation de 114 jours ; une bonne truie fait 2 portées par an de 8 à 12 porcelets. Maternité propre, colostrum dans les 6 premières heures, sevrage vers 28 jours."],
+      ["Santé & biosécurité","Quarantaine des nouveaux animaux, pédiluve à l'entrée, visiteurs limités : la peste porcine africaine se transmet par contact et par aliments contaminés. Vaccinez (rouget) et déparasitez (interne + externe). Toute fièvre avec rougeurs et mortalité rapide fait suspecter la PPA : isolez et prévenez le vétérinaire."],
+      ["Gestion & rentabilité","L'aliment représente 65 à 70 % du coût : suivez l'indice de consommation (viser environ 3 kg d'aliment par kg de gain). Pesez régulièrement et vendez au bon poids (souvent 90 à 110 kg selon le marché). Tenez le module Finances pour connaître votre marge réelle par porc."],
+      ["Réussir : erreurs à éviter","Les pertes viennent surtout de la surpopulation, de la chaleur mal gérée, de l'aliment moisi, de l'absence de quarantaine et des restes crus. Un démarrage propre et une biosécurité stricte protègent mieux votre élevage que n'importe quel médicament."]]},
+    en:{fiches:[
+      ["Housing & setup","Concrete floor with slope and channel to drain slurry and wash water; separate pens (farrowing, post-weaning, fattening, boar). Pigs don't sweat and suffer above 30 °C: provide shade and a water/wallow. Allow about 1 m² per fattening pig, more for a nursing sow, and keep the floor dry and cleaned daily."],
+      ["Feeding","Match the ration to the stage: protein-rich starter for piglets, maize-bran-cake for growth/finishing, a lean gestating sow then heavy feeding in lactation. Pigs use by-products well (brewer's grains, rice bran, cooked peelings). Clean water at will (5-10 L/day); never raw kitchen waste (ASF risk)."],
+      ["Breeding & management","The gilt is mated around 8 months / 120 kg; heat every ~21 days (key sign: she stands still under back pressure). Gestation 114 days; a good sow gives 2 litters a year of 8-12 piglets. Clean farrowing area, colostrum within the first 6 hours, weaning around 28 days."],
+      ["Health & biosecurity","Quarantine new animals, footbath at entry, limited visitors: African Swine Fever spreads by contact and contaminated feed. Vaccinate (erysipelas) and deworm (internal + external). Any fever with skin redness and rapid death suggests ASF: isolate and call the vet."],
+      ["Management & profit","Feed is 65-70% of cost: track feed conversion (aim for about 3 kg feed per kg gain). Weigh regularly and sell at the right weight (often 90-110 kg by market). Use the Finances module to know your real margin per pig."],
+      ["Getting it right: mistakes to avoid","Losses mostly come from overcrowding, poorly managed heat, mouldy feed, no quarantine and raw scraps. A clean start and strict biosecurity protect your farm better than any medicine."]]}
+  },
+  volaille:{
+    fr:{fiches:[
+      ["Logement & poussinière","Poulailler sec, bien ventilé mais sans courant d'air, protégé des prédateurs, avec une litière sèche (copeaux, balle de riz). Pour les poussins, une poussinière chauffée à ~32-34 °C la première semaine, réduite progressivement. Densité raisonnable (souvent 8 à 10 poulets/m²) pour éviter stress, picage et maladies."],
+      ["Alimentation","Servez un aliment démarrage, puis croissance (chair) ou ponte (pondeuse, enrichi en calcium pour la coquille). Aliment et eau propres en permanence, mangeoires nettoyées ; un manque d'eau coupe aussitôt la croissance ou la ponte. Évitez de gaspiller : des mangeoires bien réglées limitent les pertes qui grèvent la marge."],
+      ["Conduite en bandes","Travaillez en « tout plein / tout vide » : une seule bande à la fois, puis vide sanitaire (nettoyage, désinfection, repos du bâtiment) avant la suivante. Choisissez des poussins de qualité et soignez les 3 premiers jours (chaleur, eau sucrée légère, aliment dès l'arrivée) qui décident du lot."],
+      ["Santé & biosécurité","Vaccinez : Newcastle (essentiel, avec rappels), Gumboro, variole aviaire, selon un calendrier vétérinaire. Biosécurité : entrées limitées, pédiluve, litière sèche, pas de mélange d'âges. La contagion est très rapide : isolez ou éliminez vite les sujets malades."],
+      ["Gestion & rentabilité","Suivez trois chiffres : la mortalité, la consommation d'aliment et le poids (chair) ou le taux de ponte. Mortalité et gaspillage détruisent la marge ; comparez le coût poussin + aliment au prix de vente pour piloter votre rentabilité."],
+      ["Réussir : erreurs à éviter","Les échecs viennent surtout d'un démarrage raté (froid, eau tardive), d'une litière humide, d'un oubli de vaccination Newcastle et du mélange de bandes d'âges différents. Un lot bien démarré et bien vacciné est déjà à moitié gagné."]]},
+    en:{fiches:[
+      ["Housing & brooder","Dry, well-ventilated but draught-free house, predator-proof, with dry litter (shavings, rice husk). For chicks, a brooder at ~32-34 °C the first week, reduced gradually. Reasonable density (often 8-10 birds/m²) to avoid stress, pecking and disease."],
+      ["Feeding","Serve starter, then grower (broilers) or layer feed (calcium-enriched for shells). Clean feed and water at all times, cleaned feeders; a lack of water instantly stops growth or laying. Avoid waste: well-set feeders limit losses that eat the margin."],
+      ["Batch management","Work all-in/all-out: one batch at a time, then an empty period (cleaning, disinfection, house rest) before the next. Choose quality chicks and nail the first 3 days (heat, light sugar water, feed on arrival) that decide the batch."],
+      ["Health & biosecurity","Vaccinate: Newcastle (essential, with boosters), Gumboro, fowl pox, on a vet schedule. Biosecurity: limited entries, footbath, dry litter, no mixing of ages. Spread is very fast: isolate or cull sick birds quickly."],
+      ["Management & profit","Track three numbers: mortality, feed intake and weight (broilers) or lay rate. Mortality and waste destroy the margin; compare chick + feed cost to selling price to steer profitability."],
+      ["Getting it right: mistakes to avoid","Failures mostly come from a poor start (cold, late water), damp litter, skipping Newcastle vaccination and mixing different-age batches. A well-started, well-vaccinated batch is already half won."]]}
+  },
+  bovin:{
+    fr:{fiches:[
+      ["Logement & pâturage","Assurez un bon pâturage, de l'eau propre à volonté et de l'ombre. Prévoyez un parc ou une étable propre pour la nuit, et faites tourner les parcelles : la rotation préserve l'herbe et casse le cycle des parasites (vers, tiques)."],
+      ["Alimentation","La base reste le fourrage (herbe, foin, résidus de culture) ; complétez en énergie, protéines et minéraux (son, tourteau, pierre à lécher), surtout en saison sèche et en lactation. Une vache boit 30 à 50 L/jour, bien plus en lactation : l'eau ne doit jamais manquer."],
+      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 9 mois (283 jours). Détectez bien les chaleurs (agitation, chevauchements), notez chaque saillie et préparez le vêlage dans un endroit propre. Le veau doit téter le colostrum dans les 2 premières heures."],
+      ["Santé","Vaccinez (fièvre aphteuse, charbon), détiquez et vermifugez régulièrement ; surveillez la trypanosomose en zone à mouche tsé-tsé. Observez chaque jour l'appétit et la démarche : un animal isolé, qui rumine peu ou boite, doit être vu par le vétérinaire."],
+      ["Gestion & rentabilité","Un bovin est un capital important : suivez l'état corporel, la production (lait, croissance) et les coûts. La clé de la rentabilité est souvent la conduite d'alimentation en saison sèche, quand le fourrage manque."],
+      ["Réussir : erreurs à éviter","Les pertes viennent surtout du manque d'eau, d'un déficit alimentaire en saison sèche, de l'absence de détiquage et d'un vêlage mal suivi. Anticiper le fourrage de saison sèche (foin, ensilage, réserves) évite l'amaigrissement et les mortalités."]]},
+    en:{fiches:[
+      ["Housing & grazing","Ensure good pasture, clean water at will and shade. Provide a clean night paddock or barn, and rotate plots: rotation preserves grass and breaks the parasite cycle (worms, ticks)."],
+      ["Feeding","Forage is the base (grass, hay, crop residues); top up with energy, protein and minerals (bran, cake, lick block), especially in the dry season and lactation. A cow drinks 30-50 L/day, far more in lactation: water must never run out."],
+      ["Breeding","~21-day cycle; gestation about 9 months (283 days). Detect heats well (restlessness, mounting), record every mating and prepare calving in a clean spot. The calf must suckle colostrum within the first 2 hours."],
+      ["Health","Vaccinate (foot-and-mouth, anthrax/blackleg), control ticks and deworm regularly; watch for trypanosomosis in tsetse areas. Observe appetite and gait daily: an animal that stands apart, ruminates little or limps needs the vet."],
+      ["Management & profit","Cattle are major capital: track body condition, output (milk, growth) and costs. The key to profit is often dry-season feeding management, when forage is scarce."],
+      ["Getting it right: mistakes to avoid","Losses mostly come from lack of water, a dry-season feed gap, no tick control and poorly supervised calving. Planning dry-season forage (hay, silage, reserves) prevents weight loss and deaths."]]}
+  },
+  caprin:{
+    fr:{fiches:[
+      ["Logement","Chèvrerie sèche, bien ventilée et à l'abri de la pluie, idéalement sur un plancher surélevé à claire-voie (les crottes tombent, les pattes restent au sec). Les chèvres supportent mal l'humidité, qui favorise parasites et piétin. Prévoyez une aire d'exercice et des points en hauteur, qu'elles adorent."],
+      ["Alimentation","Ce sont des brouteuses : feuilles et fourrages ligneux (Leucaena, Gliricidia), herbe, plus un complément (son, tourteau d'arachide, minéraux). Introduisez tout nouvel aliment progressivement. Renforcez la ration en fin de gestation et en lactation, avec eau propre en permanence."],
+      ["Reproduction","Cycle de ~21 jours ; gestation d'environ 150 jours (5 mois), souvent avec des jumeaux. Préparez une case propre pour la mise bas et surveillez-la ; le colostrum est vital pour les chevreaux dans les premières heures. Un intervalle bien géré permet jusqu'à 3 mises bas en 2 ans."],
+      ["Santé & biosécurité","La priorité absolue est la vaccination contre la PPR (peste des petits ruminants), très efficace. Vermifugez régulièrement — les parasites gastro-intestinaux sont le premier problème — parez les onglons et isolez tout animal malade."],
+      ["Gestion & rentabilité","Le petit ruminant est un troupeau à cycle rapide, peu coûteux à démarrer et facile à vendre. Suivez la prolificité, la mortalité des chevreaux et les coûts ; la vaccination PPR et le déparasitage régulier sont les meilleurs investissements pour protéger votre capital."],
+      ["Réussir : erreurs à éviter","Les pertes viennent surtout de l'humidité du logement, de l'oubli de la vaccination PPR, d'un déparasitage négligé et d'une mise bas non surveillée. Un abri sec et un calendrier sanitaire simple mais respecté changent tout."]]},
+    en:{fiches:[
+      ["Housing","Dry, well-ventilated goat house sheltered from rain, ideally on a raised slatted floor (droppings fall through, feet stay dry). Goats tolerate damp poorly, which favours parasites and foot rot. Provide an exercise area and raised perches, which they love."],
+      ["Feeding","They are browsers: leaves and woody forage (Leucaena, Gliricidia), grass, plus a supplement (bran, groundnut cake, minerals). Introduce any new feed gradually. Strengthen the ration in late gestation and lactation, with clean water always available."],
+      ["Breeding","~21-day cycle; gestation about 150 days (5 months), often twins. Prepare a clean pen for kidding and watch it; colostrum is vital for kids in the first hours. A well-managed interval allows up to 3 kiddings in 2 years."],
+      ["Health & biosecurity","The absolute priority is PPR (peste des petits ruminants) vaccination, which is very effective. Deworm regularly — gastro-intestinal parasites are the top problem — trim hooves and isolate any sick animal."],
+      ["Management & profit","Small ruminants are a fast-cycling herd, cheap to start and easy to sell. Track prolificacy, kid mortality and costs; PPR vaccination and regular deworming are the best investments to protect your capital."],
+      ["Getting it right: mistakes to avoid","Losses mostly come from damp housing, skipping PPR vaccination, neglected deworming and unsupervised kidding. A dry shelter and a simple but respected health calendar change everything."]]}
+  }
+};
+/* ===== Quiz par espèce (1 question par fiche, dans l'ordre des fiches) ===== */
+const QUIZ_ESP = {
+  porc:{fr:[
+    {q:"Quelle surface prévoir environ par porc à l'engrais ?",o:["0,2 m²","1 m²","5 m²"],b:1},
+    {q:"Que ne faut-il jamais donner aux porcs ?",o:["De l'eau propre","Des déchets de cuisine crus","Du maïs"],b:1},
+    {q:"Combien de temps dure la gestation de la truie ?",o:["31 jours","114 jours","283 jours"],b:1},
+    {q:"Forte fièvre, rougeurs et mortalité rapide font suspecter…",o:["Un coup de chaleur","La peste porcine africaine","Une carence"],b:1},
+    {q:"L'aliment représente environ quelle part du coût ?",o:["10 %","30 %","65-70 %"],b:2},
+    {q:"Qu'est-ce qui protège le mieux l'élevage ?",o:["Beaucoup de médicaments","Biosécurité stricte + démarrage propre","Une forte densité"],b:1}],
+  en:[
+    {q:"About how much space per fattening pig?",o:["0.2 m²","1 m²","5 m²"],b:1},
+    {q:"What must you never feed pigs?",o:["Clean water","Raw kitchen waste","Maize"],b:1},
+    {q:"How long is the sow's gestation?",o:["31 days","114 days","283 days"],b:1},
+    {q:"High fever, redness and rapid death suggest…",o:["Heat stress","African Swine Fever","A deficiency"],b:1},
+    {q:"Feed is about what share of cost?",o:["10%","30%","65-70%"],b:2},
+    {q:"What best protects the farm?",o:["Lots of medicine","Strict biosecurity + clean start","High density"],b:1}]},
+  volaille:{fr:[
+    {q:"Température de la poussinière la 1ʳᵉ semaine ?",o:["15-18 °C","32-34 °C","45 °C"],b:1},
+    {q:"Que se passe-t-il si l'eau vient à manquer ?",o:["Rien","La croissance/ponte s'arrête aussitôt","Les poules grossissent"],b:1},
+    {q:"Le principe « tout plein / tout vide » signifie…",o:["Mélanger les âges","Un seul lot, puis vide sanitaire","Ne jamais nettoyer"],b:1},
+    {q:"Quel vaccin est essentiel en volaille ?",o:["Newcastle","Aucun","La PPR"],b:0},
+    {q:"Quels chiffres suivre pour piloter ?",o:["Aucun","Mortalité, aliment, poids/ponte","Seulement le prix"],b:1},
+    {q:"Un lot bien démarré et bien vacciné est…",o:["Perdu d'avance","À moitié gagné","Sans importance"],b:1}],
+  en:[
+    {q:"Brooder temperature in the first week?",o:["15-18 °C","32-34 °C","45 °C"],b:1},
+    {q:"What happens if water runs out?",o:["Nothing","Growth/laying stops at once","Birds gain weight"],b:1},
+    {q:"'All-in / all-out' means…",o:["Mixing ages","One batch, then an empty period","Never cleaning"],b:1},
+    {q:"Which vaccine is essential in poultry?",o:["Newcastle","None","PPR"],b:0},
+    {q:"Which numbers should you track?",o:["None","Mortality, feed, weight/lay","Only the price"],b:1},
+    {q:"A well-started, well-vaccinated batch is…",o:["Doomed","Half won","Irrelevant"],b:1}]},
+  bovin:{fr:[
+    {q:"À quoi sert la rotation des parcelles ?",o:["Fatiguer les vaches","Préserver l'herbe + casser les parasites","À rien"],b:1},
+    {q:"Quelle est la base de l'alimentation du bovin ?",o:["Le fourrage","La viande","Le sucre"],b:0},
+    {q:"La gestation de la vache dure environ…",o:["3 mois","9 mois (283 j)","1 an"],b:1},
+    {q:"Contre quoi vacciner en priorité ?",o:["Fièvre aphteuse et charbon","Rien","La grippe"],b:0},
+    {q:"La clé de rentabilité est souvent…",o:["L'alimentation de saison sèche","La couleur de l'animal","Le nom"],b:0},
+    {q:"Anticiper le fourrage de saison sèche évite…",o:["Rien","L'amaigrissement et les mortalités","Plus de lait"],b:1}],
+  en:[
+    {q:"What is plot rotation for?",o:["Tiring the cows","Preserving grass + breaking parasites","Nothing"],b:1},
+    {q:"What is the base of cattle feeding?",o:["Forage","Meat","Sugar"],b:0},
+    {q:"A cow's gestation lasts about…",o:["3 months","9 months (283 d)","1 year"],b:1},
+    {q:"What to vaccinate against first?",o:["Foot-and-mouth and anthrax","Nothing","Flu"],b:0},
+    {q:"The key to profit is often…",o:["Dry-season feeding","The animal's colour","The name"],b:0},
+    {q:"Planning dry-season forage prevents…",o:["Nothing","Weight loss and deaths","More milk"],b:1}]},
+  caprin:{fr:[
+    {q:"Les chèvres supportent mal…",o:["Le soleil","L'humidité","Le vent léger"],b:1},
+    {q:"Les chèvres sont surtout des…",o:["Carnivores","Brouteuses (feuilles, ligneux)","Granivores"],b:1},
+    {q:"La gestation de la chèvre dure environ…",o:["150 jours (5 mois)","31 jours","283 jours"],b:0},
+    {q:"Quelle vaccination est la priorité ?",o:["La PPR","Aucune","La rage seulement"],b:0},
+    {q:"Le petit ruminant est un troupeau…",o:["Lent et coûteux","À cycle rapide et peu coûteux","Impossible à vendre"],b:1},
+    {q:"Quel duo protège le mieux le capital ?",o:["Vaccination PPR + déparasitage","Rien","Beaucoup d'eau seulement"],b:0}],
+  en:[
+    {q:"Goats tolerate poorly…",o:["Sun","Damp","Light wind"],b:1},
+    {q:"Goats are mainly…",o:["Carnivores","Browsers (leaves, woody)","Grain-eaters"],b:1},
+    {q:"A goat's gestation lasts about…",o:["150 days (5 months)","31 days","283 days"],b:0},
+    {q:"Which vaccination is the priority?",o:["PPR","None","Rabies only"],b:0},
+    {q:"Small ruminants are a herd that is…",o:["Slow and costly","Fast-cycling and cheap","Impossible to sell"],b:1},
+    {q:"Which pair best protects the capital?",o:["PPR vaccination + deworming","Nothing","Only lots of water"],b:0}]}
+};
+
+/* ===== Parcours certifiant par espèce ===== */
+function fichesFaites(k){ return (etat.ecole.valideesEsp && etat.ecole.valideesEsp[k]) || []; }
+
+function vueFiches(){
+  const k = espActive();
+  const cfg = FICHES_ESP[k]; if(!cfg) return '';
+  if(ficheOuverte && ficheOuverte.esp===k) return vueFicheDetail(k, ficheOuverte.i);
+  const g = cfg[langue] || cfg.fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
+  const faites = fichesFaites(k);
+  const total = g.fiches.length;
+
+  let certif = '';
+  if(faites.length === total){
+    if(!etat.ecole.numEsp) etat.ecole.numEsp = {};
+    if(!etat.ecole.numEsp[k]){ etat.ecole.numEsp[k] = 'CSM-' + k.toUpperCase().slice(0,3) + '-' + auj().replace(/-/g,'') + '-' + uid().slice(-4).toUpperCase(); sauver(); }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — ${espLbl(k)} ${ESPECES[k].icon}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom) || '…'}</div>
+      <p>${L('a validé le parcours essentiel de gestion de cet élevage.','has completed the essential management path for this species.')}</p>
+      <p style="margin-top:6px">${ESPECES[k].icon} CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numEsp[k]}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifEsp('${k}')">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+
+  const items = g.fiches.map(([ti],i)=>{
+    const done = faites.includes(i);
+    return `<div class="lecon-item ${done?'done':''}" onclick="ouvrirFiche('${k}',${i})">
+      <div class="lecon-num">${done?'✓':i+1}</div>
+      <div class="lecon-titre">${ic[i]||'•'} ${esc(ti)}</div>
+      <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+    </div>`;
+  }).join('');
+
+  return `
+    <h2 class="page-title">${t('school_title')}</h2>
+    <p class="page-sub">${L('Parcours certifiant','Certifying path')} — ${espLbl(k)}</p>
+    ${selecteurEspece()}
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${faites.length} / ${total} ${L('fiches validées','cards completed')}</p>
+      <div class="progress-bar"><div style="width:${faites.length/total*100}%"></div></div>
+      <div style="margin-top:12px">${items}</div>
+    </div>`;
+}
+
+function vueFicheDetail(k,i){
+  const g = FICHES_ESP[k][langue] || FICHES_ESP[k].fr;
+  const f = g.fiches[i]; const ti = f[0], txt = f[1];
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
+  const done = fichesFaites(k).includes(i);
+  const qz = (QUIZ_ESP[k] && QUIZ_ESP[k][langue]) ? QUIZ_ESP[k][langue][i] : null;
+  let quizHtml = '';
+  if(qz){
+    const opts = qz.o.map((o,oi)=>`<label style="display:flex;gap:9px;align-items:center;padding:9px 11px;border:1.5px solid #E6E0D0;border-radius:9px;cursor:pointer">
+      <input type="radio" name="qf" value="${oi}"> <span>${esc(o)}</span></label>`).join('');
+    quizHtml = `<div class="card" style="margin-top:14px">
+      <h3>❓ ${L('Quiz','Quiz')}</h3>
+      <p style="font-weight:600;margin:6px 0 10px">${esc(qz.q)}</p>
+      <div style="display:flex;flex-direction:column;gap:8px">${opts}</div>
+      <div id="qf-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerQuizFiche('${k}',${i})">${L('Valider','Check')}</button>
+    </div>`;
+  }
+  return `
+    <button class="btn sec" onclick="fermerFiche()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">${ic[i]||'•'} ${esc(ti)} ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}</h2>
+      <p style="color:#444;line-height:1.75;margin-top:8px">${esc(txt)}</p>
+    </div>
+    ${quizHtml}`;
+}
+
+function ouvrirFiche(k,i){ ficheOuverte = {esp:k, i:i}; rendre(); window.scrollTo(0,0); }
+function fermerFiche(){ ficheOuverte = null; rendre(); window.scrollTo(0,0); }
+function validerQuizFiche(k,i){
+  const sel = document.querySelector('input[name="qf"]:checked');
+  const res = document.getElementById('qf-res');
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  if(!sel){ if(res) res.innerHTML = '<span style="color:var(--rouge)">'+L('Choisissez une réponse.','Pick an answer.')+'</span>'; return; }
+  const qz = QUIZ_ESP[k][langue][i];
+  if(parseInt(sel.value) === qz.b){
+    if(!etat.ecole.valideesEsp) etat.ecole.valideesEsp = {};
+    if(!etat.ecole.valideesEsp[k]) etat.ecole.valideesEsp[k] = [];
+    if(!etat.ecole.valideesEsp[k].includes(i)) etat.ecole.valideesEsp[k].push(i);
+    sauver();
+    if(res) res.innerHTML = '<span style="color:var(--feuille-fonce);font-weight:700">✓ '+L('Bonne réponse ! Fiche validée.','Correct! Card completed.')+'</span>';
+    setTimeout(()=>{ ficheOuverte = null; rendre(); window.scrollTo(0,0); }, 900);
+  } else {
+    if(res) res.innerHTML = '<span style="color:var(--rouge)">✗ '+L('Pas tout à fait — relisez la fiche et réessayez.','Not quite — re-read the card and try again.')+'</span>';
+  }
+}
+function partagerCertifEsp(k){
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const num = (etat.ecole.numEsp && etat.ecole.numEsp[k]) ? ('N° '+etat.ecole.numEsp[k]) : '';
+  const txt = [ '🎓 '+L('Certificat CuniMaster','CuniMaster Certificate')+' — '+espLbl(k),
+    (etat.ecole.nom||'—'),
+    L('Parcours essentiel validé.','Essential path completed.'), num, '— CuniSmart' ].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
+}
+
 function vueEcole(){
   if(leconOuverte !== null) return vueLecon(leconOuverte);
+  if(espActive() !== 'lapin') return vueFiches();
   const n = etat.ecole.validees.length;
   const baseFait = niveauValide(0) && niveauValide(1);
   const toutFait = n === LECONS.length;
@@ -3738,6 +4688,7 @@ function vueEcole(){
   return `
     <h2 class="page-title">${t('school_title')}</h2>
     <p class="page-sub">${t('school_sub')}</p>
+    ${selecteurEspece()}
     ${certif}
     <div class="card">
       <p style="font-weight:600;color:var(--vert-foret)">${fmt(t('school_progress'),{n})}</p>
@@ -3838,12 +4789,15 @@ function ajouterLapin(e){
   const poids = (p && p>0) ? p : null;
   etat.lapins.push({
     id: uid(),
+    espece: espActive(),
     nom: document.getElementById('l-nom').value.trim(),
     sexe: document.getElementById('l-sexe').value,
     race: document.getElementById('l-race').value,
     naissance: document.getElementById('l-naiss').value || null,
     statut: 'actif',
     poids: poids,
+    pere: document.getElementById('l-pere')?.value||null,
+    mere: document.getElementById('l-mere')?.value||null,
     pesees: poids ? [{ date: auj(), poids: poids }] : []
   });
   sauver(); rendre();
@@ -3868,6 +4822,7 @@ function ajouterSaillie(e){
   e.preventDefault();
   etat.saillies.push({
     id: uid(),
+    espece: espActive(),
     femelle: document.getElementById('s-fem').value,
     male: document.getElementById('s-mal').value,
     date: document.getElementById('s-date').value,
@@ -3943,8 +4898,11 @@ function lotOrigineOptions(){
   }).join('');
 }
 function lotPayload(lot){
-  const data = { v:1, i:lot.id, n:lot.nom, ty:lot.type, q:lot.qte, b:lot.date,
-    o:lot.origine||'', al:lot.alim||'', s:lot.note||'', e:'SCOOPS CAPAO', d:lot.cree };
+  const data = { v:1, i:lot.id, n:lot.nom, ty:lot.type, q:lot.qte, pw:lot.poids,
+    b:lot.date, o:lot.origine||'', rc:lot.race||'', al:lot.alim||'',
+    sa:lot.sante||'', hyg:lot.hygGrade||'', hygsc:lot.hygScore||'',
+    s:lot.note||'', ach:lot.acheteur||'',
+    e:lot.producteur||'SCOOPS CAPAO', esp:lot.espece||'lapin', d:lot.cree };
   return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 }
 function lienTrace(lot){ return location.origin + '/trace.html#' + lotPayload(lot); }
@@ -4068,9 +5026,26 @@ function vueCompte(){
     '</div>';
 }
 
+function logoLabel(petit){
+  const s=petit?32:40;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;flex:none">
+    <path d="M100 18L152 38L152 110Q152 158 100 176Q48 158 48 110L48 38Z" fill="#1C4025" stroke="#D4A017" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M100 32L140 48L140 110Q140 148 100 164Q60 148 60 110L60 48Z" fill="#24512f"/>
+    <path d="M100 54C117 63 123 80 114 98C105 116 83 112 78 94C72 73 83 55 100 54Z" fill="#FBF3E0" opacity=".96"/>
+    <path d="M100 54C97 72 94 88 92 104" fill="none" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M98 76C106 80 112 86 114 92" fill="none" stroke="#D4A017" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
+    <path d="M80 132L92 148L122 124" fill="none" stroke="#D4A017" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+function titreTrac(){
+  return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+    ${logoLabel(false)}
+    <h2 class="page-title" style="margin:0">${t('trace_title')}</h2>
+  </div>`;
+}
 function vueTracabilite(){
   if(etat.pro !== true){
-    return '<h2 class="page-title">'+t('trace_title')+'</h2>'+
+    return titreTrac()+
       '<p class="page-sub">'+t('trace_sub')+'</p>'+
       '<div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
         '<h3 style="color:#6B2409">'+t('trace_lock_title')+'</h3>'+
@@ -4101,7 +5076,7 @@ function vueTracabilite(){
   }).join('');
 
   return ''+
-    '<h2 class="page-title">'+t('trace_title')+'</h2>'+
+    titreTrac()+
     '<p class="page-sub">'+t('trace_sub')+'</p>'+
     '<div class="card">'+
       '<h3>'+t('trace_add')+'</h3>'+
@@ -4111,10 +5086,17 @@ function vueTracabilite(){
           '<option value="chair">'+t('tr_t_meat')+'</option><option value="repro">'+t('tr_t_breed')+'</option>'+
           '<option value="portee">'+t('tr_t_litter')+'</option><option value="autre">'+t('tr_t_other')+'</option></select></div>'+
         '<div class="champ"><label>'+t('tr_qty')+'</label><input id="lot-qte" type="number" min="1" placeholder="10"></div>'+
+        '<div class="champ"><label>'+t('tr_poids')+'</label><input id="lot-poids" placeholder="'+t('tr_poids_ph')+'"></div>'+
         '<div class="champ"><label>'+t('tr_date')+'</label><input id="lot-date" type="date" value="'+auj()+'"></div>'+
         '<div class="champ"><label>'+t('tr_litter')+'</label><select id="lot-portee"><option value="">'+t('tr_none')+'</option>'+lotOrigineOptions()+'</select></div>'+
         '<div class="champ"><label>'+t('tr_origin')+'</label><input id="lot-origine" placeholder="'+t('tr_origin_ph')+'"></div>'+
+        '<div class="champ"><label>'+t('tr_race')+'</label><input id="lot-race" placeholder="'+t('tr_race_ph')+'"></div>'+
         '<div class="champ"><label>'+t('tr_feed')+'</label><input id="lot-alim" placeholder="'+t('tr_feed_ph')+'"></div>'+
+        '<div class="champ"><label>'+t('tr_sante')+'</label><input id="lot-sante" placeholder="'+t('tr_sante_ph')+'"></div>'+
+        '<div class="champ"><label>'+t('tr_hyg')+'</label><select id="lot-hyg">'+
+          '<option value="">'+t('tr_hyg_ph')+'</option>'+
+          ['A','B','C'].map(g=>`<option value="${g}">${g}</option>`).join('')+'</select></div>'+
+        '<div class="champ"><label>'+t('tr_acheteur')+'</label><input id="lot-acheteur" placeholder="'+t('tr_acheteur_ph')+'"></div>'+
         '<div class="champ"><label>'+t('tr_note')+'</label><input id="lot-note" placeholder="'+t('tr_note_ph')+'"></div>'+
         '<button class="btn">'+t('tr_create')+'</button>'+
       '</form>'+
@@ -4131,10 +5113,24 @@ function creerLot(e){
     const s = etat.saillies.find(x=>x.id===pid);
     if(s) origine = fmt(t('tr_born_from'), {p: nom(s.femelle)+' × '+nom(s.male), d: fdate(s.dateMiseBas)});
   }
+  // score d'hygiène du dernier contrôle
+  let hygScore=''; if(etat.hygiene && etat.hygiene.length){
+    const h=etat.hygiene.slice().sort((a,b)=>b.date.localeCompare(a.date))[0];
+    const it=hygItems(); if(it.length) hygScore=Math.round(h.ctrl.filter(Boolean).length/it.length*100)+'%';
+  }
+  const gradeHyg = g('lot-hyg').value;
   const lot = { id: uid(), nom: g('lot-nom').value.trim(), type: g('lot-type').value,
     qte: g('lot-qte').value ? parseInt(g('lot-qte').value,10) : null,
+    poids: g('lot-poids').value.trim(),
     date: g('lot-date').value || auj(), origine,
-    alim: g('lot-alim').value.trim(), note: g('lot-note').value.trim(), cree: auj() };
+    race: g('lot-race').value.trim(),
+    alim: g('lot-alim').value.trim(),
+    sante: g('lot-sante').value.trim(),
+    hygGrade: gradeHyg, hygScore: hygScore,
+    acheteur: g('lot-acheteur').value.trim(),
+    note: g('lot-note').value.trim(), cree: auj(),
+    producteur: (etat.ecole&&etat.ecole.nom)||'SCOOPS CAPAO',
+    espece: espActive() };
   etat.lots.push(lot); sauver(); naviguer('tracabilite');
 }
 function supprimerLot(id){
