@@ -383,14 +383,9 @@ footer a:hover{color:var(--gold)}
   m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');});});
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-  // Ouverture fiable des liens externes (app, WhatsApp) : nouvel onglet, repli sur le même onglet
+  // Ouverture fiable des liens externes (app, WhatsApp) : navigation directe
   document.querySelectorAll('a[href^="http"]').forEach(function(a){
-    a.addEventListener('click',function(e){
-      var url=a.getAttribute('href'); if(!url) return;
-      e.preventDefault();
-      var win=window.open(url,'_blank','noopener');
-      if(!win){ window.location.href=url; }
-    });
+    a.addEventListener('click',function(e){ e.preventDefault(); window.location.assign(a.href); });
   });
 </script>
 </body>
