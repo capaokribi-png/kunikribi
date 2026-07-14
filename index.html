@@ -3169,7 +3169,7 @@ async function charger(){
     if(l === 'en' || l === 'fr') langue = l;
   }catch(e){}
   appliquerLangue(); verifierExpirations(); rendre();
-  resignerLotsEnAttente();;
+  resignerLotsEnAttente();
 }
 async function sauver(){ try{ await store.set(CLE, JSON.stringify(etat)); }catch(e){} }
 
@@ -4896,7 +4896,6 @@ function lotPayload(lot){
 function lienTrace(lot){
   const p = lotPayload(lot);
   return location.origin + '/trace.html#' + p + (lot.sig ? '.' + lot.sig : '');
-};
 }
 function qrSvg(lot){
   try{ const qr = qrcode(0,'M'); qr.addData(lienTrace(lot)); qr.make();
@@ -5125,11 +5124,11 @@ function creerLot(e){
     producteur: (etat.ecole&&etat.ecole.nom)||'SCOOPS CAPAO',
     espece: espActive() };
   etat.lots.push(lot); sauver(); naviguer('tracabilite');
+  signerLot(lot); // signature en arrière-plan, sans bloquer la création
 }
 function supprimerLot(id){
   if(!confirm(t('tr_confirm'))) return;
-  etat.lots.push(lot); sauver(); naviguer('tracabilite');
-  signerLot(lot); // signature en arrière-plan, sans bloquer la création
+  etat.lots = etat.lots.filter(l=>l.id!==id); sauver(); rendre();
 }
 
 async function signerLot(lot){
@@ -5151,7 +5150,6 @@ async function signerLot(lot){
 async function resignerLotsEnAttente(){
   const nonSignes = (etat.lots||[]).filter(l => !l.sig);
   for(const lot of nonSignes){ await signerLot(lot); }
-};
 }
 function telechargerQR(id){
   const lot = etat.lots.find(l=>l.id===id); if(!lot) return;
