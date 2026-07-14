@@ -3187,10 +3187,9 @@ function appliquerLangue(){
 
 /* ================= PARAMÈTRES ZOOTECHNIQUES ================= */
 const GESTATION = 31, PALPATION = 12, SEVRAGE = 35;
-/* ⭐ Code d'activation CuniSmart Pro — CHANGEZ-LE, puis donnez-le aux éleveurs
-   qui ont payé les 9 500 FCFA/an. Protection légère (le dépôt est public) ;
-   la vérification automatique par paiement viendra avec le compte cloud. */
-const CODE_PRO = "CAPAO-PRO-2026";
+/* ⭐ Les codes d'activation Pro ne sont plus dans ce fichier.
+   Ils vivent dans la table Supabase `activation_codes` et sont vérifiés par
+   /api/account/activate — uniques, à usage unique, illisibles depuis le client. */
 /* === Vérification de validité des codes (6 mois) === */
 function verifierExpirations(){
   const auj_=auj();
@@ -3340,12 +3339,10 @@ function vueTableau(){
 
 
 /* ================= MULTI-ÉLEVAGE (Super PRO) ================= */
-/* ⭐ Code d'activation Super PRO — CHANGEZ-LE, donnez-le aux abonnés multi-élevage. */
-const CODE_SUPERPRO = "CAPAO-SUPER-2026";
-/* 💰 Prix Super PRO (multi-élevage) et lien de paiement AfribaPay dédié (à 30 000 FCFA/an).
-   Collez ici votre lien AfribaPay « Cunismart Super PRO » quand il sera créé ; sinon, renvoie vers payer.html. */
+/* ⭐ Les codes Super PRO vivent eux aussi dans `activation_codes` (type = 'superpro'). */
+/* 💰 Prix Super PRO (multi-élevage) — 30 000 FCFA/an.
+   Le paiement passe par payer.html (Mobile Money manuel) en attendant l'API AfribaPay. */
 const PRIX_SUPERPRO = 30000;
-const LIEN_SUPERPRO = "https://checkout-sandbox.afribapay.com/ck/AFPAY260707061057569APM6510465YyR";
 
 const ESPECES = {
   lapin:   {icon:'🐰', fr:'Lapins',  en:'Rabbits', gestation:31,  palpation:12, sevrage:35,
@@ -3394,14 +3391,12 @@ function selecteurEspece(){
       ESPECES[k].icon+' '+espLbl(k)+(lock?' 🔒':'')+'</button>';
   }).join('')+'</div>';
 }
-function demanderSuperPro(){
+async function demanderSuperPro(){
   const code = prompt(t('sp_ask'));
   if(code===null) return;
   const v = code.trim();
-  if(v===''){ window.location.href = LIEN_SUPERPRO || 'payer.html'; return; }
-  if(v.toUpperCase()===CODE_SUPERPRO.toUpperCase()){
-    etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); etat.spExp=ajJours(auj(),182); sauver(); alert(t('sp_ok')); rendre();
-  } else { alert(t('sp_bad')); }
+  if(v===''){ window.location.href = 'payer.html'; return; }
+  await activerAbo(v, 'superpro');
 }
 
 function vueCheptel(){
@@ -4322,16 +4317,44 @@ function majSac(v){
   rendre();
   const i = document.getElementById('nut-kg'); if(i){ i.value = sacKg; i.focus(); }
 }
-function demanderPro(){
+async function demanderPro(){
   const code = prompt(t('pro_ask_code'));
   if(code === null) return;               // annulé
   const v = code.trim();
   if(v === ''){ window.location.href = 'payer.html'; return; }  // vide -> page d'abonnement
-  if(v.toUpperCase() === CODE_PRO.toUpperCase()){
-    etat.pro = true; etat.proDepuis = auj(); etat.proExp = ajJours(auj(), 182);
-    sauver(); alert(t('pro_ok')); rendre();
+  await activerAbo(v, 'pro');
+}
+
+/* Activation d'un abonnement par code, vérifié CÔTÉ SERVEUR.
+   Le code n'est plus dans l'application : il vit dans la base, il est unique,
+   à usage unique, et sa durée est décidée par le serveur (duration_days). */
+async function activerAbo(v, type){
+  const phone = (etat.compte && etat.compte.phone) || null;
+  const bad = (type === 'superpro') ? 'sp_bad' : 'pro_bad';
+  let res;
+  try{
+    res = await apiCompte('activate', { code: v, type: type, phone: phone });
+  }catch(e){
+    alert(langue === 'fr'
+      ? "Pas de connexion. L'activation d'un code nécessite Internet — réessayez une fois connecté."
+      : "No connection. Activating a code requires the Internet — try again once online.");
+    return;
+  }
+  const d = res.data || {};
+  if(res.status === 429){
+    alert(langue === 'fr'
+      ? "Trop de tentatives. Patientez quelques minutes avant de réessayer."
+      : "Too many attempts. Please wait a few minutes before trying again.");
+    return;
+  }
+  if(!d.ok || !d.exp){ alert(t(bad)); return; }
+
+  if(type === 'superpro'){
+    etat.superpro = true; etat.pro = true; etat.spDepuis = auj(); etat.spExp = d.exp;
+    sauver(); alert(t('sp_ok')); rendre();
   } else {
-    alert(t('pro_bad'));
+    etat.pro = true; etat.proDepuis = auj(); etat.proExp = d.exp;
+    sauver(); alert(t('pro_ok')); rendre();
   }
 }
 function partagerRecette(type){
