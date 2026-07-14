@@ -3189,7 +3189,7 @@ const GESTATION = 31, PALPATION = 12, SEVRAGE = 35;
 /* ⭐ Code d'activation CuniSmart Pro — CHANGEZ-LE, puis donnez-le aux éleveurs
    qui ont payé les 9 500 FCFA/an. Protection légère (le dépôt est public) ;
    la vérification automatique par paiement viendra avec le compte cloud. */
-const CODE_PRO = "CAPAO-PRO-2026";
+;
 /* === Vérification de validité des codes (6 mois) === */
 function verifierExpirations(){
   const auj_=auj();
@@ -3340,7 +3340,7 @@ function vueTableau(){
 
 /* ================= MULTI-ÉLEVAGE (Super PRO) ================= */
 /* ⭐ Code d'activation Super PRO — CHANGEZ-LE, donnez-le aux abonnés multi-élevage. */
-const CODE_SUPERPRO = "CAPAO-SUPER-2026";
+;
 /* 💰 Prix Super PRO (multi-élevage) et lien de paiement AfribaPay dédié (à 30 000 FCFA/an).
    Collez ici votre lien AfribaPay « Cunismart Super PRO » quand il sera créé ; sinon, renvoie vers payer.html. */
 const PRIX_SUPERPRO = 30000;
@@ -3393,14 +3393,46 @@ function selecteurEspece(){
       ESPECES[k].icon+' '+espLbl(k)+(lock?' 🔒':'')+'</button>';
   }).join('')+'</div>';
 }
-function demanderSuperPro(){
+async function demanderSuperPro(){
   const code = prompt(t('sp_ask'));
-  if(code===null) return;
+  if(code === null) return;
+
   const v = code.trim();
-  if(v===''){ window.location.href = LIEN_SUPERPRO || 'payer.html'; return; }
-  if(v.toUpperCase()===CODE_SUPERPRO.toUpperCase()){
-    etat.superpro=true; etat.pro=true; etat.spDepuis=auj(); etat.spExp=ajJours(auj(),182); sauver(); alert(t('sp_ok')); rendre();
-  } else { alert(t('sp_bad')); }
+
+  if(v === ''){
+    window.location.href = LIEN_SUPERPRO || 'payer.html';
+    return;
+  }
+
+  try{
+    const r = await fetch('/api/activate', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        code: v,
+        type: 'superpro',
+        phone: (etat.compte && etat.compte.phone) || null
+      })
+    });
+
+    const data = await r.json();
+
+    if(r.status === 200 && data.ok){
+      etat.superpro = true;
+      etat.pro = true;
+      etat.spDepuis = auj();
+      etat.spExp = data.exp;
+      sauver();
+      alert(t('sp_ok'));
+      rendre();
+    } else {
+      alert(t('sp_bad'));
+    }
+
+  }catch(e){
+    alert(t('cpt_net'));
+  }
+}
 }
 
 function vueCheptel(){
@@ -4321,17 +4353,22 @@ function majSac(v){
   rendre();
   const i = document.getElementById('nut-kg'); if(i){ i.value = sacKg; i.focus(); }
 }
-function demanderPro(){
+async function demanderPro(){
   const code = prompt(t('pro_ask_code'));
-  if(code === null) return;               // annulé
+  if(code === null) return;
   const v = code.trim();
-  if(v === ''){ window.location.href = 'payer.html'; return; }  // vide -> page d'abonnement
-  if(v.toUpperCase() === CODE_PRO.toUpperCase()){
-    etat.pro = true; etat.proDepuis = auj(); etat.proExp = ajJours(auj(), 182);
-    sauver(); alert(t('pro_ok')); rendre();
-  } else {
-    alert(t('pro_bad'));
-  }
+  if(v === ''){ window.location.href = 'payer.html'; return; }
+  try{
+    const r = await fetch('/api/activate', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ code:v, type:'pro', phone:(etat.compte&&etat.compte.phone)||null })
+    });
+    const data = await r.json();
+    if(r.status===200 && data.ok){
+      etat.pro = true; etat.proDepuis = auj(); etat.proExp = data.exp;
+      sauver(); alert(t('pro_ok')); rendre();
+    } else { alert(t('pro_bad')); }
+  }catch(e){ alert(t('cpt_net')); }
 }
 function partagerRecette(type){
   const r = recettesEsp()[type][langue];
