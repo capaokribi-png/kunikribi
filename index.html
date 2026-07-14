@@ -11,19 +11,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="CuniSmart">
 <title>CuniSmart — Gestion d'élevage cunicole · Rabbit farm manager</title>
-<script>
-(function(){
-  document.addEventListener('contextmenu',function(e){e.preventDefault();});
-  document.addEventListener('keydown',function(e){
-    if((e.ctrlKey||e.metaKey)&&['u','s'].includes(e.key.toLowerCase())){e.preventDefault();}
-    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase()))){e.preventDefault();}
-  });
-  setInterval(function(){
-    var t=new Date(); debugger;
-    if(new Date()-t>100){var c=document.getElementById('contenu');if(c)c.innerHTML='';}
-  },4000);
-})();
-</script>
 <style>
   :root{
     --vert-foret:#9A3412; --vert-fonce:#6B2409; --vert-moyen:#E2711D;
