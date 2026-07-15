@@ -4364,7 +4364,19 @@ async function demanderPro(){
 /* Activation d'un abonnement par code, vérifié CÔTÉ SERVEUR.
    Le code n'est plus dans l'application : il vit dans la base, il est unique,
    à usage unique, et sa durée est décidée par le serveur (duration_days). */
+/* Rend la saisie du code tolérante. « sup208694 », « SUP 208694 »,
+   « sup-208694 » et « SUP-208694 » désignent le même code.
+   Recopier un tiret depuis WhatsApp sur un clavier de téléphone est
+   une source d'échec garantie — autant l'absorber ici. */
+function normCode(v){
+  const brut = String(v == null ? '' : v).trim().toUpperCase();
+  const c = brut.replace(/[^A-Z0-9]/g, '');       // enlève tirets, espaces, points
+  const m = c.match(/^(PRO|SUP)([A-Z0-9]{6})$/);
+  return m ? (m[1] + '-' + m[2]) : brut;
+}
+
 async function activerAbo(v, type){
+  v = normCode(v);
   const phone = (etat.compte && etat.compte.phone) || null;
   const bad = (type === 'superpro') ? 'sp_bad' : 'pro_bad';
   let res;
@@ -5196,7 +5208,7 @@ async function activerDepuisChamp(){
     alert(langue==='fr' ? "Saisissez le code reçu par WhatsApp." : "Enter the code you received by WhatsApp.");
     return;
   }
-  const type = v.startsWith('SUP') ? 'superpro' : 'pro';
+  const type = normCode(v).startsWith('SUP') ? 'superpro' : 'pro';
   await activerAbo(v, type);
 }
 
