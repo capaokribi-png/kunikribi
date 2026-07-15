@@ -4395,6 +4395,19 @@ async function activerAbo(v, type){
       : "Too many attempts. Please wait a few minutes before trying again.");
     return;
   }
+  /* Un problème de base de données n'est PAS un code invalide. Les confondre
+     nous a fait perdre une soirée : on croyait le code faux alors que le
+     serveur ne pouvait même pas lire la table. */
+  if(d.error === 'db_error'){
+    alert((langue === 'fr'
+      ? "⚠️ Problème technique côté serveur — votre code n'est pas en cause et n'a pas été consommé.\n\nDétail : "
+      : "⚠️ Server-side technical problem — your code is fine and was not used.\n\nDetail: ") + (d.detail || '?'));
+    return;
+  }
+  if(d.error === 'cloud_non_configure'){
+    alert(langue === 'fr' ? "Le service d'activation n'est pas configuré." : "Activation service not configured.");
+    return;
+  }
   if(!d.ok || !d.exp){ alert(t(bad)); return; }
 
   if(type === 'superpro'){
