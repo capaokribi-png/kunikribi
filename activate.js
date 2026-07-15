@@ -1,32 +1,41 @@
 // api/account/activate.js — POST {code, type, phone}
-// Vérifie un code d'activation, le marque comme utilisé et renvoie la date d'expiration.
-// Réécrit sur fetch natif (aucune dépendance npm) et sur SUPABASE_SERVICE_ROLE_KEY,
-// pour rester cohérent avec login.js / backup.js / restore.js / referral.js.
+// Vérifie un code d'activation, le marque comme utilisé, renvoie l'expiration.
+//
+// Version diagnostique : distingue « code introuvable » (invalid) de
+// « la base a refusé/échoué » (db_error). La version précédente renvoyait
+// « invalid » dans les deux cas — impossible de savoir ce qui clochait.
 
-const URL = process.env.SUPABASE_URL;
-const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY; // clé service_role — jamais la clé publique
+/* Même normalisation d'URL que lib/supabase.js : une barre oblique finale
+   suffirait à tout casser (PGRST125). */
+function baseUrl(){
+  let u = (process.env.SUPABASE_URL || '').trim();
+  u = u.replace(/\/+$/, '');
+  u = u.replace(/\/rest\/v1$/, '');
+  return u;
+}
+const URL = baseUrl();
+const KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
 function headers(extra) {
   const h = { apikey: KEY, 'Content-Type': 'application/json' };
-  // Les nouvelles clés Supabase (sb_secret_...) ne sont pas des JWT : uniquement dans apikey.
-  // Les anciennes clés service_role (eyJ...) vont aussi dans Authorization.
   if (KEY && KEY.indexOf('eyJ') === 0) h.Authorization = 'Bearer ' + KEY;
   return Object.assign(h, extra || {});
 }
-function configured() { return !!(URL && KEY); }
 
-// Limite anti-brute-force en mémoire : 5 tentatives / 15 min / IP
+// Limite anti-brute-force en mémoire. Volontairement large : sur Vercel ce
+// compteur se remet à zéro à chaque instance, il gêne donc surtout
+// l'utilisateur honnête qui fait une faute de frappe.
 const tentatives = new Map();
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'method' });
-  if (!configured()) return res.status(503).json({ ok: false, error: 'cloud_non_configure' });
+  if (!URL || !KEY) return res.status(503).json({ ok: false, error: 'cloud_non_configure' });
 
   const ip = String(req.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
   const now = Date.now();
   const t = tentatives.get(ip) || { n: 0, reset: now + 15 * 60 * 1000 };
   if (now > t.reset) { t.n = 0; t.reset = now + 15 * 60 * 1000; }
-  if (t.n >= 5) return res.status(429).json({ ok: false, error: 'too_many' });
+  if (t.n >= 15) return res.status(429).json({ ok: false, error: 'too_many' });
   t.n++; tentatives.set(ip, t);
 
   const { code, type, phone } = req.body || {};
@@ -37,22 +46,46 @@ module.exports = async (req, res) => {
   const codeNorm = code.trim().toUpperCase();
 
   try {
-    // 1) Chercher le code : non utilisé, du bon type
+    // 1) Chercher le code : bon type, pas encore utilisé
     const q = URL + '/rest/v1/activation_codes'
       + '?code=eq.' + encodeURIComponent(codeNorm)
       + '&type=eq.' + encodeURIComponent(type)
       + '&used=eq.false&select=*&limit=1';
     const r = await fetch(q, { headers: headers() });
-    const rows = await r.json();
-    const data = Array.isArray(rows) && rows.length ? rows[0] : null;
-    if (!data) return res.status(200).json({ ok: false, error: 'invalid' });
+    const brut = await r.text();
 
+    // C'EST ICI que la version precedente mentait : un 401/403/500 de PostgREST
+    // etait confondu avec « code inconnu ». On separe enfin les deux.
+    if (!r.ok) {
+      console.error('[activate] lecture HTTP', r.status, brut.slice(0, 300));
+      return res.status(500).json({
+        ok: false, error: 'db_error',
+        detail: 'HTTP ' + r.status + ' : ' + brut.slice(0, 200)
+      });
+    }
+
+    let rows = null;
+    try { rows = JSON.parse(brut); } catch (e) {
+      return res.status(500).json({ ok: false, error: 'db_error', detail: 'reponse illisible' });
+    }
+    if (!Array.isArray(rows)) {
+      // PostgREST renvoie un objet {message,...} en cas de refus RLS ou de cle invalide
+      console.error('[activate] reponse inattendue', brut.slice(0, 300));
+      return res.status(500).json({
+        ok: false, error: 'db_error', detail: String(brut).slice(0, 200)
+      });
+    }
+    if (rows.length === 0) {
+      // La, et seulement la, le code est reellement inconnu / deja utilise / mauvais type
+      return res.status(200).json({ ok: false, error: 'invalid' });
+    }
+
+    const data = rows[0];
     const days = Number(data.duration_days) || 0;
     const exp = new Date(Date.now() + days * 86400000).toISOString().slice(0, 10);
 
-    // 2) Le consommer. Le filtre used=eq.false est répété volontairement :
-    //    si deux requêtes arrivent en même temps avec le même code, une seule
-    //    verra une ligne modifiée — l'autre reçoit un tableau vide et est rejetée.
+    // 2) Le consommer. Le filtre used=eq.false est repete : si deux requetes
+    //    arrivent en meme temps, une seule verra une ligne modifiee.
     const u = await fetch(
       URL + '/rest/v1/activation_codes?code=eq.' + encodeURIComponent(codeNorm) + '&used=eq.false',
       {
@@ -65,13 +98,23 @@ module.exports = async (req, res) => {
         }),
       }
     );
-    const updated = await u.json();
-    if (!u.ok || !Array.isArray(updated) || updated.length === 0) {
-      return res.status(200).json({ ok: false, error: 'invalid' }); // déjà consommé entre-temps
+    const brutU = await u.text();
+    if (!u.ok) {
+      console.error('[activate] ecriture HTTP', u.status, brutU.slice(0, 300));
+      return res.status(500).json({
+        ok: false, error: 'db_error',
+        detail: 'PATCH HTTP ' + u.status + ' : ' + brutU.slice(0, 200)
+      });
+    }
+    let updated = null;
+    try { updated = JSON.parse(brutU); } catch (e) {}
+    if (!Array.isArray(updated) || updated.length === 0) {
+      return res.status(200).json({ ok: false, error: 'invalid' }); // consomme entre-temps
     }
 
-    return res.status(200).json({ ok: true, exp });
+    return res.status(200).json({ ok: true, exp: exp });
   } catch (e) {
-    return res.status(500).json({ ok: false, error: 'server' });
+    console.error('[activate]', e);
+    return res.status(500).json({ ok: false, error: 'db_error', detail: String(e && e.message).slice(0, 200) });
   }
 };
