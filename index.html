@@ -5146,31 +5146,34 @@ function vueCompte(){
 function carteAbo(){
   const fr = (langue === 'fr');
 
+  /* Bandeau d'état : ce à quoi l'éleveur a droit aujourd'hui, et jusqu'à quand. */
+  let statut = '';
   if(etat.superpro === true){
-    return '<div class="card" style="margin-bottom:16px;border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
-      '<h3 style="color:#6B2409">⭐ Super PRO</h3>'+
-      '<p style="margin:6px 0 0;color:var(--gris)">'+
-        (fr?'Multi-élevage actif. Valable jusqu\'au ':'Multi-species active. Valid until ')+
-        '<b>'+fdate(etat.spExp)+'</b></p>'+
-      '</div>';
-  }
-  if(etat.pro === true){
-    return '<div class="card" style="margin-bottom:16px;border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
-      '<h3 style="color:#6B2409">⭐ CuniSmart Pro</h3>'+
-      '<p style="margin:6px 0 10px;color:var(--gris)">'+
-        (fr?'Actif. Valable jusqu\'au ':'Active. Valid until ')+
-        '<b>'+fdate(etat.proExp)+'</b></p>'+
-      '<button class="btn sec mini" onclick="demanderSuperPro()">'+
-        (fr?'⭐ Passer en Super PRO':'⭐ Upgrade to Super PRO')+'</button>'+
-      '</div>';
+    statut = '<p style="margin:6px 0 12px;color:var(--gris)">✅ <b>Super PRO</b> — '+
+      (fr?'multi-élevage actif jusqu\'au ':'multi-species active until ')+
+      '<b>'+fdate(etat.spExp)+'</b></p>';
+  } else if(etat.pro === true){
+    statut = '<p style="margin:6px 0 12px;color:var(--gris)">✅ <b>CuniSmart Pro</b> — '+
+      (fr?'actif jusqu\'au ':'active until ')+'<b>'+fdate(etat.proExp)+'</b></p>';
   }
 
-  // Pas encore abonné : le champ de saisie, bien en évidence.
+  /* Le champ reste TOUJOURS visible, même pour un abonné actif.
+     Sans ça, impossible de saisir le code de renouvellement à l'échéance
+     des 182 jours — le modèle de réactivation serait mort. */
+  const abonne = (etat.pro === true || etat.superpro === true);
+  const titre = abonne
+    ? (fr?'⭐ Mon abonnement':'⭐ My subscription')
+    : (fr?'⭐ Activer mon abonnement':'⭐ Activate my subscription');
+  const invite = abonne
+    ? (fr?'Code de renouvellement ou de mise à niveau reçu par WhatsApp ? Saisissez-le ici.'
+         :'Received a renewal or upgrade code by WhatsApp? Enter it here.')
+    : (fr?'Vous avez reçu un code par WhatsApp après votre paiement ? Saisissez-le ici.'
+         :'Received a code by WhatsApp after paying? Enter it here.');
+
   return '<div class="card" style="margin-bottom:16px;border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
-    '<h3 style="color:#6B2409">⭐ '+(fr?'Activer mon abonnement':'Activate my subscription')+'</h3>'+
-    '<p style="color:var(--gris);margin:6px 0 12px;font-size:14px">'+
-      (fr?'Vous avez reçu un code par WhatsApp après votre paiement ? Saisissez-le ici.'
-         :'Received a code by WhatsApp after paying? Enter it here.')+'</p>'+
+    '<h3 style="color:#6B2409">'+titre+'</h3>'+
+    statut+
+    '<p style="color:var(--gris);margin:6px 0 12px;font-size:14px">'+invite+'</p>'+
     '<form class="ligne" onsubmit="event.preventDefault();activerDepuisChamp()">'+
       '<div class="champ"><label>'+(fr?'Code d\'activation':'Activation code')+'</label>'+
         '<input id="abo-code" placeholder="PRO-XXXXXX" autocomplete="off" '+
