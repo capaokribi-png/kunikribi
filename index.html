@@ -5123,6 +5123,7 @@ function vueCompte(){
   }
   return '<h2 class="page-title">'+t('cpt_title')+'</h2>'+
     '<p class="page-sub">'+t('cpt_sub')+'</p>'+
+    carteAbo()+
     '<div class="card" style="margin-bottom:16px">'+
       '<h3>'+t('cpt_file_title')+'</h3>'+
       '<p class="vide" style="font-style:normal;margin-bottom:10px">'+t('cpt_file_note')+'</p>'+
@@ -5135,6 +5136,65 @@ function vueCompte(){
       '<h3>'+t('cpt_cloud_title')+'</h3>'+
       cloud+
     '</div>' + refCarte();
+}
+
+/* ---- CARTE ABONNEMENT ----
+   Avant, le SEUL moyen de saisir son code d'activation était de tomber par
+   hasard sur un écran verrouillé (Nutrition, Finances, Bilan, Traçabilité).
+   « Mon compte » — l'endroit où tout le monde cherche — n'avait rien.
+   Cette carte y est toujours visible, avec un vrai champ (pas un prompt()). */
+function carteAbo(){
+  const fr = (langue === 'fr');
+
+  if(etat.superpro === true){
+    return '<div class="card" style="margin-bottom:16px;border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
+      '<h3 style="color:#6B2409">⭐ Super PRO</h3>'+
+      '<p style="margin:6px 0 0;color:var(--gris)">'+
+        (fr?'Multi-élevage actif. Valable jusqu\'au ':'Multi-species active. Valid until ')+
+        '<b>'+fdate(etat.spExp)+'</b></p>'+
+      '</div>';
+  }
+  if(etat.pro === true){
+    return '<div class="card" style="margin-bottom:16px;border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
+      '<h3 style="color:#6B2409">⭐ CuniSmart Pro</h3>'+
+      '<p style="margin:6px 0 10px;color:var(--gris)">'+
+        (fr?'Actif. Valable jusqu\'au ':'Active. Valid until ')+
+        '<b>'+fdate(etat.proExp)+'</b></p>'+
+      '<button class="btn sec mini" onclick="demanderSuperPro()">'+
+        (fr?'⭐ Passer en Super PRO':'⭐ Upgrade to Super PRO')+'</button>'+
+      '</div>';
+  }
+
+  // Pas encore abonné : le champ de saisie, bien en évidence.
+  return '<div class="card" style="margin-bottom:16px;border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">'+
+    '<h3 style="color:#6B2409">⭐ '+(fr?'Activer mon abonnement':'Activate my subscription')+'</h3>'+
+    '<p style="color:var(--gris);margin:6px 0 12px;font-size:14px">'+
+      (fr?'Vous avez reçu un code par WhatsApp après votre paiement ? Saisissez-le ici.'
+         :'Received a code by WhatsApp after paying? Enter it here.')+'</p>'+
+    '<form class="ligne" onsubmit="event.preventDefault();activerDepuisChamp()">'+
+      '<div class="champ"><label>'+(fr?'Code d\'activation':'Activation code')+'</label>'+
+        '<input id="abo-code" placeholder="PRO-XXXXXX" autocomplete="off" '+
+        'style="text-transform:uppercase;letter-spacing:.05em;font-weight:600"></div>'+
+      '<button class="btn">'+(fr?'Activer':'Activate')+'</button>'+
+    '</form>'+
+    '<p style="color:var(--gris);font-size:13px;margin:12px 0 0">'+
+      (fr?'Pas encore de code ? ':'No code yet? ')+
+      '<a href="payer.html" style="color:var(--vert-foret);font-weight:600">'+
+      (fr?'Voir les tarifs et payer':'See pricing and pay')+'</a></p>'+
+    '</div>';
+}
+
+/* Le préfixe du code décide de la formule : PRO- ou SUP-.
+   L'éleveur n'a rien à choisir — une case de moins où se tromper. */
+async function activerDepuisChamp(){
+  const el = document.getElementById('abo-code');
+  const v = ((el && el.value) || '').trim().toUpperCase();
+  if(v.length < 4){
+    alert(langue==='fr' ? "Saisissez le code reçu par WhatsApp." : "Enter the code you received by WhatsApp.");
+    return;
+  }
+  const type = v.startsWith('SUP') ? 'superpro' : 'pro';
+  await activerAbo(v, type);
 }
 
 function logoLabel(petit){
