@@ -80,6 +80,8 @@
   .pay:active{transform:translateY(1px)}
   .pay:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
   .hint{text-align:center;color:var(--sage);font-size:12.5px;margin:10px 0 4px}
+  .sep{display:flex;align-items:center;gap:12px;margin:0 0 22px;color:var(--sage);font-size:12.5px}
+  .sep::before,.sep::after{content:"";flex:1;height:1px;background:var(--line)}
   .note{background:#f7faf3;border-left:3px solid var(--gold);padding:10px 12px;border-radius:0 8px 8px 0;
     font-size:12.5px;color:#3f4a3a;margin:18px 0 0}
   .foot{padding:16px 24px 22px;border-top:1px solid var(--line);margin-top:20px;text-align:center;color:var(--sage);font-size:12px}
@@ -100,7 +102,8 @@
       <p class="lead">Choisissez votre formule, payez par Mobile Money, recevez votre code d'activation.</p>
 
       <div class="offres" id="offres">
-        <div class="offre on" data-id="pro" data-px="9500" data-nom="CuniSmart Pro">
+        <div class="offre on" data-id="pro" data-px="9500" data-nom="CuniSmart Pro"
+             data-lien="https://checkout.afribapay.com/ck/AFPAY260716053741012APM6548175Rnu">
           <span class="radio"></span>
           <span class="t">
             <span class="nom">CuniSmart Pro</span>
@@ -108,7 +111,8 @@
           </span>
           <span class="px">9 500 F</span>
         </div>
-        <div class="offre" data-id="superpro" data-px="30000" data-nom="CuniSmart Super PRO">
+        <div class="offre" data-id="superpro" data-px="30000" data-nom="CuniSmart Super PRO"
+             data-lien="https://checkout.afribapay.com/ck/AFPAY260716085831129APM6548175P5T">
           <span class="radio"></span>
           <span class="t">
             <span class="nom">Super PRO</span>
@@ -117,6 +121,11 @@
           <span class="px">30 000 F</span>
         </div>
       </div>
+
+      <a class="pay" id="ckBtn" target="_blank" rel="noopener" style="margin-bottom:8px">Payer en ligne — Orange, MTN, carte</a>
+      <p class="hint" style="margin-bottom:22px">Paiement sécurisé via AfribaPay · confirmation immédiate</p>
+
+      <div class="sep"><span>ou payez directement par Mobile Money</span></div>
 
       <div class="etape">
         <span class="num">1</span>
@@ -191,7 +200,10 @@
                                          //    le bloc MTN reste caché.
   /* ===================================================================== */
 
-  let offre = { id:"pro", px:9500, nom:"CuniSmart Pro" };
+  let offre = {
+    id:"pro", px:9500, nom:"CuniSmart Pro",
+    lien:"https://checkout.afribapay.com/ck/AFPAY260716053741012APM6548175Rnu"
+  };
 
   const fmt = n => n.toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, " ");
 
@@ -200,9 +212,12 @@
     el.addEventListener("click", () => {
       document.querySelectorAll(".offre").forEach(x => x.classList.remove("on"));
       el.classList.add("on");
-      offre = { id: el.dataset.id, px: parseInt(el.dataset.px, 10), nom: el.dataset.nom };
+      offre = {
+        id: el.dataset.id, px: parseInt(el.dataset.px, 10),
+        nom: el.dataset.nom, lien: el.dataset.lien
+      };
       document.getElementById("montantTxt").textContent = fmt(offre.px) + " FCFA";
-      majWhatsApp();
+      majWhatsApp(); majCheckout();
     });
   });
 
@@ -246,7 +261,17 @@
     });
   });
 
-  majWhatsApp();
+  /* Le bouton de paiement en ligne pointe vers le checkout AfribaPay de l'offre
+     choisie. Ces liens sont publics par nature — aucune clé secrète ici.
+     La clé marchand (mk_live_...) ne doit JAMAIS apparaître dans ce fichier :
+     le dépôt GitHub est public. */
+  function majCheckout(){
+    const b = document.getElementById("ckBtn");
+    if(offre.lien){ b.href = offre.lien; b.style.display = "block"; }
+    else { b.style.display = "none"; }
+  }
+
+  majWhatsApp(); majCheckout();
 </script>
 </body>
 </html>
