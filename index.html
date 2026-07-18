@@ -5037,14 +5037,20 @@ async function apiCompte(path, body){
 /* Normalisation côté client : même règle que lib/phone.js sur le serveur.
    « 696603209 », « 237696603209 » et « +237 696 603 209 » = UN SEUL compte. */
 function normPhone(input){
-  let d = String(input == null ? '' : input).replace(/\D/g,'');
-  d = d.replace(/^00/, '');
-  if(/^237[0-9]{9}$/.test(d))  return d;                     // Cameroun complet
-  if(/^229[0-9]{10}$/.test(d)) return d;                     // Bénin complet
-  if(/^229[0-9]{8}$/.test(d))  return '22901' + d.slice(3);  // Bénin ancien 8 ch.
-  if(/^6[0-9]{8}$/.test(d))    return '237' + d;             // Cameroun sans indicatif
-  if(/^01[0-9]{8}$/.test(d))   return '229' + d;             // Bénin sans indicatif
-  return null;
+  const brut = String(input == null ? '' : input).trim();
+  if(!brut) return null;
+  // Cameroun / Bénin : normalisation stricte (un seul compte quel que soit le format)
+  let d = brut.replace(/\D/g,'').replace(/^00/, '');
+  if(/^237[0-9]{9}$/.test(d))  return d;
+  if(/^229[0-9]{10}$/.test(d)) return d;
+  if(/^229[0-9]{8}$/.test(d))  return '22901' + d.slice(3);
+  if(/^6[0-9]{8}$/.test(d))    return '237' + d;
+  if(/^01[0-9]{8}$/.test(d))   return '229' + d;
+  // Autres pays : identifiant libre (numéro complet avec indicatif, ou pseudo).
+  const libre = brut.toLowerCase().replace(/\s+/g,' ').trim();
+  const utile = libre.replace(/[^a-z0-9]/g,'');
+  if(utile.length < 4 || libre.length > 40) return null;
+  return libre;
 }
 
 function appVide(){
@@ -5061,8 +5067,8 @@ function compteLogin(){
   const phone = normPhone(brut);
   if(!phone){
     alert(langue==='fr'
-      ? "Numéro invalide.\n\nExemples :\n🇨🇲 Cameroun : 696603209\n🇧🇯 Bénin : 0190113915"
-      : "Invalid number.\n\nExamples:\n🇨🇲 Cameroon: 696603209\n🇧🇯 Benin: 0190113915");
+      ? "Identifiant trop court.\n\nUtilisez votre numéro de téléphone AVEC l'indicatif pays (ex. 221771234567 pour le Sénégal), ou un identifiant d'au moins 4 caractères."
+      : "Identifier too short.\n\nUse your phone number WITH the country code (e.g. 221771234567 for Senegal), or an identifier of at least 4 characters.");
     return;
   }
   if(code.length < 4){ alert(t('cpt_bad_code')); return; }
