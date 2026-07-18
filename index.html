@@ -4381,7 +4381,10 @@ async function activerAbo(v, type){
   const bad = (type === 'superpro') ? 'sp_bad' : 'pro_bad';
   let res;
   try{
-    res = await apiCompte('activate', { code: v, type: type, phone: phone });
+    /* On n'envoie PLUS le type : c'est la base qui sait ce qu'est un code.
+       Deviner d'après le préfixe faisait échouer toute clé venue d'un
+       revendeur (Chariow génère « 5XAK-MENK-… », pas « SUP-… »). */
+    res = await apiCompte('activate', { code: v, phone: phone });
   }catch(e){
     alert(langue === 'fr'
       ? "Pas de connexion. L'activation d'un code nécessite Internet — réessayez une fois connecté."
@@ -4410,7 +4413,8 @@ async function activerAbo(v, type){
   }
   if(!d.ok || !d.exp){ alert(t(bad)); return; }
 
-  if(type === 'superpro'){
+  // Le type vient du serveur, qui l'a lu en base. Lui seul fait foi.
+  if(d.type === 'superpro'){
     etat.superpro = true; etat.pro = true; etat.spDepuis = auj(); etat.spExp = d.exp;
     sauver(); alert(t('sp_ok')); rendre();
   } else {
@@ -5221,8 +5225,8 @@ async function activerDepuisChamp(){
     alert(langue==='fr' ? "Saisissez le code reçu par WhatsApp." : "Enter the code you received by WhatsApp.");
     return;
   }
-  const type = normCode(v).startsWith('SUP') ? 'superpro' : 'pro';
-  await activerAbo(v, type);
+  // Plus de devinette sur le préfixe : n'importe quel format de clé passe.
+  await activerAbo(v, null);
 }
 
 function logoLabel(petit){
