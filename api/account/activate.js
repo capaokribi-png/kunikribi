@@ -39,17 +39,21 @@ module.exports = async (req, res) => {
   t.n++; tentatives.set(ip, t);
 
   const { code, type, phone } = req.body || {};
-  if (!code || !type) return res.status(400).json({ ok: false, error: 'missing' });
-  if (typeof code !== 'string' || code.length > 64 || typeof type !== 'string' || type.length > 32) {
+  if (!code) return res.status(400).json({ ok: false, error: 'missing' });
+  if (typeof code !== 'string' || code.length > 64) {
     return res.status(400).json({ ok: false, error: 'bad_input' });
   }
+  // `type` est devenu FACULTATIF. C'est la base qui sait ce qu'est un code —
+  // le client n'a pas à le deviner d'après un préfixe. Sans ça, une clé
+  // générée par un revendeur (« 5XAK-MENK-… ») serait toujours refusée.
+  const typeVoulu = (typeof type === 'string' && type.length <= 32) ? type : null;
   const codeNorm = code.trim().toUpperCase();
 
   try {
     // 1) Chercher le code : bon type, pas encore utilisé
     const q = URL + '/rest/v1/activation_codes'
       + '?code=eq.' + encodeURIComponent(codeNorm)
-      + '&type=eq.' + encodeURIComponent(type)
+      + (typeVoulu ? '&type=eq.' + encodeURIComponent(typeVoulu) : '')
       + '&used=eq.false&select=*&limit=1';
     const r = await fetch(q, { headers: headers() });
     const brut = await r.text();
@@ -112,7 +116,8 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: false, error: 'invalid' }); // consomme entre-temps
     }
 
-    return res.status(200).json({ ok: true, exp: exp });
+    // On renvoie le type LU EN BASE : c'est lui qui fait foi.
+    return res.status(200).json({ ok: true, exp: exp, type: data.type });
   } catch (e) {
     console.error('[activate]', e);
     return res.status(500).json({ ok: false, error: 'db_error', detail: String(e && e.message).slice(0, 200) });
