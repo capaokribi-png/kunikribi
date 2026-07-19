@@ -80,6 +80,13 @@
   .pay:active{transform:translateY(1px)}
   .pay:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
   .hint{text-align:center;color:var(--sage);font-size:12.5px;margin:10px 0 4px}
+  .paysLbl{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--sage);margin:0 0 6px}
+  .paysSel{width:100%;padding:13px 14px;margin:0 0 14px;border:1.5px solid var(--line);border-radius:12px;
+    font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);background:#fff;cursor:pointer;
+    -webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2366755f' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center}
+  .paysSel:focus{outline:none;border-color:var(--green)}
   .sep{display:flex;align-items:center;gap:12px;margin:0 0 22px;color:var(--sage);font-size:12.5px}
   .sep::before,.sep::after{content:"";flex:1;height:1px;background:var(--line)}
   .note{background:#f7faf3;border-left:3px solid var(--gold);padding:10px 12px;border-radius:0 8px 8px 0;
@@ -102,28 +109,29 @@
       <p class="lead">Choisissez votre formule, payez par Mobile Money, recevez votre code d'activation.</p>
 
       <div class="offres" id="offres">
-        <div class="offre on" data-id="pro" data-px="9500" data-nom="CuniSmart Pro"
-             data-lien="https://checkout.afribapay.com/ck/AFPAY260716053741012APM6548175Rnu">
+        <div class="offre on" data-id="pro" data-nom="CuniSmart Pro">
           <span class="radio"></span>
           <span class="t">
             <span class="nom">CuniSmart Pro</span>
             <span class="desc">Un élevage · niveaux Confirmé & Expert · certificat Master</span>
           </span>
-          <span class="px">9 500 F</span>
+          <span class="px" id="pxPro">9 500 F</span>
         </div>
-        <div class="offre" data-id="superpro" data-px="30000" data-nom="CuniSmart Super PRO"
-             data-lien="https://checkout.afribapay.com/ck/AFPAY260716085831129APM6548175P5T">
+        <div class="offre" data-id="superpro" data-nom="CuniSmart Super PRO">
           <span class="radio"></span>
           <span class="t">
             <span class="nom">Super PRO</span>
             <span class="desc">Multi-élevage : lapins, porcs, volaille, bovins, caprins</span>
           </span>
-          <span class="px">30 000 F</span>
+          <span class="px" id="pxSuper">30 000 F</span>
         </div>
       </div>
 
-      <a class="pay" id="ckBtn" target="_blank" rel="noopener" style="margin-bottom:8px">Payer en ligne — Orange, MTN, carte</a>
-      <p class="hint" style="margin-bottom:22px">Paiement sécurisé via AfribaPay · confirmation immédiate</p>
+      <label class="paysLbl" for="paysSel">Votre pays</label>
+      <select id="paysSel" class="paysSel"></select>
+
+      <a class="pay" id="ckBtn" target="_blank" rel="noopener" style="margin-bottom:8px">Payer en ligne — Mobile Money ou carte</a>
+      <p class="hint" style="margin-bottom:22px">Orange, MTN, Moov, Wave et carte · sécurisé via AfribaPay · confirmation immédiate</p>
 
       <div class="sep"><span>ou payez directement par Mobile Money</span></div>
 
@@ -200,10 +208,36 @@
                                          //    le bloc MTN reste caché.
   /* ===================================================================== */
 
-  let offre = {
-    id:"pro", px:9500, nom:"CuniSmart Pro",
-    lien:"https://checkout.afribapay.com/ck/AFPAY260716053741012APM6548175Rnu"
+  /* ============================================================
+     TARIFS PAR PAYS — chaque lien AfribaPay a le MONTANT DÉJÀ FIXÉ.
+     L'éleveur choisit son pays : bon lien + bon prix, rien à saisir.
+     Pour réviser un taux, recréez le lien dans AfribaPay et collez
+     la nouvelle URL ici. ============================================ */
+  const ZONE = {
+    FCFA: { pays:["Cameroun","Bénin","Togo","Côte d'Ivoire","Sénégal","Burkina Faso","Mali","Niger","Gabon","Congo-Brazzaville","Tchad","Centrafrique","Guinée-Bissau"],
+      pro:      { px:"9 500 F",      lien:"https://checkout.afribapay.com/ck/AFPAY260716053741012APM6548175Rnu" },
+      superpro: { px:"30 000 F",     lien:"https://checkout.afribapay.com/ck/AFPAY260716085831129APM6548175P5T" } },
+    GNF: { pays:["Guinée (Conakry)"],
+      pro:      { px:"150 000 GNF",  lien:"https://checkout.afribapay.com/ck/AFPAY260719011318648APM6548175Dwt" },
+      superpro: { px:"475 000 GNF",  lien:"https://checkout.afribapay.com/ck/AFPAY260719022143282APM6548175PTu" } },
+    CDF: { pays:["RD Congo"],
+      pro:      { px:"50 500 CDF",   lien:"https://checkout.afribapay.com/ck/AFPAY260719015602039APM65481751LZ" },
+      superpro: { px:"155 000 CDF",  lien:"https://checkout.afribapay.com/ck/AFPAY260719021741841APM6548175uOR" } },
+    GMD: { pays:["Gambie"],
+      pro:      { px:"1 250 GMD",    lien:"https://checkout.afribapay.com/ck/AFPAY260716072410244APM6548175LN1" },
+      superpro: { px:"3 900 GMD",    lien:"https://checkout.afribapay.com/ck/AFPAY260719021947533APM6548175YOQ" } },
   };
+
+  (function remplirPays(){
+    const sel = document.getElementById("paysSel");
+    for(const z in ZONE) for(const nom of ZONE[z].pays){
+      const o = document.createElement("option");
+      o.value = z; o.textContent = nom; sel.appendChild(o);
+    }
+    sel.value = "FCFA";
+  })();
+
+  let offre = { id:"pro", nom:"CuniSmart Pro" };
 
   const fmt = n => n.toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, " ");
 
@@ -212,12 +246,8 @@
     el.addEventListener("click", () => {
       document.querySelectorAll(".offre").forEach(x => x.classList.remove("on"));
       el.classList.add("on");
-      offre = {
-        id: el.dataset.id, px: parseInt(el.dataset.px, 10),
-        nom: el.dataset.nom, lien: el.dataset.lien
-      };
-      document.getElementById("montantTxt").textContent = fmt(offre.px) + " FCFA";
-      majWhatsApp(); majCheckout();
+      offre = { id: el.dataset.id, nom: el.dataset.nom };
+      majTout();
     });
   });
 
@@ -227,7 +257,7 @@
       "Bonjour CuniSmart 🐇\n\n" +
       "Je viens de payer mon abonnement :\n" +
       "• Formule : " + offre.nom + "\n" +
-      "• Montant : " + fmt(offre.px) + " FCFA\n" +
+      "• Montant : " + (document.getElementById("montantTxt") ? document.getElementById("montantTxt").textContent : "") + "\n" +
       "• Mon numéro : \n" +
       "• ID de la transaction : \n\n" +
       "Je joins la capture du paiement. Merci de m'envoyer mon code d'activation.";
@@ -265,13 +295,27 @@
      choisie. Ces liens sont publics par nature — aucune clé secrète ici.
      La clé marchand (mk_live_...) ne doit JAMAIS apparaître dans ce fichier :
      le dépôt GitHub est public. */
-  function majCheckout(){
-    const b = document.getElementById("ckBtn");
-    if(offre.lien){ b.href = offre.lien; b.style.display = "block"; }
-    else { b.style.display = "none"; }
-  }
+  function majTout(){
+    const z = ZONE[document.getElementById("paysSel").value] || ZONE.FCFA;
+    const t = z[offre.id] || z.pro;
 
-  majWhatsApp(); majCheckout();
+    // bouton AfribaPay : lien avec le montant DÉJÀ prédéfini
+    const b = document.getElementById("ckBtn");
+    b.href = t.lien; b.style.display = "block";
+
+    // prix affichés dans les deux cartes, dans la devise du pays
+    document.getElementById("pxPro").textContent   = z.pro.px;
+    document.getElementById("pxSuper").textContent = z.superpro.px;
+
+    // montant du bloc Mobile Money manuel + WhatsApp
+    const mt = document.getElementById("montantTxt");
+    if(mt) mt.textContent = t.px;
+
+    majWhatsApp();
+  }
+  document.getElementById("paysSel").addEventListener("change", majTout);
+
+  majTout();
 </script>
 </body>
 </html>
