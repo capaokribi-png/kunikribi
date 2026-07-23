@@ -3128,6 +3128,322 @@ const LECONS = [
       {q:"What is the alarming feature of this virus in the environment?",o:["It dies within 2 hours in open air","It does not survive frost","It is ultra-resistant and survives months outside a host"],b:2},
       {q:"What is the only medical way to protect your rabbit against VHD?",o:["Antibiotics every month","Vaccinate it regularly (and protect it)","A vitamin-rich diet"],b:1}]}}
 ];
+
+/* ===== ÉCOLE D'AVICULTURE — 16 leçons pondeuse ===== */
+const LECONS_PONDEUSE = [
+/* --- NIVEAU 1 · DÉBUTANT (0-5) --- */
+{fr:{ti:"Comprendre la pondeuse vs le poulet de chair",tx:[
+ "La poule pondeuse et le poulet de chair sont deux animaux différents, deux métiers différents. Le poulet de chair est abattu à 6 semaines : cycle court, lot après lot. La pondeuse produit des œufs sur un cycle unique de 18 à 20 mois, puis est réformée. Pas les mêmes poussins, pas le même aliment, pas le même bâtiment. L'erreur la plus fréquente : acheter des poussins de chair en croyant faire de la ponte.",
+ "Pour la ponte, les souches améliorées sont indispensables : ISA Brown, Lohmann Brown, Hy-Line Brown, Novogen, Brown Nick. Elles sont sélectionnées pour produire 94 à 96 % de taux de ponte au pic, contre 60 à 70 % pour des poules locales. L'œuf roux (brun) se vend mieux que le blanc sur la plupart des marchés d'Afrique centrale et de l'Ouest.",
+ "Avant d'acheter vos poussins, téléchargez le guide d'élevage officiel de la souche choisie : il contient la courbe de poids, la courbe de ponte, le programme lumineux et les besoins nutritionnels. C'est votre vrai manuel. Un éleveur qui n'a pas ce guide travaille à l'aveugle."],
+ qz:[{q:"Quelle est la différence fondamentale entre une pondeuse et un poulet de chair ?",o:["Leur couleur","Leur cycle : la pondeuse produit des œufs sur 18–20 mois, le chair est abattu à 6 semaines","Leur taille uniquement"],b:1},
+     {q:"L'œuf le plus demandé sur la plupart des marchés d'Afrique centrale et de l'Ouest est…",o:["L'œuf blanc","L'œuf roux (brun)","L'œuf vert"],b:1},
+     {q:"Avant l'arrivée des poussins, il faut d'abord…",o:["Acheter l'aliment","Télécharger le guide d'élevage officiel de la souche","Peindre le bâtiment"],b:1},
+     {q:"Le taux de ponte au pic d'une souche améliorée est d'environ…",o:["40–50 %","70–75 %","94–96 %"],b:2},
+     {q:"Acheter une poulette démarrée de 16–17 semaines plutôt qu'un poussin d'un jour…",o:["Coûte moins cher à l'achat","Réduit le risque technique et raccourcit le délai avant les premiers œufs","Donne de moins bons œufs"],b:1}]},
+ en:{ti:"Understanding layers vs. broilers",tx:[
+ "A layer and a broiler are different animals and different trades. A broiler is slaughtered at 6 weeks: short cycle, batch after batch. A layer produces eggs over a single 18–20 month cycle, then is depleted. Different chicks, different feed, different housing. The most common mistake: buying broiler chicks thinking you are starting a laying flock.",
+ "For laying, improved strains are essential: ISA Brown, Lohmann Brown, Hy-Line Brown, Novogen, Brown Nick. They are selected to reach 94–96% peak lay rate, vs 60–70% for local hens. Brown eggs sell better than white in most Central and West African markets.",
+ "Before buying chicks, download the official management guide for your chosen strain: it contains body weight and lay curves, the lighting programme and nutrient specs. That is your real manual. A farmer without this guide is working blind."],
+ qz:[{q:"What is the fundamental difference between a layer and a broiler?",o:["Their colour","Their cycle: the layer produces eggs over 18–20 months, the broiler is slaughtered at 6 weeks","Their size only"],b:1},
+     {q:"The most demanded egg in most Central and West African markets is…",o:["White","Brown","Green"],b:1},
+     {q:"Before the chicks arrive, the first step is to…",o:["Buy the feed","Download the official breed management guide","Paint the house"],b:1},
+     {q:"Peak lay rate of an improved strain is about…",o:["40–50%","70–75%","94–96%"],b:2},
+     {q:"Buying a 16–17-week started pullet rather than a day-old chick…",o:["Costs less to buy","Cuts technical risk and shortens time to first egg","Gives worse eggs"],b:1}]}},
+
+{fr:{ti:"Préparer la poussinière",tx:[
+ "La poussinière est la pièce la plus critique du cycle pondeuse. Le poussin d'un jour ne régule pas sa température : s'il a froid, il brûle ses réserves pour se réchauffer au lieu de grandir. Un démarrage raté ne se rattrape jamais complètement. Préchauffez la poussinière 24 à 48 heures avant l'arrivée : air à 34–36 °C, litière au sol à 32 °C environ.",
+ "Lisez le comportement des poussins : entassés sous la source de chaleur = ils ont froid, augmentez ; écartés aux parois, bec ouvert = trop chaud, réduisez et ventilez ; groupés d'un seul côté = courant d'air, repérez et bouchez ; répartis partout, actifs = température parfaite. Baissez d'environ 3 °C par semaine jusqu'à la température ambiante vers 4–5 semaines.",
+ "Eau propre et aliment démarrage doivent être en place AVANT que les poussins n'entrent. 24 heures après l'arrivée, vérifiez le jabot de la majorité des poussins : il doit être plein et souple. C'est le meilleur contrôle de démarrage qui existe. Ne mettez jamais 24 h de lumière : 22 h maximum les 3 premiers jours, avec une période d'obscurité obligatoire."],
+ qz:[{q:"La température de l'air à l'arrivée des poussins doit être d'environ…",o:["20 °C","34–36 °C","45 °C"],b:1},
+     {q:"Les poussins sont tous entassés sous la lampe. Cela signifie…",o:["Ils ont trop chaud","Ils ont froid — augmentez la chaleur","Ils jouent"],b:1},
+     {q:"Pourquoi ne jamais mettre 24 h de lumière les premiers jours ?",o:["Cela coûte trop cher","La lumière continue stresse les poussins et détruit l'uniformité du lot","Ce n'est pas vrai, 24 h est recommandé"],b:1},
+     {q:"Le meilleur contrôle de démarrage 24 h après l'arrivée est…",o:["Peser les poussins","Vérifier que la majorité a le jabot plein et souple","Compter les poussins"],b:1},
+     {q:"Un démarrage raté en poussinière…",o:["Se rattrape facilement à l'entrée en ponte","Ne se rattrape jamais complètement","N'a aucun effet sur la production"],b:1}]},
+ en:{ti:"Setting up the brooder",tx:[
+ "The brooder is the most critical part of the layer cycle. A day-old chick cannot regulate its temperature: if it is cold, it burns reserves to warm itself instead of growing. A poor brooding start is never fully recovered. Preheat 24–48 hours before arrival: air at 34–36 °C, floor litter at about 32 °C.",
+ "Read chick behaviour: huddled under the heat source = cold, increase heat; spread to walls, panting = too hot, reduce and ventilate; bunched on one side = draught, find and block it; evenly spread and active = perfect temperature. Reduce by about 3 °C per week until ambient at 4–5 weeks.",
+ "Clean water and starter feed must be in place BEFORE chicks enter. 24 hours after arrival, check the crops of most chicks: they should be full and soft. This is the best brooding check there is. Never use 24-hour light: 22 h maximum the first 3 days, with a mandatory dark period."],
+ qz:[{q:"Air temperature on chick arrival should be about…",o:["20 °C","34–36 °C","45 °C"],b:1},
+     {q:"Chicks are all huddled under the lamp. This means…",o:["They are too hot","They are cold — increase heat","They are playing"],b:1},
+     {q:"Why never use 24-hour light in the first days?",o:["It costs too much","Continuous light stresses chicks and destroys flock uniformity","It is untrue, 24 h is recommended"],b:1},
+     {q:"The best brooding check 24 hours after arrival is…",o:["Weighing the chicks","Checking most have a full, soft crop","Counting the chicks"],b:1},
+     {q:"A poor brooding start…",o:["Is easily recovered at onset of lay","Is never fully recovered","Has no effect on production"],b:1}]}},
+
+{fr:{ti:"Conduite de la poulette (6–16 semaines)",tx:[
+ "Entre 6 et 16 semaines, la poulette ne produit rien. Beaucoup d'éleveurs relâchent leur attention — c'est la faute la plus coûteuse du cycle. Une poulette mal élevée ne fera jamais un bon pic de ponte, quoi qu'on fasse ensuite. Pesez un échantillon du lot chaque semaine, même jour, même heure. Objectif à 19 semaines : environ 1,6 kg pour une souche brune améliorée.",
+ "L'uniformité est aussi importante que le poids moyen : visez plus de 80 % des sujets dans ± 10 % du poids moyen. Un lot uniforme donne un pic plus haut, plus rapide et une meilleure persistance. Règle d'or : ne jamais réduire la durée d'éclairage si le poids cible n'est pas atteint.",
+ "Au Cameroun et au Bénin (entre 20° Nord et 20° Sud), la durée du jour varie peu. En bâtiment ouvert, impossible de descendre sous la durée du jour naturel : calculez votre plateau lumineux à partir de ce que le lot percevra vers 16 semaines. Dès 4 semaines, ménagez un vide de mangeoire en milieu de journée : la poulette ne trie plus les particules et développe son appétit."],
+ qz:[{q:"Pourquoi la phase 6–16 semaines est-elle décisive pour la ponte ?",o:["Parce que les poules pondent déjà","Parce que la performance future s'y construit et ne se rattrape pas ensuite","Parce que c'est la phase la moins chère"],b:1},
+     {q:"L'uniformité du lot visée est de…",o:["Environ 50 %","Plus de 80 %","100 % obligatoirement"],b:1},
+     {q:"Le lot est en retard de poids. Que faire de la durée d'éclairage ?",o:["La réduire comme prévu","Ne pas la réduire tant que le poids cible n'est pas atteint","Passer à 24 h de lumière"],b:1},
+     {q:"Peser le lot se fait…",o:["Une seule fois à 16 semaines","Chaque semaine, même jour et même heure","Une fois par mois"],b:1},
+     {q:"Le vide de mangeoire en milieu de journée sert à…",o:["Économiser l'aliment","Éviter le tri des particules et développer l'appétit","Faire maigrir les poulettes"],b:1}]},
+ en:{ti:"Pullet rearing (6–16 weeks)",tx:[
+ "Between 6 and 16 weeks, the pullet produces nothing. Many farmers ease off — this is the most costly mistake of the cycle. A poorly reared pullet will never peak well, whatever you do afterwards. Weigh a sample of the flock weekly, same day, same time. Target at 19 weeks: about 1.6 kg for an improved brown strain.",
+ "Uniformity is as important as average weight: target over 80% of birds within ±10% of average. A uniform flock peaks higher, faster and persists better. Golden rule: never reduce day length if target body weight is not reached.",
+ "In Cameroon and Benin (between 20° N and 20° S), day length varies little. In open-sided housing you cannot go below natural day length: set your lighting plateau from what the flock will perceive at around 16 weeks. From 4 weeks, allow a midday empty-feeder period: the pullet stops sorting particles and builds its appetite."],
+ qz:[{q:"Why is the 6–16 week phase decisive for laying?",o:["Because hens are already laying","Because future performance is built then and cannot be recovered later","Because it is the cheapest phase"],b:1},
+     {q:"Target flock uniformity is…",o:["About 50%","Over 80%","Necessarily 100%"],b:1},
+     {q:"The flock is underweight. What do you do with day length?",o:["Reduce it as planned","Do not reduce until target body weight is reached","Switch to 24-hour light"],b:1},
+     {q:"Weighing the flock is done…",o:["Once only at 16 weeks","Weekly, same day and time","Once a month"],b:1},
+     {q:"The midday empty-feeder period serves to…",o:["Save feed","Stop particle sorting and build appetite","Slim the pullets"],b:1}]}},
+
+{fr:{ti:"Transfert et entrée en ponte",tx:[
+ "Le transfert du bâtiment d'élevage au bâtiment de ponte se fait entre 16 et 17 semaines, avant l'entrée en ponte, aux heures fraîches. Une perte de poids de 10 à 12 % après le transfert est normale — liée à la baisse de consommation d'eau — et doit se rattraper rapidement. Ne cumulez jamais le transfert et une vaccination le même jour.",
+ "La stimulation lumineuse (augmentation de la durée d'éclairage) déclenche la maturité sexuelle et l'entrée en ponte. Elle ne se fait que si le poids cible est atteint. Stimuler un lot trop léger donne de petits œufs, des prolapsus et une carrière écourtée. Passez à l'aliment pré-ponte à partir de 15 semaines, et arrêtez-le dès le premier œuf : il ne contient pas assez de calcium pour la production.",
+ "Installez les pondoirs AVANT l'entrée en ponte : obscurs, propres, accessibles. Un œuf pondu au sol est sale, souvent cassé, parfois invendable. L'âge à 50 % de production se situe autour de 20 à 22 semaines pour une souche améliorée. Ramassez les œufs au sol fréquemment les premiers jours pour ne pas installer l'habitude."],
+ qz:[{q:"La stimulation lumineuse doit être déclenchée…",o:["Dès 12 semaines quelle que soit la taille","Quand le poids cible est atteint","Après le premier œuf"],b:1},
+     {q:"Une perte de poids de 10–12 % après le transfert est…",o:["Le signe d'une maladie grave","Normale, due à la baisse de consommation d'eau","Impossible"],b:1},
+     {q:"L'aliment pré-ponte doit être arrêté…",o:["À 30 semaines","Dès le premier œuf","Jamais"],b:1},
+     {q:"L'âge à 50 % de production d'une souche améliorée se situe autour de…",o:["12 semaines","20 à 22 semaines","35 semaines"],b:1},
+     {q:"Pour éviter la ponte au sol, il faut…",o:["Installer les pondoirs après les premiers œufs","Installer les pondoirs avant l'entrée en ponte","Laisser les poules choisir"],b:1}]},
+ en:{ti:"Transfer and onset of lay",tx:[
+ "Transfer from rearing to laying house happens at 16–17 weeks, before onset of lay, in cool hours. A 10–12% weight loss after transfer is normal — from reduced water intake — and must recover quickly. Never combine transfer and vaccination on the same day.",
+ "Light stimulation (increasing day length) triggers sexual maturity and onset of lay. It happens only when target body weight is reached. Stimulating an underweight flock gives small eggs, prolapse and a shortened career. Switch to pre-lay feed from 15 weeks, and stop it at the first egg: it does not contain enough calcium for production.",
+ "Install nests BEFORE onset of lay: dark, clean, accessible. A floor egg is dirty, often cracked, sometimes unsellable. Age at 50% production is around 20–22 weeks for an improved strain. Collect floor eggs frequently in the first days so the habit does not set in."],
+ qz:[{q:"Light stimulation should be triggered…",o:["At 12 weeks whatever the size","When target body weight is reached","After the first egg"],b:1},
+     {q:"A 10–12% weight loss after transfer is…",o:["A sign of serious disease","Normal, from reduced water intake","Impossible"],b:1},
+     {q:"Pre-lay feed must be stopped…",o:["At 30 weeks","At the first egg","Never"],b:1},
+     {q:"Age at 50% production for an improved strain is around…",o:["12 weeks","20 to 22 weeks","35 weeks"],b:1},
+     {q:"To prevent floor eggs, you must…",o:["Install nests after the first eggs","Install nests before onset of lay","Let the hens choose"],b:1}]}},
+
+{fr:{ti:"Calculer et suivre le taux de ponte",tx:[
+ "Le taux de ponte est l'indicateur roi : Taux de ponte (%) = (œufs pondus ÷ poules présentes) × 100. Exemple : 320 œufs pour 400 poules → (320 ÷ 400) × 100 = 80 %. On le calcule chaque jour et on le suit en moyenne hebdomadaire. C'est ce chiffre, et lui seul, qui dit si l'élevage va bien.",
+ "La courbe de ponte monte rapidement après l'entrée en ponte, atteint son pic vers 26–32 semaines à 94–96 %, puis décline lentement. Tracez votre courbe réelle par-dessus la courbe standard de la souche : l'écart entre les deux est votre diagnostic. La persistance — rester haut longtemps après le pic — vaut plus que le pic lui-même : un bon lot reste au-dessus de 90 % pendant jusqu'à 34 semaines.",
+ "Les autres indicateurs à surveiller au quotidien : consommation d'eau (une chute est le tout premier signal d'alerte), consommation d'aliment (113–118 g/poule/jour en ponte), mortalité. Devant une chute de ponte, vérifiez dans cet ordre : 1) eau, 2) aliment, 3) lumière, 4) chaleur, 5) stress, 6) maladie."],
+ qz:[{q:"Vous ramassez 315 œufs pour 350 poules présentes. Le taux de ponte est…",o:["90 %","111 %","315 %"],b:0},
+     {q:"La persistance de la ponte désigne…",o:["La vitesse de montée au pic","La capacité à maintenir un taux élevé longtemps après le pic","Le nombre total d'œufs"],b:1},
+     {q:"Le tout premier signal d'alerte d'un problème dans un bâtiment est souvent…",o:["Une chute de la consommation d'eau","La couleur des œufs","Le bruit des poules"],b:0},
+     {q:"Devant une chute de ponte, on vérifie EN PREMIER…",o:["L'alimentation","L'eau","La maladie"],b:1},
+     {q:"Le pic de ponte d'une souche améliorée se situe autour de…",o:["60–70 %","80–85 %","94–96 %"],b:2}]},
+ en:{ti:"Computing and tracking lay rate",tx:[
+ "Lay rate is the key indicator: Lay rate (%) = (eggs collected ÷ hens present) × 100. Example: 320 eggs for 400 hens → (320 ÷ 400) × 100 = 80%. Compute it daily and track as a weekly average. This figure alone tells you whether the flock is doing well.",
+ "The lay curve rises fast after onset, peaks at 94–96% around weeks 26–32, then declines slowly. Plot your real curve over the breed standard: the gap is your diagnosis. Persistency — staying high after the peak — is worth more than the peak itself: a good flock stays above 90% for up to 34 weeks.",
+ "Other indicators to watch daily: water consumption (a drop is the very first warning signal), feed intake (113–118 g/hen/day in lay), mortality. Facing a lay drop, check in order: 1) water, 2) feed, 3) light, 4) heat, 5) stress, 6) disease."],
+ qz:[{q:"You collect 315 eggs for 350 hens present. Lay rate is…",o:["90%","111%","315%"],b:0},
+     {q:"Laying persistency means…",o:["The speed of the rise to peak","The ability to hold a high rate long after the peak","Total egg count"],b:1},
+     {q:"The very first warning signal of a problem in a house is often…",o:["A drop in water consumption","Egg colour","Hen noise"],b:0},
+     {q:"Facing a lay drop, you check FIRST…",o:["Feed","Water","Disease"],b:1},
+     {q:"Peak lay rate of an improved strain is around…",o:["60–70%","80–85%","94–96%"],b:2}]}},
+
+/* --- NIVEAU 2 · CONFIRMÉ (5-10) --- */
+{fr:{ti:"Alimentation de la pondeuse",tx:[
+ "L'alimentation évolue avec l'âge : aliment démarrage (0–6 semaines), croissance/poulette (6–15 semaines), pré-ponte (dès 15 semaines, arrêt au 1er œuf), ponte (du 1er œuf à la réforme). La consommation en ponte est de 113–118 g par poule et par jour. L'aliment est le premier poste de coût — autour de 65–70 % du total.",
+ "Le calcium est le point technique le plus mal maîtrisé. Une poule qui en manque pond des œufs à coquille fine, molle ou sans coquille. La forme compte autant que la quantité : environ la moitié du calcium doit être en grosses particules (2–4 mm). Ces particules restent dans le gésier et libèrent le calcium pendant la NUIT, quand la coquille se forme. Sources : coquilles d'huîtres concassées, carbonate de calcium granulé.",
+ "Distribuez aux heures fraîches en climat chaud. Limitez le nombre de distributions pour que les poules finissent le fond de mangeoire et ne trient pas les particules. Un aliment moisi produit des mycotoxines qui font chuter la ponte et abîment le foie : stockez au sec sur palettes, ne distribuez jamais un aliment moisi même partiellement."],
+ qz:[{q:"Pourquoi une partie du calcium doit-elle être en grosses particules ?",o:["C'est moins cher","Les particules restent dans le gésier et libèrent le calcium la nuit, quand la coquille se forme","Pour que les poules mangent plus"],b:1},
+     {q:"La consommation journalière d'une pondeuse en ponte est d'environ…",o:["40–50 g","113–118 g","250 g"],b:1},
+     {q:"Des œufs à coquille fine ou molle indiquent d'abord…",o:["Un problème de calcium","Un excès de lumière","Une poule trop jeune"],b:0},
+     {q:"Un aliment moisi doit être…",o:["Mélangé à de l'aliment sain","Séché au soleil","Jamais distribué"],b:2},
+     {q:"L'aliment pré-ponte est arrêté…",o:["À 30 semaines","Dès le premier œuf","À 20 semaines"],b:1}]},
+ en:{ti:"Layer feeding",tx:[
+ "Feed changes with age: starter (0–6 weeks), grower/pullet (6–15 weeks), pre-lay (from 15 weeks, stop at first egg), layer (first egg to depletion). Intake in lay is 113–118 g per hen per day. Feed is the largest cost item — around 65–70% of total.",
+ "Calcium is the most poorly mastered technical point. A calcium-short hen lays thin, soft or shell-less eggs. Form matters as much as amount: about half the calcium should be coarse particles (2–4 mm). These particles stay in the gizzard and release calcium at NIGHT, when the shell forms. Sources: crushed oyster shell, granular calcium carbonate.",
+ "Feed in cool hours in a hot climate. Limit the number of feeding rounds so hens finish the bottom of the feeder and do not sort particles. Mouldy feed produces mycotoxins that crash lay and damage the liver: store dry on pallets, never feed mouldy feed even partly."],
+ qz:[{q:"Why must part of the calcium be coarse particles?",o:["It is cheaper","Particles stay in the gizzard and release calcium at night, when the shell forms","To make hens eat more"],b:1},
+     {q:"Daily feed intake of a layer in production is about…",o:["40–50 g","113–118 g","250 g"],b:1},
+     {q:"Thin or soft shells point first to…",o:["A calcium problem","Too much light","Too young a hen"],b:0},
+     {q:"Mouldy feed must be…",o:["Mixed with clean feed","Sun-dried","Never given"],b:2},
+     {q:"Pre-lay feed is stopped…",o:["At 30 weeks","At the first egg","At 20 weeks"],b:1}]}},
+
+{fr:{ti:"Santé et biosécurité",tx:[
+ "En aviculture, un lot malade se soigne mal et se soigne cher. La production perdue ne revient jamais. Prévenir coûte toujours moins cher que soigner. Les règles de base : vide sanitaire entre deux bandes (nettoyage, désinfection, bâtiment vide plusieurs jours), pédiluve à l'entrée renouvelé régulièrement, visiteurs limités, aucun mélange d'âges dans le même bâtiment.",
+ "Maladies à prévenir par vaccination : Newcastle (mortalité jusqu'à 100 %), Gumboro/bursite infectieuse (détruit l'immunité des jeunes), bronchite infectieuse (chute de ponte, coquilles déformées), Marek (tumeurs, vaccination au couvoir), variole aviaire en zone endémique. Il n'existe pas de programme vaccinal universel : établissez-le avec un vétérinaire ou technicien de votre zone.",
+ "Marche en avant : toujours les jeunes avant les vieux, les sains avant les malades. Un bâtiment silencieux alors qu'il est normalement bruyant est un bâtiment qui va mal. L'oreille est le premier outil de diagnostic. Notez la mortalité chaque jour — un nombre exact, jamais « quelques-unes »."],
+ qz:[{q:"Quelle maladie détruit l'immunité des jeunes pondeuses et les rend vulnérables à toutes les autres ?",o:["La variole aviaire","La maladie de Gumboro (bursite infectieuse)","Le coryza"],b:1},
+     {q:"Le principe de « marche en avant » consiste à…",o:["Nourrir les poules en marchant","S'occuper toujours des jeunes avant les vieux, des sains avant les malades","Avancer les dates de vaccination"],b:1},
+     {q:"Un programme vaccinal valable partout…",o:["Existe et doit être appliqué tel quel","N'existe pas — il dépend des maladies de la zone","Est fourni par le vendeur d'aliment"],b:1},
+     {q:"Le vide sanitaire entre deux bandes sert à…",o:["Reposer l'éleveur","Casser le cycle des microbes du bâtiment","Économiser l'aliment"],b:1},
+     {q:"La maladie de Newcastle peut provoquer une mortalité de…",o:["5–10 %","30–40 %","Jusqu'à 100 %"],b:2}]},
+ en:{ti:"Health and biosecurity",tx:[
+ "In poultry, a sick flock treats poorly and expensively. Lost production never returns. Prevention always costs less than treatment. Basic rules: downtime between flocks (cleaning, disinfection, several days empty), regularly renewed footbath at entry, limited visitors, never mixing ages in the same house.",
+ "Diseases to prevent by vaccination: Newcastle (up to 100% mortality), Gumboro/infectious bursal disease (destroys young birds' immunity), infectious bronchitis (lay drop, misshapen shells), Marek (tumours, hatchery vaccination), fowl pox in endemic areas. There is no universal vaccine schedule: set one with a vet or technician in your area.",
+ "One-way flow: always young before old, healthy before sick. A house gone quiet when it is normally noisy is a house in trouble. The ear is the first diagnostic tool. Record mortality daily — an exact number, never 'a few'."],
+ qz:[{q:"Which disease destroys young layers' immunity and exposes them to all others?",o:["Fowl pox","Gumboro (infectious bursal disease)","Coryza"],b:1},
+     {q:"The one-way flow principle means…",o:["Feeding hens while walking","Always tending young before old, healthy before sick","Bringing vaccination dates forward"],b:1},
+     {q:"A vaccine schedule valid everywhere…",o:["Exists and should be applied as is","Does not exist — it depends on local diseases","Is supplied by the feed seller"],b:1},
+     {q:"Downtime between flocks serves to…",o:["Rest the farmer","Break the microbial cycle in the house","Save feed"],b:1},
+     {q:"Newcastle disease can cause mortality of…",o:["5–10%","30–40%","Up to 100%"],b:2}]}},
+
+{fr:{ti:"Gestion et rentabilité",tx:[
+ "Enregistrez chaque jour : poules présentes, œufs ramassés (et séparément les œufs déclassés), aliment distribué, mortalité, dépenses et ventes. Sans ces chiffres, aucun pilotage n'est possible. L'indice de consommation (IC) = kilos d'aliment ÷ kilos d'œufs produits. Repère : environ 2,1 pour une souche améliorée à 72 semaines. Un IC dégradé est le signal d'alerte n° 1 sur la rentabilité.",
+ "Un œuf cassé, sale ou pondu au sol coûte autant à produire mais rapporte moins ou rien. Réduire les œufs déclassés est une des façons les plus rapides d'améliorer la marge. Comparez vos circuits de vente : vente directe, revendeurs, restaurants, boulangeries. Le prix au plateau varie fortement.",
+ "La réforme se fait généralement à 72–80 semaines : quand l'aliment consommé coûte plus que les œufs produits, le lot n'est plus rentable. La vente des poules de réforme est une vraie recette à intégrer au calcul. Commandez les poulettes de remplacement à l'avance : les couvoirs sont souvent en rupture."],
+ qz:[{q:"L'indice de consommation se calcule par…",o:["Œufs ÷ poules","Kg d'aliment ÷ kg d'œufs produits","Prix de l'aliment × poules"],b:1},
+     {q:"La décision de réformer un lot se prend principalement sur…",o:["L'âge en mois uniquement","Le taux de ponte comparé au coût de l'aliment","La couleur des plumes"],b:1},
+     {q:"Un œuf pondu au sol et sali…",o:["Se vend au même prix","A coûté autant à produire mais rapporte moins","Ne coûte rien"],b:1},
+     {q:"L'indice de consommation repère d'une souche améliorée à 72 semaines est d'environ…",o:["1,0","2,1","4,0"],b:1},
+     {q:"La vente des poules de réforme…",o:["N'a aucune valeur","Est une recette réelle à intégrer au calcul","Est interdite"],b:1}]},
+ en:{ti:"Management and profitability",tx:[
+ "Record daily: hens present, eggs collected (and downgraded eggs separately), feed given, mortality, expenses and sales. Without these figures, no steering is possible. Feed conversion ratio (FCR) = kg of feed ÷ kg of eggs produced. Benchmark: about 2.1 for an improved strain at 72 weeks. A worsening FCR is profit warning number one.",
+ "A cracked, dirty or floor egg costs as much to produce but returns less or nothing. Cutting downgraded eggs is one of the fastest ways to lift margin. Compare your sales channels: direct, resellers, restaurants, bakeries. Farm-gate prices vary greatly.",
+ "Depletion is usually at 72–80 weeks: when feed costs more than the eggs produced, the flock is no longer profitable. Spent hen sales are real income to include in the calculation. Order replacement pullets well ahead: hatcheries are often out of stock."],
+ qz:[{q:"Feed conversion ratio is calculated as…",o:["Eggs ÷ hens","Kg feed ÷ kg eggs produced","Feed price × hens"],b:1},
+     {q:"The depletion decision rests mainly on…",o:["Age in months only","Lay rate vs cost of feed consumed","Feather colour"],b:1},
+     {q:"A dirty floor egg…",o:["Sells at the same price","Cost the same to produce but returns less","Costs nothing"],b:1},
+     {q:"FCR benchmark for an improved strain at 72 weeks is about…",o:["1.0","2.1","4.0"],b:1},
+     {q:"Spent hen sales…",o:["Have no value","Are real income to include in the calculation","Are forbidden"],b:1}]}},
+
+{fr:{ti:"Le stress thermique en aviculture",tx:[
+ "La pondeuse est sensible à la chaleur. Au-delà de 33 °C environ, on observe des pertes de production et de la mortalité. Signe visible : la poule respire vite, bec ouvert (halètement). Elle mange moins, pond moins, et les coquilles deviennent plus fines — elle consacre son énergie à dissiper la chaleur plutôt qu'à produire.",
+ "Mesures de gestion : ventilation renforcée, eau fraîche et abondante disponible en permanence (une rupture de quelques heures en forte chaleur peut décimer un lot), aliment distribué aux heures fraîches (tôt le matin, en soirée), densité réduite, ombrière ou double toiture pour réduire le rayonnement. Un lot progressivement acclimaté souffre beaucoup moins qu'un lot exposé brutalement.",
+ "En saison froide, les poules mangent plus (elles brûlent de l'énergie pour se réchauffer) et pondent moins d'œufs à coquille plus épaisse. Adaptez la ration et le programme lumineux : une nuit longue diminue la durée d'éclairage disponible et peut faire chuter la ponte — compensez avec un éclairage artificiel."],
+ qz:[{q:"Au-delà de quelle température environ la pondeuse subit-elle des pertes de production ?",o:["20 °C","33 °C","45 °C"],b:1},
+     {q:"Le signe visible du stress thermique chez la poule est…",o:["Elle pond davantage","Elle respire vite, bec ouvert (halètement)","Elle mange plus"],b:1},
+     {q:"En forte chaleur, que distribue-t-on aux heures fraîches ?",o:["De l'eau uniquement","L'aliment","Rien — on ne change pas ses habitudes"],b:1},
+     {q:"Une rupture d'eau de quelques heures en forte chaleur peut…",o:["N'avoir aucun effet","Décimer un lot entier","Augmenter la ponte"],b:1},
+     {q:"Pour réduire le stress thermique, on peut…",o:["Augmenter la densité","Réduire la ventilation","Distribuer l'aliment aux heures fraîches et assurer de l'eau fraîche en permanence"],b:2}]},
+ en:{ti:"Heat stress in poultry",tx:[
+ "The layer is sensitive to heat. Above about 33 °C, production losses and mortality occur. Visible sign: the hen breathes fast, beak open (panting). She eats less, lays less, and shells become thinner — she uses her energy dissipating heat rather than producing.",
+ "Management measures: increased ventilation, abundant cool water always available (a break of a few hours in high heat can decimate a flock), feed in cool hours (early morning, evening), reduced density, shade net or double roof to cut radiation. A gradually acclimatised flock suffers far less than one exposed abruptly.",
+ "In cold seasons, hens eat more (burning energy to keep warm) and lay fewer eggs with thicker shells. Adjust the ration and lighting programme: a long night reduces available day length and can drop lay — compensate with artificial lighting."],
+ qz:[{q:"Above about which temperature does the layer suffer production losses?",o:["20 °C","33 °C","45 °C"],b:1},
+     {q:"The visible sign of heat stress in a hen is…",o:["She lays more","She breathes fast, beak open (panting)","She eats more"],b:1},
+     {q:"In high heat, what is given in cool hours?",o:["Water only","Feed","Nothing — do not change habits"],b:1},
+     {q:"A water break of a few hours in high heat can…",o:["Have no effect","Decimate an entire flock","Increase lay"],b:1},
+     {q:"To reduce heat stress you can…",o:["Increase density","Reduce ventilation","Feed in cool hours and keep cool water always available"],b:2}]}},
+
+/* --- NIVEAU 3 · EXPERT (10-16) --- */
+{fr:{ti:"Programme lumineux avancé",tx:[
+ "La lumière contrôle la ponte via la photopériode. Un programme lumineux bien conduit peut décaler l'entrée en ponte, hisser le pic et maintenir la persistance. En poussinière, programme dégressif (réduction progressive de la durée d'éclairage) pour que la poulette grandisse avant de produire. En bâtiment de ponte, programme progressif (augmentation) pour déclencher puis soutenir la production.",
+ "En bâtiment clos, la durée totale d'éclairage visée en ponte est souvent de 14 à 16 heures. En bâtiment ouvert en zone tropicale, vous ne contrôlez pas la lumière naturelle : calculez votre durée de lumière artificielle à ajouter pour atteindre la cible, et assurez une intensité suffisante (au moins 10 lux au niveau des têtes des poules).",
+ "Règles d'or : ne jamais réduire la durée d'éclairage en ponte (sauf mue programmée), ne jamais stimuler un lot qui n'a pas atteint son poids cible, et vérifier régulièrement que les ampoules fonctionnent toutes — une zone sombre dans un bâtiment crée une hétérogénéité de ponte."],
+ qz:[{q:"La durée d'éclairage totale visée en bâtiment de ponte est souvent de…",o:["6–8 heures","10–12 heures","14–16 heures"],b:2},
+     {q:"En bâtiment ouvert en zone tropicale, vous ne pouvez pas descendre sous…",o:["8 h de lumière","La durée du jour naturel","12 h de lumière"],b:1},
+     {q:"En ponte, on ne doit jamais…",o:["Augmenter la durée d'éclairage","Réduire la durée d'éclairage","Vérifier les ampoules"],b:1},
+     {q:"L'intensité lumineuse minimale au niveau des têtes des poules est d'environ…",o:["1 lux","10 lux","100 lux"],b:1},
+     {q:"En poussinière, le programme lumineux est…",o:["Progressif (on augmente)","Dégressif (on réduit progressivement)","Constant"],b:1}]},
+ en:{ti:"Advanced lighting programme",tx:[
+ "Light controls laying through photoperiod. A well-run lighting programme can delay onset of lay, raise the peak and maintain persistency. In the brooder, a step-down programme (gradually reducing day length) lets the pullet grow before producing. In the laying house, a step-up programme (increasing) triggers then sustains production.",
+ "In a closed house, the target total lighting in lay is often 14–16 hours. In open-sided tropical housing, you cannot control natural light: compute the artificial light to add to hit the target, and ensure sufficient intensity (at least 10 lux at hen head height).",
+ "Golden rules: never reduce day length in lay (except planned moulting), never light-stimulate a flock that has not reached target body weight, and check regularly that all bulbs work — a dark zone in a house creates a patchy lay."],
+ qz:[{q:"Target total lighting in a laying house is often…",o:["6–8 hours","10–12 hours","14–16 hours"],b:2},
+     {q:"In open-sided tropical housing, you cannot go below…",o:["8 h of light","Natural day length","12 h of light"],b:1},
+     {q:"In lay, you must never…",o:["Increase day length","Reduce day length","Check the bulbs"],b:1},
+     {q:"Minimum light intensity at hen head height is about…",o:["1 lux","10 lux","100 lux"],b:1},
+     {q:"In the brooder, the lighting programme is…",o:["Step-up (increasing)","Step-down (gradually reducing)","Constant"],b:1}]}},
+
+{fr:{ti:"Qualité de coquille et diagnostic",tx:[
+ "La qualité de coquille est le premier indicateur visible d'un problème de formulation ou de santé. Tableau de diagnostic : coquille fine ou molle → calcium insuffisant ou trop fin (manque de particules) ; œuf sans coquille → carence sévère ou stress intense ; coquille rugueuse ou déformée → maladie (bronchite infectieuse en tête) ou lot trop âgé ; coquille pâle sur souche rousse → stress, chaleur, maladie ; beaucoup d'œufs cassés → coquille fragile ou pondoirs insuffisants.",
+ "La solution calcium particulaire : environ la moitié du calcium doit être en grosses particules de 2–4 mm, augmentées à 3–5 mm à partir de 10 semaines. Ces particules libèrent le calcium la nuit, au moment précis où la coquille se calcifie dans l'utérus. Une poule manquant de calcium mobilise le calcium de ses os — on parle de fatigue osseuse (ostéoporose de ponte), qui entraîne des paralysies et des mortalités.",
+ "L'eau joue aussi sur la coquille : une rupture d'eau réduit la consommation d'aliment et donc l'apport de calcium. La vitamine D3 est indispensable à l'absorption du calcium : une carence donne des coquilles fines même si le calcium alimentaire est suffisant. Sources : exposition à la lumière naturelle, prémix vitaminé."],
+ qz:[{q:"Une coquille rugueuse ou déformée évoque d'abord…",o:["Un manque d'eau","Une maladie (notamment la bronchite infectieuse) ou un lot trop âgé","Un excès de lumière"],b:1},
+     {q:"Que se passe-t-il si la poule manque de calcium sur le long terme ?",o:["Elle pond plus","Elle mobilise le calcium de ses os, risquant paralysie et mortalité","Elle mange moins"],b:1},
+     {q:"La vitamine D3 est nécessaire pour…",o:["La pigmentation de la coquille","L'absorption du calcium","La couleur du jaune d'œuf"],b:1},
+     {q:"La moitié du calcium doit être en grosses particules car…",o:["C'est moins cher","Elles libèrent le calcium la nuit, quand la coquille se forme","Les poules les préfèrent"],b:1},
+     {q:"Un pic d'œufs sans coquille signale…",o:["Un simple changement de saison","Une carence sévère ou un stress intense","Une bonne production"],b:1}]},
+ en:{ti:"Shell quality and diagnosis",tx:[
+ "Shell quality is the first visible sign of a formulation or health problem. Diagnostic table: thin or soft shell → insufficient calcium or too fine (no particles); shell-less egg → severe deficiency or intense stress; rough or misshapen shell → disease (infectious bronchitis above all) or old flock; pale shell on a brown strain → stress, heat, disease; many cracked eggs → fragile shell or too few nests.",
+ "The particulate calcium solution: about half the calcium should be coarse particles of 2–4 mm, raised to 3–5 mm from 10 weeks. These particles release calcium at night, at the precise moment the shell calcifies in the uterus. A calcium-deficient hen draws on bone calcium — this is cage layer fatigue (laying osteoporosis), leading to paralysis and deaths.",
+ "Water also affects the shell: a water break reduces feed intake and thus calcium supply. Vitamin D3 is essential for calcium absorption: a deficiency gives thin shells even when dietary calcium is adequate. Sources: natural light exposure, vitamin premix."],
+ qz:[{q:"A rough or misshapen shell points first to…",o:["Lack of water","Disease (especially infectious bronchitis) or an old flock","Too much light"],b:1},
+     {q:"What happens if a hen lacks calcium long-term?",o:["She lays more","She draws on bone calcium, risking paralysis and death","She eats less"],b:1},
+     {q:"Vitamin D3 is needed for…",o:["Shell pigmentation","Calcium absorption","Yolk colour"],b:1},
+     {q:"Half the calcium must be coarse particles because…",o:["It is cheaper","They release calcium at night, when the shell forms","Hens prefer them"],b:1},
+     {q:"A surge of shell-less eggs signals…",o:["A simple seasonal change","Severe deficiency or intense stress","Good production"],b:1}]}},
+
+{fr:{ti:"Uniformité du lot et pesées",tx:[
+ "L'uniformité se calcule ainsi : pesez au moins 100 sujets (idéalement chaque semaine), calculez le poids moyen, comptez ceux qui se trouvent entre 90 % et 110 % de ce poids moyen, divisez par le total et multipliez par 100. Un lot uniforme à 80 % ou plus entre en ponte de façon groupée, pic plus haut et plus rapide.",
+ "Un lot hétérogène entre en ponte en désordre : certaines poulettes commencent trop tôt (prolapsus, petits œufs), d'autres trop tard. La principale cause d'hétérogénéité est la compétition à la mangeoire : si les mangeoires sont insuffisantes ou mal placées, les dominantes mangent et les autres attendent. Un linéaire de mangeoire de 10–12 cm par poule est la norme.",
+ "Si l'uniformité est mauvaise, séparez les sujets en deux groupes (grands et petits) et adaptez l'alimentation : plus de fréquence de distribution et plus d'aliment pour les petits, moins pour les grands. Un tri à 12 semaines est encore rattrapable ; à 16 semaines, les dés sont jetés."],
+ qz:[{q:"Un lot est uniforme à 75 %. Cela signifie…",o:["75 % des poules pondent","75 % des sujets sont dans ± 10 % du poids moyen","75 % ont été vaccinés"],b:1},
+     {q:"La principale cause d'hétérogénéité dans un lot est…",o:["Une mauvaise génétique uniquement","La compétition à la mangeoire (espace insuffisant)","La couleur de la litière"],b:1},
+     {q:"Le linéaire de mangeoire recommandé par poule est de…",o:["2–3 cm","10–12 cm","30 cm"],b:1},
+     {q:"Un tri et une correction d'uniformité à 12 semaines sont…",o:["Inutiles","Encore rattrapables","Trop tardifs"],b:1},
+     {q:"Un lot hétérogène entre en ponte…",o:["De façon groupée et efficace","En désordre, avec risques de prolapsus et de petits œufs","Plus rapidement"],b:1}]},
+ en:{ti:"Flock uniformity and weighing",tx:[
+ "Uniformity is computed as follows: weigh at least 100 birds (ideally weekly), compute the average, count those between 90% and 110% of that average, divide by the total and multiply by 100. A flock 80% or more uniform enters lay together, with a higher, faster peak.",
+ "A non-uniform flock enters lay in disarray: some pullets start too early (prolapse, small eggs), others too late. The main cause of heterogeneity is feeder competition: if feeders are too few or badly placed, dominant birds eat and others wait. A feeder space of 10–12 cm per hen is the standard.",
+ "If uniformity is poor, split birds into two groups (large and small) and adjust feeding: more frequent distribution and more feed for the small, less for the large. A sort at 12 weeks is still correctable; at 16 weeks, the die is cast."],
+ qz:[{q:"A flock is 75% uniform. This means…",o:["75% of hens are laying","75% of birds are within ±10% of average weight","75% have been vaccinated"],b:1},
+     {q:"The main cause of heterogeneity in a flock is…",o:["Bad genetics only","Feeder competition (insufficient space)","Litter colour"],b:1},
+     {q:"Recommended feeder space per hen is…",o:["2–3 cm","10–12 cm","30 cm"],b:1},
+     {q:"A uniformity sort and correction at 12 weeks is…",o:["Useless","Still correctable","Too late"],b:1},
+     {q:"A non-uniform flock enters lay…",o:["Evenly and efficiently","In disarray, with prolapse and small-egg risks","Faster"],b:1}]}},
+
+{fr:{ti:"Mue et prolongation du cycle",tx:[
+ "La mue est le renouvellement naturel du plumage, accompagné d'un arrêt ou d'une forte baisse de ponte. En élevage commercial, on peut induire une mue forcée (restriction alimentaire ou hydrique courte, sous contrôle vétérinaire) pour donner une deuxième carrière productive au lot et retarder la réforme. Les œufs de la deuxième carrière sont plus gros, avec des coquilles meilleures.",
+ "La décision de prolonger un lot (mue programmée) ou de réformer dépend du prix de l'aliment, du prix de l'œuf, du coût des poulettes de remplacement et de la disponibilité des couvoirs. Un calcul économique rigoureux est nécessaire. Règle pratique : si le taux de ponte descend sous 60–65 %, la marge devient souvent négative.",
+ "Indicateurs avancés de réforme : taux de ponte < 60–65 %, proportion d'œufs déclassés en hausse, mortalité en hausse, indice de consommation dégradé. En pratique à l'échelle africaine, la réforme se fait souvent à 72 semaines, avec vente des poules au marché local comme volaille de table."],
+ qz:[{q:"La mue forcée peut être utilisée pour…",o:["Augmenter la taille des œufs uniquement","Donner une deuxième carrière productive au lot","Remplacer la vaccination Newcastle"],b:1},
+     {q:"Les œufs de la deuxième carrière (post-mue) sont en général…",o:["Plus petits avec des coquilles fines","Plus gros avec de meilleures coquilles","Identiques"],b:1},
+     {q:"La décision de prolonger un lot plutôt que de réformer nécessite…",o:["Aucun calcul","Un calcul économique rigoureux","L'avis du voisin"],b:1},
+     {q:"À quel taux de ponte environ la marge devient-elle souvent négative ?",o:["90 %","75 %","60–65 %"],b:2},
+     {q:"La réforme des pondeuses se fait habituellement en élevage commercial vers…",o:["30 semaines","72–80 semaines","2 ans"],b:1}]},
+ en:{ti:"Moulting and cycle extension",tx:[
+ "Moulting is the natural renewal of plumage, accompanied by a stop or sharp drop in lay. In commercial farming, forced moulting can be induced (short feed or water restriction, under veterinary supervision) to give the flock a second productive career and delay depletion. Second-career eggs are larger, with better shells.",
+ "The decision to extend a flock (planned moult) or deplete depends on feed price, egg price, replacement pullet cost and hatchery availability. A rigorous economic calculation is needed. Practical rule: if lay rate falls below 60–65%, the margin often turns negative.",
+ "Advanced depletion indicators: lay rate < 60–65%, rising proportion of downgraded eggs, rising mortality, worsening FCR. In practice at African scale, depletion usually happens at 72 weeks, with hens sold on the local market as table poultry."],
+ qz:[{q:"Forced moulting can be used to…",o:["Increase egg size only","Give the flock a second productive career","Replace Newcastle vaccination"],b:1},
+     {q:"Second-career (post-moult) eggs are generally…",o:["Smaller with thin shells","Larger with better shells","Identical"],b:1},
+     {q:"The decision to extend a flock rather than deplete requires…",o:["No calculation","A rigorous economic calculation","The neighbour's opinion"],b:1},
+     {q:"At about which lay rate does the margin often turn negative?",o:["90%","75%","60–65%"],b:2},
+     {q:"Depletion of layers in commercial farming usually happens around…",o:["30 weeks","72–80 weeks","2 years"],b:1}]}},
+
+{fr:{ti:"Biosécurité avancée et vide sanitaire",tx:[
+ "Le vide sanitaire est le cœur de la biosécurité. Il se déroule en 4 étapes : 1) Sortie du lot et retrait de toute la litière ; 2) Lavage au jet haute pression de toutes les surfaces (sol, murs, équipements) avec un détergent ; 3) Désinfection avec un désinfectant homologué, en respectant le temps de contact ; 4) Séchage complet puis période de repos avant l'entrée du lot suivant.",
+ "Les points faibles habituels : les équipements qu'on oublie (mangeoires, abreuvoirs, grilles), les coins et recoins non nettoyés, la litière humide sous les perchoirs, et les rongeurs qui persistent entre les bandes. Un rattrapage de souris ou de rats pendant le vide sanitaire vaut toutes les désinfections.",
+ "Vérifiez les pédiluves : un pédiluve vide ou avec un désinfectant périmé est un faux sentiment de sécurité. Changez le produit régulièrement. Formez les employés : un agent d'élevage qui entre dans le bâtiment avec les mêmes bottes que la veille contourne tout le protocole. Le sas sanitaire (vestiaire dédié, bottes réservées) est non négociable."],
+ qz:[{q:"La première étape du vide sanitaire est…",o:["La désinfection chimique","La sortie du lot et l'enlèvement de toute la litière","Le repos du bâtiment"],b:1},
+     {q:"Un pédiluve avec un désinfectant périmé est…",o:["Efficace quand même","Un faux sentiment de sécurité","Suffisant si changé chaque mois"],b:1},
+     {q:"L'ordre des étapes du vide sanitaire est…",o:["Désinfection → Lavage → Séchage → Repos","Sortie du lot → Lavage → Désinfection → Séchage","Repos → Lavage → Sortie du lot → Désinfection"],b:1},
+     {q:"Les rongeurs entre deux bandes constituent…",o:["Aucun risque particulier","Un risque majeur — ils transmettent des maladies","Un avantage, ils nettoient les restes"],b:1},
+     {q:"Le sas sanitaire (vestiaire + bottes dédiées) est…",o:["Optionnel selon le budget","Non négociable pour protéger le bâtiment","Utile uniquement en saison des pluies"],b:1}]},
+ en:{ti:"Advanced biosecurity and downtime",tx:[
+ "Downtime is the heart of biosecurity. It runs in 4 steps: 1) Remove the flock and all litter; 2) Power-wash all surfaces (floor, walls, equipment) with detergent; 3) Disinfect with an approved product, respecting contact time; 4) Full drying then a rest period before the next flock.",
+ "Usual weak points: equipment that gets overlooked (feeders, drinkers, grilles), uncleaned corners, damp litter under perches, and rodents persisting between flocks. Catching mice and rats during downtime is worth any disinfection.",
+ "Check footbaths: an empty or expired-disinfectant footbath is a false sense of security. Change the product regularly. Train staff: a stockperson entering the house in yesterday's boots bypasses the whole protocol. The sanitary lock (dedicated changing room, dedicated boots) is non-negotiable."],
+ qz:[{q:"The first step of downtime is…",o:["Chemical disinfection","Removing the flock and all litter","House rest"],b:1},
+     {q:"A footbath with expired disinfectant is…",o:["Still effective","A false sense of security","Fine if changed monthly"],b:1},
+     {q:"The order of downtime steps is…",o:["Disinfect → Wash → Dry → Rest","Remove flock → Wash → Disinfect → Dry","Rest → Wash → Remove flock → Disinfect"],b:1},
+     {q:"Rodents between flocks represent…",o:["No particular risk","A major risk — they transmit diseases","An advantage, they clean leftovers"],b:1},
+     {q:"The sanitary lock (changing room + dedicated boots) is…",o:["Optional depending on budget","Non-negotiable to protect the house","Useful only in the rainy season"],b:1}]}},
+
+{fr:{ti:"Pilotage économique du lot",tx:[
+ "Le coût de revient d'un œuf = total des charges ÷ nombre d'œufs vendables. Les charges comprennent : poulettes (amorties sur le cycle), aliment (60–70 % du total), santé, énergie, eau, litière, main-d'œuvre, emballages, transport. Un œuf déclassé coûte autant à produire et rapporte moins ou rien : la qualité des œufs est directement de la marge.",
+ "Piloter par la marge et non par le chiffre d'affaires. Calculez votre marge par poule logée sur le cycle complet. Comparez vos circuits de vente : un œuf vendu directement à un restaurant peut valoir 1,5 à 2 fois l'œuf vendu au revendeur. La relation commerciale directe avec les acheteurs réguliers (hôtels, boulangeries, cantines) sécurise la trésorerie.",
+ "Anticipez les cycles : commandez les poulettes de remplacement avant la fin du lot. Le temps entre la sortie d'un lot et l'entrée du suivant (vide sanitaire + attente poulettes) coûte cher en fixe (loyer, salaire, intérêts) sans recettes. Optimiser ce temps est un levier de rentabilité souvent négligé."],
+ qz:[{q:"Le coût de revient d'un œuf se calcule par…",o:["Total des charges ÷ œufs vendables","Prix de vente × nombre de poules","Aliment ÷ poules"],b:0},
+     {q:"L'aliment représente environ … du coût total de production de l'œuf.",o:["10–15 %","30–40 %","60–70 %"],b:2},
+     {q:"Vendre directement à un restaurant plutôt qu'à un revendeur…",o:["Ne change rien au prix","Peut doubler ou presque la marge par œuf","Est toujours interdit"],b:1},
+     {q:"Le temps entre deux bandes (vide sanitaire + attente poulettes) est…",o:["Neutre économiquement","Un coût réel en charges fixes sans recettes","Une période de repos gratuit"],b:1},
+     {q:"La marge par poule logée se calcule sur…",o:["Le mois en cours uniquement","Le cycle complet","Une semaine de production"],b:1}]},
+ en:{ti:"Economic management of the flock",tx:[
+ "Cost per egg = total costs ÷ saleable eggs. Costs include: pullets (amortised over the cycle), feed (60–70% of total), health, energy, water, litter, labour, packaging, transport. A downgraded egg costs as much to produce and returns less or nothing: egg quality is directly margin.",
+ "Steer by margin, not turnover. Compute your margin per hen housed over the full cycle. Compare sales channels: an egg sold directly to a restaurant can fetch 1.5 to 2 times the price of one sold to a reseller. Direct commercial relationships with regular buyers (hotels, bakeries, canteens) secure cash flow.",
+ "Anticipate cycles: order replacement pullets before the current flock ends. The time between one flock out and the next in (downtime + pullet wait) costs money in fixed charges (rent, wages, interest) with no income. Optimising this time is an often-overlooked profitability lever."],
+ qz:[{q:"Cost per egg is calculated as…",o:["Total costs ÷ saleable eggs","Selling price × number of hens","Feed ÷ hens"],b:0},
+     {q:"Feed represents about … of total egg production cost.",o:["10–15%","30–40%","60–70%"],b:2},
+     {q:"Selling directly to a restaurant rather than a reseller…",o:["Changes nothing","Can nearly double the margin per egg","Is always forbidden"],b:1},
+     {q:"Time between flocks (downtime + pullet wait) is…",o:["Economically neutral","A real cost in fixed charges with no income","A free rest period"],b:1},
+     {q:"Margin per hen housed is computed over…",o:["The current month only","The full cycle","One week of production"],b:1}]}}
+,
+{fr:{ti:"Couvoirs, commandes et intégration amont",tx:[
+ "Choisir son couvoir est une décision stratégique : la qualité sanitaire du poussin d'un jour — taux de mycoplasme, programme vaccinal au couvoir (Marek notamment), homogénéité de l'éclosion — conditionne tout le lot. Visitez le couvoir ou renseignez-vous auprès d'éleveurs qui en sont clients. Un poussin de mauvaise qualité ne deviendra jamais une bonne pondeuse, quels que soient vos efforts.",
+ "Anticipez les commandes : les couvoirs fonctionnent sur des bandes programmées longtemps à l'avance. Une commande tardive signifie un lot raté, des poulettes de mauvaise qualité ou un vide sanitaire rallongé qui coûte en charges fixes sans recettes. Planifiez sur 12 mois : sortie du lot N, vide sanitaire, entrée du lot N+1.",
+ "L'intégration amont — partenariat avec un fournisseur d'aliment de confiance et un prestataire de santé animal — réduit les coûts et sécurise les approvisionnements. Négociez des prix à l'avance sur l'aliment : c'est 65–70 % de votre coût. Un écart de 5 % sur le prix de l'aliment peut doubler ou effacer votre marge."],
+ qz:[{q:"Que faut-il vérifier avant de choisir son couvoir ?",o:["Le nom du directeur","La qualité sanitaire, le programme vaccinal et l'homogénéité des lots","La couleur des bâtiments"],b:1},
+     {q:"Un vide sanitaire rallongé à cause d'une commande tardive coûte…",o:["Rien, c'est une pause bienvenue","En charges fixes (loyer, salaires) sans recettes","Uniquement le prix de l'aliment"],b:1},
+     {q:"L'aliment représente environ … du coût de production de l'œuf.",o:["10 %","30–40 %","65–70 %"],b:2},
+     {q:"Un poussin de mauvaise qualité sanitaire à la livraison…",o:["Peut être rattrapé avec un bon aliment","Ne deviendra jamais une bonne pondeuse","Suffit si on vaccine bien ensuite"],b:1},
+     {q:"Négocier le prix de l'aliment à l'avance est important parce que…",o:["C'est obligatoire par la loi","Un écart de 5 % peut doubler ou effacer la marge","Cela impressionne le fournisseur"],b:1}]},
+ en:{ti:"Hatcheries, ordering and upstream integration",tx:[
+ "Choosing a hatchery is a strategic decision: the sanitary quality of the day-old chick — mycoplasma status, hatchery vaccination programme (Marek especially), hatch uniformity — conditions the whole flock. Visit the hatchery or ask other farmers who use it. A poor-quality chick will never become a good layer, whatever effort you put in.",
+ "Plan orders ahead: hatcheries run batches scheduled far in advance. A late order means a disrupted flock, poor-quality pullets or an extended downtime that costs in fixed charges with no income. Plan on a 12-month basis: flock N out, downtime, flock N+1 in.",
+ "Upstream integration — a reliable feed supplier and animal health service partner — cuts costs and secures supply. Negotiate feed prices in advance: it is 65–70% of your cost. A 5% difference in feed price can double or wipe out your margin."],
+ qz:[{q:"What must you check before choosing a hatchery?",o:["The director's name","Sanitary quality, vaccination programme and flock uniformity","Building colour"],b:1},
+     {q:"An extended downtime caused by a late order costs…",o:["Nothing, it is a welcome break","Fixed charges (rent, wages) with no income","Only the feed price"],b:1},
+     {q:"Feed represents about … of egg production cost.",o:["10%","30–40%","65–70%"],b:2},
+     {q:"A chick with poor sanitary quality on delivery…",o:["Can be rescued with good feed","Will never become a good layer","Is fine if vaccinated well afterwards"],b:1},
+     {q:"Negotiating feed prices in advance matters because…",o:["It is legally required","A 5% difference can double or wipe out the margin","It impresses the supplier"],b:1}]}}
+
+];
+const NIVEAUX_PONDEUSE = [
+  {deb:0, fin:5,  k:'lvl_1'},
+  {deb:5, fin:10, k:'lvl_2'},
+  {deb:10, fin:16, k:'lvl_3'}
+];
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
@@ -4699,9 +5015,171 @@ function partagerCertifEsp(k){
   partagerWhatsApp(txt.join('\n'));
 }
 
+
+
+/* ===== ÉCOLE D'AVICULTURE — fonctions de rendu ===== */
+function niveauPondeuseFait(idx){
+  // Renvoie true si toutes les leçons du niveau sont validées
+  const pp = etat.ecole.valideesP || [];
+  const nv = NIVEAUX_PONDEUSE[idx];
+  for(let i=nv.deb; i<nv.fin; i++) if(!pp.includes(i)) return false;
+  return true;
+}
+function vueLeconsPondeuse(){
+  if(leconOuverte !== null) return vueLeconPondeuse(leconOuverte);
+  const pp = etat.ecole.valideesP || [];
+  const n = pp.length;
+  const total = LECONS_PONDEUSE.length;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const TITRES = {fr:"École d'aviculture — Filière ponte",en:"Poultry school — Layer production"};
+  const titre = TITRES[langue]||TITRES.fr;
+  const toutFait = n === total;
+
+  // Certificat
+  let certif = '';
+  if(toutFait){
+    if(!etat.ecole.numPondeuse){
+      etat.ecole.numPondeuse = 'CSM-VOL-'+auj().replace(/-/g,'') + '-' + uid().slice(-4).toUpperCase();
+      sauver();
+    }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — 🐔 ${L('Pondeuse','Layer')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom)||'…'}</div>
+      <p>${L('a validé le parcours certifiant École d\'aviculture — Filière ponte.','has completed the Poultry school — Layer production certifying path.')}</p>
+      <p style="margin-top:6px">🐔 CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numPondeuse}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifPondeuse()">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+
+  // Niveaux
+  const ICONES_P = ['🐔','🐣','📏','🥚','📈','🌽','🛡️','💰','🔆','🥚','⚖️','🔄','🧹','💵','🧮','📋'];
+  const LABELS_NV = {fr:['Niveau 1 · Débutant','Niveau 2 · Confirmé','Niveau 3 · Expert'],
+                     en:['Level 1 · Beginner','Level 2 · Intermediate','Level 3 · Expert']};
+  const lblNv = LABELS_NV[langue]||LABELS_NV.fr;
+
+  let leconHTML = '';
+  NIVEAUX_PONDEUSE.forEach((nv,ni)=>{
+    const nvFait = niveauPondeuseFait(ni);
+    const nvDispo = ni===0 || niveauPondeuseFait(ni-1);
+    leconHTML += `<div style="margin-bottom:18px">
+      <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+      </div>`;
+    if(!nvDispo){
+      leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
+    } else {
+      for(let i=nv.deb;i<nv.fin;i++){
+        const done = pp.includes(i);
+        const lec = LECONS_PONDEUSE[i][langue]||LECONS_PONDEUSE[i].fr;
+        leconHTML += `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLeconPondeuse(${i})">
+          <div class="lecon-num">${done?'✓':i+1}</div>
+          <div class="lecon-titre">${ICONES_P[i]||'•'} ${esc(lec.ti)}</div>
+          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+        </div>`;
+      }
+    }
+    leconHTML += '</div>';
+  });
+
+  return `
+    <h2 class="page-title">${titre}</h2>
+    <p class="page-sub">${L('Parcours certifiant en 3 niveaux — 16 leçons + quiz (5 questions). Validez tout pour obtenir votre certificat.','Certifying path in 3 levels — 16 lessons + quizzes (5 questions). Complete all to earn your certificate.')}</p>
+    ${selecteurEspece()}
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${n} / ${total} ${L('leçons validées','lessons completed')}</p>
+      <div class="progress-bar"><div style="width:${n/total*100}%"></div></div>
+      <div style="margin-top:12px">${leconHTML}</div>
+    </div>`;
+}
+
+function ouvrirLeconPondeuse(idx){
+  leconOuverte = idx; rendre(); window.scrollTo(0,0);
+}
+
+function vueLeconPondeuse(idx){
+  const lec = LECONS_PONDEUSE[idx][langue]||LECONS_PONDEUSE[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ICONES_P = ['🐔','🐣','📏','🥚','📈','🌽','🛡️','💰','🔆','🥚','⚖️','🔄','🧹','💵','🧮','📋'];
+  const done = (etat.ecole.valideesP||[]).includes(idx);
+
+  const txtHtml = lec.tx.map(p=>`<p>${esc(p)}</p>`).join('');
+  const opts = lec.qz.map((q,qi)=>`
+    <div class="quiz-q">
+      <p>${qi+1}. ${esc(q.q)}</p>
+      ${q.o.map((o,oi)=>`
+        <label class="quiz-opt" id="qp-${qi}-${oi}">
+          <input type="radio" name="qp${qi}" value="${oi}" style="flex-shrink:0"> ${esc(o)}
+        </label>`).join('')}
+    </div>`).join('');
+
+  return `
+    <button class="btn sec" onclick="fermerLeconPondeuse()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">
+        ${ICONES_P[idx]||'•'} ${esc(lec.ti)}
+        ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}
+      </h2>
+      <div class="lecon-texte" style="margin-top:12px">${txtHtml}</div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>❓ ${fmt(t('quiz_title'),{n:4})}</h3>
+      <p style="color:var(--gris);font-size:.88rem;margin-bottom:10px">
+        ${L('⚠️ Fiche 7 (Santé) : protocoles à valider avec un vétérinaire de votre zone.','⚠️ Module 7 (Health): protocols to validate with a vet in your area.')}
+      </p>
+      <form id="qp-form">${opts}</form>
+      <div id="qp-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerLeconPondeuse(${idx})">${t('btn_check')}</button>
+    </div>`;
+}
+
+function fermerLeconPondeuse(){ leconOuverte=null; rendre(); window.scrollTo(0,0); }
+
+function validerLeconPondeuse(idx){
+  const lec = LECONS_PONDEUSE[idx][langue]||LECONS_PONDEUSE[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const res = document.getElementById('qp-res');
+  let bonnes=0, total=lec.qz.length;
+  lec.qz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="qp'+qi+'"]:checked');
+    if(!sel){ if(res) res.innerHTML='<span style="color:var(--rouge)">'+L('Répondez à toutes les questions.','Answer all questions.')+'</span>'; return; }
+    const ok=parseInt(sel.value)===q.b;
+    if(ok) bonnes++;
+    // colorier les options
+    q.o.forEach((_,oi)=>{
+      const lbl=document.getElementById('qp-'+qi+'-'+oi);
+      if(lbl){ lbl.classList.remove('bonne','fausse'); if(oi===q.b) lbl.classList.add('bonne'); else if(oi===parseInt(sel.value)) lbl.classList.add('fausse'); }
+    });
+  });
+  if(!res) return;
+  const seuilPasse = 4; // 4/5 pour valider
+  if(bonnes>=seuilPasse){
+    if(!etat.ecole.valideesP) etat.ecole.valideesP=[];
+    if(!etat.ecole.valideesP.includes(idx)) etat.ecole.valideesP.push(idx);
+    sauver();
+    res.innerHTML='<span style="color:var(--feuille-fonce);font-weight:700">🎉 '+L('Bravo ! '+bonnes+'/'+total+' — Leçon validée !','Well done! '+bonnes+'/'+total+' — Lesson completed!')+'</span>';
+    setTimeout(()=>{ leconOuverte=null; rendre(); window.scrollTo(0,0); },1100);
+  } else {
+    res.innerHTML='<span style="color:var(--rouge)">✗ '+bonnes+'/'+total+' — '+L('Relisez la leçon et réessayez (4/5 requis).','Re-read the lesson and try again (4/5 required).')+'</span>';
+  }
+}
+
+function partagerCertifPondeuse(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const num=(etat.ecole.numPondeuse)?('N° '+etat.ecole.numPondeuse):'';
+  const txt=['🎓 '+L('Certificat CuniMaster — École d\'aviculture','CuniMaster Certificate — Poultry school'),
+    (etat.ecole.nom||'—'),
+    L('Filière ponte — 16 leçons validées.','Layer production — 16 lessons completed.'),
+    num,'— CuniSmart'].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
+}
+
 function vueEcole(){
-  if(leconOuverte !== null) return vueLecon(leconOuverte);
+  if(espActive() === 'volaille') return vueLeconsPondeuse();
   if(espActive() !== 'lapin') return vueFiches();
+  if(leconOuverte !== null) return vueLecon(leconOuverte);
   const n = etat.ecole.validees.length;
   const baseFait = niveauValide(0) && niveauValide(1);
   const toutFait = n === LECONS.length;
