@@ -1,7 +1,8 @@
 // CuniSmart PWA — service worker à mise à jour automatique.
-// Astuce : incrémentez CACHE_VERSION (v3 -> v4...) à chaque grosse mise à jour
+// Astuce : incrémentez CACHE_VERSION (v4 -> v5...) à chaque grosse mise à jour
 // pour forcer le nettoyage de l'ancien cache.
-const CACHE_VERSION = 'cunismart-v4';
+// v5 — CuniMaster : parcours certifiants pondeuse, porc, chèvre, bovin (64 leçons ajoutées)
+const CACHE_VERSION = 'cunismart-v5';
 const CORE = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', (e) => {
