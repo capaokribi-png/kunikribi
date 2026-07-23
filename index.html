@@ -3761,6 +3761,323 @@ const NIVEAUX_PORC = [
   {deb:10, fin:16, k:'lvl_3'}
 ];
 
+
+/* ===== ÉCOLE D'ÉLEVAGE CAPRIN — 16 leçons ===== */
+const LECONS_CAPRIN = [
+
+/* ---------- NIVEAU 1 : DÉBUTANT (0-5) ---------- */
+{fr:{ti:"Comprendre la chèvre tropicale africaine",tx:[
+ "La chèvre est l'animal d'élevage le plus adapté aux contraintes africaines. Elle valorise les ressources ligneuses — feuilles, rameaux, arbustes — que les bovins ne touchent pas. Elle résiste à la chaleur, se reproduit toute l'année en zone tropicale sans saisonnalité marquée, et met souvent bas des jumeaux. L'Afrique de l'Ouest concentre 37 % du cheptel caprin africain. Pourtant la productivité reste faible dans la grande majorité des élevages. Le potentiel est réel — ce qui manque, c'est la méthode.",
+ "Deux systèmes d'élevage coexistent. Le système extensif (divagation) : la chèvre cherche seule sa nourriture, l'éleveur n'intervient presque pas. Résultat : mortalité des chevreaux souvent supérieure à 30 %, reproduction non maîtrisée, revenus imprévisibles. Le système semi-intensif (stabulation partielle avec complément alimentaire) : la chèvre rentre le soir, reçoit un complément, les chevreaux sont surveillés. Résultat : mortalité divisée par 3, prolificité améliorée, revenus planifiables.",
+ "Ce que CuniSmart apporte à l'éleveur caprin que le système extensif n'offre jamais : la date de mise bas calculée à l'avance, le suivi du poids des chevreaux semaine par semaine, le registre de chaque traitement sanitaire, et la marge réelle par chevreau vendu. Sans ces données, l'éleveur subit. Avec elles, il pilote."],
+ qz:[{q:"Quel est l'avantage principal de la chèvre sur le bovin en Afrique tropicale ?",o:["Elle donne plus de lait","Elle valorise les ressources ligneuses inaccessibles aux bovins","Elle vit plus longtemps"],b:1},
+     {q:"La mortalité présevrage des chevreaux en système extensif africain peut dépasser…",o:["5 %","30 %","80 %"],b:1},
+     {q:"Le système semi-intensif améliore principalement…",o:["Le prix de vente des caprins","La mortalité des chevreaux, la prolificité et la prévisibilité du revenu","La résistance de la chèvre aux maladies"],b:1},
+     {q:"La chèvre tropicale se reproduit…",o:["Uniquement en saison sèche","Toute l'année, sans saisonnalité marquée","Une seule fois par an"],b:1},
+     {q:"Sans données de suivi (poids, dates, traitements), l'éleveur caprin…",o:["S'en sort très bien par expérience","Subit les aléas sans pouvoir piloter","Produit toujours plus"],b:1}]},
+ en:{ti:"Understanding the tropical African goat",tx:[
+ "The goat is the livestock animal best adapted to African constraints. It uses woody resources — leaves, twigs, shrubs — that cattle will not touch. It withstands heat, breeds year-round in the tropics without marked seasonality, and often gives birth to twins. West Africa holds 37% of Africa's goat population. Yet productivity remains low in most herds. The potential is real — what is missing is method.",
+ "Two farming systems coexist. Extensive (scavenging): the goat finds its own food, the farmer barely intervenes. Result: kid mortality often above 30%, uncontrolled breeding, unpredictable income. Semi-intensive (part-housed with feed supplement): the goat comes in at night, receives a supplement, kids are watched. Result: mortality cut by two-thirds, better prolificacy, plannable income.",
+ "What CuniSmart gives the goat farmer that the extensive system never offers: the kidding date calculated in advance, weekly kid weight tracking, a record of every health treatment, and the real margin per kid sold. Without these data, the farmer reacts. With them, he manages."],
+ qz:[{q:"What is the goat's main advantage over cattle in tropical Africa?",o:["It gives more milk","It uses woody resources that cattle cannot reach","It lives longer"],b:1},
+     {q:"Pre-weaning kid mortality in African extensive systems can exceed…",o:["5%","30%","80%"],b:1},
+     {q:"Semi-intensive management mainly improves…",o:["The selling price of goats","Kid mortality, prolificacy and income predictability","The goat's disease resistance"],b:1},
+     {q:"The tropical goat breeds…",o:["Only in the dry season","Year-round, without marked seasonality","Only once a year"],b:1},
+     {q:"Without tracking data (weight, dates, treatments), the goat farmer…",o:["Gets by fine on experience","Reacts to events without being able to manage","Always produces more"],b:1}]}},
+
+{fr:{ti:"Choisir ses races et ses animaux",tx:[
+ "Les races locales africaines sont le point de départ naturel. La Chèvre Naine de Guinée (naine d'Afrique de l'Ouest) : petite, très prolifique (prolificité jusqu'à 1,85 — la plus haute d'Afrique), rustique, adaptée aux zones forestières humides du Cameroun et du Bénin. La chèvre Sahélienne (Sahel) : plus grande, bonne pour la viande, adaptée aux zones semi-arides. La Kirdi au Cameroun : rustique, zones de savane. Ces races locales ont survécu des siècles dans vos conditions — c'est leur principal atout.",
+ "Les races améliorées — Boer (viande), Saanen (lait, 2 à 3 L/jour) — peuvent améliorer les performances mais exigent un bâtiment sec, une alimentation contrôlée et un suivi sanitaire rigoureux. Un croisement Boer × local ou Saanen × local donne souvent le meilleur compromis. Ne pas introduire une race améliorée pure dans un élevage extensif : elle mourra avant de produire.",
+ "Critères d'achat : animal alerte et actif (une chèvre prostrée ou séparée du groupe est malade), pas d'écoulement oculaire ni nasal, pas de diarrhée visible, poil propre et bien couché, muqueuses roses, pattes solides. Une chèvre boiteuse au moment de l'achat ne s'arrangera pas seule. Compter 1 bouc pour 20 à 25 chèvres maximum. Renouveler le bouc tous les 2 ans avec un animal d'une lignée différente pour éviter la consanguinité."],
+ qz:[{q:"La race caprine africaine avec la prolificité la plus élevée (jusqu'à 1,85) est…",o:["La Saanen","La Chèvre Naine de Guinée","La Boer"],b:1},
+     {q:"Introduire une race améliorée pure dans un système extensif tropical…",o:["Améliore immédiatement la production","Est risqué : l'animal peut mourir avant de produire","N'a aucun inconvénient"],b:1},
+     {q:"Un bouc peut couvrir au maximum…",o:["5 chèvres","20 à 25 chèvres","100 chèvres"],b:1},
+     {q:"Le renouvellement du bouc tous les 2 ans a pour but de…",o:["Réduire les coûts","Éviter la consanguinité et maintenir la vigueur du troupeau","Augmenter le lait"],b:1},
+     {q:"Lors de l'achat, une chèvre avec des écoulements oculaires et nasaux…",o:["Est normale en saison des pluies","Doit être refusée — elle est probablement malade","Peut être achetée à prix réduit"],b:1}]},
+ en:{ti:"Choosing your breeds and animals",tx:[
+ "Local African breeds are the natural starting point. The Guinea Dwarf goat (West African Dwarf): small, highly prolific (prolificacy up to 1.85 — the highest in Africa), hardy, adapted to the humid forest zones of Cameroon and Benin. The Sahelian goat: larger, good for meat, adapted to semi-arid areas. The Kirdi in Cameroon: hardy, savanna zones. Local breeds have survived centuries in your conditions — that is their main asset.",
+ "Improved breeds — Boer (meat), Saanen (milk, 2–3 L/day) — can improve performance but require dry housing, controlled feeding and rigorous health management. A Boer × local or Saanen × local cross often gives the best compromise. Never introduce a pure improved breed into an extensive system: it will die before it produces.",
+ "Buying criteria: alert and active animal (a dull goat separated from the group is sick), no eye or nose discharge, no visible diarrhoea, clean flat coat, pink mucous membranes, sound legs. A lame goat at purchase will not heal on its own. Count 1 buck per 20–25 does maximum. Replace the buck every 2 years with an animal from a different line to avoid inbreeding."],
+ qz:[{q:"The African goat breed with the highest prolificacy (up to 1.85) is…",o:["The Saanen","The Guinea Dwarf goat","The Boer"],b:1},
+     {q:"Introducing a pure improved breed into a tropical extensive system…",o:["Immediately improves production","Is risky: the animal may die before it produces","Has no downside"],b:1},
+     {q:"A buck can cover at most…",o:["5 does","20 to 25 does","100 does"],b:1},
+     {q:"Replacing the buck every 2 years aims to…",o:["Reduce costs","Avoid inbreeding and maintain herd vigour","Increase milk"],b:1},
+     {q:"When buying, a goat with eye and nose discharge…",o:["Is normal in the rainy season","Must be refused — it is probably sick","Can be bought at a lower price"],b:1}]}},
+
+{fr:{ti:"Logement : sec avant tout",tx:[
+ "La chèvre supporte très mal l'humidité — bien plus que la chaleur. Un bâtiment humide est un bâtiment où les parasites gastrointestinaux explosent, où les chevreaux meurent d'hypothermie nocturne, et où le piétin (pourriture des pieds) se propage. Le sol est la clé : soit un plancher surélevé à claire-voie (caillebotis bois ou bambou à 50–80 cm du sol), soit une litière sèche épaisse renouvelée très régulièrement.",
+ "Le caillebotis est la solution la plus efficace contre les parasites : les fèces tombent au sol, les pattes restent sèches, et les larves de strongles (les vers parasites) ne remontent pas à plus de 15 cm. Si vous ne pouvez pas installer un caillebotis, la litière sèche renouvelée tous les 2 jours vaut mieux que rien. Un bâtiment bien ventilé mais sans courant d'air direct. Séparation des stades : chevrettes sevrées, chèvres gestantes, maternité (box individuel calme), mâles.",
+ "La clôture est non négociable : la chèvre est l'animal le plus fugueur de l'élevage. Elle cherche et trouve toujours une faille dans une clôture. Grillage rigide de 1,2 m de hauteur minimum, bien tendu, avec des poteaux solides. Surface recommandée en stabulation : 1 à 1,5 m² par adulte, 2 m² pour une chèvre allaitante avec ses chevreaux. Un bâtiment surpeuplé est un bâtiment malade."],
+ qz:[{q:"La principale raison d'utiliser un plancher surélevé à claire-voie pour les chèvres est…",o:["La chèvre aime les hauteurs","Les fèces tombent au sol, les pattes restent sèches, et les larves parasites ne remontent pas","C'est moins coûteux à construire"],b:1},
+     {q:"La chèvre tropicale supporte mal…",o:["La chaleur","L'humidité","Le vent léger"],b:1},
+     {q:"La hauteur minimale recommandée pour la clôture d'un élevage caprin est…",o:["50 cm","1,2 m","3 m"],b:1},
+     {q:"La surface recommandée en stabulation par chèvre adulte est de…",o:["0,2 m²","1 à 1,5 m²","10 m²"],b:1},
+     {q:"Un bâtiment caprin surpeuplé favorise surtout…",o:["La croissance des chevreaux","Le développement des maladies et parasites","La production de lait"],b:1}]},
+ en:{ti:"Housing: dry above all",tx:[
+ "The goat tolerates dampness very poorly — far more than heat. A damp house means exploding gastrointestinal parasite loads, kids dying of overnight hypothermia, and footrot spreading. The floor is the key: either a raised slatted floor (wood or bamboo slats at 50–80 cm from the ground), or thick dry bedding changed very frequently.",
+ "The slatted floor is the most effective solution against parasites: droppings fall through, feet stay dry, and strongyle larvae (parasitic worms) cannot climb above 15 cm. If you cannot install a slatted floor, dry bedding changed every 2 days is better than nothing. The building should be well ventilated but with no direct draught. Separate the stages: weaned kids, gestating does, kidding unit (quiet individual pen), bucks.",
+ "Fencing is non-negotiable: the goat is the most escape-prone animal on the farm. It will always find and exploit a gap in the fence. Rigid mesh at least 1.2 m high, well tensioned, with solid posts. Recommended floor space in housing: 1 to 1.5 m² per adult, 2 m² for a nursing doe with her kids. An overcrowded house is a sick house."],
+ qz:[{q:"The main reason to use a raised slatted floor for goats is…",o:["Goats like heights","Droppings fall through, feet stay dry, and parasite larvae cannot climb back up","It is cheaper to build"],b:1},
+     {q:"The tropical goat tolerates poorly…",o:["Heat","Dampness","Light wind"],b:1},
+     {q:"Minimum recommended fence height for a goat farm is…",o:["50 cm","1.2 m","3 m"],b:1},
+     {q:"Recommended floor space per adult doe in housing is…",o:["0.2 m²","1 to 1.5 m²","10 m²"],b:1},
+     {q:"An overcrowded goat house mainly promotes…",o:["Kid growth","Development of disease and parasites","Milk production"],b:1}]}},
+
+{fr:{ti:"Alimentation : la chèvre broute, elle ne broie pas",tx:[
+ "La chèvre est une brouteuse, pas une ruminante de prairie. Elle cherche les feuilles, les rameaux et les plantes ligneuses plutôt que l'herbe rase. C'est sa grande force : elle valorise des ressources fourragères inaccessibles aux bovins et aux ovins. Plantes fourragères excellentes à planter autour de l'élevage : Leucaena leucocephala (riche en protéines, mais ne pas dépasser 30 % de la ration), Gliricidia sepium (très appétente), Moringa oleifera (riche en minéraux), Stylosanthes guianensis (fibres), feuilles de manioc bien fanées, tiges de bananier, gousses d'acacia.",
+ "En stabulation ou semi-intensif, la ration de base (fourrage à volonté) est complétée par 200 à 400 g de concentré par jour selon le stade : entretien = 200 g, gestation avancée (dernier mois) = 300 à 400 g, lactation = 400 g ou plus selon le nombre de chevreaux. Minéraux : pierre à lécher ou prémix — carence fréquente en phosphore et calcium dans les sols tropicaux acides. Ne jamais introduire un nouvel aliment brutalement : transition progressive sur 7 à 10 jours.",
+ "L'eau est souvent négligée chez la chèvre mais essentielle. Un adulte boit 3 à 6 litres par jour ; une chèvre allaitante peut boire le double. L'eau doit être propre et fraîche — la chèvre refuse l'eau chaude ou souillée et souffre en silence. Le flushing : distribuer 300 à 500 g d'un aliment énergétique (son de maïs, manioc sec) pendant 2 à 3 semaines avant la saillie prévue. Des études en Afrique de l'Ouest ont montré une amélioration de la fertilité de 28 % à 81 % avec le flushing seul."],
+ qz:[{q:"La chèvre préfère naturellement…",o:["L'herbe rase comme le bœuf","Les feuilles, rameaux et plantes ligneuses (brouteuse)","Les graines et céréales"],b:1},
+     {q:"Le Leucaena ne doit pas dépasser … de la ration caprine.",o:["5 %","30 %","80 %"],b:1},
+     {q:"La consommation d'eau d'une chèvre adulte est d'environ…",o:["0,5 litre par jour","3 à 6 litres par jour","20 litres par jour"],b:2},
+     {q:"Le flushing alimentaire avant la saillie vise à…",o:["Faire grossir la chèvre avant la mise bas","Améliorer la fertilité et la prolificité","Réduire la consommation d'aliment"],b:1},
+     {q:"Nouvel aliment à introduire dans la ration : on procède…",o:["D'un seul coup pour habituer rapidement","Progressivement sur 7 à 10 jours","Jamais, on garde toujours le même aliment"],b:1}]},
+ en:{ti:"Feeding: the goat browses, it does not graze",tx:[
+ "The goat is a browser, not a grassland ruminant. It seeks leaves, twigs and woody plants rather than short grass. That is its great strength: it uses forage resources inaccessible to cattle and sheep. Excellent forage plants to establish around the farm: Leucaena leucocephala (high protein, but no more than 30% of ration), Gliricidia sepium (very palatable), Moringa oleifera (rich in minerals), Stylosanthes guianensis (fibre), well-wilted cassava leaves, banana stems, acacia pods.",
+ "In housed or semi-intensive systems, the base ration (forage ad lib) is supplemented with 200–400 g of concentrate per day by stage: maintenance = 200 g, advanced gestation (last month) = 300–400 g, lactation = 400 g or more depending on number of kids. Minerals: lick block or premix — phosphorus and calcium deficiency is common in acidic tropical soils. Never introduce a new feed abruptly: gradual transition over 7–10 days.",
+ "Water is often overlooked for goats but is essential. An adult drinks 3–6 litres a day; a nursing doe can drink twice that. Water must be clean and cool — the goat refuses warm or fouled water and suffers silently. Flushing: give 300–500 g of an energy supplement (maize bran, dried cassava) for 2–3 weeks before the planned mating. Studies in West Africa showed fertility improving from 28% to 81% with flushing alone."],
+ qz:[{q:"The goat naturally prefers…",o:["Short grass like cattle","Leaves, twigs and woody plants (browser)","Seeds and grains"],b:1},
+     {q:"Leucaena must not exceed … of the goat ration.",o:["5%","30%","80%"],b:1},
+     {q:"Daily water intake of an adult doe is about…",o:["0.5 litre","3 to 6 litres","20 litres"],b:1},
+     {q:"Nutritional flushing before mating aims to…",o:["Fatten the doe before kidding","Improve fertility and prolificacy","Reduce feed intake"],b:1},
+     {q:"A new feed to introduce in the ration: you proceed…",o:["All at once to get the goat used to it quickly","Gradually over 7 to 10 days","Never — always keep the same feed"],b:1}]}},
+
+{fr:{ti:"Le cycle de reproduction : la clé du revenu",tx:[
+ "La chèvre tropicale est polyœstrienne : elle peut se reproduire toute l'année, sans saisonnalité marquée. C'est son grand avantage sur les ovins et les bovins d'Europe. Cycle de 21 jours. Chaleurs durant 24 à 48 heures — courtes, donc à ne pas rater. Signes de chaleurs : chèvre agitée, qui bêle fréquemment, vulve légèrement gonflée et rosée, queue qui remue. En présence du bouc, elle s'immobilise pour lui. Saillie naturelle : surveiller que la saillie a bien eu lieu, noter la date.",
+ "Gestation : 150 jours (5 mois). Mémo : 5 mois pile. Première mise bas : en moyenne à 15,3 mois en Afrique de l'Ouest en système extensif — on peut viser 12 à 14 mois en semi-intensif avec une bonne alimentation. Ne pas saillir une chevrette trop jeune ou trop légère : risque de dystocie (mise bas difficile) et de mortalité maternelle. Prolificité moyenne en Afrique : 1,46 — les jumeaux sont la règle, pas l'exception, surtout chez la naine.",
+ "Objectif de conduite : 3 mises bas en 2 ans. Pour y parvenir : sevrer les chevreaux à 60–75 jours, saillir la chèvre 2 à 3 semaines après le sevrage, obtenir une gestation de 150 jours, soit un intervalle total entre mises bas d'environ 8 mois. Notez chaque saillie dans CuniSmart avec la date exacte : le logiciel calcule automatiquement la date prévue de mise bas et vous alerte à l'approche."],
+ qz:[{q:"La gestation de la chèvre dure…",o:["114 jours","150 jours (5 mois)","283 jours"],b:1},
+     {q:"La prolificité moyenne de la chèvre en Afrique de l'Ouest est de…",o:["0,8 (un chevreau sur deux mises bas)","1,46 (souvent des jumeaux)","3,0 (triplets systématiques)"],b:1},
+     {q:"L'objectif de conduite pour un élevage caprin bien géré est de…",o:["1 mise bas par an","3 mises bas en 2 ans","5 mises bas par an"],b:1},
+     {q:"La durée des chaleurs chez la chèvre est de…",o:["5 à 7 jours","24 à 48 heures","1 semaine"],b:1},
+     {q:"Pour atteindre l'objectif de 3 mises bas en 2 ans, le sevrage des chevreaux se fait vers…",o:["2 semaines","60 à 75 jours","6 mois"],b:1}]},
+ en:{ti:"The reproduction cycle: the key to income",tx:[
+ "The tropical goat is polyoestrous: it can breed year-round without marked seasonality. That is its great advantage over European sheep and cattle. 21-day cycle. Oestrus lasts 24–48 hours — short, so not to be missed. Signs of heat: restless doe, frequent bleating, slightly swollen and pink vulva, wagging tail. In the presence of the buck, she stands still for him. Natural mating: watch that mating actually took place, record the date.",
+ "Gestation: 150 days (5 months). Memo: exactly 5 months. First kidding: on average at 15.3 months in West Africa in extensive systems — you can target 12–14 months in semi-intensive with good feeding. Do not mate a too-young or too-light kid: risk of dystocia (difficult birth) and maternal death. Average prolificacy in Africa: 1.46 — twins are the rule, not the exception, especially in the Dwarf.",
+ "Management target: 3 kiddings in 2 years. To achieve this: wean kids at 60–75 days, mate the doe 2–3 weeks after weaning, 150-day gestation, giving a total inter-kidding interval of about 8 months. Record every mating in CuniSmart with the exact date: the software automatically calculates the expected kidding date and alerts you as it approaches."],
+ qz:[{q:"Goat gestation lasts…",o:["114 days","150 days (5 months)","283 days"],b:1},
+     {q:"Average prolificacy of the goat in West Africa is…",o:["0.8 (one kid every two births)","1.46 (often twins)","3.0 (always triplets)"],b:1},
+     {q:"The management target for a well-run goat farm is…",o:["1 kidding per year","3 kiddings in 2 years","5 kiddings per year"],b:1},
+     {q:"Oestrus duration in the goat is…",o:["5 to 7 days","24 to 48 hours","1 week"],b:1},
+     {q:"To reach the target of 3 kiddings in 2 years, kids are weaned around…",o:["2 weeks","60 to 75 days","6 months"],b:1}]}},
+
+/* ---------- NIVEAU 2 : CONFIRMÉ (5-10) ---------- */
+{fr:{ti:"La mise bas et les premiers jours des chevreaux",tx:[
+ "La mise bas est le moment le plus critique du cycle. Préparer un box de mise bas propre, sec et calme 5 jours avant la date prévue (calculée par CuniSmart). Signes avant-coureurs 24 à 48 h avant : creusement du flanc, ligament sacro-sciatique relâché (la croupe s'affaisse), mamelon qui gonfle et laisse parfois s'écouler du colostrum. La chèvre s'isole du groupe et gratte la litière. Ne pas intervenir si tout progresse normalement — mais surveiller.",
+ "Dès la naissance, le chevreau doit téter le colostrum dans les 2 premières heures. Le colostrum est irremplaçable : il transmet l'immunité maternelle. Un chevreau qui ne tète pas dans les 2 premières heures a très peu de chances de survivre sans intervention. Guidez les jumeaux vers les mamelles — la dominance entre jumeaux commence dès la première heure, et le plus faible peut mourir de faim à côté d'une mère qui a du lait. En cas de gestation triple, envisagez l'adoption par une autre chèvre.",
+ "Pesez chaque chevreau à la naissance : un chevreau sous 1 kg a un pronostic très réservé. Sous 800 g, une aide intensive s'impose. Dans les premiers jours : chaleur artificielle la nuit si la température descend (le chevreau n'a pas de réserve de graisse), lait ou colostrum de substitution si la mère n'en a pas assez, surveillance des diarrhées (signe précoce de coccidiose ou d'entérite). Les infestations parasitaires commencent dès la 2ème semaine de vie en zone tropicale humide."],
+ qz:[{q:"Dans combien de temps le chevreau doit-il impérativement téter le colostrum ?",o:["Dans les 2 premières heures","Dans les 24 heures","Dans la première semaine"],b:0},
+     {q:"Le poids à la naissance en dessous duquel un chevreau est en danger critique est…",o:["2 kg","1 kg","500 g"],b:1},
+     {q:"Un chevreau jumeau plus faible peut mourir de faim parce que…",o:["Il n'aime pas le lait","La dominance entre jumeaux commence dès la première heure, et il est écarté de la mamelle","Il n'a pas de réflexe de tétée"],b:1},
+     {q:"En zone tropicale humide (Cameroun), les parasites gastrointestinaux s'installent chez le chevreau dès…",o:["6 mois","2 à 3 semaines de vie","La naissance"],b:1},
+     {q:"Quand préparer le box de mise bas ?",o:["Le jour J","5 jours avant la date prévue","Après la mise bas"],b:1}]},
+ en:{ti:"Kidding and the first days of kids",tx:[
+ "Kidding is the most critical moment of the cycle. Prepare a clean, dry and quiet kidding pen 5 days before the expected date (calculated by CuniSmart). Warning signs 24–48 h before: sunken flanks, relaxed sacro-sciatic ligament (the rump drops), udder filling and sometimes dripping colostrum. The doe separates from the group and paws the bedding. Do not intervene if progress is normal — but watch closely.",
+ "From birth, the kid must suckle colostrum within the first 2 hours. Colostrum is irreplaceable: it passes on maternal immunity. A kid that does not suckle in the first 2 hours has very little chance of survival without intervention. Guide twins to the teats — dominance between twins begins in the first hour, and the weaker one can starve beside a mother with plenty of milk. If a triplet birth, consider fostering onto another doe.",
+ "Weigh each kid at birth: a kid under 1 kg has a very guarded prognosis. Under 800 g, intensive care is needed. In the first days: artificial heat at night if temperature drops (the kid has no fat reserves), substitute milk or colostrum if the dam does not have enough, watch for diarrhoea (early sign of coccidiosis or enteritis). Parasite infestations begin as early as week 2 of life in humid tropical zones."],
+ qz:[{q:"How soon must a kid suckle colostrum?",o:["Within the first 2 hours","Within 24 hours","Within the first week"],b:0},
+     {q:"The birth weight below which a kid is in critical danger is…",o:["2 kg","1 kg","500 g"],b:1},
+     {q:"A weaker twin kid can starve because…",o:["It does not like milk","Dominance between twins starts in the first hour and it is pushed away from the teat","It has no suckling reflex"],b:1},
+     {q:"In humid tropical zones (Cameroon), gastrointestinal parasites establish in kids from…",o:["6 months","2 to 3 weeks of life","Birth"],b:1},
+     {q:"When should the kidding pen be prepared?",o:["On the day","5 days before the expected date","After kidding"],b:1}]}},
+
+{fr:{ti:"La mortalité présevrage : comprendre et agir",tx:[
+ "La mortalité présevrage des chevreaux est la première contrainte documentée de l'élevage caprin en Afrique de l'Ouest (Missohou et al., CIRAD/REMVT, 2016). Elle peut dépasser 30 % en système extensif. Elle réduit de moitié la productivité numérique du troupeau. Comprendre ses causes, c'est savoir où intervenir. Quatre causes principales : l'hypothermie nocturne (le chevreau naît sans graisse de réserve et ne régule pas encore sa température), le déficit de colostrum, la diarrhée néonatale (entérite, coccidiose), et la sous-alimentation de la mère (une chèvre maigre n'a pas assez de lait).",
+ "Les actions qui font vraiment la différence : 1) Box de mise bas propre et sec — un chevreau qui naît sur une litière humide et froide perd sa chaleur corporelle en quelques heures. 2) Colostrum dans les 2 premières heures — systématique, même pour les chevreaux vigoureux. 3) Pesée à la naissance et chaque semaine — un chevreau qui perd du poids deux semaines de suite est un signal d'alarme. 4) Chaleur artificielle la nuit les 10 premiers jours en cas de fraîcheur nocturne. 5) Déparasitage de la mère avant la mise bas — une mère déparasitée infeste moins le sol.",
+ "La mortalité après le 15ème jour est dominée par le parasitisme (coccidiose, strongles). La prévention passe par le plancher surélevé ou la litière sèche renouvelée, et par un déparasitage ciblé dès les premiers signes (diarrhée, amaigrissement, chevreau qui traine). Objectif réaliste en semi-intensif maîtrisé : ramener la mortalité présevrage sous 10 %."],
+ qz:[{q:"La principale cause de mortalité des chevreaux dans les premières 48 heures est…",o:["Les maladies virales","L'hypothermie (le chevreau n'a pas de réserve de chaleur) et le déficit de colostrum","Les prédateurs"],b:1},
+     {q:"Après le 15ème jour, la principale cause de mortalité des chevreaux devient…",o:["L'hypothermie","Le parasitisme gastrointestinal (coccidiose, strongles)","Les fractures"],b:1},
+     {q:"Un objectif réaliste de mortalité présevrage en semi-intensif maîtrisé est…",o:["0 %","Moins de 10 %","30 %"],b:1},
+     {q:"Déparasiter la mère avant la mise bas permet de…",o:["Améliorer la qualité du lait uniquement","Réduire la contamination du sol et donc l'infestation précoce des chevreaux","Prévenir la PPR"],b:1},
+     {q:"Le signe qui doit alerter immédiatement sur un chevreau est…",o:["Il dort beaucoup les premières heures","Il perd du poids deux semaines de suite","Il tète souvent"],b:1}]},
+ en:{ti:"Pre-weaning mortality: understand and act",tx:[
+ "Pre-weaning kid mortality is the most documented constraint of goat farming in West Africa (Missohou et al., CIRAD/REMVT, 2016). It can exceed 30% in extensive systems. It halves the numerical productivity of the herd. Understanding its causes means knowing where to act. Four main causes: overnight hypothermia (the kid is born with no fat reserves and cannot yet regulate its temperature), colostrum deficit, neonatal diarrhoea (enteritis, coccidiosis), and dam underfeeding (a thin doe does not have enough milk).",
+ "The actions that really make a difference: 1) Clean dry kidding pen — a kid born on cold wet bedding loses body heat within hours. 2) Colostrum in the first 2 hours — systematic, even for vigorous kids. 3) Weigh at birth and every week — a kid losing weight for two consecutive weeks is an alarm signal. 4) Artificial heat at night for the first 10 days if nights are cool. 5) Deworm the dam before kidding — a dewormed dam contaminates the ground less.",
+ "Mortality after day 15 is dominated by parasitism (coccidiosis, strongyles). Prevention rests on slatted floors or regularly changed dry bedding, and targeted deworming at the first signs (diarrhoea, weight loss, lagging kid). Realistic target in well-managed semi-intensive: bring pre-weaning mortality below 10%."],
+ qz:[{q:"The main cause of kid mortality in the first 48 hours is…",o:["Viral disease","Hypothermia (the kid has no heat reserves) and colostrum deficit","Predators"],b:1},
+     {q:"After day 15, the main cause of kid mortality becomes…",o:["Hypothermia","Gastrointestinal parasitism (coccidiosis, strongyles)","Fractures"],b:1},
+     {q:"A realistic pre-weaning mortality target in well-managed semi-intensive is…",o:["0%","Below 10%","30%"],b:1},
+     {q:"Deworming the dam before kidding reduces…",o:["Milk quality only","Ground contamination and thus early infestation of kids","PPR"],b:1},
+     {q:"The sign that should immediately alert you about a kid is…",o:["It sleeps a lot in the first hours","It loses weight for two consecutive weeks","It suckles often"],b:1}]}},
+
+{fr:{ti:"Le parasitisme gastrointestinal : le tueur silencieux",tx:[
+ "Le parasitisme gastrointestinal est la première cause de morbidité et de mortalité caprine en zone tropicale humide. Des études réalisées à Dschang, dans l'Ouest du Cameroun, ont identifié cinq familles de parasites chez des chevreaux dès la 2ème semaine de vie : Eimeria (coccidiose), Strongyloides, Moniezia, Trichostrongylidae (strongles) et Trichuris. Les Eimeria s'installent en premier. Une litière humide multiplie les infestations. Un chevreau parasité mange mais maigrit — c'est le signe distinctif.",
+ "La méthode FAMACHA est l'outil de déparasitage le plus efficace et le plus durable en zone tropicale. Elle consiste à examiner la couleur des muqueuses oculaires conjonctivales (la muqueuse de la paupière inférieure) : rose vif = non anémié, pas besoin de traiter ; rose pâle = surveiller ; blanc = traiter immédiatement. On ne déparasite que les animaux qui en ont besoin — pas tout le troupeau à date fixe. Cela évite la résistance aux anthelminthiques, signalée dans de nombreux pays africains.",
+ "Anthelminthiques efficaces en Afrique tropicale : albendazole (efficacité > 95 % confirmée au Cameroun et en Côte d'Ivoire), ivermectine (parasites internes et externes). Pour la coccidiose : sulfamides (sulfadiméthoxine, toltrazuril). Important : ne jamais utiliser le même anthelminthique en continu. Rotation des molécules pour limiter la résistance. Ne pas traiter les femelles gestantes au premier trimestre sans avis vétérinaire."],
+ qz:[{q:"La méthode FAMACHA consiste à examiner…",o:["La couleur des selles","La couleur des muqueuses oculaires pour détecter l'anémie","Le poids hebdomadaire"],b:1},
+     {q:"Le principal avantage du déparasitage ciblé (FAMACHA) par rapport au déparasitage systématique est…",o:["Il est gratuit","Il évite la résistance aux anthelminthiques en ne traitant que les animaux qui en ont besoin","Il est plus rapide"],b:1},
+     {q:"Un chevreau parasité se reconnaît à…",o:["Il mange trop","Il mange mais maigrit, a des diarrhées et traine derrière le troupeau","Il a de la fièvre toujours"],b:1},
+     {q:"Pour prévenir les parasites gastrointestinaux, la mesure de logement la plus efficace est…",o:["Augmenter la densité","Utiliser un plancher surélevé à claire-voie ou une litière sèche renouvelée","Laisser les chèvres divaguer"],b:1},
+     {q:"La résistance aux anthelminthiques en Afrique tropicale est…",o:["Un mythe, les parasites ne résistent pas","Un phénomène documenté dans plusieurs pays (RDC, Éthiopie, Sénégal)","Seulement possible chez les bovins"],b:1}]},
+ en:{ti:"Gastrointestinal parasitism: the silent killer",tx:[
+ "Gastrointestinal parasitism is the leading cause of goat morbidity and mortality in humid tropical areas. Studies at Dschang, West Cameroon, identified five parasite families in kids from week 2 of life: Eimeria (coccidiosis), Strongyloides, Moniezia, Trichostrongylidae (strongyles) and Trichuris. Eimeria establishes first. Damp bedding multiplies infestations. A parasitised kid eats but loses weight — the distinctive sign.",
+ "The FAMACHA method is the most effective and sustainable deworming tool in the tropics. It involves examining the colour of the ocular conjunctival mucosa (the mucous membrane of the lower eyelid): bright pink = not anaemic, no need to treat; pale pink = monitor; white = treat immediately. Only animals that need it are treated — not the whole herd on a fixed schedule. This avoids anthelmintic resistance, documented in many African countries.",
+ "Effective anthelmintics in tropical Africa: albendazole (>95% efficacy confirmed in Cameroon and Ivory Coast), ivermectin (internal and external parasites). For coccidiosis: sulphonamides (sulfadimethoxine, toltrazuril). Important: never use the same anthelmintic continuously. Rotate molecules to limit resistance. Do not treat pregnant does in the first trimester without veterinary advice."],
+ qz:[{q:"The FAMACHA method involves examining…",o:["Droppings colour","Ocular mucous membrane colour to detect anaemia","Weekly body weight"],b:1},
+     {q:"The main advantage of targeted deworming (FAMACHA) over blanket deworming is…",o:["It is free","It avoids anthelmintic resistance by treating only animals that need it","It is faster"],b:1},
+     {q:"A parasitised kid is recognised by…",o:["It eats too much","It eats but loses weight, has diarrhoea and lags behind the herd","It always has a fever"],b:1},
+     {q:"To prevent gastrointestinal parasites, the most effective housing measure is…",o:["Increase density","Use a raised slatted floor or regularly changed dry bedding","Let goats scavenge"],b:1},
+     {q:"Anthelmintic resistance in tropical Africa is…",o:["A myth, parasites do not resist","A documented phenomenon in several countries (DRC, Ethiopia, Senegal)","Only possible in cattle"],b:1}]}},
+
+{fr:{ti:"La PPR et les maladies principales du caprin",tx:[
+ "La Peste des Petits Ruminants (PPR) est la maladie infectieuse la plus dangereuse pour les caprins en Afrique. Virale, très contagieuse, mortalité jusqu'à 80 % chez les chèvres naïves. Signalée pour la première fois en Côte d'Ivoire en 1942, elle est aujourd'hui endémique dans la quasi-totalité de l'Afrique subsaharienne. Signes cliniques : fièvre brusque (41–42 °C), larmoiements et écoulements nasaux abondants (sécrétions qui deviennent mucopurulentes), lésions dans la bouche (nécrose de la gencive, de la langue), diarrhée profuse, animal prostré. Mort en 5 à 10 jours.",
+ "Bonne nouvelle majeure : un vaccin existe et confère une immunité à vie. Le vaccin vivant atténué (souche Nig. 75/1) est disponible dans la plupart des pays d'Afrique centrale et de l'Ouest. Des vaccins thermostables (Xerovac) sont déployés pour pallier les problèmes de chaîne du froid. Vacciner toutes les chèvres, petits élevages compris. L'immunité est à vie pour les femelles — les boucs et béliers doivent être revaccinés. Exigez que le vaccin soit sorti d'un réfrigérateur au moment de l'injection : un vaccin qui a rompu la chaîne du froid ne protège plus.",
+ "Autres maladies à surveiller : l'entérotoxémie (Clostridium perfringens — mort subite sans signe préalable, vaccin disponible), la brucellose (avortements répétés, fièvre ondulante transmissible à l'humain — ne jamais consommer le lait cru d'une chèvre ayant avorté), le piétin (boiterie intense, odeur nauséabonde entre les onglons, très contagieux en sol humide)."],
+ qz:[{q:"La PPR confère une immunité à vie grâce à…",o:["Un traitement antibiotique","La vaccination avec le vaccin vivant atténué","L'exposition naturelle sans danger"],b:1},
+     {q:"Un vaccin PPR sorti d'un réfrigérateur depuis plusieurs heures au soleil tropical…",o:["Reste efficace 24 heures","Est probablement inactif et ne protégera pas","Devient encore plus puissant"],b:1},
+     {q:"La brucellose caprine est dangereuse pour l'humain car…",o:["Elle provoque des éruptions cutanées","Elle est transmissible à l'humain par le lait cru et les avortements","Elle est toujours mortelle chez la chèvre"],b:1},
+     {q:"La mortalité de la PPR chez des chèvres non vaccinées peut atteindre…",o:["5 %","80 %","100 % toujours"],b:1},
+     {q:"Le piétin se propage surtout dans…",o:["Les zones sèches et chaudes","Les sols humides — très contagieux en saison des pluies","Les zones de montagne uniquement"],b:1}]},
+ en:{ti:"PPR and the main goat diseases",tx:[
+ "Peste des Petits Ruminants (PPR) is the most dangerous infectious disease for goats in Africa. Viral, highly contagious, mortality up to 80% in naive animals. First reported in Ivory Coast in 1942, it is now endemic throughout most of sub-Saharan Africa. Clinical signs: sudden high fever (41–42 °C), heavy eye and nose discharge (becoming mucopurulent), mouth lesions (gum and tongue necrosis), profuse diarrhoea, prostrate animal. Death in 5–10 days.",
+ "Major good news: a vaccine exists and gives lifelong immunity. The live attenuated vaccine (strain Nig. 75/1) is available in most Central and West African countries. Thermostable vaccines (Xerovac) are being rolled out to address cold-chain problems. Vaccinate all goats, including small flocks. Immunity is lifelong for females — bucks and rams must be revaccinated. Insist that the vaccine comes out of a refrigerator at the time of injection: a vaccine that has broken the cold chain no longer protects.",
+ "Other diseases to watch: enterotoxaemia (Clostridium perfringens — sudden death without prior sign, vaccine available), brucellosis (repeated abortions, undulant fever transmissible to humans — never consume raw milk from a doe that has aborted), footrot (severe lameness, foul smell between the claws, highly contagious in wet ground)."],
+ qz:[{q:"PPR confers lifelong immunity through…",o:["Antibiotic treatment","Vaccination with the live attenuated vaccine","Natural exposure without danger"],b:1},
+     {q:"A PPR vaccine left out of a refrigerator for several hours in tropical sun…",o:["Stays effective for 24 hours","Is probably inactive and will not protect","Becomes even more powerful"],b:1},
+     {q:"Caprine brucellosis is dangerous for humans because…",o:["It causes skin rashes","It is transmissible to humans through raw milk and abortions","It is always fatal in goats"],b:1},
+     {q:"PPR mortality in unvaccinated goats can reach…",o:["5%","80%","Always 100%"],b:1},
+     {q:"Footrot spreads mainly in…",o:["Dry hot areas","Wet ground — highly contagious in the rainy season","Mountain areas only"],b:1}]}},
+
+/* ---------- NIVEAU 3 : EXPERT (10-16) ---------- */
+{fr:{ti:"Alimentation avancée et plantes fourragères",tx:[
+ "En système semi-intensif maîtrisé, l'alimentation est le principal levier de performance. Le fourrage ligneux local (Leucaena, Gliricidia, Moringa) peut couvrir 60 à 80 % des besoins protéiques d'une chèvre à l'entretien. Mais en fin de gestation (dernier mois) et en début de lactation, les besoins augmentent de 50 à 80 % : un complément concentré devient indispensable. Rationnement recommandé : 300 à 400 g de concentré (son + tourteau d'arachide + prémix) par jour.",
+ "Le flushing (suralimentation prénatale) est la technique à plus fort retour sur investissement en élevage caprin africain. Des essais menés en Afrique de l'Ouest ont montré une amélioration de la fertilité de 28 % à 81 % et de la fécondité de 25 % à 69 % avec 500 g de manioc sec par jour pendant 45 jours avant la saillie. Mécanisme : l'excès d'énergie stimule l'axe hypothalamo-hypophysaire, augmente la pulsatilité de la LH et l'ovulation. En pratique : commencer le flushing 2 à 3 semaines avant la date de saillie prévue.",
+ "Plantes fourragères à installer : Leucaena leucocephala (protéines 25–30 %, mais ne pas dépasser 30 % de la ration — contient de la mimosin), Gliricidia sepium (palatabilité excellente, protéines 22–25 %), Moringa oleifera (vitamines, minéraux, protéines 27 %), Stylosanthes guianensis (fibres, légumineuse tropicale). Taille des arbustes : couper à 1 m de hauteur pour la repousse. Un hectare de Leucaena bien géré peut nourrir 20 à 30 chèvres en complément."],
+ qz:[{q:"Le flushing alimentaire augmente la fertilité en stimulant…",o:["La production de lait uniquement","L'axe hormonal reproducteur via l'excès d'énergie","La résistance aux parasites"],b:1},
+     {q:"Le Leucaena ne doit pas dépasser 30 % de la ration caprine car…",o:["Il est trop cher","Il contient de la mimosin, molécule qui peut nuire en excès","La chèvre ne l'aime pas"],b:1},
+     {q:"En fin de gestation et en début de lactation, les besoins alimentaires de la chèvre augmentent de…",o:["10 %","50 à 80 %","200 %"],b:1},
+     {q:"Le flushing doit commencer…",o:["Le jour de la saillie","2 à 3 semaines avant la saillie prévue","6 mois avant"],b:1},
+     {q:"Le Moringa est particulièrement utile dans la ration caprine car…",o:["Il est riche en sucres","Il apporte vitamines, minéraux et protéines (27 %)","Il est facile à conserver"],b:1}]},
+ en:{ti:"Advanced feeding and fodder plants",tx:[
+ "In well-managed semi-intensive systems, feeding is the main performance lever. Local woody forage (Leucaena, Gliricidia, Moringa) can cover 60–80% of a maintenance doe's protein needs. But in late gestation (last month) and early lactation, needs rise by 50–80%: a concentrate supplement becomes essential. Recommended ration: 300–400 g concentrate (bran + groundnut cake + premix) per day.",
+ "Flushing (pre-mating overfeeding) has the highest return on investment in African goat farming. Trials in West Africa showed fertility improving from 28% to 81% and fecundity from 25% to 69% with 500 g dried cassava per day for 45 days before mating. Mechanism: excess energy stimulates the hypothalamic-pituitary axis, increases LH pulsatility and ovulation. In practice: start flushing 2–3 weeks before the planned mating date.",
+ "Forage plants to establish: Leucaena leucocephala (protein 25–30%, but no more than 30% of ration — contains mimosine), Gliricidia sepium (excellent palatability, protein 22–25%), Moringa oleifera (vitamins, minerals, protein 27%), Stylosanthes guianensis (fibre, tropical legume). Pruning: cut shrubs at 1 m height for regrowth. One well-managed hectare of Leucaena can supplement 20–30 goats."],
+ qz:[{q:"Nutritional flushing improves fertility by stimulating…",o:["Milk production only","The reproductive hormonal axis through energy surplus","Parasite resistance"],b:1},
+     {q:"Leucaena must not exceed 30% of the goat ration because…",o:["It is too expensive","It contains mimosine, which can be harmful in excess","Goats do not like it"],b:1},
+     {q:"In late gestation and early lactation, the doe's feed needs increase by…",o:["10%","50 to 80%","200%"],b:1},
+     {q:"Flushing should start…",o:["On mating day","2 to 3 weeks before the planned mating","6 months before"],b:1},
+     {q:"Moringa is especially useful in goat rations because…",o:["It is rich in sugars","It provides vitamins, minerals and protein (27%)","It is easy to store"],b:1}]}},
+
+{fr:{ti:"Piloter la reproduction pour 3 mises bas en 2 ans",tx:[
+ "L'objectif de 3 mises bas en 2 ans est ambitieux mais réalisable en zone tropicale avec une conduite rigoureuse. Le calcul : gestation 150 jours + allaitement 60 jours + repos post-sevrage + intervalle saillie-conception ≈ 240 jours → intervalle entre mises bas de 8 mois. Trois mises bas en 24 mois = 24 ÷ 8 = 3. Trois mises bas de 1,46 chevreau donnent 4,38 chevreaux par chèvre et par an — contre 1,46 en système extensif avec une seule mise bas annuelle.",
+ "La technique de l'effet mâle est un outil puissant et gratuit pour synchroniser les mises bas et induire l'ovulation en saison de faible activité sexuelle. Principe : isoler les femelles de tout contact olfactif et visuel avec le bouc pendant 3 à 4 semaines, puis l'introduire brutalement. La stimulation olfactive par les phéromones du bouc déclenche une ovulation en 3 à 4 jours et synchronise les chaleurs du groupe. Résultat : mise bas groupée, surveillance facilitée, lots de chevreaux homogènes à vendre ensemble.",
+ "Sélection sur la prolificité : notez systématiquement dans CuniSmart le nombre de nés vivants à chaque mise bas. Conservez comme futures reproductrices les filles des chèvres qui donnent le plus souvent des jumeaux. Évitez les accouplements consanguins (père × fille, mère × fils, frère × sœur) : notez père et mère de chaque chevreau dès la naissance. Une consanguinité répétée sur 2 à 3 générations réduit la prolificité et la vigueur."],
+ qz:[{q:"L'effet mâle consiste à…",o:["Donner plus d'aliment au bouc","Introduire brutalement un bouc dans un groupe de femelles isolées de tout contact mâle pour déclencher l'ovulation","Castrer les boucs non reproducteurs"],b:1},
+     {q:"L'objectif de 3 mises bas en 2 ans est atteignable car l'intervalle entre mises bas peut être de…",o:["3 mois","8 mois","18 mois"],b:1},
+     {q:"3 mises bas avec une prolificité de 1,46 donnent environ … chevreaux par chèvre et par an.",o:["1,46","4,4","10"],b:1},
+     {q:"Pour éviter la consanguinité dans son troupeau, l'éleveur doit…",o:["Vendre tous les boucs nés","Noter père et mère de chaque chevreau et renouveler le bouc régulièrement","Séparer tous les mâles dès la naissance"],b:1},
+     {q:"Les mises bas groupées (grâce à l'effet mâle) facilitent…",o:["L'alimentation des chèvres","La surveillance, et permettent de vendre des lots de chevreaux homogènes","La vaccination PPR"],b:1}]},
+ en:{ti:"Steering reproduction to 3 kiddings in 2 years",tx:[
+ "The target of 3 kiddings in 2 years is ambitious but achievable in the tropics with rigorous management. The calculation: 150-day gestation + 60-day suckling + post-weaning rest + mating-conception interval ≈ 240 days → inter-kidding interval of 8 months. Three kiddings in 24 months = 24 ÷ 8 = 3. Three kiddings at 1.46 prolificacy give 4.38 kids per doe per year — vs 1.46 in extensive systems with one annual kidding.",
+ "The male effect technique is a powerful free tool to synchronise kiddings and induce ovulation in a period of low sexual activity. Principle: isolate females from any olfactory or visual contact with the buck for 3–4 weeks, then introduce him abruptly. Olfactory stimulation by buck pheromones triggers ovulation in 3–4 days and synchronises group oestrus. Result: grouped kidding, easier monitoring, homogeneous kid groups to sell together.",
+ "Selection for prolificacy: systematically record in CuniSmart the number of live births at each kidding. Keep as future breeders the daughters of does that most often give twins. Avoid inbred matings (sire × daughter, dam × son, brother × sister): record sire and dam of every kid at birth. Inbreeding repeated over 2–3 generations reduces prolificacy and vigour."],
+ qz:[{q:"The male effect consists of…",o:["Giving the buck more feed","Abruptly introducing a buck into a group of females isolated from all male contact to trigger ovulation","Castrating non-breeding bucks"],b:1},
+     {q:"The target of 3 kiddings in 2 years is achievable because the inter-kidding interval can be…",o:["3 months","8 months","18 months"],b:1},
+     {q:"3 kiddings at 1.46 prolificacy give about … kids per doe per year.",o:["1.46","4.4","10"],b:1},
+     {q:"To avoid inbreeding in the herd, the farmer must…",o:["Sell all bucks born","Record sire and dam of every kid and replace the buck regularly","Separate all males at birth"],b:1},
+     {q:"Grouped kiddings (via the male effect) facilitate…",o:["Doe feeding","Monitoring, and allow homogeneous kid groups to be sold together","PPR vaccination"],b:1}]}},
+
+{fr:{ti:"Lutte intégrée contre les parasites",tx:[
+ "Le déparasitage systématique aveugle (toutes les chèvres, à date fixe, avec le même produit) est à proscrire en zone tropicale. Il accélère la résistance aux anthelminthiques, documentée en RDC, Éthiopie, Gambie et Sénégal avec l'albendazole. La lutte intégrée combine plusieurs approches pour réduire la pression parasitaire sans épuiser les molécules disponibles.",
+ "Les cinq piliers de la lutte intégrée caprine : 1) FAMACHA — traiter uniquement les animaux anémiés (muqueuse blanche). 2) Rotation des pâturages — laisser chaque parcelle se reposer 3 semaines minimum sans animaux, les larves de strongles meurent par dessiccation. 3) Plancher surélevé ou litière sèche — les larves ne montent pas. 4) Déparasitage ciblé post-partum — la chèvre qui vient de mettre bas est immunodéprimée et très sensible : déparasite systématiquement. 5) Rotation des anthelminthiques — alterner benzimidazoles (albendazole), lactones macrocycliques (ivermectine), et lévamisole selon les résultats de contrôle.",
+ "La nutrition est aussi un outil antiparasitaire : un animal bien nourri développe une immunité naturelle contre les parasites bien plus robuste qu'un animal sous-alimenté. Des études ont montré qu'une supplémentation protéique (tourteau de soja, Leucaena) augmente significativement la résistance des caprins aux strongles. Le tanin des plantes comme l'acacia ou le sorgho rouge a un effet anthelminthique naturel documenté."],
+ qz:[{q:"Le déparasitage systématique aveugle à date fixe est problématique car…",o:["Il coûte trop cher","Il accélère la résistance aux anthelminthiques","Il est interdit par la loi"],b:1},
+     {q:"La rotation des pâturages réduit les parasites en…",o:["Tuant les larves par dessiccation quand la parcelle est vide pendant 3 semaines","Améliorant la qualité de l'herbe","Réduisant l'appétit des parasites"],b:1},
+     {q:"Parmi les 5 piliers de la lutte intégrée, quel est le moment où un déparasitage SYSTÉMATIQUE est justifié ?",o:["Tous les 3 mois pour toutes les chèvres","Uniquement après la mise bas (immunodépression post-partum)","Jamais"],b:1},
+     {q:"La nutrition améliore la résistance aux parasites car…",o:["Un animal bien nourri produit des défenses immunitaires plus robustes","Les parasites n'aiment pas les aliments riches","Les parasites meurent avec un aliment trop énergétique"],b:1},
+     {q:"La rotation des anthelminthiques vise à…",o:["Réduire les coûts","Limiter la résistance en évitant l'utilisation continue d'une seule molécule","Améliorer le goût du lait"],b:1}]},
+ en:{ti:"Integrated parasite control",tx:[
+ "Blanket systematic deworming (all goats, on a fixed date, with the same product) must be avoided in the tropics. It accelerates anthelmintic resistance, documented in DRC, Ethiopia, Gambia and Senegal with albendazole. Integrated control combines several approaches to reduce parasite pressure without exhausting the available molecules.",
+ "The five pillars of integrated caprine parasite control: 1) FAMACHA — treat only anaemic animals (white mucosa). 2) Pasture rotation — let each plot rest at least 3 weeks without animals; strongyle larvae die by desiccation. 3) Slatted floor or dry bedding — larvae cannot climb. 4) Targeted post-partum deworming — the doe that has just kidded is immunosuppressed and very susceptible: deworm systematically. 5) Anthelmintic rotation — alternate benzimidazoles (albendazole), macrocyclic lactones (ivermectin) and levamisole based on control results.",
+ "Nutrition is also an antiparasitic tool: a well-fed animal develops natural immunity to parasites far more robustly than an underfed one. Studies have shown that protein supplementation (soybean cake, Leucaena) significantly increases caprine resistance to strongyles. Tannins from plants such as acacia or red sorghum have a documented natural anthelmintic effect."],
+ qz:[{q:"Blanket systematic deworming on a fixed date is problematic because…",o:["It costs too much","It accelerates anthelmintic resistance","It is forbidden by law"],b:1},
+     {q:"Pasture rotation reduces parasites by…",o:["Killing larvae by desiccation when the plot is empty for 3 weeks","Improving grass quality","Reducing parasite appetite"],b:1},
+     {q:"Among the 5 pillars of integrated control, when is SYSTEMATIC deworming justified?",o:["Every 3 months for all goats","Only after kidding (post-partum immunosuppression)","Never"],b:1},
+     {q:"Good nutrition improves parasite resistance because…",o:["A well-fed animal builds more robust immune defences","Parasites dislike rich feed","Parasites die with energy-dense feed"],b:1},
+     {q:"Anthelmintic rotation aims to…",o:["Reduce costs","Limit resistance by avoiding continuous use of a single molecule","Improve milk flavour"],b:1}]}},
+
+{fr:{ti:"Santé avancée et biosécurité caprine",tx:[
+ "La quarantaine de tout nouvel animal (3 semaines minimum, dans un espace totalement isolé du reste du troupeau) est la première règle de biosécurité. Pendant cette période : déparasitage interne et externe, vaccination PPR si non documentée, examen clinique complet. Ne jamais introduire un animal acheté dans un marché sans quarantaine — les marchés de bétail sont les principaux vecteurs de diffusion des maladies.",
+ "Brucellose : zoonose majeure. Transmissible à l'humain via le lait cru et les produits des avortements. Signes chez la chèvre : avortements répétés (souvent en fin de gestation), rétention placentaire, arthrite. Protéger absolument : gants lors des mises bas, ne jamais consommer le lait cru d'une chèvre ayant avorté, faire analyser les avortements répétés par un laboratoire. Le piétin (Dichelobacter nodosus) : très contagieux en sol humide ; traitement par bain de pieds au sulfate de cuivre 10 % (2 fois par semaine pendant 3 semaines), puis assèchement.",
+ "Tenue d'un carnet sanitaire rigoureux dans CuniSmart : date de chaque traitement, molécule, dose, animal traité. Un registre sanitaire propre est de plus en plus demandé par les acheteurs urbains qui craignent les résidus médicamenteux dans la viande et le lait. C'est aussi la preuve de votre sérieux pour accéder aux projets de développement et aux financements."],
+ qz:[{q:"La quarantaine d'un nouvel animal dure au minimum…",o:["24 heures","3 semaines","3 mois"],b:1},
+     {q:"La brucellose est dangereuse pour l'éleveur car…",o:["Elle tue toujours la chèvre rapidement","Elle est transmissible à l'humain via le lait cru et les avortements","Elle détruit les cornes des chèvres"],b:1},
+     {q:"Le traitement du piétin repose principalement sur…",o:["Des antibiotiques injectables uniquement","Des bains de pieds au sulfate de cuivre et l'assèchement de la loge","De la vitamine C"],b:1},
+     {q:"Pourquoi tenir un registre sanitaire dans CuniSmart ?",o:["Uniquement pour les contrôles administratifs","Pour détecter les inefficacités de traitement, rassurer les acheteurs et accéder aux financements","Ce n'est pas utile pour les petits élevages"],b:1},
+     {q:"Les marchés de bétail sont particulièrement risqués pour la santé du troupeau car…",o:["Les prix y sont trop élevés","Ce sont les principaux vecteurs de diffusion des maladies (PPR, parasites, etc.)","L'alimentation y est mauvaise"],b:1}]},
+ en:{ti:"Advanced health and goat biosecurity",tx:[
+ "Quarantine of every new animal (minimum 3 weeks, in a space completely isolated from the rest of the herd) is the first biosecurity rule. During this period: internal and external deworming, PPR vaccination if not documented, full clinical examination. Never introduce a market-bought animal without quarantine — livestock markets are the main disease spread vectors.",
+ "Brucellosis: a major zoonosis. Transmissible to humans through raw milk and abortion products. Signs in the goat: repeated abortions (often late in gestation), retained placenta, arthritis. Essential protection: gloves at kidding, never consume raw milk from a doe that has aborted, have repeated abortions analysed by a laboratory. Footrot (Dichelobacter nodosus): highly contagious in wet ground; treat with 10% copper sulphate foot bath (twice a week for 3 weeks), then keep feet dry.",
+ "Keep a rigorous health record in CuniSmart: date of every treatment, molecule, dose, animal treated. A clean health record is increasingly demanded by urban buyers worried about drug residues in meat and milk. It is also proof of your seriousness when applying for development projects and funding."],
+ qz:[{q:"Quarantine of a new animal lasts at minimum…",o:["24 hours","3 weeks","3 months"],b:1},
+     {q:"Brucellosis is dangerous for the farmer because…",o:["It always kills the goat rapidly","It is transmissible to humans through raw milk and abortions","It destroys goat horns"],b:1},
+     {q:"Footrot treatment rests mainly on…",o:["Injectable antibiotics only","Copper sulphate foot baths and keeping the pen dry","Vitamin C"],b:1},
+     {q:"Why keep a health record in CuniSmart?",o:["Only for administrative checks","To detect treatment failures, reassure buyers and access funding","Not useful for small farms"],b:1},
+     {q:"Livestock markets are particularly risky for herd health because…",o:["Prices are too high","They are the main disease spread vectors (PPR, parasites, etc.)","Feed is poor there"],b:1}]}},
+
+{fr:{ti:"La chèvre laitière en zone tropicale",tx:[
+ "La chèvre laitière est souvent sous-estimée en Afrique tropicale. La chèvre naine locale produit 0,3 à 0,5 litre de lait par jour en lactation — modeste mais réel et précieux pour la famille. Un croisé Saanen × local monte à 1 à 2 litres par jour. Une Saanen pure bien conduite peut dépasser 2 à 3 litres. Le lait caprin est naturellement homogénéisé (globules gras plus petits), plus digestible que le lait de vache, et riche en vitamines A et B.",
+ "Techniques de traite : traite à la main, 2 fois par jour (matin et soir), après avoir laissé le chevreau téter quelques minutes pour déclencher la descente du lait (réflexe d'éjection par ocytocine). Ne jamais traire une chèvre dont le chevreau n'est pas encore sevré à plus de 50 % de sa production — le chevreau a la priorité. Hygiène : mains propres, gobelet de trayage propre, filtration du lait, conservation au frais immédiate. En zone tropicale, le lait cru tourne en 2 heures à 30 °C.",
+ "Valorisation : fromage frais (facile, coagulation avec du jus de citron ou présure), yaourt caprin (fermentation à 40–42 °C pendant 6–8 heures), vente en bidon dans les quartiers urbains. Le fromage se vend 3 à 5 fois le prix du lait cru. Un éleveur qui transforme 2 litres de lait par jour en fromage frais multiplie son revenu laitier par 3 à 4 sans investissement majeur."],
+ qz:[{q:"La production de lait d'une chèvre naine locale en lactation est d'environ…",o:["3 à 5 litres par jour","0,3 à 0,5 litre par jour","10 litres par jour"],b:1},
+     {q:"Pourquoi laisser le chevreau téter quelques minutes avant de traire la chèvre ?",o:["Pour rassurer la chèvre","Pour déclencher la descente du lait par le réflexe d'ocytocine","Pour vérifier la qualité du lait"],b:1},
+     {q:"En zone tropicale à 30 °C, le lait caprin cru tourne en…",o:["24 heures","2 heures","1 semaine"],b:1},
+     {q:"La valorisation du lait caprin en fromage frais multiplie le revenu laitier par…",o:["1,1","3 à 5","10"],b:1},
+     {q:"Le lait caprin est plus digestible que le lait de vache car…",o:["Il est moins riche en matières grasses","Les globules gras sont plus petits et naturellement homogénéisés","Il ne contient pas de lactose"],b:1}]},
+ en:{ti:"Dairy goat production in tropical conditions",tx:[
+ "The dairy goat is often underestimated in tropical Africa. The local dwarf goat produces 0.3–0.5 litres of milk per day in lactation — modest but real and precious for the family. A Saanen × local crossbred reaches 1–2 litres per day. A pure Saanen well managed can exceed 2–3 litres. Goat milk is naturally homogenised (smaller fat globules), more digestible than cow milk, and rich in vitamins A and B.",
+ "Milking technique: hand milking, twice a day (morning and evening), after letting the kid suckle for a few minutes to trigger milk letdown (oxytocin ejection reflex). Never milk a doe whose kid is not yet weaned for more than 50% of her output — the kid has priority. Hygiene: clean hands, clean milking cup, strain the milk, refrigerate immediately. In tropical conditions, raw milk turns in 2 hours at 30 °C.",
+ "Adding value: fresh cheese (easy, coagulate with lemon juice or rennet), goat yoghurt (ferment at 40–42 °C for 6–8 hours), sale by the can in urban neighbourhoods. Cheese sells for 3–5 times the price of raw milk. A farmer who processes 2 litres per day into fresh cheese multiplies dairy income by 3–4 without major investment."],
+ qz:[{q:"Milk output of a local dwarf doe in lactation is about…",o:["3 to 5 litres per day","0.3 to 0.5 litre per day","10 litres per day"],b:1},
+     {q:"Why let the kid suckle for a few minutes before milking the doe?",o:["To calm the doe","To trigger milk letdown through the oxytocin reflex","To check milk quality"],b:1},
+     {q:"In tropical conditions at 30 °C, raw goat milk turns in…",o:["24 hours","2 hours","1 week"],b:1},
+     {q:"Processing goat milk into fresh cheese multiplies dairy income by…",o:["1.1","3 to 5","10"],b:1},
+     {q:"Goat milk is more digestible than cow milk because…",o:["It is less rich in fat","The fat globules are smaller and naturally homogenised","It contains no lactose"],b:1}]}},
+
+{fr:{ti:"Pilotage économique du troupeau caprin",tx:[
+ "La chèvre a deux sources de revenu complémentaires : la vente de chevreaux (viande) et la vente du lait (ou des produits laitiers). Dans la majorité des élevages africains, seule la viande est valorisée. Intégrer le lait dans le système de revenus, même modestement, augmente la marge de 30 à 50 % sans augmenter le cheptel. Indicateurs à suivre dans CuniSmart Finances : marge par chevreau produit, coût de production d'un kg de viande caprine vive, taux de mortalité présevrage, intervalle entre mises bas.",
+ "Le marché caprin africain est très saisonnier. Les prix montent fortement lors des fêtes religieuses (Tabaski/Aïd El-Kébir pour les zones à forte population musulmane — le mouton est préféré mais la chèvre remplace quand le mouton manque), lors des fêtes nationales, de Noël, de Pâques. Un éleveur qui planifie ses saillies 8 mois avant ces dates peut améliorer sa marge de 30 à 60 % par rapport à une vente hors saison. La viande caprine a un avantage commercial unique : elle est acceptée par toutes les religions et cultures.",
+ "Le calcul de la marge : recettes (vente chevreaux + vente lait + vente chèvres de réforme) − charges (aliment, santé, amortissement des investissements, main-d'œuvre). La viande et les produits laitiers caprins sont de plus en plus prisés dans les villes africaines. La traçabilité CuniSmart (registre propre, pas d'antibiotiques abusifs) devient un argument de vente auprès des restaurateurs et supermarchés urbains."],
+ qz:[{q:"Intégrer le lait dans les revenus d'un élevage caprin augmente la marge de…",o:["5 %","30 à 50 %","200 %"],b:1},
+     {q:"Quand les prix du caprin sont-ils généralement les plus hauts en Afrique ?",o:["En période de fortes pluies","Lors des fêtes religieuses (Tabaski) et nationales","En pleine saison sèche"],b:1},
+     {q:"La viande caprine a un avantage commercial unique car…",o:["Elle est moins chère que le poulet","Elle est acceptée par toutes les religions et cultures","Elle se conserve plus longtemps"],b:1},
+     {q:"Pour améliorer la marge sans agrandir le cheptel, le levier le plus accessible est…",o:["Acheter plus de boucs","Valoriser le lait en fromage ou yaourt","Changer de race immédiatement"],b:1},
+     {q:"Planifier les saillies 8 mois avant les fêtes religieuses ou nationales permet de…",o:["Réduire les coûts vétérinaires","Vendre au moment des prix les plus hauts et améliorer la marge de 30 à 60 %","Augmenter la prolificité"],b:1}]},
+ en:{ti:"Economic management of the goat herd",tx:[
+ "The goat has two complementary income sources: kid sales (meat) and milk sales (or dairy products). In most African farms, only meat is valorised. Adding milk to the income system, even modestly, raises margin by 30–50% without increasing the herd. Indicators to track in CuniSmart Finances: margin per kid produced, production cost per kg of live goat meat, pre-weaning mortality rate, inter-kidding interval.",
+ "The African goat market is highly seasonal. Prices surge at religious festivals (Eid al-Adha/Tabaski in areas with large Muslim populations — the sheep is preferred but the goat replaces it when sheep are scarce), national holidays, Christmas and Easter. A farmer who plans matings 8 months before these dates can improve margin by 30–60% compared with off-season sales. Goat meat has a unique commercial advantage: it is accepted by all religions and cultures.",
+ "Margin calculation: income (kid sales + milk sales + cull doe sales) − costs (feed, health, investment depreciation, labour). Goat meat and dairy products are increasingly sought after in African cities. CuniSmart traceability (clean records, no antibiotic abuse) is becoming a sales argument with restaurateurs and urban supermarkets."],
+ qz:[{q:"Adding milk to goat farm income raises margin by…",o:["5%","30 to 50%","200%"],b:1},
+     {q:"When are goat prices generally highest in Africa?",o:["During heavy rains","At religious (Eid) and national holidays","In peak dry season"],b:1},
+     {q:"Goat meat has a unique commercial advantage because…",o:["It is cheaper than chicken","It is accepted by all religions and cultures","It keeps longer"],b:1},
+     {q:"To improve margin without expanding the herd, the most accessible lever is…",o:["Buy more bucks","Process milk into cheese or yoghurt","Change breed immediately"],b:1},
+     {q:"Planning matings 8 months before religious or national holidays allows you to…",o:["Reduce vet costs","Sell at peak prices and improve margin by 30–60%","Increase prolificacy"],b:1}]}},
+
+{fr:{ti:"Construire un troupeau caprin durable",tx:[
+ "La chèvre est l'animal d'entrée en élevage par excellence en Afrique tropicale : faible investissement de départ, cycle court, polyvalence (viande, lait, fumier), marché universel. Démarrer avec 5 à 10 chèvres et 1 bouc est la bonne taille pour apprendre sans trop risquer. Le troupeau se capitalise rapidement : une bonne reproductrice caprine peut mettre bas 3 fois en 2 ans pendant 7 à 8 ans de carrière productive — soit jusqu'à 12 mises bas. En gardant les meilleures chevrettes, vous construisez un capital animal sans achat supplémentaire.",
+ "Sélection sur descendance : noter systématiquement dans CuniSmart le nombre de nés vivants, le poids des chevreaux à la naissance et au sevrage, et la valeur laitière estimée de la mère (poids de la portée à 30 jours). Conserver les filles des meilleures reproductrices. Vendre les boucs castrés (chevraux châtrés engraissent mieux et ont une viande plus douce) ou les vendre entiers selon le marché. Rationaliser le troupeau : une chèvre qui n'atteint jamais 1,2 chevreau par mise bas après 3 portées est à réformer.",
+ "Le fumier caprin est sous-valorisé : riche en azote (1,5 à 2 %), phosphore (0,5 %) et potassium (2 %), il est très recherché par les maraîchers pour le maraîchage de contre-saison. Collecter le fumier du bâtiment et le vendre ou l'échanger contre des légumes — c'est un revenu supplémentaire qui couvre souvent le coût de l'alimentation. La règle d'or finale : tout noter dans CuniSmart. Vos données sur 2 à 3 ans sont votre meilleur capital invisible pour accéder au crédit, aux projets PDCVEP et aux partenariats institutionnels."],
+ qz:[{q:"Pourquoi la chèvre est-elle l'animal d'entrée en élevage idéal en Afrique tropicale ?",o:["Elle ne nécessite aucun soin","Faible investissement de départ, cycle court, polyvalence, marché universel","Elle produit plus que le bovin"],b:1},
+     {q:"Une bonne reproductrice caprine peut avoir combien de mises bas sur toute sa carrière ?",o:["1 à 2","Jusqu'à 12 (3 par an × 7 à 8 ans)","50"],b:1},
+     {q:"Une chèvre qui n'atteint pas 1,2 chevreau par mise bas après 3 portées doit être…",o:["Nourrie davantage","Réformée et remplacée","Gardée car elle peut s'améliorer"],b:1},
+     {q:"Le fumier caprin est valorisable car…",o:["Il sert à nourrir les volailles","Riche en N, P et K, il est recherché par les maraîchers et peut couvrir le coût de l'alimentation","Il est sans valeur nutritive"],b:1},
+     {q:"Sur le long terme, la meilleure ressource de l'éleveur caprin est…",o:["Le prix du marché","Ses données de suivi sur 2 à 3 ans, qui lui donnent accès au crédit et aux financements","La taille de son troupeau"],b:1}]},
+ en:{ti:"Building a sustainable goat herd",tx:[
+ "The goat is the ideal entry-level livestock in tropical Africa: low start-up investment, short cycle, versatility (meat, milk, manure), universal market. Starting with 5–10 does and 1 buck is the right size to learn without too much risk. The herd capitalises quickly: a good caprine breeder can kid 3 times in 2 years over 7–8 years of productive career — up to 12 kiddings. By keeping the best does, you build animal capital without further purchases.",
+ "Selection on progeny: systematically record in CuniSmart born alive numbers, kid weight at birth and weaning, and estimated dam milking value (litter weight at 30 days). Keep daughters of the best breeders. Sell castrated buck kids (wethers fatten better and have milder-tasting meat) or intact according to the market. Rationalise the herd: a doe that never reaches 1.2 kids per kidding after 3 litters should be culled.",
+ "Goat manure is undervalued: rich in nitrogen (1.5–2%), phosphorus (0.5%) and potassium (2%), it is highly sought by market gardeners for off-season vegetable production. Collect manure from the house and sell or barter it for vegetables — it is an additional income that often covers the cost of feed. Final golden rule: record everything in CuniSmart. Your data over 2–3 years is your best invisible capital for accessing credit, PDCVEP projects and institutional partnerships."],
+ qz:[{q:"Why is the goat the ideal entry-level livestock in tropical Africa?",o:["It needs no care","Low start-up cost, short cycle, versatility, universal market","It produces more than cattle"],b:1},
+     {q:"A good caprine breeder can have how many kiddings in her lifetime?",o:["1 to 2","Up to 12 (3 per year × 7 to 8 years)","50"],b:1},
+     {q:"A doe that does not reach 1.2 kids per kidding after 3 litters should be…",o:["Fed more","Culled and replaced","Kept as she may improve"],b:1},
+     {q:"Goat manure is worth valorising because…",o:["It feeds poultry","Rich in N, P and K, it is sought by market gardeners and can cover feed costs","It has no nutritional value"],b:1},
+     {q:"In the long run, the goat farmer's best resource is…",o:["Market price","His 2–3 years of tracking data, which give access to credit and funding","The size of his herd"],b:1}]}}
+];
+const NIVEAUX_CAPRIN = [
+  {deb:0,  fin:5,  k:'lvl_1'},
+  {deb:5,  fin:10, k:'lvl_2'},
+  {deb:10, fin:16, k:'lvl_3'}
+];
+
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
@@ -5645,9 +5962,149 @@ function partagerCertifPorc(){
   partagerWhatsApp(txt.join('\n'));
 }
 
+
+/* ===== ÉCOLE D'ÉLEVAGE CAPRIN — fonctions de rendu ===== */
+function niveauCaprinFait(idx){
+  const vc = etat.ecole.valideesCaprin || [];
+  const nv = NIVEAUX_CAPRIN[idx];
+  for(let i=nv.deb; i<nv.fin; i++) if(!vc.includes(i)) return false;
+  return true;
+}
+function vueLeconsCaprins(){
+  if(leconOuverte !== null) return vueLeconCaprin(leconOuverte);
+  const vc = etat.ecole.valideesCaprin || [];
+  const n = vc.length, total = LECONS_CAPRIN.length;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const titre = L("École d'élevage caprin","Goat farming school");
+  const toutFait = n === total;
+  let certif = '';
+  if(toutFait){
+    if(!etat.ecole.numCaprin){
+      etat.ecole.numCaprin = 'CSM-CAP-'+auj().replace(/-/g,'')+'-'+uid().slice(-4).toUpperCase();
+      sauver();
+    }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — 🐐 ${L('Élevage caprin','Goat Farming')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom)||'…'}</div>
+      <p>${L("a validé le parcours certifiant École d'élevage caprin.","has completed the Goat Farming School certifying path.")}</p>
+      <p style="margin-top:6px">🐐 CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numCaprin}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifCaprin()">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+  const ICONES_C = ['🐐','🔍','🏠','🌿','🔄','🍼','⚠️','🦠','💉','🥛','🌾','♻️','🛡️','🧀','💰','🌱'];
+  const LABELS_NV = {fr:['Niveau 1 · Débutant','Niveau 2 · Confirmé','Niveau 3 · Expert'],
+                     en:['Level 1 · Beginner','Level 2 · Intermediate','Level 3 · Expert']};
+  const lblNv = LABELS_NV[langue]||LABELS_NV.fr;
+  let leconHTML = '';
+  NIVEAUX_CAPRIN.forEach((nv,ni)=>{
+    const nvFait = niveauCaprinFait(ni);
+    const nvDispo = ni===0 || niveauCaprinFait(ni-1);
+    leconHTML += `<div style="margin-bottom:18px">
+      <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+      </div>`;
+    if(!nvDispo){
+      leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
+    } else {
+      for(let i=nv.deb;i<nv.fin;i++){
+        const done = vc.includes(i);
+        const lec = LECONS_CAPRIN[i][langue]||LECONS_CAPRIN[i].fr;
+        leconHTML += `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLeconCaprin(${i})">
+          <div class="lecon-num">${done?'✓':i+1}</div>
+          <div class="lecon-titre">${ICONES_C[i]||'•'} ${esc(lec.ti)}</div>
+          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+        </div>`;
+      }
+    }
+    leconHTML += '</div>';
+  });
+  return `
+    <h2 class="page-title">${titre}</h2>
+    <p class="page-sub">${L('Parcours certifiant en 3 niveaux — 16 leçons + quiz (5 questions). Validez tout pour obtenir votre certificat.','Certifying path in 3 levels — 16 lessons + quizzes (5 questions). Complete all to earn your certificate.')}</p>
+    ${selecteurEspece()}
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${n} / ${total} ${L('leçons validées','lessons completed')}</p>
+      <div class="progress-bar"><div style="width:${n/total*100}%"></div></div>
+      <div style="margin-top:12px">${leconHTML}</div>
+    </div>`;
+}
+function ouvrirLeconCaprin(idx){ leconOuverte=idx; rendre(); window.scrollTo(0,0); }
+function vueLeconCaprin(idx){
+  const lec = LECONS_CAPRIN[idx][langue]||LECONS_CAPRIN[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ICONES_C = ['🐐','🔍','🏠','🌿','🔄','🍼','⚠️','🦠','💉','🥛','🌾','♻️','🛡️','🧀','💰','🌱'];
+  const done = (etat.ecole.valideesCaprin||[]).includes(idx);
+  const txtHtml = lec.tx.map(p=>`<p>${esc(p)}</p>`).join('');
+  const opts = lec.qz.map((q,qi)=>`
+    <div class="quiz-q">
+      <p>${qi+1}. ${esc(q.q)}</p>
+      ${q.o.map((o,oi)=>`
+        <label class="quiz-opt" id="qca-${qi}-${oi}">
+          <input type="radio" name="qca${qi}" value="${oi}" style="flex-shrink:0"> ${esc(o)}
+        </label>`).join('')}
+    </div>`).join('');
+  return `
+    <button class="btn sec" onclick="fermerLeconCaprin()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">
+        ${ICONES_C[idx]||'•'} ${esc(lec.ti)}
+        ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}
+      </h2>
+      <div class="lecon-texte" style="margin-top:12px">${txtHtml}</div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>❓ ${fmt(t('quiz_title'),{n:4})}</h3>
+      <p style="color:var(--gris);font-size:.88rem;margin-bottom:10px">
+        ${L('⚠️ Leçons 9 et 13 : protocoles sanitaires à valider avec un vétérinaire de votre zone.','⚠️ Lessons 9 and 13: health protocols to validate with a vet in your area.')}
+      </p>
+      <form id="qca-form">${opts}</form>
+      <div id="qca-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerLeconCaprin(${idx})">${t('btn_check')}</button>
+    </div>`;
+}
+function fermerLeconCaprin(){ leconOuverte=null; rendre(); window.scrollTo(0,0); }
+function validerLeconCaprin(idx){
+  const lec = LECONS_CAPRIN[idx][langue]||LECONS_CAPRIN[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const res = document.getElementById('qca-res');
+  let bonnes=0, total=lec.qz.length, allOk=true;
+  lec.qz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="qca'+qi+'"]:checked');
+    if(!sel){ allOk=false; return; }
+    const ok=parseInt(sel.value)===q.b;
+    if(ok) bonnes++;
+    q.o.forEach((_,oi)=>{
+      const lbl=document.getElementById('qca-'+qi+'-'+oi);
+      if(lbl){ lbl.classList.remove('bonne','fausse'); if(oi===q.b) lbl.classList.add('bonne'); else if(oi===parseInt(sel.value)) lbl.classList.add('fausse'); }
+    });
+  });
+  if(!allOk){ if(res) res.innerHTML='<span style="color:var(--rouge)">'+L('Répondez à toutes les questions.','Answer all questions.')+'</span>'; return; }
+  if(!res) return;
+  if(bonnes>=4){
+    if(!etat.ecole.valideesCaprin) etat.ecole.valideesCaprin=[];
+    if(!etat.ecole.valideesCaprin.includes(idx)) etat.ecole.valideesCaprin.push(idx);
+    sauver();
+    res.innerHTML='<span style="color:var(--feuille-fonce);font-weight:700">🎉 '+L('Bravo ! '+bonnes+'/'+total+' — Leçon validée !','Well done! '+bonnes+'/'+total+' — Lesson completed!')+'</span>';
+    setTimeout(()=>{ leconOuverte=null; rendre(); window.scrollTo(0,0); },1100);
+  } else {
+    res.innerHTML='<span style="color:var(--rouge)">✗ '+bonnes+'/'+total+' — '+L('Relisez la leçon et réessayez (4/5 requis).','Re-read the lesson and try again (4/5 required).')+'</span>';
+  }
+}
+function partagerCertifCaprin(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const num=(etat.ecole.numCaprin)?('N° '+etat.ecole.numCaprin):'';
+  const txt=['🎓 '+L("Certificat CuniMaster — École d'élevage caprin","CuniMaster Certificate — Goat Farming School"),
+    (etat.ecole.nom||'—'), L('16 leçons validées.','16 lessons completed.'), num,'— CuniSmart'].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
+}
+
 function vueEcole(){
   if(espActive() === 'volaille') return vueLeconsPondeuse();
   if(espActive() === 'porc') return vueLeconsPorcin();
+  if(espActive() === 'caprin') return vueLeconsCaprins();
   if(espActive() !== 'lapin') return vueFiches();
   if(leconOuverte !== null) return vueLecon(leconOuverte);
   const n = etat.ecole.validees.length;
