@@ -4078,6 +4078,323 @@ const NIVEAUX_CAPRIN = [
   {deb:10, fin:16, k:'lvl_3'}
 ];
 
+
+/* ===== ÉCOLE D'ÉLEVAGE BOVIN — 16 leçons ===== */
+const LECONS_BOVIN = [
+
+/* ---------- NIVEAU 1 : DÉBUTANT (0-5) ---------- */
+{fr:{ti:"Comprendre le bovin tropical africain",tx:[
+ "Le bovin africain n'est pas uniquement un outil de production — c'est un capital vivant, une réserve de valeur et un lien social. En Afrique centrale et de l'Ouest, le troupeau représente l'épargne des ménages ruraux, la dot familiale, et le moyen d'accès au crédit informel. Comprendre ce rôle est indispensable pour conseiller ou gérer un élevage bovin africain sans heurter les réalités culturelles.",
+ "Deux grands groupes génétiques coexistent. Les taurins (Bos taurus, sans bosse) : N'Dama, Baoulé, Namchi, Borgou — adaptés aux zones forestières humides, trypanotolérantes (ils supportent la trypanosomiase sans mourir, contrairement aux zébus), petit format (200–250 kg), bons taux de fécondité (83 %). Les zébus (Bos indicus, avec bosse) : Bororo, Goudali, Gobra, Fulani — plus grands (350–500 kg mâle), performants en savane sèche, productifs en lait avec bon apport alimentaire, mais sensibles à la trypanosomiase en zone forestière.",
+ "La trypanotolérance de la N'Dama est un avantage génétique irremplaçable en zone humide. Ce n'est pas une immunité totale — c'est la capacité à contrôler la parasitémie sans mourir, à continuer à reproduire et à produire malgré la pression des glossines. Une génisse N'Dama en zone de savane sèche sans tsé-tsé sera moins performante qu'un zébu de la même zone. Choisir sa race en fonction de son environnement, pas de la mode."],
+ qz:[{q:"La principale différence entre la N'Dama et le Zébu Bororo en zone forestière humide est…",o:["La couleur de la robe","La trypanotolérance de la N'Dama qui lui permet de survivre malgré les glossines","La taille des cornes"],b:1},
+     {q:"En Afrique tropicale, le troupeau bovin représente d'abord…",o:["Un outil de production uniquement","Un capital vivant, une épargne et un lien social","Un animal de compagnie"],b:1},
+     {q:"Le taux de fécondité de la N'Dama en élevage est d'environ…",o:["30 %","83 %","100 %"],b:1},
+     {q:"En zone de forte pression de glossines (mouches tsé-tsé), quelle race choisir ?",o:["Le Zébu Bororo pour sa taille","La N'Dama ou un taurin trypanotolérante","Peu importe la race"],b:1},
+     {q:"La trypanotolérance de la N'Dama signifie que…",o:["Elle est totalement immunisée contre la trypanosomiase","Elle tolère la maladie sans mourir et continue à se reproduire malgré la pression parasitaire","Elle ne peut pas être infectée par les mouches tsé-tsé"],b:1}]},
+ en:{ti:"Understanding the tropical African bovine",tx:[
+ "The African bovine is not just a production tool — it is living capital, a store of value and a social bond. In Central and West Africa, the herd represents rural household savings, family bridewealth and a means of accessing informal credit. Understanding this role is essential to advise or manage an African cattle operation without clashing with cultural realities.",
+ "Two main genetic groups coexist. Taurines (Bos taurus, humpless): N'Dama, Baoulé, Namchi, Borgou — adapted to humid forest areas, trypanotolerant (they endure trypanosomiasis without dying, unlike zebu), compact frame (200–250 kg), good fertility rates (83%). Zebus (Bos indicus, humped): Bororo, Goudali, Gobra, Fulani — larger (350–500 kg male), productive in dry savanna, good milk yield with adequate feeding, but sensitive to trypanosomiasis in forest zones.",
+ "The N'Dama's trypanotolerance is an irreplaceable genetic asset in humid areas. It is not total immunity — it is the ability to control parasitaemia without dying, to continue breeding and producing despite tsetse pressure. An N'Dama heifer in a dry savanna zone without tsetse flies will be less productive than a zebu in the same area. Choose your breed based on your environment, not fashion."],
+ qz:[{q:"The main difference between the N'Dama and the Bororo Zebu in a humid forest zone is…",o:["Coat colour","The N'Dama's trypanotolerance allowing it to survive despite tsetse flies","Horn size"],b:1},
+     {q:"In tropical Africa, the cattle herd represents above all…",o:["A production tool only","Living capital, savings and a social bond","A pet"],b:1},
+     {q:"The N'Dama's fertility rate in farming is about…",o:["30%","83%","100%"],b:1},
+     {q:"In a zone with heavy tsetse fly pressure, which breed to choose?",o:["The Bororo Zebu for its size","The N'Dama or a local trypanotolerant taurine","Breed does not matter"],b:1},
+     {q:"The N'Dama's trypanotolerance means it…",o:["Is fully immune to trypanosomiasis","Tolerates the disease without dying and keeps reproducing despite parasite pressure","Cannot be infected by tsetse flies"],b:1}]}},
+
+{fr:{ti:"Choisir ses races et constituer son troupeau",tx:[
+ "Le choix de la race dépend avant tout de votre zone agro-écologique. Zone forestière humide (Cameroun forêt, Bénin côtier) : taurins trypanotolérantes obligatoires — N'Dama, Baoulé, Borgou. Zone de savane ou plateau : zébus ou croisés possibles. Zone de transition : croisés N'Dama × zébu ou × races laitières améliorées (Holstein, Montbéliarde pour le lait). Les croisés offrent souvent le meilleur compromis productivité / rusticité, mais ils perdent partiellement la trypanotolérance de la N'Dama.",
+ "Ne jamais acheter sur un marché à bétail sans quarantaine de 3 semaines minimum dans un enclos séparé de votre troupeau. Les marchés sont les principaux foyers de diffusion de la PPCB et de la fièvre aphteuse — les deux maladies les plus contagieuses du bovin en Afrique. Critères d'achat : animal alerte, muqueuses roses, pas d'écoulement oculaire ou nasal, état corporel correct (côtes légèrement palpables mais non saillantes), pattes solides, pas de boiterie, respiration normale. Évitez les animaux qui toussent, même légèrement.",
+ "Un taureau pour 20 à 30 vaches maximum en monte naturelle. Un taureau surmené produit du sperme de moins bonne qualité et rate des saillies. Renouveler le taureau tous les 3 à 4 ans avec un animal d'une lignée différente. Pour les génisses de renouvellement : elles doivent atteindre les deux tiers du poids adulte de leur race avant la première saillie. Notez chaque animal dans CuniSmart dès l'entrée dans le troupeau : date de naissance ou d'achat, race, sexe, origine, poids."],
+ qz:[{q:"En zone forestière humide du Cameroun, quelle race bovine est recommandée ?",o:["Zébu Bororo pour sa productivité","Taurine trypanotolérante (N'Dama, Baoulé) pour sa résistance aux glossines","Holstein pour sa production laitière"],b:1},
+     {q:"La durée minimale de quarantaine pour un animal acheté sur un marché est de…",o:["24 heures","3 semaines","3 mois"],b:1},
+     {q:"Un animal toussant au moment de l'achat…",o:["Est normal en saison sèche","Doit être refusé — la toux peut signaler la PPCB ou la fièvre aphteuse","Peut être acheté à prix réduit"],b:1},
+     {q:"Un taureau peut saillir au maximum…",o:["5 vaches par jour sans limite","20 à 30 vaches en monte naturelle","100 vaches"],b:1},
+     {q:"Les génisses sont mises à la saillie quand elles atteignent…",o:["6 mois","Les deux tiers du poids adulte de leur race","Le même poids que le taureau"],b:1}]},
+ en:{ti:"Choosing breeds and building your herd",tx:[
+ "Breed choice depends first on your agro-ecological zone. Humid forest zone (Cameroon forest, coastal Benin): trypanotolerant taurines are mandatory — N'Dama, Baoulé, Borgou. Savanna or plateau zone: zebus or crossbreds possible. Transition zone: N'Dama × zebu or × improved dairy breeds (Holstein, Montbéliarde for milk). Crossbreds often offer the best productivity/hardiness compromise, but partially lose the N'Dama's trypanotolerance.",
+ "Never buy from a livestock market without a minimum 3-week quarantine in a pen separate from your herd. Markets are the main foci for spreading CBPP and foot-and-mouth disease — the two most contagious cattle diseases in Africa. Buying criteria: alert animal, pink mucous membranes, no eye or nose discharge, correct body condition (ribs slightly palpable but not prominent), sound legs with no lameness, normal breathing. Avoid animals that cough, even slightly.",
+ "One bull per 20–30 cows maximum in natural mating. An overworked bull produces poorer-quality semen and misses matings. Replace the bull every 3–4 years with an animal from a different line. For replacement heifers: they must reach two-thirds of their breed's adult weight before the first mating. Record every animal in CuniSmart from the day it enters the herd: date of birth or purchase, breed, sex, origin, weight."],
+ qz:[{q:"In humid forest zones of Cameroon, which cattle breed is recommended?",o:["Bororo Zebu for productivity","Trypanotolerant taurine (N'Dama, Baoulé) for resistance to tsetse flies","Holstein for milk production"],b:1},
+     {q:"Minimum quarantine duration for a market-bought animal is…",o:["24 hours","3 weeks","3 months"],b:1},
+     {q:"An animal coughing at purchase…",o:["Is normal in the dry season","Must be refused — coughing can signal CBPP or foot-and-mouth disease","Can be bought at a lower price"],b:1},
+     {q:"A bull can serve at most…",o:["5 cows per day without limit","20 to 30 cows in natural mating","100 cows"],b:1},
+     {q:"Heifers are put to mating when they reach…",o:["6 months of age","Two-thirds of their breed's adult weight","The same weight as the bull"],b:1}]}},
+
+{fr:{ti:"Logement, parc et gestion des pâturages",tx:[
+ "Le bovin tropical vit essentiellement au pâturage — mais un parc nocturne sécurisé est indispensable pour la gestion du troupeau. Il permet : les vaccinations, les traitements antiparasitaires, le suivi des vêlages, la surveillance de l'état des animaux, la protection contre les prédateurs (hyènes, lions en zone de savane) et les vols. Le parc doit être clôturé (piquets + fil barbelé ou grillage), orienté pour que le vent emporte les odeurs loin des habitations, et équipé d'un abreuvoir propre et d'un espace d'ombre.",
+ "La rotation des pâturages est le levier le plus puissant pour améliorer la productivité fourragère sans investissement majeur. Principe : diviser la surface pâturable en 3 à 4 blocs de taille égale. Chaque bloc est pâturé 3 semaines puis mis au repos 3 à 6 semaines. Pendant le repos, l'herbe repousse et les larves de parasites gastrointestinaux meurent faute d'hôte. Résultat : meilleure disponibilité de fourrage en saison des pluies, réduction de la charge parasitaire, amélioration de l'état corporel des animaux.",
+ "L'eau est le premier facteur limitant de la production bovine en zone tropicale. Une vache boit 30 à 50 litres par jour, jusqu'à 80 litres en forte chaleur ou en lactation. Un abreuvement insuffisant réduit l'appétit, la production laitière, la fertilité et ralentit la croissance. En saison sèche, les points d'eau se raréfient — anticiper : marigots, puits, forages. Ne jamais laisser le troupeau accéder à des eaux stagnantes souillées (douves hépatiques, leptospirose)."],
+ qz:[{q:"La rotation des pâturages améliore la santé du troupeau car…",o:["Elle réduit la superficie de pâturage","Les larves de parasites meurent pendant le repos du pâturage, faute d'hôte","Elle supprime les tiques"],b:1},
+     {q:"La consommation d'eau d'une vache en lactation par forte chaleur peut atteindre…",o:["5 litres par jour","30 litres par jour","80 litres par jour"],b:2},
+     {q:"Un parc nocturne pour les bovins est indispensable pour…",o:["Réduire la surface de pâturage","Les vaccinations, traitements, surveillance des vêlages et protection contre prédateurs","Augmenter la production de lait"],b:1},
+     {q:"Une vache qui boit insuffisamment souffre principalement de…",o:["Corne qui pousse trop vite","Réduction de l'appétit, de la production laitière, de la fertilité et de la croissance","Prise de poids excessive"],b:1},
+     {q:"Pour la rotation des pâturages, chaque bloc est mis au repos pendant…",o:["1 à 2 jours","3 à 6 semaines","6 mois"],b:1}]},
+ en:{ti:"Housing, corral and pasture management",tx:[
+ "Tropical cattle live mainly at pasture — but a secure night corral is essential for herd management. It allows: vaccinations, antiparasitic treatments, monitoring of calvings, observation of animal condition, protection from predators (hyenas, lions in savanna zones) and theft prevention. The corral must be fenced (posts + barbed wire or mesh), oriented so wind carries odours away from dwellings, and equipped with a clean water trough and shade.",
+ "Pasture rotation is the most powerful lever to improve forage productivity without major investment. Principle: divide the grazeable area into 3 or 4 equal blocks. Each block is grazed for 3 weeks then rested for 3–6 weeks. During rest, grass regrows and gastrointestinal parasite larvae die without a host. Result: better forage availability in the rainy season, reduced parasite load, improved animal body condition.",
+ "Water is the primary limiting factor of bovine production in the tropics. A cow drinks 30–50 litres a day, up to 80 litres in high heat or lactation. Insufficient watering reduces appetite, milk production, fertility and slows growth. In the dry season, water points become scarce — anticipate: streams, wells, boreholes. Never allow the herd to drink from stagnant contaminated water (liver flukes, leptospirosis)."],
+ qz:[{q:"Pasture rotation improves herd health because…",o:["It reduces the grazing area","Parasite larvae die during the pasture rest period without a host","It eliminates ticks"],b:1},
+     {q:"Water intake of a cow in lactation in high heat can reach…",o:["5 litres per day","30 litres per day","80 litres per day"],b:2},
+     {q:"A night corral for cattle is essential for…",o:["Reducing pasture area","Vaccinations, treatments, calving monitoring and predator protection","Increasing milk production"],b:1},
+     {q:"A cow drinking insufficiently mainly suffers from…",o:["Excessively fast horn growth","Reduced appetite, milk production, fertility and growth","Excessive weight gain"],b:1},
+     {q:"In pasture rotation, each block is rested for…",o:["1 to 2 days","3 to 6 weeks","6 months"],b:1}]}},
+
+{fr:{ti:"Alimentation : maîtriser la saison sèche",tx:[
+ "L'alimentation du bovin en Afrique tropicale suit un cycle annuel prévisible. Saison des pluies : herbe abondante et de bonne qualité, animaux qui s'engraissent naturellement. Début saison sèche : herbe sénescente, qualité qui chute (protéines < 5 %, fibres élevées), animaux qui stagnent. Pleine saison sèche : fourrage rare, animaux qui maigrissent de 10 à 30 % de leur poids. Ce cycle est la principale cause de la faible productivité des troupeaux bovins africains. L'éleveur expert ne le subit pas — il le prépare.",
+ "Stratégies d'anticipation : 1) Fenaison — faucher et sécher des herbes de qualité en fin de saison des pluies (Panicum, Andropogon). 2) Conservation des résidus de cultures — fanes d'arachide (12 % de protéines, excellent), tiges de maïs et sorgho (énergie), son de riz, paille de riz traitée à l'urée (augmente la digestibilité de 15 à 20 %). 3) Cultures fourragères — légumineuses (Stylosanthes, Mucuna) qui fixent l'azote et enrichissent le sol tout en nourrissant le troupeau. 4) Complémentation concentrée — graine de coton, tourteau d'arachide, son de blé.",
+ "La complémentation minérale est souvent négligée mais essentielle. Les sols tropicaux acides sont déficients en phosphore et parfois en cuivre. Une vache carencée en phosphore présente des picas (lèche les os, la terre), des chaleurs irrégulières, et des avortements. Pierre à lécher ou prémix minéral à disposition en permanence. Urée : 100 à 150 g par bovin adulte et par jour, mélangée à la mélasse ou à la paille — augmente l'utilisation de l'azote non protéique. Ne jamais donner l'urée seule ni d'un coup — intoxication mortelle."],
+ qz:[{q:"En pleine saison sèche tropicale, les bovins perdent généralement…",o:["Du poids — jusqu'à 10 à 30 % de leur poids de saison des pluies","Du poil uniquement","Rien si l'herbe est là"],b:0},
+     {q:"Les fanes d'arachide sont un excellent fourrage de saison sèche car…",o:["Elles sont faciles à stocker","Elles contiennent environ 12 % de protéines","Elles remplacent l'eau"],b:1},
+     {q:"Un bovin carencé en phosphore se reconnaît à…",o:["Une robe plus brillante","Des picas (lèche les os, la terre), des chaleurs irrégulières et des avortements","Une production de lait plus élevée"],b:1},
+     {q:"L'urée alimentaire pour les bovins ne doit JAMAIS être donnée…",o:["En faible quantité","Seule et d'un coup — risque d'intoxication mortelle","Avec de la mélasse"],b:1},
+     {q:"La paille de riz traitée à l'urée est utilisée pour…",o:["La neutraliser avant distribution","Augmenter sa digestibilité de 15 à 20 %","La colorer pour mieux la repérer"],b:1}]},
+ en:{ti:"Feeding: mastering the dry season",tx:[
+ "Cattle feeding in tropical Africa follows a predictable annual cycle. Rainy season: abundant good-quality grass, animals naturally gaining condition. Early dry season: senescent grass, quality dropping (protein < 5%, high fibre), animals stalling. Peak dry season: scarce forage, animals losing 10–30% of their weight. This cycle is the main cause of low cattle productivity in African herds. The expert farmer does not endure it — he prepares for it.",
+ "Anticipation strategies: 1) Haymaking — cut and dry quality grasses at the end of the rainy season (Panicum, Andropogon). 2) Crop residue preservation — groundnut haulms (12% protein, excellent), maize and sorghum stalks (energy), rice bran, urea-treated rice straw (increases digestibility by 15–20%). 3) Fodder crops — legumes (Stylosanthes, Mucuna) that fix nitrogen and enrich the soil while feeding the herd. 4) Concentrate supplementation — cottonseed, groundnut cake, wheat bran.",
+ "Mineral supplementation is often neglected but essential. Acidic tropical soils are deficient in phosphorus and sometimes copper. A phosphorus-deficient cow shows pica (licking bones, earth), irregular oestrus and abortions. Provide lick blocks or mineral premix at all times. Urea: 100–150 g per adult bovine per day, mixed into molasses or straw — increases utilisation of non-protein nitrogen. Never give urea alone or all at once — fatal poisoning."],
+ qz:[{q:"At peak dry season in the tropics, cattle generally lose…",o:["Weight — up to 10 to 30% of their rainy-season weight","Hair only","Nothing if grass is there"],b:0},
+     {q:"Groundnut haulms are an excellent dry-season forage because…",o:["They are easy to store","They contain about 12% protein","They replace water"],b:1},
+     {q:"A phosphorus-deficient bovine is recognised by…",o:["A shinier coat","Pica (licking bones, earth), irregular oestrus and abortions","Higher milk production"],b:1},
+     {q:"Dietary urea for cattle must NEVER be given…",o:["In small amounts","Alone and all at once — risk of fatal poisoning","Mixed with molasses"],b:1},
+     {q:"Urea-treated rice straw is used to…",o:["Neutralise it before feeding","Increase its digestibility by 15 to 20%","Colour it for easier identification"],b:1}]}},
+
+{fr:{ti:"Le cycle de reproduction bovin",tx:[
+ "Le cycle de reproduction bovin est le levier économique central de l'élevage — et le moins bien maîtrisé en Afrique tropicale. Cycle œstrien : 21 jours. Chaleurs : 12 à 18 heures seulement — très courtes, souvent nocturnes, difficiles à détecter. Signes : vache agitée et qui vocalise plus que d'habitude, elle monte ses congénères ou se laisse monter (réflexe d'immobilité en présence du taureau), vulve légèrement gonflée et humide, possible légère morve translucide. Technique de détection : peindre le dos de la vache avec une craie ou une peinture grasse — si la peinture est effacée le matin, elle a été chevauchée dans la nuit.",
+ "Gestation : 283 jours (environ 9 mois). Premier vêlage : 36 à 40 mois pour les taurins bien conduits, 48 à 50 mois pour les zébus en extensif. L'objectif est un vêlage par an — soit un intervalle vêlage-vêlage de 365 jours. En réalité, l'intervalle est souvent de 428 à 474 jours en système extensif africain (données N'Dama et Baoulé en Côte d'Ivoire). Chaque mois perdu sur l'intervalle vêlage-vêlage représente un veau de moins sur la vie productive de la vache.",
+ "Cause principale de l'allongement de l'intervalle : l'anœstrus post-partum — la vache ne revient pas en chaleur après le vêlage. En Afrique tropicale, la principale cause est la sous-alimentation : une vache qui a maigri pendant la gestation et la lactation ne reprend pas ses cycles tant qu'elle n'a pas reconstitué ses réserves corporelles. Solution : améliorer l'alimentation dans les 60 jours avant et après le vêlage. Notez chaque saillie et chaque vêlage dans CuniSmart avec la date exacte — c'est la seule façon de calculer l'intervalle réel et de piloter votre troupeau."],
+ qz:[{q:"La durée des chaleurs chez la vache est de…",o:["3 à 5 jours","12 à 18 heures seulement","1 semaine"],b:1},
+     {q:"La gestation de la vache dure environ…",o:["150 jours","283 jours (9 mois)","365 jours"],b:1},
+     {q:"La principale cause de l'allongement de l'intervalle vêlage-vêlage en Afrique tropicale est…",o:["La chaleur excessive","La sous-alimentation, qui empêche la reprise des cycles","La vache qui n'aime pas le taureau"],b:1},
+     {q:"L'objectif d'intervalle vêlage-vêlage en élevage bien conduit est de…",o:["150 jours","365 jours (un vêlage par an)","600 jours"],b:1},
+     {q:"Pour détecter les chaleurs nocturnes, une technique simple est de…",o:["Rester debout toute la nuit","Peindre le dos de la vache — si la peinture est effacée le matin, elle a été chevauchée","Mettre une caméra"],b:1}]},
+ en:{ti:"The bovine reproduction cycle",tx:[
+ "The bovine reproduction cycle is the central economic lever of cattle farming — and the least well managed in tropical Africa. Oestrous cycle: 21 days. Oestrus: only 12–18 hours — very short, often nocturnal, hard to detect. Signs: cow restless and vocalising more than usual, mounts herdmates or allows mounting (standing reflex in the bull's presence), slightly swollen and moist vulva, possible slight translucent mucus. Detection technique: paint the cow's back with chalk or greasy paint — if the paint is rubbed off in the morning, she was mounted during the night.",
+ "Gestation: 283 days (about 9 months). First calving: 36–40 months for well-managed taurines, 48–50 months for zebus in extensive systems. The target is one calving per year — a calving interval of 365 days. In reality, the interval is often 428–474 days in African extensive systems (N'Dama and Baoulé data from Ivory Coast). Every month lost on the calving interval is one fewer calf over the cow's productive life.",
+ "Main cause of lengthened interval: post-partum anoestrus — the cow does not return to oestrus after calving. In tropical Africa, the main cause is underfeeding: a cow that lost condition during gestation and lactation will not resume cycling until she has rebuilt her body reserves. Solution: improve feeding in the 60 days before and after calving. Record every mating and calving in CuniSmart with the exact date — it is the only way to calculate the real interval and manage your herd."],
+ qz:[{q:"Duration of oestrus in the cow is…",o:["3 to 5 days","Only 12 to 18 hours","1 week"],b:1},
+     {q:"Cow gestation lasts about…",o:["150 days","283 days (9 months)","365 days"],b:1},
+     {q:"The main cause of lengthened calving interval in tropical Africa is…",o:["Excessive heat","Underfeeding, which prevents return to cycling","The cow not liking the bull"],b:1},
+     {q:"Target calving interval in a well-managed herd is…",o:["150 days","365 days (one calving per year)","600 days"],b:1},
+     {q:"To detect nocturnal oestrus, a simple technique is to…",o:["Stay up all night","Paint the cow's back — if rubbed off by morning, she was mounted","Install a camera"],b:1}]}},
+
+/* ---------- NIVEAU 2 : CONFIRMÉ (5-10) ---------- */
+{fr:{ti:"Le vêlage et les soins au veau",tx:[
+ "Le vêlage est rarement difficile chez les races locales africaines — les veaux sont proportionnellement petits par rapport au gabarit de la mère. Surveiller quand même : vache isolée du troupeau, agitation, contractions visibles. Si aucun progrès après 2 heures de contractions actives, intervention vétérinaire nécessaire. Signes normaux avant le vêlage : gonflement de la mamelle dans les 24 à 48 h, relâchement des ligaments sacro-sciatiques (la croupe s'affaisse), légère morve vulvaire.",
+ "Soins immédiats après la naissance : dégager les voies respiratoires si le veau ne respire pas (frictionner vigoureusement avec de la paille sèche, nettoyer le nez et la bouche). Le veau doit se lever dans l'heure et téter dans les 3 premières heures. Le colostrum est irremplaçable : il contient les immunoglobulines qui protégeront le veau les premières semaines de vie. Un veau qui ne se lève pas ou ne tète pas dans les 3 heures doit être aidé activement. Peser le veau à la naissance dans CuniSmart — c'est la première donnée de sa fiche individuelle.",
+ "Les soins du cordon ombilical : désinfecter avec de la teinture d'iode immédiatement après la naissance. Une omphalite (infection du nombril) peut devenir une septicémie mortelle en zone tropicale humide. Dans les premiers jours : surveiller que le veau tète régulièrement (ventre souple et légèrement rond = il a mangé), surveiller les diarrhées (première cause de mortalité des veaux sous 3 semaines), protéger la nuit en saison fraîche (une couverture de jute suffisamment)."],
+ qz:[{q:"Le veau doit impérativement téter le colostrum…",o:["Dans la première semaine","Dans les 3 premières heures après la naissance","Le lendemain"],b:1},
+     {q:"Si la vache n'a pas progressé après 2 heures de contractions actives, il faut…",o:["Attendre encore 12 heures","Appeler le vétérinaire immédiatement","Donner des antibiotiques"],b:1},
+     {q:"L'infection du cordon ombilical (omphalite) est dangereuse car…",o:["Elle coûte cher à traiter","Elle peut devenir une septicémie mortelle","Elle empêche le veau de téter"],b:1},
+     {q:"Un veau dont le ventre est souple et légèrement rond…",o:["A trop mangé","A bien tété — c'est le signe qu'il s'alimente correctement","Est malade"],b:1},
+     {q:"Pourquoi peser le veau à la naissance dans CuniSmart ?",o:["Pour respecter la réglementation","C'est la première donnée de son suivi individuel et permet de détecter précocement les retards de croissance","Pour calculer le prix de vente"],b:1}]},
+ en:{ti:"Calving and calf care",tx:[
+ "Calving is rarely difficult in local African breeds — calves are proportionally small relative to the dam's frame. Watch all the same: cow separating from the herd, restlessness, visible contractions. If no progress after 2 hours of active contractions, veterinary intervention is needed. Normal signs before calving: udder swelling in the 24–48 h before, relaxation of sacro-sciatic ligaments (rump drops), slight vulvar mucus.",
+ "Immediate post-birth care: clear the airways if the calf is not breathing (rub vigorously with dry straw, clean nose and mouth). The calf must stand within an hour and suckle within the first 3 hours. Colostrum is irreplaceable: it contains the immunoglobulins that will protect the calf in its first weeks of life. A calf that does not stand or suckle within 3 hours must be actively helped. Weigh the calf at birth in CuniSmart — it is the first entry in its individual record.",
+ "Navel cord care: disinfect with iodine tincture immediately after birth. Navel ill (omphalitis) can become a fatal septicaemia in humid tropical conditions. In the first days: check the calf suckles regularly (soft, slightly rounded belly = it has fed), watch for diarrhoea (leading cause of calf mortality under 3 weeks), protect at night in cool weather (a jute cover is enough)."],
+ qz:[{q:"The calf must suckle colostrum…",o:["Within the first week","Within the first 3 hours after birth","The following day"],b:1},
+     {q:"If the cow has not progressed after 2 hours of active contractions, you must…",o:["Wait another 12 hours","Call the vet immediately","Give antibiotics"],b:1},
+     {q:"Navel infection (omphalitis) is dangerous because…",o:["It is expensive to treat","It can become a fatal septicaemia","It stops the calf from suckling"],b:1},
+     {q:"A calf with a soft, slightly rounded belly…",o:["Has eaten too much","Has suckled well — a sign it is feeding correctly","Is sick"],b:1},
+     {q:"Why weigh the calf at birth in CuniSmart?",o:["To comply with regulations","It is the first entry in its individual record and allows early detection of growth lag","To calculate the selling price"],b:1}]}},
+
+{fr:{ti:"Conduire le veau et le jeune bovin",tx:[
+ "La croissance du veau en zone tropicale est directement liée à la qualité et à la quantité du lait maternel, et à l'accès au pâturage de qualité dès les premières semaines. Proposez du fourrage vert tendre au veau dès la 2ème semaine : cela stimule le développement du rumen et accélère la transition vers la rumination. Le développement du rumen est le processus clé : un veau qui rumine bien dès 3 mois sera un adulte efficace alimentairement.",
+ "Sevrage : en élevage allaitant extensif, le sevrage naturel se fait entre 6 et 9 mois. En élevage laitier orienté production, sevrage précoce à 3–4 mois pour récupérer le lait. La pesée mensuelle est l'outil de suivi indispensable : un veau qui n'a pas pris de poids depuis 2 pesées consécutives est en souffrance. Causes : insuffisance de lait maternel, parasites gastrointestinaux (déparasitage dès 3 mois), maladie, eau insuffisante. Les génisses de renouvellement doivent atteindre les 2/3 du poids adulte de leur race avant la première saillie — trop précoce = vêlage difficile, chétivité de la génisse, carrière écourtée.",
+ "Identification : chaque veau doit être marqué ou bouchlé dès la naissance et enregistré dans CuniSmart avec sa filiation (père, mère). Sans identification, pas de sélection possible sur descendance — vous tournez en rond génétiquement. Le GMQ (Gain Moyen Quotidien) du jeune bovin est l'indicateur de performance clé de l'engraissement : GMQ = gain de poids (kg) ÷ nombre de jours. Pour les races locales : 250 à 400 g/jour en extensif. Pour les croisés bien conduits : 500 à 700 g/jour."],
+ qz:[{q:"À quel âge faut-il proposer du fourrage au veau pour stimuler le développement du rumen ?",o:["À partir de 6 mois","Dès la 2ème semaine de vie","Uniquement après le sevrage"],b:1},
+     {q:"Un veau qui n'a pas pris de poids depuis 2 pesées consécutives…",o:["Est en bonne santé, c'est normal","Est en souffrance — vérifier lait maternel, parasites, maladie, eau","A atteint son poids adulte"],b:1},
+     {q:"Pourquoi identifier (boucler) chaque veau dès la naissance ?",o:["Par obligation administrative uniquement","Pour permettre la sélection sur descendance et éviter la consanguinité","Pour le vendre plus cher"],b:1},
+     {q:"Le GMQ d'un veau de race locale en extensif est d'environ…",o:["50 g par jour","250 à 400 g par jour","2 kg par jour"],b:1},
+     {q:"Saillir une génisse trop précocement (avant les 2/3 du poids adulte) risque de provoquer…",o:["Une meilleure prolificité","Un vêlage difficile, la chétivité de la génisse et une carrière écourtée","Une augmentation du lait"],b:1}]},
+ en:{ti:"Raising the calf and the young bovine",tx:[
+ "Calf growth in tropical conditions is directly linked to the quality and quantity of the dam's milk, and access to quality pasture from the first weeks. Offer soft green forage from week 2: this stimulates rumen development and speeds up the transition to rumination. Rumen development is the key process: a calf ruminating well by 3 months will be an efficient adult in feed use.",
+ "Weaning: in extensive suckler systems, natural weaning occurs between 6 and 9 months. In milk-production-oriented systems, early weaning at 3–4 months recovers milk output. Monthly weighing is the essential monitoring tool: a calf that has not gained weight over 2 consecutive weighings is suffering. Causes: insufficient maternal milk, gastrointestinal parasites (deworm from 3 months), disease, insufficient water. Replacement heifers must reach 2/3 of the adult weight of their breed before the first mating — too early = difficult calving, stunted heifer, shortened career.",
+ "Identification: every calf must be tagged or ear-tagged at birth and recorded in CuniSmart with its parentage (sire, dam). Without identification, selection on progeny is impossible — you go round in genetic circles. ADG (Average Daily Gain) of the young bovine is the key performance indicator for fattening: ADG = weight gain (kg) ÷ number of days. For local breeds: 250–400 g/day in extensive systems. For well-managed crossbreds: 500–700 g/day."],
+ qz:[{q:"At what age should forage be offered to the calf to stimulate rumen development?",o:["From 6 months","From week 2 of life","Only after weaning"],b:1},
+     {q:"A calf that has not gained weight over 2 consecutive weighings…",o:["Is healthy — that is normal","Is suffering — check maternal milk, parasites, disease, water","Has reached adult weight"],b:1},
+     {q:"Why tag every calf at birth?",o:["For administrative compliance only","To enable selection on progeny and avoid inbreeding","To sell it for a higher price"],b:1},
+     {q:"ADG of a local-breed calf in extensive systems is about…",o:["50 g per day","250 to 400 g per day","2 kg per day"],b:1},
+     {q:"Mating a heifer too early (before 2/3 of adult weight) risks…",o:["Better prolificacy","Difficult calving, a stunted heifer and a shortened career","Higher milk yield"],b:1}]}},
+
+{fr:{ti:"La trypanosomiase : la maladie n°1 des zones humides",tx:[
+ "La trypanosomiase animale africaine (TAA) est transmise par les glossines (mouches tsé-tsé, genre Glossina). Elle est endémique dans les zones forestières humides du Cameroun, du Bénin et de la majorité de l'Afrique centrale et de l'Ouest. Elle touche les bovins, mais aussi les équins, les caprins et les porcins selon les espèces de Trypanosoma. Pour les bovins : Trypanosoma vivax et T. congolense sont les plus fréquents. Signes cliniques : anémie progressive (muqueuses pâles — gencives, conjonctives), amaigrissement malgré un appétit initial conservé, chute de la production laitière, avortements, œdèmes, et mort si non traitée.",
+ "Traitement : deux trypanocides principaux. Le diminazène acéturate (Bérénil) : traitement curatif, 1 injection intramusculaire au dosage de 7 mg/kg. L'isométamidium chlorure (Samorin) : propriétés curatives ET préventives (protège 2 à 4 mois). Attention majeure : au Bénin, 99 % des éleveurs traitent avec des trypanocides, mais 42 % s'approvisionnent sans prescription et utilisent des dosages incorrects — une résistance au diminazène se développe. Utiliser les trypanocides avec rigueur, sur diagnostic vétérinaire.",
+ "Stratégies complémentaires : insecticides rémanents sur les animaux (cyperméthrine pour-on ou bain), pièges à tsé-tsé imprégnés d'insecticide (efficaces dans les corridors forestiers), débroussaillage des abords de l'élevage (les glossines aiment l'ombre et l'humidité). Choix génétique : en zone d'endémie trypanosomiase, la N'Dama ou un taurin trypanotolérante est préférable à tout zébu, même amélioré."],
+ qz:[{q:"La trypanosomiase bovine est transmise par…",o:["Les tiques","Les mouches tsé-tsé (glossines)","Les moustiques"],b:1},
+     {q:"Le premier signe visible de la trypanosomiase bovine est…",o:["Une forte fièvre immédiate","L'anémie progressive visible aux muqueuses pâles (gencives, conjonctives)","Des plaies cutanées"],b:1},
+     {q:"L'isométamidium chlorure (Samorin) se distingue du diminazène car il a des propriétés…",o:["Uniquement curatives","Curatives ET préventives (protège 2 à 4 mois)","Uniquement préventives"],b:1},
+     {q:"L'utilisation de trypanocides sans prescription et à mauvais dosage risque de provoquer…",o:["Une guérison plus rapide","Une résistance médicamenteuse dans les parasites","Un meilleur engraissement"],b:1},
+     {q:"En zone de forte pression de tsé-tsé, le choix de race à privilégier est…",o:["Le Zébu Bororo pour sa productivité","La N'Dama ou un taurin trypanotolérante","La Holstein pour le lait"],b:1}]},
+ en:{ti:"Trypanosomiasis: the number-one disease in humid zones",tx:[
+ "African animal trypanosomiasis (AAT) is transmitted by tsetse flies (genus Glossina). It is endemic in the humid forest zones of Cameroon, Benin and most of Central and West Africa. It affects cattle, but also equines, goats and pigs depending on Trypanosoma species. For cattle: T. vivax and T. congolense are most frequent. Clinical signs: progressive anaemia (pale mucous membranes — gums, conjunctiva), weight loss despite initial preserved appetite, drop in milk production, abortions, oedema, and death if untreated.",
+ "Treatment: two main trypanocides. Diminazene aceturate (Berenil): curative treatment, 1 intramuscular injection at 7 mg/kg. Isometamidium chloride (Samorin): curative AND preventive properties (protects 2–4 months). Major caution: in Benin, 99% of farmers treat with trypanocides but 42% source them without prescription and use incorrect doses — resistance to diminazene is developing. Use trypanocides rigorously, on veterinary diagnosis.",
+ "Complementary strategies: residual insecticides on animals (cypermethrin pour-on or dip), insecticide-impregnated tsetse traps (effective in forest corridors), bush-clearing around the farm (tsetse flies prefer shade and humidity). Genetic choice: in a trypanosomiasis-endemic zone, the N'Dama or a local trypanotolerant taurine is preferable to any zebu, even improved."],
+ qz:[{q:"Bovine trypanosomiasis is transmitted by…",o:["Ticks","Tsetse flies (Glossina)","Mosquitoes"],b:1},
+     {q:"The first visible sign of bovine trypanosomiasis is…",o:["Immediate high fever","Progressive anaemia visible in pale mucous membranes (gums, conjunctiva)","Skin lesions"],b:1},
+     {q:"Isometamidium chloride (Samorin) differs from diminazene in having…",o:["Only curative properties","Curative AND preventive properties (protects 2–4 months)","Only preventive properties"],b:1},
+     {q:"Using trypanocides without prescription and at wrong doses risks…",o:["Faster recovery","Drug resistance developing in the parasites","Better fattening"],b:1},
+     {q:"In a zone with heavy tsetse pressure, the preferred breed is…",o:["Bororo Zebu for productivity","N'Dama or a local trypanotolerant taurine","Holstein for milk"],b:1}]}},
+
+{fr:{ti:"Santé, vaccinations et parasites externes",tx:[
+ "La PPCB (Péripneumonie Contagieuse Bovine) est la maladie infectieuse bovine la plus grave en Afrique — elle est estimée à 2 milliards USD de pertes annuelles. Causée par Mycoplasma mycoides, elle se propage par inhalation (contacts entre bovins). Signes : toux sèche progressive, difficultés respiratoires, fièvre (41–42 °C), animal qui s'isole. Le vaccin vivant atténué est disponible dans la plupart des pays d'Afrique centrale et de l'Ouest — immunité de 12 à 18 mois. Exiger que le vaccin soit sorti du réfrigérateur au moment de l'injection.",
+ "Autres vaccinations essentielles : Fièvre aphteuse (très contagieuse, lésions sur les pieds et la bouche, arrêt de production), Charbon bactéridien/Anthrax (Bacillus anthracis — mort subite en quelques heures, zoonose mortelle, vaccination annuelle obligatoire dans de nombreux pays), Charbon symptomatique ou Blackleg (Clostridium chauvoei — touche les jeunes bovins 6–24 mois, mort subite, vaccin efficace). Tiques : les deux genres principaux — Amblyomma variegatum (transmet la cowdriose heartwater) et Rhipicephalus (transmettent la babésiose et l'anaplasmose). Détiquage régulier par bain acaricide ou pour-on à la cyperméthrine.",
+ "Helminthes gastrointestinaux : parasites des bovins au pâturage (strongles, douves hépatiques en zones humides). Déparasitage systématique 2 fois par an (fin saison des pluies et fin saison sèche). Surveillance : un bovin maigre à pâturage avec de la diarrhée chronique est très probablement parasité. Ne jamais traiter sans alterner les molécules — résistance anthelminthique en développement en Afrique tropicale."],
+ qz:[{q:"La PPCB (Péripneumonie Contagieuse Bovine) est causée par…",o:["Un virus","Mycoplasma mycoides — se propage par inhalation entre bovins","Une tique"],b:1},
+     {q:"Le Charbon bactéridien (Anthrax) est particulièrement dangereux car…",o:["Il est difficile à diagnostiquer","Il provoque une mort subite en quelques heures et est une zoonose mortelle pour l'humain","Il est résistant aux vaccins"],b:1},
+     {q:"Le genre de tique Amblyomma variegatum est vecteur de…",o:["La trypanosomiase","La cowdriose (heartwater)","La PPCB"],b:1},
+     {q:"Le déparasitage systématique des bovins se fait…",o:["Une fois par semaine","2 fois par an (fin saison des pluies et fin saison sèche)","Uniquement si l'animal montre des symptômes"],b:1},
+     {q:"Un vaccin PPCB sorti d'un réfrigérateur depuis plusieurs heures au soleil…",o:["Reste efficace 48 heures","Est probablement inactif — la chaîne du froid est critique","Devient plus puissant"],b:1}]},
+ en:{ti:"Health, vaccinations and external parasites",tx:[
+ "CBPP (Contagious Bovine Pleuropneumonia) is the most serious bovine infectious disease in Africa — estimated at USD 2 billion in annual losses. Caused by Mycoplasma mycoides, it spreads by inhalation (contact between cattle). Signs: progressive dry cough, breathing difficulties, fever (41–42 °C), animal separating from herd. The live attenuated vaccine is available in most Central and West African countries — immunity lasting 12–18 months. Insist the vaccine comes from a refrigerator at the time of injection.",
+ "Other essential vaccinations: Foot-and-mouth disease (highly contagious, lesions on feet and mouth, production halt), Anthrax (Bacillus anthracis — sudden death within hours, fatal zoonosis, annual vaccination required in many countries), Blackleg (Clostridium chauvoei — affects young cattle 6–24 months, sudden death, effective vaccine). Ticks: the two main genera — Amblyomma variegatum (transmits heartwater cowdriosis) and Rhipicephalus (transmit babesiosis and anaplasmosis). Regular dipping in acaricide or pour-on cypermethrin.",
+ "Gastrointestinal helminths: parasites of grazing cattle (strongyles, liver flukes in wet zones). Systematic deworming twice a year (end of rainy season and end of dry season). Watch: a thin grazing bovine with chronic diarrhoea is very probably parasitised. Never treat without rotating molecules — anthelmintic resistance is developing in tropical Africa."],
+ qz:[{q:"CBPP is caused by…",o:["A virus","Mycoplasma mycoides — spreads by inhalation between cattle","A tick"],b:1},
+     {q:"Anthrax (Bacillus anthracis) is particularly dangerous because…",o:["It is hard to diagnose","It causes sudden death within hours and is a fatal zoonosis for humans","It resists vaccines"],b:1},
+     {q:"The tick genus Amblyomma variegatum is a vector of…",o:["Trypanosomiasis","Heartwater (cowdriosis)","CBPP"],b:1},
+     {q:"Systematic deworming of cattle is done…",o:["Once a week","Twice a year (end of rainy and end of dry season)","Only when symptoms appear"],b:1},
+     {q:"A CBPP vaccine left in the sun for several hours…",o:["Stays effective for 48 hours","Is probably inactive — cold chain is critical","Becomes more potent"],b:1}]}},
+
+/* ---------- NIVEAU 3 : EXPERT (10-16) ---------- */
+{fr:{ti:"La vache laitière tropicale",tx:[
+ "La production laitière bovine en Afrique tropicale est fortement contrainte par la génétique et l'alimentation. Les races locales en extensif produisent 1 à 3 litres par jour, avec une lactation de 150 à 180 jours. La N'Dama produit environ 400 kg par lactation. Les croisés Holstein ou Montbéliarde × local montent à 5 à 10 litres par jour mais sont très exigeants : alimentation contrôlée, logement sec, suivi sanitaire strict, sensibilité à la trypanosomiase, chaleur mal tolérée. Ce sont des animaux pour des éleveurs expérimentés avec des ressources stables.",
+ "Traite : 2 fois par jour (matin et soir), systématiquement après la tétée du veau pour déclencher la descente du lait. Hygiène absolue : udder washing avant la traite, premier jet écarté dans un gobelet sombre (détection de mammite : grumeaux, filaments, couleur anormale), gobelet de traite propre. La mammite bovine (inflammation de la mamelle) est fréquente en zone tropicale humide : litière humide, mauvaise hygiène de traite, fin de lactation. Traitement : antibiotiques intramammaires selon prescription vétérinaire. Prévention : vacherie sèche, hygiène de traite rigoureuse, retraite systématique à sec.",
+ "Gestion de la lactation : la production culmine en 3ème à 4ème semaine post-partum puis décline. L'alimentation dans les 60 premiers jours de lactation (énergie élevée) est déterminante pour le pic de production et la persistance. Une vache sous-alimentée en début de lactation ne rattrapera pas son potentiel. La retraite à sec (arrêt de la traite 6 à 8 semaines avant le vêlage suivant) est indispensable pour la régénération de la mamelle et les réserves corporelles du prochain veau."],
+ qz:[{q:"La production laitière d'une vache locale en extensif est d'environ…",o:["10 à 20 litres par jour","1 à 3 litres par jour","50 litres par jour"],b:1},
+     {q:"Pourquoi écarterle premier jet de lait dans un gobelet sombre ?",o:["C'est le plus riche en matières grasses","Pour détecter visuellement une mammite (grumeaux, filaments, couleur anormale)","Pour nettoyer le trayon"],b:1},
+     {q:"La mammite bovine en zone tropicale humide est favorisée par…",o:["Une alimentation trop riche","La litière humide et une mauvaise hygiène de traite","Le surpâturage"],b:1},
+     {q:"La retraite à sec (arrêt de la traite 6 à 8 semaines avant le vêlage) permet…",o:["D'économiser de l'eau","La régénération de la mamelle et la constitution des réserves pour le prochain veau","De réduire la consommation d'aliment"],b:1},
+     {q:"Un croisé Holstein × local produit plus de lait qu'une race locale mais exige…",o:["Moins de soins","Une alimentation contrôlée, un logement sec et un suivi sanitaire strict","Un fourrage moins riche"],b:1}]},
+ en:{ti:"The tropical dairy cow",tx:[
+ "Bovine milk production in tropical Africa is heavily constrained by genetics and feeding. Local extensive breeds produce 1–3 litres a day with a 150–180 day lactation. The N'Dama produces about 400 kg per lactation. Holstein or Montbéliarde × local crossbreds reach 5–10 litres a day but are very demanding: controlled feeding, dry housing, strict health management, susceptibility to trypanosomiasis, poor heat tolerance. These are animals for experienced farmers with stable resources.",
+ "Milking: twice a day (morning and evening), systematically after the calf suckles to trigger milk letdown. Absolute hygiene: udder washing before milking, first strip discarded into a dark cup (mastitis check: clots, filaments, abnormal colour), clean milking cup. Bovine mastitis (udder inflammation) is common in humid tropical zones: damp bedding, poor milking hygiene, late lactation. Treatment: intramammary antibiotics on vet prescription. Prevention: dry housing, rigorous milking hygiene, systematic dry-off.",
+ "Lactation management: production peaks at weeks 3–4 post-partum then declines. Feeding in the first 60 days of lactation (high energy) is decisive for the production peak and persistency. A cow underfed in early lactation will not recover her potential. Dry-off (stopping milking 6–8 weeks before the next calving) is essential for udder regeneration and body reserves for the next calf."],
+ qz:[{q:"Milk output of a local cow in an extensive system is about…",o:["10 to 20 litres a day","1 to 3 litres a day","50 litres a day"],b:1},
+     {q:"Why strip the first jet of milk into a dark cup?",o:["It is the richest in fat","To visually detect mastitis (clots, filaments, abnormal colour)","To clean the teat"],b:1},
+     {q:"Bovine mastitis in humid tropical zones is promoted by…",o:["Too rich a diet","Damp bedding and poor milking hygiene","Overgrazing"],b:1},
+     {q:"Dry-off (stopping milking 6–8 weeks before calving) allows…",o:["Water saving","Udder regeneration and building body reserves for the next calf","Reducing feed intake"],b:1},
+     {q:"A Holstein × local crossbred produces more milk than a local breed but requires…",o:["Less care","Controlled feeding, dry housing and strict health management","Less rich forage"],b:1}]}},
+
+{fr:{ti:"Maîtriser l'alimentation de saison sèche et l'embouche",tx:[
+ "L'embouche (engraissement intensif court de 90 à 120 jours) est la technique qui permet de tirer le maximum de valeur des bovins en saison des prix hauts. Principe : acheter des animaux maigres en saison sèche à bas prix, les engraisser avec des sous-produits agro-industriels disponibles localement, et vendre au moment des fêtes (Noël, Pâques, fêtes nationales) quand les prix montent. Sous-produits utilisables : graine de coton (riche en protéines et en énergie, 20–25 % protéines), son de blé, drêches de brasserie séchées, tourteaux d'arachide ou de palmiste, mélasse (appétence et énergie).",
+ "Ration d'embouche type pour un taurin de 250 kg : 3 à 5 kg de sous-produits concentrés + fourrage à volonté + eau propre. La complémentation en azote non protéique (urée) : 100 à 150 g/jour mélangés à la mélasse, distribués progressivement sur 3 à 4 semaines d'adaptation. Peser les animaux toutes les 2 semaines pour calculer le GMQ et ajuster la ration. Un GMQ inférieur à 300 g/jour en embouche signale une ration déséquilibrée ou une maladie.",
+ "La graine de coton doit être limitée à 1,5 à 2 kg/jour maximum (elle contient du gossypol, toxique à forte dose pour les bovins). La mélasse ne doit pas dépasser 15 % de la ration totale (acidose). Les animaux en embouche doivent avoir de l'ombre et de l'eau fraîche en permanence — la chaleur réduit l'appétit et dégrade l'efficacité alimentaire. Calculez votre marge d'embouche dans CuniSmart : prix de vente − (prix d'achat + coût de l'aliment + frais vétérinaires)."],
+ qz:[{q:"L'embouche bovine consiste à…",o:["Nourrir les vaches en lactation","Acheter des animaux maigres, les engraisser intensivement, puis vendre au moment des prix hauts","Laisser les bovins au pâturage naturel sans supplément"],b:1},
+     {q:"La graine de coton en embouche doit être limitée à 1,5 à 2 kg/jour car…",o:["Elle est trop chère","Elle contient du gossypol, toxique à forte dose pour les bovins","Elle est insuffisamment énergétique"],b:1},
+     {q:"Un GMQ inférieur à 300 g/jour en embouche signale…",o:["Un très bon résultat","Un problème de ration ou une maladie","Un résultat normal pour les races locales"],b:1},
+     {q:"La mélasse dans la ration bovine ne doit pas dépasser 15 % car…",o:["Elle coûte trop cher","Elle risque de provoquer une acidose à forte dose","Elle est peu appétente"],b:1},
+     {q:"L'urée alimentaire pour les bovins doit être introduite…",o:["D'un seul coup à la dose maximale","Progressivement sur 3 à 4 semaines d'adaptation","Uniquement aux veaux"],b:1}]},
+ en:{ti:"Mastering dry-season feeding and fattening",tx:[
+ "Cattle fattening (intensive short-term fattening over 90–120 days) is the technique that extracts maximum value from cattle when prices are high. Principle: buy thin animals cheaply in the dry season, fatten them on locally available agro-industrial by-products, and sell during festive periods (Christmas, Easter, national holidays) when prices rise. Usable by-products: cottonseed (rich in protein and energy, 20–25% protein), wheat bran, dried brewers' grains, groundnut or palm cake, molasses (palatability and energy).",
+ "Typical fattening ration for a 250 kg taurine: 3–5 kg of concentrate by-products + forage ad lib + clean water. Non-protein nitrogen supplementation (urea): 100–150 g/day mixed into molasses, introduced gradually over 3–4 weeks of adaptation. Weigh animals every 2 weeks to compute ADG and adjust the ration. An ADG below 300 g/day in fattening signals an unbalanced ration or disease.",
+ "Cottonseed must be limited to 1.5–2 kg/day maximum (it contains gossypol, toxic at high doses for cattle). Molasses must not exceed 15% of the total ration (acidosis). Fattening animals must have shade and fresh water at all times — heat reduces appetite and impairs feed efficiency. Calculate your fattening margin in CuniSmart: selling price − (purchase price + feed cost + vet expenses)."],
+ qz:[{q:"Cattle fattening consists of…",o:["Feeding lactating cows","Buying thin animals, intensively fattening them, then selling when prices are high","Leaving cattle on natural pasture without supplement"],b:1},
+     {q:"Cottonseed in fattening must be limited to 1.5–2 kg/day because…",o:["It is too expensive","It contains gossypol, toxic at high doses for cattle","It is not energy-dense enough"],b:1},
+     {q:"An ADG below 300 g/day in fattening signals…",o:["A very good result","A ration problem or disease","A normal result for local breeds"],b:1},
+     {q:"Molasses in the bovine ration must not exceed 15% because…",o:["It is too expensive","It can cause acidosis at high doses","It is unpalatable"],b:1},
+     {q:"Dietary urea for cattle must be introduced…",o:["All at once at maximum dose","Gradually over 3 to 4 weeks of adaptation","Only to calves"],b:1}]}},
+
+{fr:{ti:"Piloter la reproduction pour un vêlage par an",tx:[
+ "L'objectif d'un vêlage par an (intervalle vêlage-vêlage de 365 jours) est le standard de l'élevage bovin performant. Chaque mois gagné sur l'intervalle représente un veau supplémentaire sur la vie productive de la vache. Pour l'atteindre, deux points sont critiques : la reprise des cycles après le vêlage (anœstrus post-partum) et la détection des chaleurs. En Afrique tropicale, l'anœstrus post-partum dure en moyenne 90 à 150 jours chez les races locales en extensif — contre 50 à 60 jours en élevage bien conduit.",
+ "Note d'état corporel (NEC) : évaluez la NEC de vos vaches sur une échelle de 1 (cachectique) à 5 (obèse) en observant les saillies des vertèbres, des côtes et des hanches. Idéalement 3 à la saillie et à la mise bas, pas moins de 2,5 au sevrage. Une vache qui atteint la mise bas en mauvais état corporel (NEC < 2,5) produit moins de lait, perd du poids plus vite en lactation, et met plus de temps à reprendre ses cycles. Améliorer l'alimentation dans les 60 jours avant le vêlage prévu (flushing pré-partum) est l'action la plus rentable.",
+ "Sevrage précoce des veaux (avant 90 jours) : raccourcit l'anœstrus de 30 à 60 jours en levant l'inhibition hormonale de la lactation sur les cycles ovariens. Technique à utiliser avec discernement : elle pénalise la croissance du veau si la ration de substitution est insuffisante. En pratique : notiez dans CuniSmart la date du vêlage, la NEC à la mise bas, et la date de la première saillie post-partum. Ces trois données permettent de calculer l'intervalle vêlage-saillie et d'identifier les vaches à problème."],
+ qz:[{q:"L'anœstrus post-partum chez les vaches locales en extensif africain dure en moyenne…",o:["15 à 20 jours","90 à 150 jours","2 ans"],b:1},
+     {q:"La principale cause de l'anœstrus post-partum prolongé en Afrique tropicale est…",o:["La chaleur excessive","La sous-alimentation qui empêche la reconstitution des réserves corporelles","L'âge de la vache"],b:1},
+     {q:"Le sevrage précoce (avant 90 jours) raccourcit l'anœstrus car…",o:["Le veau mange moins","Il lève l'inhibition hormonale de la lactation sur les cycles ovariens","La vache produit plus de lait"],b:1},
+     {q:"La NEC idéale de la vache à la saillie est de…",o:["1 à 2 (très maigre)","3","5 (obèse)"],b:1},
+     {q:"Pour calculer l'intervalle vêlage-saillie, il faut noter dans CuniSmart…",o:["Uniquement le prix de vente des veaux","La date du vêlage et la date de la première saillie post-partum","Le poids du taureau"],b:1}]},
+ en:{ti:"Steering reproduction to one calving per year",tx:[
+ "The target of one calving per year (365-day calving interval) is the standard of productive cattle farming. Every month gained on the interval is one extra calf over the cow's productive life. To achieve it, two points are critical: resumption of cycling after calving (post-partum anoestrus) and oestrus detection. In tropical Africa, post-partum anoestrus lasts on average 90–150 days in local extensive breeds — vs 50–60 days in well-managed systems.",
+ "Body condition score (BCS): assess your cows' BCS on a 1 (emaciated) to 5 (obese) scale by observing vertebra, rib and hip bone prominence. Ideally 3 at mating and calving, no less than 2.5 at weaning. A cow that reaches calving in poor condition (BCS < 2.5) produces less milk, loses weight faster in lactation and takes longer to resume cycling. Improving feeding in the 60 days before the expected calving (pre-calving flushing) is the most profitable action.",
+ "Early weaning (before 90 days): shortens anoestrus by 30–60 days by lifting the hormonal inhibition of lactation on ovarian cycles. Use with judgement: it penalises calf growth if the substitute ration is inadequate. In practice: record in CuniSmart the calving date, BCS at calving and date of first post-partum mating. These three data allow you to compute the calving-to-service interval and identify problem cows."],
+ qz:[{q:"Post-partum anoestrus in local African extensive cows lasts on average…",o:["15 to 20 days","90 to 150 days","2 years"],b:1},
+     {q:"The main cause of prolonged post-partum anoestrus in tropical Africa is…",o:["Excessive heat","Underfeeding preventing body reserve rebuilding","The cow's age"],b:1},
+     {q:"Early weaning (before 90 days) shortens anoestrus because…",o:["The calf eats less","It lifts the hormonal inhibition of lactation on ovarian cycles","The cow produces more milk"],b:1},
+     {q:"Ideal BCS of the cow at mating is…",o:["1 to 2 (very thin)","3","5 (obese)"],b:1},
+     {q:"To compute the calving-to-service interval, record in CuniSmart…",o:["Only the calf selling price","The calving date and date of first post-partum mating","The bull's weight"],b:1}]}},
+
+{fr:{ti:"Lutte contre les tiques et parasites externes",tx:[
+ "Les tiques sont les ectoparasites bovins les plus importants en Afrique tropicale. Amblyomma variegatum est le plus répandu en Afrique centrale et de l'Ouest : il transmet la cowdriose (heartwater, causée par Ehrlichia ruminantium — mortalité jusqu'à 90 % chez les races sensibles) et la dermatophilose. Rhipicephalus (microplus, decoloratus) transmet la babésiose (Babesia bovis, B. bigemina) et l'anaplasmose — deux maladies qui provoquent anémie sévère et mortalité élevée. Une forte infestation de tiques déprime aussi directement la production laitière et la croissance.",
+ "Stratégies de lutte : le bain acaricide (trempage complet dans une solution acaricide) est la méthode la plus efficace mais nécessite une installation coûteuse. L'application pour-on (cyperméthrine ou amitraz) sur le dos est pratique et protège 4 à 6 semaines. Rotation obligatoire des familles d'acaricides (pyréthrinoïdes, organophosphorés, amidines) pour éviter la résistance. Fréquence : en saison humide (pic de tiques) tous les 15 jours, en saison sèche tous les 3 à 4 semaines.",
+ "Lutte intégrée : la rotation des pâturages réduit significativement la charge en tiques. Les larves sans hôte meurent en 3 à 6 mois selon les conditions climatiques. En zone endémique cowdriose, la vaccination existe (pas encore largement disponible en Afrique de l'Ouest) — renseignez-vous auprès de votre service vétérinaire. Notez dans CuniSmart chaque traitement acaricide : date, produit, dose — essentiel pour suivre l'efficacité et respecter les délais d'attente lait et viande."],
+ qz:[{q:"La tique Amblyomma variegatum est vectrice de…",o:["La trypanosomiase","La cowdriose (heartwater) et la dermatophilose","La PPCB"],b:1},
+     {q:"Pourquoi alterner les familles d'acaricides dans le temps ?",o:["Pour économiser de l'argent","Pour éviter la résistance médicamenteuse chez les tiques","Pour améliorer la palatabilité"],b:1},
+     {q:"La rotation des pâturages réduit les tiques car…",o:["Elle sèche les pâturages","Les larves sans hôte meurent en 3 à 6 mois","Les tiques détestent l'herbe courte"],b:1},
+     {q:"En saison humide (pic de tiques), la fréquence de traitement acaricide recommandée est…",o:["Une fois par an","Tous les 15 jours","Toutes les 4 heures"],b:1},
+     {q:"Babesia bovis et B. bigemina, transmises par Rhipicephalus, provoquent principalement…",o:["De la toux sèche","Anémie sévère et mortalité élevée","Des avortements répétés"],b:1}]},
+ en:{ti:"Tick control and external parasites",tx:[
+ "Ticks are the most important bovine ectoparasites in tropical Africa. Amblyomma variegatum is the most widespread in Central and West Africa: it transmits heartwater (cowdriosis, caused by Ehrlichia ruminantium — mortality up to 90% in susceptible breeds) and dermatophilosis. Rhipicephalus (microplus, decoloratus) transmits babesiosis (Babesia bovis, B. bigemina) and anaplasmosis — two diseases causing severe anaemia and high mortality. Heavy tick infestation also directly depresses milk production and growth.",
+ "Control strategies: the acaricide dip (full immersion in acaricide solution) is the most effective method but needs a costly installation. Pour-on application (cypermethrin or amitraz) on the back is convenient and protects 4–6 weeks. Mandatory rotation of acaricide families (pyrethroids, organophosphates, amidines) to prevent resistance. Frequency: in the wet season (tick peak) every 15 days, in the dry season every 3–4 weeks.",
+ "Integrated control: pasture rotation significantly reduces tick loads. Larvae without a host die in 3–6 months depending on climate. In heartwater-endemic zones, a vaccine exists (not yet widely available in West Africa) — check with your veterinary service. Record every acaricide treatment in CuniSmart: date, product, dose — essential to monitor efficacy and respect milk and meat withdrawal times."],
+ qz:[{q:"The tick Amblyomma variegatum is a vector of…",o:["Trypanosomiasis","Heartwater (cowdriosis) and dermatophilosis","CBPP"],b:1},
+     {q:"Why rotate acaricide families over time?",o:["To save money","To prevent drug resistance in ticks","To improve palatability"],b:1},
+     {q:"Pasture rotation reduces ticks because…",o:["It dries out pastures","Larvae without a host die in 3 to 6 months","Ticks dislike short grass"],b:1},
+     {q:"In the wet season (tick peak), the recommended acaricide treatment frequency is…",o:["Once a year","Every 15 days","Every 4 hours"],b:1},
+     {q:"Babesia bovis and B. bigemina, transmitted by Rhipicephalus, mainly cause…",o:["Dry cough","Severe anaemia and high mortality","Repeated abortions"],b:1}]}},
+
+{fr:{ti:"Gestion financière et rentabilité bovine",tx:[
+ "Le bovin est un actif à cycle très long. De la naissance d'une génisse à sa première vente de veau : 4 à 5 ans. Ce cycle exige une vision financière pluriannuelle que la plupart des éleveurs africains n'ont pas l'habitude d'appliquer. Les sources de revenus d'un troupeau bovin : vente de veaux (le principal revenu récurrent), vente de lait (si race ou croisé laitier), vente de bovins à l'engrais ou d'embouche, vente de reproducteurs de valeur, vente de fumier composté (souvent négligée mais réelle), location du taureau.",
+ "Indicateurs à suivre dans CuniSmart Finances : taux de vêlage annuel (veaux nés / vaches saillies × 100 — objectif > 75 %), taux de mortalité des veaux (objectif < 5 %), GMQ des jeunes bovins, intervalle vêlage-vêlage moyen du troupeau. Un troupeau de 10 vaches avec un intervalle vêlage-vêlage de 365 jours produit 10 veaux par an. Le même troupeau avec un intervalle de 18 mois ne produit que 6 à 7 veaux. C'est la même vache, le même pâturage, les mêmes soins — la différence est dans la gestion de la reproduction.",
+ "Le fumier bovin est la ressource la plus sous-valorisée des éleveurs africains. Un bovin adulte produit 8 à 10 kg de fumier frais par jour — soit 3 à 4 tonnes par an. Composté (mélangé à des résidus végétaux, humidifié et retourné 2 à 3 fois en 3 mois), il devient un engrais organique de qualité, vendu à 50 000 à 150 000 FCFA la tonne selon les marchés locaux. Un troupeau de 20 bovins peut produire 60 à 80 tonnes de compost par an — un revenu parallèle de 3 à 12 millions FCFA."],
+ qz:[{q:"Le principal revenu récurrent d'un troupeau bovin allaitant est…",o:["La vente de lait","La vente de veaux","La vente de fumier"],b:1},
+     {q:"Un troupeau de 10 vaches avec un intervalle de 18 mois entre vêlages produit par an…",o:["10 veaux","6 à 7 veaux","15 veaux"],b:1},
+     {q:"Le fumier bovin composté peut être vendu à…",o:["Aucune valeur marchande","50 000 à 150 000 FCFA la tonne","Le même prix que l'aliment concentré"],b:1},
+     {q:"Pour suivre la rentabilité d'un troupeau bovin, l'indicateur clé est…",o:["La couleur de la robe des animaux","Le taux de vêlage annuel (veaux nés / vaches saillies × 100)","L'âge du plus vieux animal"],b:1},
+     {q:"Un taux de vêlage annuel acceptable en élevage bovin tropical est…",o:["20 à 30 %","Supérieur à 75 %","100 % obligatoirement"],b:1}]},
+ en:{ti:"Financial management and bovine profitability",tx:[
+ "Cattle is a very long-cycle asset. From the birth of a heifer to her first calf sale: 4–5 years. This cycle demands multi-year financial planning that most African farmers are not accustomed to applying. Income sources of a cattle herd: calf sales (the main recurring income), milk sales (if dairy breed or crossbred), sale of fattened or feedlot cattle, sale of valuable breeding animals, sale of composted manure (often overlooked but real), bull hire.",
+ "Indicators to track in CuniSmart Finances: annual calving rate (calves born / cows served × 100 — target > 75%), calf mortality rate (target < 5%), young bovine ADG, mean herd calving interval. A herd of 10 cows with a 365-day calving interval produces 10 calves per year. The same herd with an 18-month interval produces only 6–7 calves. Same cow, same pasture, same care — the difference is in reproduction management.",
+ "Bovine manure is the most undervalued resource of African farmers. An adult bovine produces 8–10 kg of fresh manure per day — 3–4 tonnes per year. Composted (mixed with plant residues, moistened and turned 2–3 times over 3 months), it becomes quality organic fertiliser, sold at 50,000–150,000 FCFA per tonne depending on local markets. A herd of 20 cattle can produce 60–80 tonnes of compost per year — a parallel income of 3–12 million FCFA."],
+ qz:[{q:"The main recurring income of a suckler cattle herd is…",o:["Milk sales","Calf sales","Manure sales"],b:1},
+     {q:"A herd of 10 cows with an 18-month calving interval produces per year…",o:["10 calves","6 to 7 calves","15 calves"],b:1},
+     {q:"Composted bovine manure can be sold at…",o:["No market value","50,000 to 150,000 FCFA per tonne","The same price as concentrate feed"],b:1},
+     {q:"To monitor a cattle herd's profitability, the key indicator is…",o:["Coat colour of the animals","Annual calving rate (calves born / cows served × 100)","The age of the oldest animal"],b:1},
+     {q:"An acceptable annual calving rate in tropical cattle farming is…",o:["20 to 30%","Above 75%","Necessarily 100%"],b:1}]}},
+
+{fr:{ti:"Marchés, valorisation et circuits de vente",tx:[
+ "Le marché bovin africain est dominé par des réseaux de commerce informels — convoyeurs, courtiers, bouchers itinérants — qui fixent les prix à leur avantage. L'éleveur isolé est toujours la partie faible de la négociation. La solution : vendre groupé (via une coopérative d'éleveurs), vendre directement aux abattoirs industriels ou aux bouchers de quartier, ou valoriser la viande par transformation (bœuf fumé, charcuterie bovine artisanale).",
+ "Saisonnalité des prix : la viande bovine est plus chère en saison des fêtes (Noël, Pâques, fêtes nationales, Tabaski) et en saison sèche (animaux maigres rares = prix montant). Les animaux maigres de début de saison sèche sont vendus à bas prix par des éleveurs en difficulté — l'éleveur organisé les achète pour l'embouche et les revend 3 mois plus tard avec une marge de 30 à 50 %. La traçabilité CuniSmart est de plus en plus demandée par les abattoirs industriels et les acheteurs institutionnels pour les marchés publics (cantines scolaires, prisons, hôpitaux).",
+ "Le cuir et les abats sont des revenus complémentaires négligés. Le cuir bovin africain est exporté (Chine, Inde) — vendre le cuir à un tanneur plutôt que de l'abandonner. Les abats (foie, cœur, rognons, intestins) se vendent dans les marchés locaux à des prix unitaires parfois supérieurs à la viande. Un bovin bien valorisé de la tête à la queue augmente la recette totale de 15 à 25 %."],
+ qz:[{q:"L'éleveur bovin isolé est en position faible dans la négociation car…",o:["Il n'a qu'un animal à vendre","Les convoyeurs et courtiers informels fixent les prix à leur avantage","La viande bovine se vend mal"],b:1},
+     {q:"L'embouche bovine (achat maigre + engraissement + revente en fête) génère une marge potentielle de…",o:["2 à 5 %","30 à 50 % sur le prix d'achat","200 %"],b:1},
+     {q:"La traçabilité CuniSmart est de plus en plus demandée par…",o:["Les petits marchés ruraux","Les abattoirs industriels et acheteurs institutionnels pour les marchés publics","Les vendeurs de bord de route"],b:1},
+     {q:"Les abats bovins (foie, cœur, rognons) sont intéressants car…",o:["Ils se conservent plus longtemps que la viande","Leur prix unitaire est parfois supérieur à la viande dans les marchés locaux","Ils sont sans valeur nutritive"],b:1},
+     {q:"La période de prix le plus bas pour le bovin en Afrique tropicale est généralement…",o:["La saison des fêtes (Noël, Pâques)","Le début de la saison sèche (animaux maigres en vente de détresse)","La saison des pluies"],b:1}]},
+ en:{ti:"Markets, valorisation and sales channels",tx:[
+ "The African cattle market is dominated by informal trading networks — drovers, brokers, itinerant butchers — who set prices to their own advantage. The isolated farmer is always the weaker party in the negotiation. The solution: sell collectively (through a farmers' cooperative), sell directly to industrial abattoirs or neighbourhood butchers, or valorise the meat through processing (smoked beef, artisan bovine charcuterie).",
+ "Price seasonality: beef is more expensive during festive periods (Christmas, Easter, national holidays, Eid) and in the dry season (scarce lean animals = rising prices). Lean animals at the start of the dry season are sold cheaply by struggling farmers — the organised farmer buys them for fattening and resells 3 months later with a 30–50% margin. CuniSmart traceability is increasingly demanded by industrial abattoirs and institutional buyers for public procurement (school canteens, prisons, hospitals).",
+ "Hide and offal are overlooked complementary income sources. African cattle hide is exported (China, India) — sell the hide to a tanner rather than abandoning it. Offal (liver, heart, kidneys, intestines) sells in local markets at unit prices sometimes higher than meat. A well-valorised bovine from head to tail increases total income by 15–25%."],
+ qz:[{q:"The isolated cattle farmer is in a weak negotiating position because…",o:["He has only one animal to sell","Informal drovers and brokers set prices to their own advantage","Beef sells poorly"],b:1},
+     {q:"Cattle fattening (buy lean + fatten + sell at festive time) generates a potential margin of…",o:["2 to 5%","30 to 50% on purchase price","200%"],b:1},
+     {q:"CuniSmart traceability is increasingly demanded by…",o:["Small rural markets","Industrial abattoirs and institutional buyers for public procurement","Roadside sellers"],b:1},
+     {q:"Bovine offal (liver, heart, kidneys) is valuable because…",o:["It keeps longer than meat","Its unit price is sometimes higher than meat in local markets","It has no nutritional value"],b:1},
+     {q:"The period of lowest cattle prices in tropical Africa is generally…",o:["Festive season (Christmas, Easter)","The start of the dry season (distress sales of lean animals)","The rainy season"],b:1}]}},
+
+{fr:{ti:"Construire un troupeau bovin durable sur 10 ans",tx:[
+ "Le troupeau bovin se construit lentement mais représente un capital durable et croissant. Plan à 10 ans : démarrer avec 5 vaches et un taureau, atteindre 20 à 30 têtes en 7 à 8 ans par croît naturel (si taux de vêlage > 75 % et mortalité veaux < 5 %), vendre les excédents mâles et les femelles de mauvaise valeur reproductive. Le troupeau auto-finance sa propre expansion — sans emprunt, sans achat extérieur.",
+ "Sélection sur descendance : noter systématiquement dans CuniSmart la date de naissance, le poids à la naissance, à 6 mois et à 12 mois de chaque veau, ainsi que la production laitière estimée de la mère. Sélectionner comme futures reproductrices les génisses des vaches qui : vêlent tôt (< 40 mois pour la première mise bas), vêlent régulièrement (intervalle < 14 mois), produisent des veaux vigoureux et de bon poids. La sélection sur 3 générations améliore significativement les performances sans achat extérieur.",
+ "Connexion au réseau professionnel : coopératives d'éleveurs, MINEPIA (Cameroun), services vétérinaires de zone, projets FAO et PDCVEP. Un éleveur qui tient un registre propre dans CuniSmart sur 3 ans a un dossier solide pour accéder au crédit rural, aux subventions aux intrants (vaccins, acaricides), et aux marchés institutionnels. La règle d'or finale : noter tout dans CuniSmart — chaque naissance, chaque vêlage, chaque traitement, chaque vente. Votre troupeau est votre capital. Vos données sont sa carte d'identité."],
+ qz:[{q:"Un troupeau de 5 vaches avec un taux de vêlage de 80 % et une mortalité de 5 % peut atteindre combien de têtes en 7 à 8 ans ?",o:["5 à 6 têtes (aucune croissance)","20 à 30 têtes par croît naturel","100 têtes"],b:1},
+     {q:"La sélection des génisses de renouvellement doit prioriser les filles des vaches qui…",o:["Ont la plus belle robe","Vêlent tôt, régulièrement et produisent des veaux vigoureux","Sont les plus grandes du troupeau"],b:1},
+     {q:"Un registre propre dans CuniSmart sur 3 ans permet à l'éleveur d'accéder à…",o:["Aucun avantage particulier","Crédit rural, subventions aux intrants et marchés institutionnels","Un diplôme universitaire"],b:1},
+     {q:"Le croît naturel d'un troupeau bovin s'auto-finance car…",o:["Les vaches ne consomment rien","La vente des veaux et excédents couvre les coûts et finance l'expansion","Les prix sont toujours en hausse"],b:1},
+     {q:"La règle d'or de l'élevage bovin durable en Afrique est…",o:["Vendre le plus vite possible","Tout noter dans CuniSmart — chaque naissance, vêlage, traitement, vente — pour piloter avec des données réelles","Ne jamais vendre d'animaux"],b:1}]},
+ en:{ti:"Building a sustainable cattle herd over 10 years",tx:[
+ "The cattle herd builds slowly but represents durable and growing capital. A 10-year plan: start with 5 cows and a bull, reach 20–30 head in 7–8 years through natural increase (if calving rate > 75% and calf mortality < 5%), sell surplus males and females of poor reproductive value. The herd self-finances its own expansion — no loans, no outside purchases.",
+ "Selection on progeny: systematically record in CuniSmart date of birth, weight at birth, 6 months and 12 months for every calf, plus the estimated milk output of the dam. Select as future breeders heifers from cows that: calve early (< 40 months for first calving), calve regularly (interval < 14 months), produce vigorous calves of good weight. Selection over 3 generations significantly improves performance without outside purchase.",
+ "Connection to the professional network: farmer cooperatives, MINEPIA (Cameroon), area veterinary services, FAO and PDCVEP projects. A farmer holding a clean CuniSmart record over 3 years has a solid file to access rural credit, input subsidies (vaccines, acaricides) and institutional markets. Final golden rule: record everything in CuniSmart — every birth, every calving, every treatment, every sale. Your herd is your capital. Your data is its identity card."],
+ qz:[{q:"A herd of 5 cows with an 80% calving rate and 5% mortality can reach how many head in 7–8 years?",o:["5 to 6 head (no growth)","20 to 30 head through natural increase","100 head"],b:1},
+     {q:"Selection of replacement heifers must prioritise daughters of cows that…",o:["Have the finest coat","Calve early, regularly and produce vigorous calves","Are the tallest in the herd"],b:1},
+     {q:"A clean CuniSmart record over 3 years allows the farmer to access…",o:["No particular benefit","Rural credit, input subsidies and institutional markets","A university degree"],b:1},
+     {q:"A cattle herd's natural increase self-finances because…",o:["Cows consume nothing","Calf and surplus sales cover costs and fund expansion","Prices always rise"],b:1},
+     {q:"The golden rule of sustainable cattle farming in Africa is…",o:["Sell as fast as possible","Record everything in CuniSmart — every birth, calving, treatment, sale — to manage with real data","Never sell animals"],b:1}]}}
+];
+const NIVEAUX_BOVIN = [
+  {deb:0,  fin:5,  k:'lvl_1'},
+  {deb:5,  fin:10, k:'lvl_2'},
+  {deb:10, fin:16, k:'lvl_3'}
+];
+
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
@@ -6101,10 +6418,150 @@ function partagerCertifCaprin(){
   partagerWhatsApp(txt.join('\n'));
 }
 
+
+/* ===== ÉCOLE D'ÉLEVAGE BOVIN — fonctions de rendu ===== */
+function niveauBovinFait(idx){
+  const vb = etat.ecole.valideesBovin || [];
+  const nv = NIVEAUX_BOVIN[idx];
+  for(let i=nv.deb; i<nv.fin; i++) if(!vb.includes(i)) return false;
+  return true;
+}
+function vueLeconsBovin(){
+  if(leconOuverte !== null) return vueLeconBovin(leconOuverte);
+  const vb = etat.ecole.valideesBovin || [];
+  const n = vb.length, total = LECONS_BOVIN.length;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const titre = L("École d'élevage bovin","Cattle farming school");
+  const toutFait = n === total;
+  let certif = '';
+  if(toutFait){
+    if(!etat.ecole.numBovin){
+      etat.ecole.numBovin = 'CSM-BOV-'+auj().replace(/-/g,'')+'-'+uid().slice(-4).toUpperCase();
+      sauver();
+    }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — 🐄 ${L('Élevage bovin','Cattle Farming')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom)||'…'}</div>
+      <p>${L("a validé le parcours certifiant École d'élevage bovin.","has completed the Cattle Farming School certifying path.")}</p>
+      <p style="margin-top:6px">🐄 CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numBovin}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifBovin()">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+  const ICONES_B = ['🐄','🔍','🏞️','🌾','🔄','🍼','🐂','🦟','💉','🥛','☀️','🧫','🐛','💰','🏪','🌿'];
+  const LABELS_NV = {fr:['Niveau 1 · Débutant','Niveau 2 · Confirmé','Niveau 3 · Expert'],
+                     en:['Level 1 · Beginner','Level 2 · Intermediate','Level 3 · Expert']};
+  const lblNv = LABELS_NV[langue]||LABELS_NV.fr;
+  let leconHTML = '';
+  NIVEAUX_BOVIN.forEach((nv,ni)=>{
+    const nvFait = niveauBovinFait(ni);
+    const nvDispo = ni===0 || niveauBovinFait(ni-1);
+    leconHTML += `<div style="margin-bottom:18px">
+      <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+      </div>`;
+    if(!nvDispo){
+      leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
+    } else {
+      for(let i=nv.deb;i<nv.fin;i++){
+        const done = vb.includes(i);
+        const lec = LECONS_BOVIN[i][langue]||LECONS_BOVIN[i].fr;
+        leconHTML += `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLeconBovin(${i})">
+          <div class="lecon-num">${done?'✓':i+1}</div>
+          <div class="lecon-titre">${ICONES_B[i]||'•'} ${esc(lec.ti)}</div>
+          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+        </div>`;
+      }
+    }
+    leconHTML += '</div>';
+  });
+  return `
+    <h2 class="page-title">${titre}</h2>
+    <p class="page-sub">${L('Parcours certifiant en 3 niveaux — 16 leçons + quiz (5 questions). Validez tout pour obtenir votre certificat.','Certifying path in 3 levels — 16 lessons + quizzes (5 questions). Complete all to earn your certificate.')}</p>
+    ${selecteurEspece()}
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${n} / ${total} ${L('leçons validées','lessons completed')}</p>
+      <div class="progress-bar"><div style="width:${n/total*100}%"></div></div>
+      <div style="margin-top:12px">${leconHTML}</div>
+    </div>`;
+}
+function ouvrirLeconBovin(idx){ leconOuverte=idx; rendre(); window.scrollTo(0,0); }
+function vueLeconBovin(idx){
+  const lec = LECONS_BOVIN[idx][langue]||LECONS_BOVIN[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ICONES_B = ['🐄','🔍','🏞️','🌾','🔄','🍼','🐂','🦟','💉','🥛','☀️','🧫','🐛','💰','🏪','🌿'];
+  const done = (etat.ecole.valideesBovin||[]).includes(idx);
+  const txtHtml = lec.tx.map(p=>`<p>${esc(p)}</p>`).join('');
+  const opts = lec.qz.map((q,qi)=>`
+    <div class="quiz-q">
+      <p>${qi+1}. ${esc(q.q)}</p>
+      ${q.o.map((o,oi)=>`
+        <label class="quiz-opt" id="qbv-${qi}-${oi}">
+          <input type="radio" name="qbv${qi}" value="${oi}" style="flex-shrink:0"> ${esc(o)}
+        </label>`).join('')}
+    </div>`).join('');
+  return `
+    <button class="btn sec" onclick="fermerLeconBovin()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">
+        ${ICONES_B[idx]||'•'} ${esc(lec.ti)}
+        ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}
+      </h2>
+      <div class="lecon-texte" style="margin-top:12px">${txtHtml}</div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>❓ ${fmt(t('quiz_title'),{n:4})}</h3>
+      <p style="color:var(--gris);font-size:.88rem;margin-bottom:10px">
+        ${L('⚠️ Leçons 8 et 9 : trypanosomiase et PPCB — protocoles à valider avec un vétérinaire de votre zone.','⚠️ Lessons 8 and 9: trypanosomiasis and CBPP — protocols to validate with a vet in your area.')}
+      </p>
+      <form id="qbv-form">${opts}</form>
+      <div id="qbv-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerLeconBovin(${idx})">${t('btn_check')}</button>
+    </div>`;
+}
+function fermerLeconBovin(){ leconOuverte=null; rendre(); window.scrollTo(0,0); }
+function validerLeconBovin(idx){
+  const lec = LECONS_BOVIN[idx][langue]||LECONS_BOVIN[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const res = document.getElementById('qbv-res');
+  let bonnes=0, total=lec.qz.length, allOk=true;
+  lec.qz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="qbv'+qi+'"]:checked');
+    if(!sel){ allOk=false; return; }
+    const ok=parseInt(sel.value)===q.b;
+    if(ok) bonnes++;
+    q.o.forEach((_,oi)=>{
+      const lbl=document.getElementById('qbv-'+qi+'-'+oi);
+      if(lbl){ lbl.classList.remove('bonne','fausse'); if(oi===q.b) lbl.classList.add('bonne'); else if(oi===parseInt(sel.value)) lbl.classList.add('fausse'); }
+    });
+  });
+  if(!allOk){ if(res) res.innerHTML='<span style="color:var(--rouge)">'+L('Répondez à toutes les questions.','Answer all questions.')+'</span>'; return; }
+  if(!res) return;
+  if(bonnes>=4){
+    if(!etat.ecole.valideesBovin) etat.ecole.valideesBovin=[];
+    if(!etat.ecole.valideesBovin.includes(idx)) etat.ecole.valideesBovin.push(idx);
+    sauver();
+    res.innerHTML='<span style="color:var(--feuille-fonce);font-weight:700">🎉 '+L('Bravo ! '+bonnes+'/'+total+' — Leçon validée !','Well done! '+bonnes+'/'+total+' — Lesson completed!')+'</span>';
+    setTimeout(()=>{ leconOuverte=null; rendre(); window.scrollTo(0,0); },1100);
+  } else {
+    res.innerHTML='<span style="color:var(--rouge)">✗ '+bonnes+'/'+total+' — '+L('Relisez la leçon et réessayez (4/5 requis).','Re-read the lesson and try again (4/5 required).')+'</span>';
+  }
+}
+function partagerCertifBovin(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const num=(etat.ecole.numBovin)?('N° '+etat.ecole.numBovin):'';
+  const txt=['🎓 '+L("Certificat CuniMaster — École d'élevage bovin","CuniMaster Certificate — Cattle Farming School"),
+    (etat.ecole.nom||'—'), L('16 leçons validées.','16 lessons completed.'), num,'— CuniSmart'].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
+}
+
 function vueEcole(){
   if(espActive() === 'volaille') return vueLeconsPondeuse();
   if(espActive() === 'porc') return vueLeconsPorcin();
   if(espActive() === 'caprin') return vueLeconsCaprins();
+  if(espActive() === 'bovin') return vueLeconsBovin();
   if(espActive() !== 'lapin') return vueFiches();
   if(leconOuverte !== null) return vueLecon(leconOuverte);
   const n = etat.ecole.validees.length;
