@@ -4859,6 +4859,16 @@ function riskLabel(F){
 // ─── 3. VUE PRINCIPALE ───────────────────────────────────────────────────────
 function vueConsanguinite(){
   const L=(fr,en)=>langue==='fr'?fr:en;
+  if(etat.pro !== true){
+    return `<div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2);text-align:center;padding:28px">
+      <div style="font-size:2rem;margin-bottom:8px">🧬</div>
+      <h3 style="color:#6B2409">🔒 ${L('Consanguinité & généalogie — réservées à CuniSmart Pro','Inbreeding & genealogy — CuniSmart Pro only')}</h3>
+      <p style="color:var(--gris);margin:10px auto 14px;max-width:40ch">${L('Calculez le coefficient de consanguinité de chaque couple avant la saillie et visualisez l&#39;arbre généalogique de vos reproductrices. Réservé aux abonnés Pro.','Compute the inbreeding coefficient for each pair before mating and visualise the pedigree of your breeders. Pro subscribers only.')}</p>
+      <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+      <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+      <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+    </div>`;
+  }
   const femelles=etat.lapins.filter(l=>l.sexe==='F'&&l.statut==='actif'&&espDe(l)===espActive());
   const males   =etat.lapins.filter(l=>l.sexe==='M'&&l.statut==='actif'&&espDe(l)===espActive());
 
@@ -5313,6 +5323,18 @@ function vueFinances(){
 
 /* ---------- Bilan ---------- */
 function vueBilan(){
+  const L_b=(fr,en)=>langue==='fr'?fr:en;
+  if(etat.pro !== true){
+    return `<h2 class="page-title">${t('rep_title')}</h2>
+      <p class="page-sub">${t('rep_sub')}</p>
+      <div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:#6B2409">🔒 ${L_b('Bilan & rapport financier — réservés à CuniSmart Pro','Report & financial statement — CuniSmart Pro only')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${L_b('Calculez vos KPI (fertilité, prolificité, marge) et générez un rapport financier OHADA imprimable pour vos partenaires, banques et coopératives. Réservé aux abonnés Pro.','Compute your KPIs (fertility, prolificacy, margin) and generate a printable OHADA financial statement for your partners, banks and cooperatives. Pro subscribers only.')}</p>
+        <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+        <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+        <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+      </div>`;
+  }
   const k = calculerKPI();
   const conseils = calculerDiagnostic(k);
   const v = x => x === null ? '—' : x;
@@ -6013,10 +6035,29 @@ function vueLeconsPondeuse(){
   let leconHTML = '';
   NIVEAUX_PONDEUSE.forEach((nv,ni)=>{
     const nvFait = niveauPondeuseFait(ni);
-    const nvDispo = ni===0 || niveauPondeuseFait(ni-1);
+    const premierVerrouProP = (ni===1 && etat.pro!==true);
+    const deuxiemeVerrouProP = (ni===2 && etat.pro!==true);
+    if(deuxiemeVerrouProP){ leconHTML += ''; return; }
+    if(premierVerrouProP){
+      leconHTML += `<div style="margin-top:18px"><div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:var(--terre-fonce,#6B2409)">${t('pro_lock_title')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${t('pro_pitch')}</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div class="pro-feat">${t('pro_f1')}</div><div class="pro-feat">${t('pro_f2')}</div>
+          <div class="pro-feat">${t('pro_f3')}</div><div class="pro-feat">${t('pro_f4')}</div>
+          <div class="pro-feat">${t('pro_f5')}</div>
+        </div>
+        <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+        <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+        <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+      </div></div>`;
+      return;
+    }
+    const nvDispo = ni===0 || (etat.pro===true && niveauPondeuseFait(ni-1));
+    const badgeP = (ni>=1) ? ` <span class="tag gest">${t('pro_badge')}</span>` : ` <span class="tag ok">${t('nut_free')}</span>`;
     leconHTML += `<div style="margin-bottom:18px">
       <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
-        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+        ${lblNv[ni]}${badgeP} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
       </div>`;
     if(!nvDispo){
       leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
@@ -6170,10 +6211,29 @@ function vueLeconsPorcin(){
   let leconHTML = '';
   NIVEAUX_PORC.forEach((nv,ni)=>{
     const nvFait = niveauPorcFait(ni);
-    const nvDispo = ni===0 || niveauPorcFait(ni-1);
+    const premierVerrouProPC = (ni===1 && etat.pro!==true);
+    const deuxiemeVerrouProPC = (ni===2 && etat.pro!==true);
+    if(deuxiemeVerrouProPC){ leconHTML += ''; return; }
+    if(premierVerrouProPC){
+      leconHTML += `<div style="margin-top:18px"><div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:var(--terre-fonce,#6B2409)">${t('pro_lock_title')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${t('pro_pitch')}</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div class="pro-feat">${t('pro_f1')}</div><div class="pro-feat">${t('pro_f2')}</div>
+          <div class="pro-feat">${t('pro_f3')}</div><div class="pro-feat">${t('pro_f4')}</div>
+          <div class="pro-feat">${t('pro_f5')}</div>
+        </div>
+        <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+        <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+        <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+      </div></div>`;
+      return;
+    }
+    const nvDispo = ni===0 || (etat.pro===true && niveauPorcFait(ni-1));
+    const badgePC = (ni>=1) ? ` <span class="tag gest">${t('pro_badge')}</span>` : ` <span class="tag ok">${t('nut_free')}</span>`;
     leconHTML += `<div style="margin-bottom:18px">
       <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
-        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+        ${lblNv[ni]}${badgePC} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
       </div>`;
     if(!nvDispo){
       leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
@@ -6317,10 +6377,29 @@ function vueLeconsCaprins(){
   let leconHTML = '';
   NIVEAUX_CAPRIN.forEach((nv,ni)=>{
     const nvFait = niveauCaprinFait(ni);
-    const nvDispo = ni===0 || niveauCaprinFait(ni-1);
+    const premierVerrouProCA = (ni===1 && etat.pro!==true);
+    const deuxiemeVerrouProCA = (ni===2 && etat.pro!==true);
+    if(deuxiemeVerrouProCA){ leconHTML += ''; return; }
+    if(premierVerrouProCA){
+      leconHTML += `<div style="margin-top:18px"><div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:var(--terre-fonce,#6B2409)">${t('pro_lock_title')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${t('pro_pitch')}</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div class="pro-feat">${t('pro_f1')}</div><div class="pro-feat">${t('pro_f2')}</div>
+          <div class="pro-feat">${t('pro_f3')}</div><div class="pro-feat">${t('pro_f4')}</div>
+          <div class="pro-feat">${t('pro_f5')}</div>
+        </div>
+        <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+        <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+        <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+      </div></div>`;
+      return;
+    }
+    const nvDispo = ni===0 || (etat.pro===true && niveauCaprinFait(ni-1));
+    const badgeCA = (ni>=1) ? ` <span class="tag gest">${t('pro_badge')}</span>` : ` <span class="tag ok">${t('nut_free')}</span>`;
     leconHTML += `<div style="margin-bottom:18px">
       <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
-        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+        ${lblNv[ni]}${badgeCA} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
       </div>`;
     if(!nvDispo){
       leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
@@ -6456,10 +6535,29 @@ function vueLeconsBovin(){
   let leconHTML = '';
   NIVEAUX_BOVIN.forEach((nv,ni)=>{
     const nvFait = niveauBovinFait(ni);
-    const nvDispo = ni===0 || niveauBovinFait(ni-1);
+    const premierVerrouProBV = (ni===1 && etat.pro!==true);
+    const deuxiemeVerrouProBV = (ni===2 && etat.pro!==true);
+    if(deuxiemeVerrouProBV){ leconHTML += ''; return; }
+    if(premierVerrouProBV){
+      leconHTML += `<div style="margin-top:18px"><div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:var(--terre-fonce,#6B2409)">${t('pro_lock_title')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${t('pro_pitch')}</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div class="pro-feat">${t('pro_f1')}</div><div class="pro-feat">${t('pro_f2')}</div>
+          <div class="pro-feat">${t('pro_f3')}</div><div class="pro-feat">${t('pro_f4')}</div>
+          <div class="pro-feat">${t('pro_f5')}</div>
+        </div>
+        <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+        <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+        <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+      </div></div>`;
+      return;
+    }
+    const nvDispo = ni===0 || (etat.pro===true && niveauBovinFait(ni-1));
+    const badgeBV = (ni>=1) ? ` <span class="tag gest">${t('pro_badge')}</span>` : ` <span class="tag ok">${t('nut_free')}</span>`;
     leconHTML += `<div style="margin-bottom:18px">
       <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
-        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+        ${lblNv[ni]}${badgeBV} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
       </div>`;
     if(!nvDispo){
       leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
