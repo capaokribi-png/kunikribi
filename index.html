@@ -3444,6 +3444,323 @@ const NIVEAUX_PONDEUSE = [
   {deb:5, fin:10, k:'lvl_2'},
   {deb:10, fin:16, k:'lvl_3'}
 ];
+
+/* ===== ÉCOLE DE PORCICULTURE — 16 leçons ===== */
+const LECONS_PORC = [
+
+/* ---------- NIVEAU 1 · DÉBUTANT (0-5) ---------- */
+{fr:{ti:"Choisir ses animaux et ses races",tx:[
+ "En Afrique tropicale, le porc est l'un des élevages les plus rentables à petite échelle. Mais le choix de la race décide de tout. Le porc local africain est rustique, résistant à la chaleur et aux maladies, et nécessite peu d'intrants — mais sa croissance est lente (8 à 10 mois pour l'engraissement) et ses portées modestes (6 à 8 porcelets). Les races améliorées européennes (Large White, Landrace, Duroc, Piétrain) sont plus productives mais exigeantes : elles ont besoin d'un logement adapté, d'un aliment de qualité et d'une bonne conduite sanitaire. Le croisé — local × amélioré — est souvent le meilleur compromis pour l'éleveur africain en transition : rusticité + meilleur rendement.",
+ "Quand vous achetez un animal, exigez une quarantaine de 3 à 4 semaines dans un lieu isolé de votre élevage, avant toute introduction. C'est votre premier mur de défense contre les maladies, en particulier la Peste Porcine Africaine (PPA). À l'achat, vérifiez : poil propre et lisse, yeux vifs sans écoulement, pas de diarrhée sous la queue, pattes solides sans boiterie, muqueuses roses. Une cochette destinée à la reproduction doit avoir au moins 12 mamelles bien développées et symétriques.",
+ "Comptez un verrat pour 15 à 20 truies maximum. Un verrat utilisé trop souvent voit sa qualité de sperme baisser — une saillie tous les 2 jours au maximum. Renouvelez le verrat tous les 2 ans pour éviter la consanguinité dans votre cheptel. Notez chaque animal dès l'entrée dans CuniSmart : identifiant, race, date de naissance ou d'achat, père et mère si connus."],
+ qz:[{q:"Le principal avantage du porc local africain face aux races améliorées est…",o:["Une croissance plus rapide","Sa rusticité et son adaptation à la chaleur","Des portées plus nombreuses"],b:1},
+     {q:"Avant d'introduire un porc acheté dans votre élevage, il faut obligatoirement…",o:["Le peser","Le faire passer 3 à 4 semaines en quarantaine isolée","Le vacciner immédiatement"],b:1},
+     {q:"Un verrat peut saillir au maximum…",o:["5 truies par jour","Une fois tous les 2 jours","Sans limite"],b:1},
+     {q:"Combien de mamelles doit avoir au minimum une cochette de reproduction ?",o:["6","12","20"],b:1},
+     {q:"Le croisé (local × amélioré) est recommandé en Afrique tropicale car…",o:["Il est moins cher à l'achat","Il combine rusticité et meilleur rendement","Il ne nécessite aucun soin"],b:1}]},
+ en:{ti:"Choosing your animals and breeds",tx:[
+ "In tropical Africa, the pig is one of the most profitable small-scale livestock enterprises. But breed choice decides everything. The local African pig is hardy, heat- and disease-resistant and needs few inputs — but it grows slowly (8–10 months to slaughter) and has modest litters (6–8 piglets). Improved European breeds (Large White, Landrace, Duroc, Piétrain) are more productive but demanding: they need appropriate housing, quality feed and good health management. The crossbred — local × improved — is often the best compromise for the transitioning African farmer: hardiness + better yield.",
+ "When you buy an animal, insist on a 3–4 week quarantine in a place isolated from your farm before any introduction. This is your first line of defence against disease, especially African Swine Fever (ASF). On purchase, check: clean smooth coat, bright eyes with no discharge, no diarrhoea under the tail, sound legs with no lameness, pink mucous membranes. A gilt intended for breeding must have at least 12 well-developed symmetrical teats.",
+ "Allow one boar for every 15–20 sows at most. A boar used too often sees his semen quality drop — one mating every 2 days maximum. Replace the boar every 2 years to avoid inbreeding in your herd. Record every animal in CuniSmart from day one: ID, breed, date of birth or purchase, sire and dam if known."],
+ qz:[{q:"The main advantage of the local African pig over improved breeds is…",o:["Faster growth","Hardiness and heat tolerance","More numerous litters"],b:1},
+     {q:"Before introducing a purchased pig into your farm, you must…",o:["Weigh it","Keep it in isolated quarantine for 3–4 weeks","Vaccinate it immediately"],b:1},
+     {q:"A boar can mate at most…",o:["5 sows per day","Once every 2 days","Without limit"],b:1},
+     {q:"How many teats must a breeding gilt have at minimum?",o:["6","12","20"],b:1},
+     {q:"The crossbred (local × improved) is recommended in tropical Africa because…",o:["It is cheaper to buy","It combines hardiness and better yield","It needs no care at all"],b:1}]}},
+
+{fr:{ti:"Construire et organiser la porcherie",tx:[
+ "La porcherie est l'investissement de départ le plus important — et le plus structurant pour toute la conduite de l'élevage. La règle n°1 : séparer les stades physiologiques. Une bonne porcherie comprend au minimum : la verraterie (loge individuelle pour le mâle), les loges des truies gestantes (groupe ou individuel), la maternité (case individuelle d'environ 6 m² avec barre anti-écrasement), le post-sevrage et les loges d'engraissement. Mélanger les stades provoque stress, compétition, transmission de maladies.",
+ "Le sol bétonné est indispensable : pente de 2 à 3 % vers un caniveau qui permet d'évacuer facilement le lisier et les eaux de lavage. La propreté du sol est la première protection sanitaire. Le toit doit déborder largement (1,5 m minimum) pour protéger les murs de la pluie et créer de l'ombre. Le porc ne transpire pas : il souffre dès que la température dépasse 30 °C. Orientez le bâtiment face aux vents dominants, prévoyez un espace humide (bauge) ou un arrosage au sol pour rafraîchir. Densité : environ 1 m² par porc à l'engrais, 6 m² pour une truie suitée.",
+ "La porcherie doit être clôturée et fermée aux animaux extérieurs. Les phacochères, potamochères et sangliers sont porteurs sains de la PPA — un seul contact avec vos porcs peut décimer tout l'élevage en quelques jours. Prévoyez aussi un pédiluve à l'entrée et un vestiaire dédié : les chaussures et les vêtements apportés de l'extérieur sont des vecteurs de maladies aussi réels que les animaux eux-mêmes."],
+ qz:[{q:"Pourquoi faut-il séparer les stades physiologiques dans la porcherie ?",o:["Pour le plaisir des animaux","Pour éviter stress, compétition et transmission de maladies","Pour réduire la consommation d'aliment uniquement"],b:1},
+     {q:"La pente du sol bétonné d'une porcherie doit être de…",o:["0 % (sol plat)","2 à 3 % vers un caniveau","10 % vers l'extérieur"],b:1},
+     {q:"Le porc commence à souffrir de la chaleur à partir de…",o:["20 °C","30 °C","40 °C"],b:1},
+     {q:"Pourquoi clôturer la porcherie et empêcher l'accès aux animaux sauvages ?",o:["Pour éviter le vol","Parce que les phacochères et sangliers peuvent transmettre la PPA","Par obligation légale uniquement"],b:1},
+     {q:"La surface recommandée pour une truie suitée en maternité est d'environ…",o:["1 m²","6 m²","20 m²"],b:1}]},
+ en:{ti:"Building and organising the pig house",tx:[
+ "The pig house is the biggest start-up investment — and the one that most shapes herd management. Rule number one: separate the physiological stages. A good pig house has at minimum: a boar pen (individual), gestating sow pens (group or individual), a farrowing unit (individual pen of about 6 m² with a farrowing rail), a weaner section and fattening pens. Mixing stages causes stress, competition and disease spread.",
+ "A concrete floor is essential: 2–3% slope toward a channel to drain slurry and wash water easily. Floor cleanliness is the primary health protection. The roof must overhang generously (at least 1.5 m) to keep walls dry and provide shade. The pig does not sweat: it suffers as soon as temperature exceeds 30 °C. Orient the building facing prevailing winds, provide a wallow or floor wetting to cool animals. Density: about 1 m² per fattening pig, 6 m² for a nursing sow.",
+ "The pig house must be fenced and closed to outside animals. Warthogs, bushpigs and wild boar are healthy carriers of ASF — a single contact with your pigs can wipe out the whole herd within days. Also provide a footbath at the entrance and a dedicated changing area: shoes and clothes brought from outside are just as real a disease vector as animals."],
+ qz:[{q:"Why must physiological stages be separated in the pig house?",o:["For the animals' comfort","To prevent stress, competition and disease transmission","To reduce feed intake only"],b:1},
+     {q:"The slope of a pig house concrete floor should be…",o:["0% (flat)","2–3% toward a channel","10% toward the outside"],b:1},
+     {q:"A pig starts to suffer from heat above…",o:["20 °C","30 °C","40 °C"],b:1},
+     {q:"Why fence the pig house and stop access by wild animals?",o:["To prevent theft","Because warthogs and wild boar can transmit ASF","For legal obligation only"],b:1},
+     {q:"Recommended space for a nursing sow in the farrowing unit is about…",o:["1 m²","6 m²","20 m²"],b:1}]}},
+
+{fr:{ti:"Alimentation : les bases tropicales",tx:[
+ "Le porc est omnivore et valorise très bien les sous-produits agricoles locaux. C'est son atout majeur en Afrique tropicale. Mais une règle est absolue et non négociable : ne jamais donner de déchets de cuisine contenant de la viande ou des produits à base de porc (même cuits, même en petite quantité). Le virus de la PPA survit plusieurs mois dans la viande et des années dans la viande congelée. Un seul repas contaminé peut décimer tout l'élevage.",
+ "Les matières premières locales utilisables et sûres : son de maïs ou de riz (énergie + fibres), tourteau d'arachide ou de soja (protéines), pulpe de manioc séchée (énergie, max 30 % de la ration car pauvre en protéines), drêches de brasserie séchées (protéines), feuilles de citrouille et feuilles de patate douce bien fanées (fibres + vitamines). Compléter avec un prémix vitamino-minéral, de la poudre d'os ou coquilles d'huîtres pour le calcium et le phosphore, et une pincée de sel. Jamais de déchets de cuisine crus.",
+ "L'eau est le premier nutriment. Un porc adulte boit 5 à 10 litres par jour — et une truie allaitante jusqu'à 20 litres. Un manque d'eau, même quelques heures, réduit l'appétit et la croissance. En zone tropicale, l'eau doit être fraîche et disponible en permanence. Les besoins alimentaires varient selon le stade : porcelet démarrage (protéines 18–20 %), croissance (16–18 %), finition (14–16 %), truie gestante (14–15 %, rationnée), truie allaitante (18–20 %, à volonté)."],
+ qz:[{q:"Pourquoi ne jamais donner de déchets de cuisine avec de la viande de porc à vos porcs ?",o:["C'est interdit par la religion","Le virus de la PPA survit dans la viande et peut décimer tout l'élevage","Les porcs n'aiment pas ça"],b:1},
+     {q:"La pulpe de manioc séchée ne doit pas dépasser … de la ration du porc.",o:["5 %","30 %","80 %"],b:1},
+     {q:"Une truie allaitante peut boire jusqu'à … d'eau par jour.",o:["2 litres","10 litres","20 litres"],b:2},
+     {q:"Le stade qui a les besoins en protéines les plus élevés est…",o:["La truie gestante","Le porcelet au démarrage (18–20 %)","Le porc en finition"],b:1},
+     {q:"Les matières premières interdites aux porcs en Afrique sont…",o:["Le son de maïs","Les déchets de cuisine contenant de la viande de porc","Le tourteau d'arachide"],b:1}]},
+ en:{ti:"Feeding: tropical basics",tx:[
+ "The pig is omnivorous and makes excellent use of local agricultural by-products. That is its main advantage in tropical Africa. But one rule is absolute and non-negotiable: never give kitchen scraps containing meat or pork products (even cooked, even in small quantities). The ASF virus survives for months in meat and years in frozen meat. A single contaminated meal can wipe out the entire herd.",
+ "Safe and usable local raw materials: maize or rice bran (energy + fibre), groundnut or soybean cake (protein), dried cassava pulp (energy, max 30% of ration as it is low in protein), dried brewers' grains (protein), pumpkin leaves and well-wilted sweet potato leaves (fibre + vitamins). Complete with a vitamin-mineral premix, bone meal or crushed oyster shells for calcium and phosphorus, and a pinch of salt. Never raw kitchen waste.",
+ "Water is the first nutrient. An adult pig drinks 5–10 litres a day — and a nursing sow up to 20 litres. Even a few hours without water reduces appetite and growth. In tropical conditions, water must be cool and permanently available. Feed needs vary by stage: piglet starter (protein 18–20%), grower (16–18%), finisher (14–16%), gestating sow (14–15%, rationed), nursing sow (18–20%, ad lib)."],
+ qz:[{q:"Why never feed kitchen scraps containing pork meat to your pigs?",o:["It is religiously forbidden","The ASF virus survives in meat and can wipe out the herd","Pigs do not like it"],b:1},
+     {q:"Dried cassava pulp must not exceed … of a pig's ration.",o:["5%","30%","80%"],b:1},
+     {q:"A nursing sow can drink up to … of water per day.",o:["2 litres","10 litres","20 litres"],b:2},
+     {q:"The stage with the highest protein needs is…",o:["The gestating sow","The starter piglet (18–20%)","The finishing pig"],b:1},
+     {q:"The raw materials forbidden for pigs in Africa are…",o:["Maize bran","Kitchen scraps containing pork meat","Groundnut cake"],b:1}]}},
+
+{fr:{ti:"Le cycle de reproduction : comprendre pour piloter",tx:[
+ "Maîtriser le cycle de la truie, c'est maîtriser son revenu. La truie revient en chaleur toutes les 3 semaines (21 jours). Les chaleurs durent 2 à 3 jours. Le signe le plus fiable : le réflexe d'immobilité — posez la main sur le dos de la truie et exercez une pression ; si elle reste immobile, elle est en chaleur et prête pour la saillie. Ce réflexe est encore plus net en présence du verrat.",
+ "La cochette (jeune femelle n'ayant jamais mis bas) ne doit pas être saillie avant 7 à 8 mois et 100 à 120 kg minimum. Saillir trop tôt donne une portée réduite, épuise la cochette avant la fin de sa croissance, et raccourcit sa carrière. La gestation dure exactement 114 jours — 3 mois, 3 semaines, 3 jours. La mise bas a lieu entre le 114ème et le 118ème jour. Après le sevrage (28 jours en intensif, 45 jours en extensif), la truie revient en chaleur 3 à 5 jours plus tard.",
+ "Objectif de conduite : 2 à 2,2 portées par truie et par an. Pour l'atteindre, l'intervalle entre le sevrage et la saillie fécondante suivante doit rester court (idéalement 5 à 7 jours). Un intervalle long signifie souvent une truie trop maigre en fin de lactation. Notez chaque saillie dans CuniSmart avec la date exacte : le logiciel calcule automatiquement la date prévue de mise bas."],
+ qz:[{q:"La truie revient en chaleur tous les…",o:["14 jours","21 jours","31 jours"],b:1},
+     {q:"Le signe le plus fiable de chaleur chez la truie est…",o:["Elle mange moins","Le réflexe d'immobilité au toucher du dos","Elle crie fort"],b:1},
+     {q:"La gestation de la truie dure…",o:["31 jours","114 jours","283 jours"],b:1},
+     {q:"Une cochette ne doit pas être saillie avant…",o:["3 mois","7 à 8 mois et 100 kg minimum","2 ans"],b:1},
+     {q:"L'objectif de portées par truie et par an est de…",o:["1 portée","2 à 2,2 portées","4 portées"],b:1}]},
+ en:{ti:"The reproduction cycle: understand to manage",tx:[
+ "Mastering the sow cycle means mastering your income. The sow returns to heat every 3 weeks (21 days). Oestrus lasts 2–3 days. The most reliable sign: the standing reflex — place your hand on the sow's back and apply pressure; if she stands still, she is in heat and ready to mate. This reflex is even stronger in the presence of the boar.",
+ "The gilt (young female that has never farrowed) must not be mated before 7–8 months and at least 100–120 kg. Mating too early gives a reduced litter, exhausts the gilt before she has finished growing, and shortens her career. Gestation lasts exactly 114 days — 3 months, 3 weeks, 3 days. Farrowing occurs between day 114 and 118. After weaning (28 days intensive, 45 days extensive), the sow returns to heat 3–5 days later.",
+ "Management target: 2 to 2.2 litters per sow per year. To achieve this, the interval from weaning to the next successful mating must stay short (ideally 5–7 days). A long interval usually means a sow that was too thin at the end of lactation. Record every mating in CuniSmart with the exact date: the software automatically calculates the expected farrowing date."],
+ qz:[{q:"The sow returns to heat every…",o:["14 days","21 days","31 days"],b:1},
+     {q:"The most reliable sign of heat in a sow is…",o:["She eats less","The standing reflex when pressure is applied to her back","She calls out loudly"],b:1},
+     {q:"Sow gestation lasts…",o:["31 days","114 days","283 days"],b:1},
+     {q:"A gilt must not be mated before…",o:["3 months","7–8 months and at least 100 kg","2 years"],b:1},
+     {q:"The target number of litters per sow per year is…",o:["1 litter","2 to 2.2 litters","4 litters"],b:1}]}},
+
+{fr:{ti:"La mise bas et les premiers jours des porcelets",tx:[
+ "La mise bas est le moment le plus critique et le plus rentable de tout le cycle. 80 % de la mortalité des porcelets survient dans les 72 premières heures. Quatre causes dominent en Afrique tropicale : l'écrasement par la truie (une truie peut peser 150 à 250 kg), le manque de colostrum, le froid nocturne, et la diarrhée des nouveau-nés. Toutes sont évitables avec de la méthode.",
+ "Préparez la case de maternité 7 jours avant la date prévue : nettoyage complet, désinfection, séchage, litière sèche et propre. Installez une barre anti-écrasement (rail fixé à 25–30 cm du sol sur les côtés de la loge) : c'est la mesure la plus simple et la plus efficace pour réduire l'écrasement. Prévoyez une lampe chauffante pour les porcelets dans un coin de la loge — ils ne régulent pas encore leur température. Les porcelets doivent boire le colostrum dans les 2 premières heures : c'est vital pour leur immunité. Guidez les faibles vers les mamelles antérieures (les plus laitières).",
+ "Après la mise bas, pesez la portée et comptez : nés vivants, mort-nés, et momifiés (décédés en cours de gestation). Sevrez vers 28 jours en élevage intensif. À partir du 15ème jour de vie, proposez aux porcelets un pré-starter solide en libre accès dans une mangeoire protégée de la truie (créep feeding) : cela prépare leur tube digestif au sevrage et réduit le choc alimentaire."],
+ qz:[{q:"Quel pourcentage de la mortalité des porcelets survient dans les 72 premières heures ?",o:["20 %","50 %","80 %"],b:2},
+     {q:"La barre anti-écrasement dans la case de maternité sert à…",o:["Attacher la truie pour la traite","Empêcher la truie d'écraser ses porcelets","Séparer les porcelets de la truie dès la naissance"],b:1},
+     {q:"Le colostrum doit être bu par les porcelets…",o:["À n'importe quel moment de la première semaine","Dans les 2 premières heures après la naissance","Seulement à partir du 3ème jour"],b:1},
+     {q:"Le créep feeding (pré-starter solide pour porcelets) commence à partir de…",o:["La naissance","Le 15ème jour de vie","Le sevrage"],b:1},
+     {q:"La principale cause de mortalité des porcelets en Afrique tropicale est…",o:["La fièvre","L'écrasement par la truie","Le manque d'eau"],b:1}]},
+ en:{ti:"Farrowing and the first days of piglets",tx:[
+ "Farrowing is the most critical and most profitable moment in the whole cycle. 80% of piglet mortality happens in the first 72 hours. Four causes dominate in tropical Africa: crushing by the sow (a sow can weigh 150–250 kg), lack of colostrum, cold nights, and newborn diarrhoea. All are preventable with method.",
+ "Prepare the farrowing pen 7 days before the expected date: full clean, disinfect, dry, clean dry bedding. Install a farrowing rail (rail fixed 25–30 cm from the floor on the sides of the pen): this is the simplest and most effective measure to cut crushing. Provide a heat lamp for piglets in one corner of the pen — they cannot yet regulate their temperature. Piglets must drink colostrum within the first 2 hours: it is vital for their immunity. Guide the weakest to the front teats (most productive).",
+ "After farrowing, weigh the litter and count: born alive, stillborn and mummified (died during gestation). Wean at around 28 days in intensive systems. From day 15 of life, offer piglets a solid pre-starter ad lib in a creep feeder protected from the sow: this prepares their digestive tract for weaning and reduces the feed shock."],
+ qz:[{q:"What percentage of piglet mortality occurs in the first 72 hours?",o:["20%","50%","80%"],b:2},
+     {q:"The farrowing rail in the maternity pen is there to…",o:["Tie the sow for milking","Prevent the sow from crushing her piglets","Separate piglets from the sow at birth"],b:1},
+     {q:"Colostrum must be drunk by piglets…",o:["Any time in the first week","Within the first 2 hours after birth","Only from the 3rd day"],b:1},
+     {q:"Creep feeding (solid pre-starter for piglets) starts from…",o:["Birth","Day 15 of life","Weaning"],b:1},
+     {q:"The main cause of piglet mortality in tropical Africa is…",o:["Fever","Crushing by the sow","Lack of water"],b:1}]}},
+
+/* ---------- NIVEAU 2 · CONFIRMÉ (5-10) ---------- */
+{fr:{ti:"Conduire le porcelet après le sevrage",tx:[
+ "Le sevrage est un triple choc pour le porcelet : il quitte le lait pour l'aliment solide, il est séparé de sa mère, et il est souvent regroupé avec des inconnus. Ce stress immunitaire et digestif est la principale fenêtre de vulnérabilité après la naissance. La diarrhée post-sevrage est la première cause de mortalité à ce stade — et elle est largement évitable avec de la méthode.",
+ "L'aliment post-sevrage doit être très digestible, riche en protéines (18–20 %) et distribué en petites quantités fréquentes. Les petites granulés ou la farine humidifiée facilitent la consommation. L'eau propre doit être disponible en permanence. Les porcelets sevrés ont encore besoin de chaleur : maintenez une zone chaude (25–28 °C) avec une lampe ou une résistance pendant les 2 premières semaines, surtout la nuit en saison fraîche.",
+ "Triez les porcelets par taille à l'entrée en post-sevrage : les petits regroupés ensemble mangent sans être écartés par les dominants. Ne déplacez pas inutilement les animaux — chaque déplacement est un stress supplémentaire qui ralentit la croissance. Observez chaque jour : un porcelet qui ne mange pas, prostré, avec les flancs creux, est un porcelet en danger. Isolez immédiatement tout animal suspect pour éviter la contamination du groupe."],
+ qz:[{q:"Le triple choc du sevrage pour le porcelet est…",o:["Alimentation + logement + vaccination","Aliment solide + séparation de la mère + nouveau groupe","Chaleur + eau + aliment"],b:1},
+     {q:"La température recommandée pour les porcelets sevrés les 2 premières semaines est…",o:["15–18 °C","25–28 °C","38 °C"],b:1},
+     {q:"La principale cause de mortalité au stade post-sevrage est…",o:["L'écrasement","La diarrhée post-sevrage","La chaleur"],b:1},
+     {q:"Pourquoi trier les porcelets par taille à l'entrée en post-sevrage ?",o:["Pour les peser plus facilement","Pour que les petits mangent sans être écartés par les dominants","Pour les identifier"],b:1},
+     {q:"Face à un porcelet prostré qui ne mange pas, la première action est…",o:["Le nourrir de force","L'isoler immédiatement du groupe","Augmenter la chaleur générale"],b:1}]},
+ en:{ti:"Managing the piglet after weaning",tx:[
+ "Weaning is a triple shock for the piglet: it leaves milk for solid feed, it is separated from its mother, and it is usually grouped with strangers. This immune and digestive stress is the main window of vulnerability after birth. Post-weaning diarrhoea is the leading cause of mortality at this stage — and it is largely preventable with method.",
+ "Post-weaning feed must be highly digestible, rich in protein (18–20%) and given in frequent small amounts. Small pellets or moistened meal are easier to eat. Clean water must be available at all times. Weaners still need warmth: maintain a warm zone (25–28 °C) with a lamp or heat mat for the first 2 weeks, especially at night in cool weather.",
+ "Sort piglets by size on entry to the weaner pen: smaller ones grouped together eat without being pushed aside by dominant ones. Do not move animals unnecessarily — every move is additional stress that slows growth. Observe daily: a piglet that is not eating, dull, with hollow flanks, is a piglet in danger. Isolate any suspect animal immediately to prevent spread to the group."],
+ qz:[{q:"The triple shock of weaning for a piglet is…",o:["Feed + housing + vaccination","Solid feed + separation from mother + new group","Heat + water + feed"],b:1},
+     {q:"Recommended temperature for weaners in the first 2 weeks is…",o:["15–18 °C","25–28 °C","38 °C"],b:1},
+     {q:"The leading cause of mortality at the post-weaning stage is…",o:["Crushing","Post-weaning diarrhoea","Heat"],b:1},
+     {q:"Why sort piglets by size on entry to the weaner pen?",o:["To weigh them more easily","So that smaller ones can eat without being pushed aside","To identify them"],b:1},
+     {q:"Facing a dull piglet that is not eating, the first action is…",o:["Force-feed it","Isolate it from the group immediately","Raise the general temperature"],b:1}]}},
+
+{fr:{ti:"Alimentation avancée et formulation locale",tx:[
+ "L'aliment représente 65 à 70 % du coût de production du porc. Réduire ce coût de 20 à 30 % grâce aux matières premières locales sans dégrader les performances, c'est le levier de rentabilité le plus accessible à l'éleveur africain. La formulation repose sur 3 piliers : énergie (maïs broyé, son, manioc séché, drêches), protéines (tourteau d'arachide ou soja, farine de poisson, drêches de brasserie), et le complément (prémix vitamino-minéral, calcaire ou poudre d'os, sel). Le maïs ne doit pas dépasser 40–45 % de la ration pour éviter un excès de lipides en finition.",
+ "Le flushing truie est une technique simple et très rentable : augmentez l'alimentation de la truie 10 à 15 jours avant la saillie prévue (environ 3 kg/jour au lieu de 2,5 kg). Cela stimule l'ovulation et augmente la taille de la portée. Revenez à la ration normale dès la confirmation de gestation. Truie gestante sobre (2,2 à 2,5 kg/jour selon le format) : une truie trop grasse aura une mise bas difficile (dystocie) et allaitera moins bien. Truie allaitante : à volonté (4 à 8 kg/jour selon la taille de la portée).",
+ "L'indice de consommation (IC) = kilos d'aliment ÷ kilos de gain de poids vif. Repère : 2,8 à 3,2 pour une race améliorée bien conduite en engraissement, 4 à 5 pour le porc local. Un IC qui se dégrade signale un problème : chaleur, aliment de mauvaise qualité ou déséquilibré, porc hors de sa fenêtre optimale d'engraissement, maladie en cours. Pesez chaque semaine pour calculer le gain moyen quotidien (GMQ) et décider du bon moment de vente."],
+ qz:[{q:"Le flushing consiste à…",o:["Nettoyer les abreuvoirs avant la mise bas","Augmenter l'alimentation de la truie 10 à 15 jours avant la saillie","Réduire la ration en fin de gestation"],b:1},
+     {q:"L'indice de consommation repère en engraissement pour une race améliorée est de…",o:["1,0 à 1,5","2,8 à 3,2","6 à 8"],b:1},
+     {q:"Une truie gestante trop grasse risque…",o:["D'avoir une portée plus nombreuse","Une mise bas difficile (dystocie) et d'allaiter moins bien","De manquer de calcium"],b:1},
+     {q:"Le maïs ne doit pas dépasser … de la ration du porc pour éviter l'excès de lipides.",o:["10 %","40–45 %","80 %"],b:1},
+     {q:"L'aliment représente environ … du coût de production du porc.",o:["20–25 %","65–70 %","90 %"],b:1}]},
+ en:{ti:"Advanced feeding and local formulation",tx:[
+ "Feed represents 65–70% of pig production cost. Cutting that cost by 20–30% using local raw materials without hurting performance is the most accessible profitability lever for the African farmer. Formulation rests on 3 pillars: energy (ground maize, bran, dried cassava, draff), protein (groundnut or soya cake, fishmeal, brewers' grains), and the complement (vitamin-mineral premix, limestone or bone meal, salt). Maize should not exceed 40–45% of the ration to avoid excess fat at finishing.",
+ "Sow flushing is a simple and highly profitable technique: increase the sow's feed 10–15 days before the planned mating (about 3 kg/day instead of 2.5 kg). This stimulates ovulation and increases litter size. Return to normal ration as soon as gestation is confirmed. Gestating sow — lean (2.2–2.5 kg/day depending on frame size): an over-fat sow will have a difficult farrowing (dystocia) and will suckle poorly. Nursing sow: ad lib (4–8 kg/day depending on litter size).",
+ "Feed conversion ratio (FCR) = kg feed ÷ kg live weight gain. Benchmark: 2.8 to 3.2 for a well-managed improved breed at fattening, 4–5 for the local pig. A worsening FCR signals a problem: heat, poor or unbalanced feed, pig outside its optimal fattening window, ongoing disease. Weigh weekly to compute average daily gain (ADG) and decide the right time to sell."],
+ qz:[{q:"Flushing consists of…",o:["Cleaning drinkers before farrowing","Increasing the sow's feed 10–15 days before mating","Reducing ration at the end of gestation"],b:1},
+     {q:"FCR benchmark for an improved breed at fattening is…",o:["1.0 to 1.5","2.8 to 3.2","6 to 8"],b:1},
+     {q:"An over-fat gestating sow risks…",o:["Having a more numerous litter","A difficult farrowing (dystocia) and poorer nursing","Calcium deficiency"],b:1},
+     {q:"Maize should not exceed … of the pig's ration to avoid excess fat.",o:["10%","40–45%","80%"],b:1},
+     {q:"Feed represents about … of pig production cost.",o:["20–25%","65–70%","90%"],b:1}]}},
+
+{fr:{ti:"La PPA : comprendre pour survivre",tx:[
+ "La Peste Porcine Africaine est la menace n°1 de l'élevage porcin en Afrique subsaharienne. C'est une maladie virale causée par un Asfivirus, endémique dans la faune sauvage africaine depuis des décennies — phacochères, potamochères et certaines tiques (genre Ornithodoros) sont porteurs sains et ne meurent pas de la maladie. Les porcs domestiques, eux, en meurent presque toujours. Il n'existe aucun vaccin et aucun traitement. La mortalité approche 100 % dans les 10 jours.",
+ "Le virus est extrêmement résistant dans l'environnement : il survit plusieurs mois dans les sécrétions, des mois à des années dans la viande selon les conditions de conservation, et des années dans la viande congelée. La transmission se fait par contact direct porc à porc, par les déchets de cuisine contenant de la viande de porc ou sanglier, par les humains et les véhicules contaminés, et par les tiques vectrices. Les symptômes : fièvre très haute (40–42 °C), taches hémorragiques rouges ou violacées sur la peau (oreilles, ventre, pattes), prostration totale, refus d'alimentation, mort rapide en 3 à 10 jours.",
+ "Conduite à tenir en cas de suspicion : isoler immédiatement les animaux suspects, ne rien vendre ni déplacer, ne pas abattre pour la viande (le virus se propage), alerter le vétérinaire ou l'autorité sanitaire de votre zone. En Afrique centrale et de l'Ouest, la déclaration rapide peut déclencher un appui vétérinaire et parfois des indemnisations. La PPA ne touche pas l'humain : vous ne risquez rien à manipuler un porc malade — mais votre élevage, oui."],
+ qz:[{q:"La PPA est transmise aux porcs domestiques par…",o:["L'eau de pluie","Contact avec des porcs infectés, déchets de cuisine à base de porc, ou tiques vectrices","L'air uniquement"],b:1},
+     {q:"Il existe un vaccin efficace contre la PPA.",o:["Oui, disponible chez le vétérinaire","Non, il n'existe aucun vaccin ni traitement","Oui mais très coûteux"],b:1},
+     {q:"La fièvre dans la PPA atteint…",o:["38–39 °C (normale)","40–42 °C","35 °C"],b:1},
+     {q:"Face à un cas suspect de PPA, la première action est…",o:["Abattre immédiatement tous les porcs pour la viande","Isoler les animaux suspects et alerter le vétérinaire sans rien vendre ni déplacer","Donner des antibiotiques en urgence"],b:1},
+     {q:"La PPA est-elle dangereuse pour l'humain ?",o:["Oui, c'est une zoonose mortelle","Non, elle ne touche que les porcs et suidés sauvages","Oui, mais seulement chez les enfants"],b:1}]},
+ en:{ti:"ASF: understand to survive",tx:[
+ "African Swine Fever is the number-one threat to pig farming in sub-Saharan Africa. It is a viral disease caused by an Asfivirus, endemic in African wildlife for decades — warthogs, bushpigs and certain ticks (genus Ornithodoros) are healthy carriers that do not die from the disease. Domestic pigs almost always do. There is no vaccine and no treatment. Mortality approaches 100% within 10 days.",
+ "The virus is extremely resistant in the environment: it survives months in secretions, months to years in meat depending on storage conditions, and years in frozen meat. Transmission is by direct pig-to-pig contact, by kitchen scraps containing pork or wild boar meat, by contaminated people and vehicles, and by vector ticks. Symptoms: very high fever (40–42 °C), red or purple haemorrhagic patches on the skin (ears, belly, legs), total prostration, refusal to eat, rapid death in 3–10 days.",
+ "What to do if ASF is suspected: isolate suspect animals immediately, sell and move nothing, do not slaughter for meat (the virus spreads), alert the vet or animal health authority in your area. In Central and West Africa, rapid reporting can trigger veterinary support and sometimes compensation. ASF does not affect humans: you risk nothing by handling a sick pig — but your farm does."],
+ qz:[{q:"ASF is transmitted to domestic pigs by…",o:["Rainwater","Contact with infected pigs, pork kitchen scraps, or vector ticks","Air only"],b:1},
+     {q:"There is an effective vaccine against ASF.",o:["Yes, available from the vet","No, there is no vaccine or treatment","Yes but very expensive"],b:1},
+     {q:"Fever in ASF reaches…",o:["38–39 °C (normal)","40–42 °C","35 °C"],b:1},
+     {q:"Facing a suspected ASF case, the first action is…",o:["Immediately slaughter all pigs for meat","Isolate suspect animals and alert the vet without selling or moving anything","Give antibiotics urgently"],b:1},
+     {q:"Is ASF dangerous for humans?",o:["Yes, it is a fatal zoonosis","No, it only affects pigs and wild suids","Yes, but only in children"],b:1}]}},
+
+{fr:{ti:"Santé, vaccinations et parasites",tx:[
+ "En l'absence de vaccin contre la PPA, la biosécurité est la seule protection. Mais d'autres maladies évitables existent et méritent un programme prophylactique rigoureux. Le rouget (érysipèle) est une bactériose très répandue en zone tropicale : fièvre, lésions cutanées en losanges, prostration, morts subites chez les jeunes — un vaccin existe et doit être administré selon le calendrier de votre vétérinaire. La parvovirose truie provoque avortements et mortinatalité — vacciner avant la première saillie.",
+ "Le déparasitage est souvent négligé et pourtant très rentable. Les parasites internes (helminthes : ascaris, trichures) réduisent silencieusement la croissance et l'efficacité alimentaire. Déparasitez systématiquement à chaque cycle reproducteur de la truie et à l'entrée de tout nouvel animal. La gale porcine (Sarcoptes scabiei) est très contagieuse et très répandue : prurit intense, perte de poils, retard de croissance — traitez avec un acaricide toute la loge et tous les animaux en même temps.",
+ "Règle d'or : la température rectale normale du porc est de 38 à 39,5 °C. Toute fièvre au-delà de 40 °C appelle une action immédiate : isolement, observation, appel du vétérinaire. Ne donnez jamais d'antibiotiques sans diagnostic — cela crée des résistances et laisse des résidus dans la viande qui peuvent vous coûter des clients. Nettoyage et désinfection de la case entre chaque lot : c'est la première médecine."],
+ qz:[{q:"Quelle maladie bactérienne du porc provoque des lésions cutanées en losanges et des morts subites ?",o:["La PPA","Le rouget (érysipèle)","La gale"],b:1},
+     {q:"La gale porcine est causée par…",o:["Un virus","Un parasite externe (Sarcoptes scabiei)","Une bactérie"],b:1},
+     {q:"La température rectale normale du porc est de…",o:["36–37 °C","38–39,5 °C","41–42 °C"],b:1},
+     {q:"Pourquoi ne pas donner des antibiotiques sans diagnostic vétérinaire ?",o:["C'est trop cher","Cela crée des résistances et laisse des résidus dans la viande","Les antibiotiques sont inefficaces chez le porc"],b:1},
+     {q:"Le déparasitage de la truie se fait…",o:["Une seule fois dans sa vie","À chaque cycle reproducteur","Uniquement si elle montre des symptômes"],b:1}]},
+ en:{ti:"Health, vaccinations and parasites",tx:[
+ "With no vaccine against ASF, biosecurity is the only protection. But other preventable diseases exist and deserve a rigorous prophylaxis programme. Erysipelas is a bacterial disease very widespread in tropical conditions: fever, diamond-shaped skin lesions, prostration, sudden deaths in young pigs — a vaccine exists and should be given on your vet's schedule. Sow parvovirus causes abortions and stillbirths — vaccinate before the first mating.",
+ "Deworming is often neglected yet very profitable. Internal parasites (helminths: ascarids, whipworms) silently reduce growth and feed efficiency. Deworm systematically at each reproductive cycle of the sow and on entry of any new animal. Pig mange (Sarcoptes scabiei) is highly contagious and very widespread: intense itching, hair loss, growth lag — treat the whole pen and all animals simultaneously with an acaricide.",
+ "Golden rule: normal rectal temperature in pigs is 38–39.5 °C. Any fever above 40 °C calls for immediate action: isolation, observation, call the vet. Never give antibiotics without a diagnosis — it creates resistance and leaves residues in the meat that can cost you customers. Cleaning and disinfection of the pen between every group: that is the first medicine."],
+ qz:[{q:"Which bacterial pig disease causes diamond-shaped skin lesions and sudden deaths?",o:["ASF","Erysipelas","Mange"],b:1},
+     {q:"Pig mange is caused by…",o:["A virus","An external parasite (Sarcoptes scabiei)","A bacterium"],b:1},
+     {q:"Normal rectal temperature in pigs is…",o:["36–37 °C","38–39.5 °C","41–42 °C"],b:1},
+     {q:"Why not give antibiotics without a veterinary diagnosis?",o:["It is too expensive","It creates resistance and leaves residues in the meat","Antibiotics are ineffective in pigs"],b:1},
+     {q:"Sow deworming is done…",o:["Once in her life","At each reproductive cycle","Only if symptoms appear"],b:1}]}},
+
+/* ---------- NIVEAU 3 · EXPERT (10-16) ---------- */
+{fr:{ti:"La truie haute performance",tx:[
+ "La carrière d'une truie se joue dès ses deux premières portées. L'objectif est d'atteindre 5 à 6 portées productives — c'est à partir de la 3ème portée que la truie donne ses meilleures performances. Les deux premières sont souvent les moins prolifiques car la truie est encore en croissance pendant la gestation. C'est pourquoi la cochette doit être sailllie au bon poids, bien nourrie pendant la gestation, et surtout ne pas finir trop maigre à l'issue de la lactation.",
+ "Le pilotage par la note d'état corporel (NEC) est l'outil clé de la truie haute performance. La NEC se note de 1 (cachectique) à 5 (obèse), l'idéal étant 3 à 3,5 à la saillie et à la mise bas, et pas moins de 2,5 au sevrage. Une truie qui atteint le sevrage trop maigre (NEC < 2,5) aura un retour en chaleur tardif (> 10 jours), une ovulation médiocre et donc une portée réduite. Adaptez la ration en conséquence : augmentez si la truie maigrit, réduisez si elle engraisse trop.",
+ "L'intervalle sevrage–saillie fécondante est l'indicateur de pilotage n°1 de la conduite de la truie. Idéalement 5 à 7 jours. Au-delà de 10 jours, c'est une perte économique directe. Causes d'allongement : truie trop maigre, chaleur excessive, stress, maladie intercurrente. La réforme s'impose après 6 à 7 portées, ou si 2 portées consécutives donnent moins de 7 porcelets nés vivants, ou en cas de problèmes locomoteurs répétés qui compromettent la saillie."],
+ qz:[{q:"La NEC idéale de la truie à la saillie et à la mise bas est de…",o:["1 à 2 (très maigre)","3 à 3,5","5 (obèse)"],b:1},
+     {q:"Un intervalle sevrage–saillie supérieur à 10 jours signale souvent…",o:["Une excellente performance","Une truie trop maigre en fin de lactation","Une truie trop grasse"],b:1},
+     {q:"La truie atteint ses meilleures performances à partir de…",o:["La 1ère portée","La 3ème portée","La 10ème portée"],b:1},
+     {q:"La réforme de la truie est justifiée si…",o:["Elle a eu sa 1ère portée","2 portées consécutives donnent moins de 7 porcelets nés vivants","Elle a plus de 1 an"],b:1},
+     {q:"La NEC ne doit pas descendre en dessous de … au sevrage.",o:["1","2,5","4"],b:1}]},
+ en:{ti:"The high-performing sow",tx:[
+ "A sow's career is decided in her first two litters. The target is 5–6 productive litters — it is from the 3rd litter onwards that the sow gives her best performance. The first two are often the least prolific because the sow is still growing during gestation. That is why the gilt must be mated at the right weight, well fed during gestation, and above all must not finish too thin after lactation.",
+ "Managing by body condition score (BCS) is the key tool for a high-performing sow. BCS runs from 1 (emaciated) to 5 (obese), the ideal being 3 to 3.5 at mating and farrowing, and no less than 2.5 at weaning. A sow that reaches weaning too thin (BCS < 2.5) will have a delayed return to heat (> 10 days), poor ovulation and therefore a reduced litter. Adjust the ration accordingly: increase if the sow loses weight, reduce if she gets too fat.",
+ "The weaning-to-service interval is the number-one management indicator for sow performance. Ideally 5–7 days. Beyond 10 days, it is a direct economic loss. Causes of lengthening: sow too thin, excessive heat, stress, intercurrent disease. Culling is indicated after 6–7 litters, or if 2 consecutive litters give fewer than 7 born alive, or in cases of repeated locomotion problems that compromise mating."],
+ qz:[{q:"Ideal BCS of the sow at mating and farrowing is…",o:["1 to 2 (very thin)","3 to 3.5","5 (obese)"],b:1},
+     {q:"A weaning-to-service interval above 10 days often signals…",o:["Excellent performance","A sow too thin at the end of lactation","A sow too fat"],b:1},
+     {q:"The sow reaches her best performance from…",o:["The 1st litter","The 3rd litter","The 10th litter"],b:1},
+     {q:"Culling the sow is justified if…",o:["She has had her 1st litter","2 consecutive litters give fewer than 7 born alive","She is over 1 year old"],b:1},
+     {q:"BCS must not fall below … at weaning.",o:["1","2.5","4"],b:1}]}},
+
+{fr:{ti:"Gérer la chaleur tropicale en porciculture",tx:[
+ "Le porc est l'animal d'élevage le plus sensible à la chaleur. Il ne possède pratiquement pas de glandes sudoripares fonctionnelles et ne peut pas transpirer pour se refroidir. Sa seule régulation thermique est le halètement et la recherche de surfaces fraîches. Dès 30 °C, il réduit sa consommation alimentaire de 20 à 30 %, sa croissance ralentit, et son IC se dégrade. La truie allaitante est la plus touchée : elle mange moins, produit moins de lait, perd du poids, et ses porcelets croissent moins vite.",
+ "Solutions architecturales : orientation du bâtiment face aux vents dominants, débords de toit de 1,5 m minimum, toiture en matériaux isolants ou double toiture avec lame d'air, murs ouverts avec filet anti-moustique pour la ventilation, bauge (zone humide avec eau froide ou sol arrosé) accessible à tous les animaux en engraissement. Surdimensionnez les abreuvoirs en saison chaude — une panne d'eau quelques heures suffit à déclencher un coup de chaleur.",
+ "Solutions zootechniques : distribuez l'aliment aux heures fraîches (tôt le matin, fin d'après-midi), aspergez les toitures aux heures les plus chaudes (11 h–15 h), réduisez la densité en saison chaude, ventilateurs dans la maternité. La chaleur aggrave aussi les pathologies respiratoires et immunitaires : les animaux affaiblis par le stress thermique résistent moins aux infections et à la PPA. Tenez un registre de température dans votre porcherie — CuniSmart Santé permet de le noter."],
+ qz:[{q:"Le porc régule sa température principalement par…",o:["La transpiration","Le halètement et la recherche de surfaces fraîches","Le pelage"],b:1},
+     {q:"Dès 30 °C, le porc réduit sa consommation alimentaire d'environ…",o:["5 %","20 à 30 %","50 %"],b:1},
+     {q:"La truie allaitante est particulièrement sensible à la chaleur car…",o:["Elle est plus grosse","Elle mange moins, produit moins de lait et perd du poids","Elle a plus de parasites"],b:1},
+     {q:"Pour réduire la chaleur dans la porcherie, on peut…",o:["Fermer toutes les ouvertures","Arroser les toitures aux heures les plus chaudes","Augmenter la densité"],b:1},
+     {q:"La chaleur aggrave la sensibilité aux maladies car…",o:["Les animaux dorment plus","Le stress thermique affaiblit les défenses immunitaires","Les bactéries disparaissent par la chaleur"],b:1}]},
+ en:{ti:"Managing tropical heat in pig farming",tx:[
+ "The pig is the livestock animal most sensitive to heat. It has virtually no functional sweat glands and cannot sweat to cool itself. Its only thermal regulation is panting and seeking cool surfaces. From 30 °C, it reduces feed intake by 20–30%, growth slows and FCR deteriorates. The nursing sow is most affected: she eats less, produces less milk, loses weight, and her piglets grow more slowly.",
+ "Architectural solutions: building orientation facing prevailing winds, roof overhangs of at least 1.5 m, insulating roofing materials or double roof with air gap, open walls with mosquito net for ventilation, wallow (wet zone with cool water or watered floor) accessible to all fattening animals. Oversize drinkers in hot weather — a water failure for a few hours is enough to trigger heat stress.",
+ "Management solutions: feed in cool hours (early morning, late afternoon), spray rooftops during the hottest hours (11 am–3 pm), reduce density in the hot season, fans in the farrowing unit. Heat also worsens respiratory and immune conditions: animals weakened by thermal stress resist infections and ASF less well. Keep a temperature log in your pig house — CuniSmart Health lets you record it."],
+ qz:[{q:"The pig regulates its temperature mainly by…",o:["Sweating","Panting and seeking cool surfaces","Coat"],b:1},
+     {q:"From 30 °C, the pig reduces feed intake by about…",o:["5%","20–30%","50%"],b:1},
+     {q:"The nursing sow is especially sensitive to heat because…",o:["She is bigger","She eats less, produces less milk and loses weight","She has more parasites"],b:1},
+     {q:"To reduce heat in the pig house, you can…",o:["Close all openings","Spray rooftops during the hottest hours","Increase density"],b:1},
+     {q:"Heat worsens disease susceptibility because…",o:["Animals sleep more","Thermal stress weakens immune defences","Bacteria disappear with heat"],b:1}]}},
+
+,
+{fr:{ti:"Piloter par l'indice de consommation (IC)",tx:[
+ "L'indice de consommation (IC) est l'indicateur de performance le plus important en engraissement porcin. Il mesure l'efficacité avec laquelle votre porc transforme l'aliment en viande : IC = kilos d'aliment consommés ÷ kilos de poids vif gagné. Exemple : un porc qui mange 280 kg d'aliment pour passer de 30 kg à 110 kg gagne 80 kg — son IC est de 280 ÷ 80 = 3,5. Repères : 2,8 à 3,2 pour une race améliorée bien conduite, 4 à 5 pour le porc local.",
+ "Pesez chaque semaine un échantillon représentatif de 5 à 10 porcs à l'engrais — toujours le même jour, à jeun de préférence. Le gain moyen quotidien (GMQ) = gain de poids (kg) ÷ nombre de jours. Un porc amélioré en bonne conduite gagne 600 à 800 g par jour. En dessous de 500 g, quelque chose ne va pas : chaleur, aliment déséquilibré, maladie, ou porc hors de sa fenêtre optimale d'engraissement.",
+ "L'IC se dégrade inexorablement après 110–120 kg : le porc continue à manger autant mais engraisse davantage en graisse qu'en muscle. La valeur commerciale par kilo chute. Vendez entre 90 et 110 kg pour maximiser la marge. Tenez un tableau de suivi hebdomadaire dans CuniSmart Finances : entrez le coût de l'aliment et le poids des porcs, et vous connaissez votre coût de production réel à la semaine."],
+ qz:[{q:"L'indice de consommation (IC) se calcule par…",o:["Nombre de porcs ÷ surface de la porcherie","Kilos d'aliment consommés ÷ kilos de poids vif gagné","Prix de l'aliment × nombre de porcs"],b:1},
+     {q:"Un IC de 3,5 pour un porc local est…",o:["Excellent","Acceptable pour un porc local","Catastrophique"],b:1},
+     {q:"Le gain moyen quotidien (GMQ) attendu pour un porc amélioré en bonne conduite est…",o:["100–200 g/jour","600–800 g/jour","2 kg/jour"],b:1},
+     {q:"Après 110–120 kg, l'IC du porc se dégrade car…",o:["Il mange moins","Il engraisse en graisse plutôt qu'en muscle","Il tombe systématiquement malade"],b:1},
+     {q:"Pour calculer l'IC hebdomadaire, il faut obligatoirement…",o:["Observer le comportement du porc","Peser régulièrement un échantillon de porcs","Compter le nombre de repas par jour"],b:1}]},
+ en:{ti:"Managing by feed conversion ratio (FCR)",tx:[
+ "Feed conversion ratio (FCR) is the most important performance indicator in pig fattening. It measures how efficiently your pig turns feed into meat: FCR = kg of feed consumed ÷ kg of live weight gained. Example: a pig eating 280 kg of feed to go from 30 kg to 110 kg gains 80 kg — its FCR is 280 ÷ 80 = 3.5. Benchmarks: 2.8 to 3.2 for a well-managed improved breed, 4–5 for the local pig.",
+ "Weigh a representative sample of 5–10 fattening pigs weekly — always the same day, preferably fasted. Average daily gain (ADG) = weight gain (kg) ÷ number of days. A well-managed improved pig gains 600–800 g per day. Below 500 g, something is wrong: heat, unbalanced feed, disease, or pig outside its optimal fattening window.",
+ "FCR deteriorates inexorably above 110–120 kg: the pig keeps eating as much but lays down fat rather than muscle. Commercial value per kg drops. Sell between 90 and 110 kg to maximise margin. Keep a weekly tracking table in CuniSmart Finances: enter feed cost and pig weight, and you know your real production cost week by week."],
+ qz:[{q:"Feed conversion ratio (FCR) is calculated as…",o:["Number of pigs ÷ house floor area","Kg feed consumed ÷ kg live weight gained","Feed price × number of pigs"],b:1},
+     {q:"An FCR of 3.5 for a local pig is…",o:["Excellent","Acceptable for a local pig","Catastrophic"],b:1},
+     {q:"Expected average daily gain (ADG) for a well-managed improved pig is…",o:["100–200 g/day","600–800 g/day","2 kg/day"],b:1},
+     {q:"Above 110–120 kg, FCR deteriorates because…",o:["The pig eats less","It lays down fat rather than muscle","It systematically falls sick"],b:1},
+     {q:"To calculate weekly FCR, you must…",o:["Observe pig behaviour","Weigh a regular sample of pigs","Count the number of meals per day"],b:1}]}},
+{fr:{ti:"Biosécurité avancée et protocole PPA",tx:[
+ "Une porcherie sécurisée fonctionne en zones distinctes : zone sale (extérieur, véhicules, accès public), zone de transition (vestiaire avec bottes et blouses dédiées, pédiluve à désinfectant renouvelé), zone propre (bâtiments d'élevage), zone ultra-protégée (maternité). Aucun animal, aucun véhicule, aucun visiteur ne doit passer d'une zone à l'autre sans le protocole de transition.",
+ "Le registre des visiteurs est obligatoire et vital en zone d'endémie PPA : notez nom, date, dernier élevage visité. Un visiteur venant d'un autre élevage porcin dans les 72 heures ne doit pas entrer dans votre porcherie. Les cadavres de porcs ne doivent jamais être abandonnés — enterrement profond (1,5 m) ou incinération immédiate. Les chiens et charognards peuvent transporter le virus sur plusieurs kilomètres. L'aliment est aussi un vecteur : stockez les sacs à l'abri des rongeurs (vecteurs de tiques), ne mélangez jamais les aliments provenant de fermes différentes sans source vérifiée.",
+ "Plan de crise PPA : affichez dans votre porcherie le numéro du vétérinaire de zone et celui de l'autorité sanitaire. Formez vos employés aux signes cliniques et à la procédure d'isolement. En cas de foyer, l'abattage précipité pour la vente accélère la propagation — c'est une tentation économique compréhensible mais désastreuse. En Afrique centrale, la déclaration rapide aux autorités peut déclencher des mesures de soutien. Un éleveur préparé perd moins, même en cas de crise."],
+ qz:[{q:"Un visiteur venant d'un autre élevage porcin ne doit pas entrer dans votre porcherie pendant…",o:["1 heure","72 heures","30 jours"],b:1},
+     {q:"Un cadavre de porc doit être…",o:["Abandonné à l'extérieur","Enterré à 1,5 m de profondeur ou incinéré immédiatement","Donné aux chiens de la ferme"],b:1},
+     {q:"Le pédiluve à l'entrée de la porcherie doit être…",o:["Rempli d'eau simple","Rempli de désinfectant renouvelé régulièrement","Optionnel selon le budget"],b:1},
+     {q:"En cas de suspicion PPA, abattre les porcs pour les vendre immédiatement est…",o:["La meilleure solution économique","Désastreux car cela accélère la propagation du virus","Obligatoire selon la réglementation"],b:1},
+     {q:"Les rongeurs dans la porcherie sont dangereux car…",o:["Ils mangent l'aliment uniquement","Ils peuvent être porteurs de tiques vectrices de la PPA","Ils font peur aux porcs"],b:1}]},
+ en:{ti:"Advanced biosecurity and ASF protocol",tx:[
+ "A secure pig house operates in distinct zones: dirty zone (outside, vehicles, public access), transition zone (changing room with dedicated boots and overalls, regularly renewed disinfectant footbath), clean zone (housing buildings), ultra-protected zone (farrowing unit). No animal, vehicle or visitor should pass from one zone to another without the transition protocol.",
+ "A visitor log is mandatory and vital in ASF-endemic areas: record name, date, last farm visited. A visitor who has been to another pig farm in the previous 72 hours must not enter your pig house. Pig carcasses must never be left unattended — deep burial (1.5 m) or immediate incineration. Dogs and scavengers can carry the virus over several kilometres. Feed is also a vector: store bags away from rodents (tick vectors), never mix feeds from different farms without a verified source.",
+ "ASF crisis plan: post in your pig house the phone number of the area vet and the animal health authority. Train your staff on clinical signs and the isolation procedure. In a crisis, hasty slaughter for sale accelerates spread — it is an understandable economic temptation but a disastrous one. In Central Africa, rapid reporting to authorities can trigger support measures. A prepared farmer loses less, even in a crisis."],
+ qz:[{q:"A visitor from another pig farm must not enter your pig house for…",o:["1 hour","72 hours","30 days"],b:1},
+     {q:"A dead pig must be…",o:["Left outside","Buried at 1.5 m depth or immediately incinerated","Given to farm dogs"],b:1},
+     {q:"The footbath at the entrance to the pig house must be…",o:["Filled with plain water","Filled with regularly renewed disinfectant","Optional depending on budget"],b:1},
+     {q:"In a suspected ASF case, slaughtering pigs to sell them immediately is…",o:["The best economic solution","Disastrous as it accelerates virus spread","Mandatory by regulation"],b:1},
+     {q:"Rodents in the pig house are dangerous because…",o:["They eat feed only","They may carry ticks that vector ASF","They scare the pigs"],b:1}]}},
+
+{fr:{ti:"Pilotage économique du lot",tx:[
+ "L'élevage porcin est un cycle long comparé à d'autres spéculations : saillie → gestation 114 jours → lactation 28 jours → post-sevrage 60 jours → engraissement 90 à 150 jours selon la race. De la saillie à la vente du porc charcutier, il s'écoule environ 8 à 10 mois. Ce cycle long exige une planification de trésorerie rigoureuse : les charges (aliment, soins) courent sans interruption pendant que les recettes n'arrivent que par pics (vente de porcelets, vente de porcs à l'engrais, vente de truies de réforme).",
+ "Calculez votre coût de production par kilo de porc vif : aliment (65–70 %), porcelet (10–15 %), santé (5–8 %), amortissement bâtiment, main-d'œuvre. Vendez au bon poids : entre 90 et 110 kg pour les races améliorées selon votre marché. Après 110–120 kg, l'IC se dégrade, le porc engraisse trop en graisse plutôt qu'en muscle, et la marge par kilo chute brutalement. Pesez chaque semaine sur un échantillon de 5 porcs et calculez le gain moyen quotidien (GMQ) — il vous dit quand vendre.",
+ "Deux recettes souvent sous-estimées : la vente des truies de réforme (viande à prix honorable selon le marché) et le lisier (engrais organique très recherché par les maraîchers). Le lisier de porc est l'un des fumiers les plus riches en azote — valorisez-le en le vendant aux cultures voisines, cela compense une partie des coûts de gestion des déchets. Tenez vos registres de finances dans CuniSmart à chaque opération : la marge réelle par porc vendu est la seule vérité qui compte."],
+ qz:[{q:"Le poids de vente optimal du porc charcutier en race améliorée est généralement…",o:["50–60 kg","90–110 kg","150–180 kg"],b:1},
+     {q:"Après 110–120 kg, l'IC du porc se dégrade car…",o:["Le porc mange moins","Il engraisse en graisse plutôt qu'en muscle, rendement chute","Il tombe malade"],b:1},
+     {q:"Quelle est la part de l'aliment dans le coût de production du porc ?",o:["10–20 %","65–70 %","90 %"],b:1},
+     {q:"Le lisier de porc est valorisable car…",o:["Il sert de litière","C'est un engrais organique riche en azote recherché par les maraîchers","Il n'a aucune valeur"],b:1},
+     {q:"Pour décider du bon moment de vente, l'indicateur à suivre est…",o:["L'âge en mois uniquement","Le GMQ (gain moyen quotidien) calculé par pesée hebdomadaire","La couleur de la peau"],b:1}]},
+ en:{ti:"Economic management of the fattening batch",tx:[
+ "Pig farming is a long cycle compared to other species: mating → 114-day gestation → 28-day lactation → 60-day post-weaning → 90–150-day fattening depending on breed. From mating to selling the baconer, about 8–10 months elapse. This long cycle demands rigorous cash-flow planning: costs (feed, health) run without interruption while income comes only in peaks (piglet sales, sale of fatteners, sale of cull sows).",
+ "Calculate your production cost per kg of live pig: feed (65–70%), piglet (10–15%), health (5–8%), building depreciation, labour. Sell at the right weight: 90–110 kg for improved breeds depending on your market. Above 110–120 kg, FCR deteriorates, the pig lays down fat rather than muscle, and margin per kg drops sharply. Weigh weekly on a sample of 5 pigs and compute average daily gain (ADG) — it tells you when to sell.",
+ "Two often underestimated income sources: sale of cull sows (meat at an honourable price depending on the market) and slurry (organic fertiliser highly sought by market gardeners). Pig slurry is one of the richest manures in nitrogen — valorise it by selling it to neighbouring crop farmers, which offsets part of waste management costs. Record every financial operation in CuniSmart: the real margin per pig sold is the only truth that counts."],
+ qz:[{q:"Optimal selling weight for an improved-breed baconer is generally…",o:["50–60 kg","90–110 kg","150–180 kg"],b:1},
+     {q:"Above 110–120 kg, FCR deteriorates because…",o:["The pig eats less","It lays down fat rather than muscle, yield drops","It falls sick"],b:1},
+     {q:"What share of pig production cost is feed?",o:["10–20%","65–70%","90%"],b:1},
+     {q:"Pig slurry is worth valorising because…",o:["It serves as bedding","It is nitrogen-rich organic fertiliser sought by market gardeners","It has no value"],b:1},
+     {q:"To decide the right moment to sell, the indicator to track is…",o:["Age in months only","ADG (average daily gain) computed by weekly weighing","Skin colour"],b:1}]}},
+
+{fr:{ti:"Marchés, valorisation et circuits de vente",tx:[
+ "Le porc en Afrique centrale et de l'Ouest connaît une demande urbaine en forte croissance, mais le marché est très saisonnier : les prix montent fortement en période de fêtes (Noël, Pâques, fêtes nationales) et chutent hors saison. Un éleveur qui planifie ses mises bas pour avoir des porcs à vendre au bon moment peut améliorer sa marge de 20 à 40 % sur l'année. Notez dans CuniSmart la date de chaque saillie : vous verrez 8 à 9 mois à l'avance si vos animaux seront prêts pour le pic de demande.",
+ "Ne vendez jamais au même circuit de vente. Les vendeurs au bord de la route subissent les prix les plus bas. Les circuits à forte valeur ajoutée sont : les abattoirs (prix fixe et régulier), les bouchers de marché (prix de gros), les restaurateurs et hôtels (prix unitaire élevé mais petit volume, paiement parfois lent), la transformation artisanale (saucisses, viande fumée, chipolatas — valorisation jusqu'à 2–3 fois le prix du porc vif si vous maîtrisez la technique).",
+ "La traçabilité est un argument de vente croissant en milieu urbain africain, surtout depuis que la PPA a rendu les consommateurs méfiants sur l'origine du porc. Un éleveur qui peut montrer un registre propre, des vaccinations à jour, et un élevage fermé à la faune sauvage, peut demander un prix supérieur. CuniSmart Traçabilité génère un QR code par lot : scannez-le avec votre acheteur pour montrer votre sérieux."],
+ qz:[{q:"Quand les prix du porc sont-ils généralement les plus hauts en Afrique centrale ?",o:["En pleine saison des pluies","Pendant les fêtes (Noël, Pâques, fêtes nationales)","En juillet–août"],b:1},
+     {q:"Le circuit de vente qui valorise le mieux le porc est généralement…",o:["La vente au bord de la route","La transformation artisanale (saucisses, viande fumée)","Le don aux voisins"],b:1},
+     {q:"La traçabilité CuniSmart peut vous permettre de…",o:["Réduire le coût de l'aliment","Demander un prix supérieur en prouvant votre sérieux à l'acheteur","Éviter de vacciner"],b:1},
+     {q:"Planifier les saillies par rapport aux pics de demande permet d'améliorer la marge de…",o:["1–2 %","20–40 %","200 %"],b:1},
+     {q:"Quel document CuniSmart permet à l'acheteur de vérifier l'origine et les pratiques d'élevage ?",o:["Le bilan financier","Le QR code de traçabilité par lot","Le registre des vaccinations uniquement"],b:1}]},
+ en:{ti:"Markets, value and sales channels",tx:[
+ "Pig farming in Central and West Africa faces strong growing urban demand, but the market is highly seasonal: prices rise sharply during festive periods (Christmas, Easter, national holidays) and fall off-season. A farmer who plans farrowings to have pigs ready at the right time can improve margin by 20–40% over the year. Record every mating date in CuniSmart: you will see 8–9 months in advance whether your animals will be ready for the demand peak.",
+ "Never sell through just one channel. Roadside sellers get the lowest prices. High-value channels are: abattoirs (fixed regular price), market butchers (wholesale price), restaurants and hotels (high unit price but small volume, sometimes slow payment), artisan processing (sausages, smoked meat, chipolatas — valorisation up to 2–3 times live pig price if you master the technique).",
+ "Traceability is a growing sales argument in urban Africa, especially since ASF has made consumers wary of pork origin. A farmer who can show clean records, up-to-date vaccinations and a farm closed to wildlife can ask a premium price. CuniSmart Traceability generates a QR code per batch: scan it with your buyer to show your professionalism."],
+ qz:[{q:"When are pig prices generally highest in Central Africa?",o:["In peak rainy season","During festivals (Christmas, Easter, national holidays)","In July–August"],b:1},
+     {q:"The sales channel that best valorises pig is generally…",o:["Roadside selling","Artisan processing (sausages, smoked meat)","Giving to neighbours"],b:1},
+     {q:"CuniSmart traceability can allow you to…",o:["Reduce feed cost","Ask a premium price by proving your professionalism to the buyer","Avoid vaccinating"],b:1},
+     {q:"Planning farrowings around demand peaks can improve margin by…",o:["1–2%","20–40%","200%"],b:1},
+     {q:"Which CuniSmart document lets a buyer verify the origin and farming practices?",o:["The financial report","The batch traceability QR code","The vaccination record only"],b:1}]}},
+
+{fr:{ti:"Construire un élevage durable sur 5 ans",tx:[
+ "Le plus grand risque de l'éleveur porcin africain n'est pas la PPA ni la chaleur — c'est le découragement après la première crise. Un plan à 5 ans, réaliste et progressif, est la meilleure assurance contre l'abandon. Démarrez petit : 3 à 5 truies, un verrat, une infrastructure simple mais bien conçue. L'autofinancement se dessine généralement entre 18 et 24 mois si la conduite est rigoureuse. Réinvestissez les bénéfices des 2 premières années dans l'infrastructure (maternité correcte, clôture complète, forage ou citerner) plutôt que dans l'agrandissement précipité.",
+ "Sélectionnez sur votre propre descendance : conservez comme futures truies les femelles des meilleures portées — celles des truies avec le plus de nés vivants, les meilleurs poids de sevrage, et une bonne valeur laitière (poids de la portée à 21 jours). Cette sélection progressive améliore silencieusement les performances sans investissement supplémentaire. Pour le verrat, renouveler tous les 2 ans avec un animal d'une lignée différente de la vôtre pour conserver la vigueur hybride.",
+ "Restez connecté au réseau local : coopérative d'éleveurs, vétérinaire de zone, délégation MINEPIA (Cameroun) ou structure équivalente dans votre pays. Un éleveur isolé est vulnérable à la PPA parce qu'il est le dernier à être averti. Un réseau vous donne l'alerte précoce, le groupement d'achat d'aliment et de vaccins, et l'accès aux marchés collectifs. La règle d'or finale : notez tout dans CuniSmart — chaque saillie, chaque mise bas, chaque dépense, chaque vente. Vos données sont votre capital invisible."],
+ qz:[{q:"Quand l'autofinancement d'un élevage porcin bien conduit devient-il généralement visible ?",o:["Dès le premier mois","Entre 18 et 24 mois","Après 10 ans seulement"],b:1},
+     {q:"Les bénéfices des 2 premières années doivent être reinvestis en priorité dans…",o:["L'agrandissement immédiat du cheptel","L'infrastructure (maternité, clôture, eau)","La décoration de la porcherie"],b:1},
+     {q:"La sélection sur descendance vise à…",o:["Changer toutes les truies chaque année","Conserver les femelles des meilleures portées pour améliorer progressivement le troupeau","Acheter les races les plus chères"],b:1},
+     {q:"Pourquoi renouveler le verrat tous les 2 ans avec une lignée différente ?",o:["Par obligation légale","Pour éviter la consanguinité et conserver la vigueur hybride","Parce que les verrats vieillissent vite"],b:1},
+     {q:"L'appartenance à un réseau d'éleveurs (coopérative, vétérinaire de zone) protège surtout contre…",o:["La chaleur","L'isolement et le manque d'alerte précoce en cas de PPA","Les dépenses vétérinaires"],b:1}]},
+ en:{ti:"Building a sustainable farm over 5 years",tx:[
+ "The greatest risk for the African pig farmer is not ASF or heat — it is discouragement after the first crisis. A realistic, progressive 5-year plan is the best insurance against giving up. Start small: 3–5 sows, one boar, simple but well-designed infrastructure. Break-even usually appears between 18 and 24 months with rigorous management. Reinvest the first two years' profits in infrastructure (proper farrowing unit, complete fencing, borehole or water tank) rather than hasty expansion.",
+ "Select on your own progeny: keep as future sows the females from the best litters — daughters of sows with the most born alive, best weaning weights and good milking ability (litter weight at 21 days). This gradual selection silently improves performance without extra investment. For the boar, renew every 2 years with an animal from a different line than yours to maintain hybrid vigour.",
+ "Stay connected to the local network: farmer cooperative, area vet, MINEPIA delegation (Cameroon) or equivalent body in your country. An isolated farmer is the most vulnerable to ASF because they are the last to be warned. A network gives you early warning, group purchase of feed and vaccines, and access to collective markets. Final golden rule: record everything in CuniSmart — every mating, every farrowing, every expense, every sale. Your data is your invisible capital."],
+ qz:[{q:"When does a well-run pig farm generally reach break-even?",o:["From the first month","Between 18 and 24 months","Only after 10 years"],b:1},
+     {q:"Profits from the first 2 years should be reinvested mainly in…",o:["Immediate herd expansion","Infrastructure (farrowing unit, fencing, water)","Decorating the pig house"],b:1},
+     {q:"Selecting on progeny aims to…",o:["Replace all sows every year","Keep females from the best litters to gradually improve the herd","Buy the most expensive breeds"],b:1},
+     {q:"Why renew the boar every 2 years with a different line?",o:["By legal obligation","To avoid inbreeding and maintain hybrid vigour","Because boars age quickly"],b:1},
+     {q:"Belonging to a farmer network (cooperative, area vet) mainly protects against…",o:["Heat","Isolation and lack of early warning in case of ASF","Veterinary expenses"],b:1}]}}
+];
+const NIVEAUX_PORC = [
+  {deb:0,  fin:5,  k:'lvl_1'},
+  {deb:5,  fin:10, k:'lvl_2'},
+  {deb:10, fin:16, k:'lvl_3'}
+];
+
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
@@ -5176,8 +5493,161 @@ function partagerCertifPondeuse(){
   partagerWhatsApp(txt.join('\n'));
 }
 
+
+/* ===== ÉCOLE DE PORCICULTURE — fonctions de rendu ===== */
+function niveauPorcFait(idx){
+  const vp = etat.ecole.valideesPorc || [];
+  const nv = NIVEAUX_PORC[idx];
+  for(let i=nv.deb; i<nv.fin; i++) if(!vp.includes(i)) return false;
+  return true;
+}
+function vueLeconsPorcin(){
+  if(leconOuverte !== null) return vueLeconPorc(leconOuverte);
+  const vp = etat.ecole.valideesPorc || [];
+  const n = vp.length;
+  const total = LECONS_PORC.length;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const TITRES = {fr:"École de porciculture",en:"Pig farming school"};
+  const titre = TITRES[langue]||TITRES.fr;
+  const toutFait = n === total;
+
+  let certif = '';
+  if(toutFait){
+    if(!etat.ecole.numPorc){
+      etat.ecole.numPorc = 'CSM-POR-'+auj().replace(/-/g,'') + '-' + uid().slice(-4).toUpperCase();
+      sauver();
+    }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — 🐖 ${L('Porciculture','Pig Farming')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom)||'…'}</div>
+      <p>${L('a validé le parcours certifiant École de porciculture.','has completed the Pig Farming School certifying path.')}</p>
+      <p style="margin-top:6px">🐖 CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numPorc}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifPorc()">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+
+  const ICONES_P = ['🐷','🏗️','🌽','🔄','🍼','🐣','🧮','🦠','💉','🌡️','⭐','🌞','🛡️','💰','🏪','🌱'];
+  const LABELS_NV = {fr:['Niveau 1 · Débutant','Niveau 2 · Confirmé','Niveau 3 · Expert'],
+                     en:['Level 1 · Beginner','Level 2 · Intermediate','Level 3 · Expert']};
+  const lblNv = LABELS_NV[langue]||LABELS_NV.fr;
+
+  let leconHTML = '';
+  NIVEAUX_PORC.forEach((nv,ni)=>{
+    const nvFait = niveauPorcFait(ni);
+    const nvDispo = ni===0 || niveauPorcFait(ni-1);
+    leconHTML += `<div style="margin-bottom:18px">
+      <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+        ${lblNv[ni]} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+      </div>`;
+    if(!nvDispo){
+      leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
+    } else {
+      for(let i=nv.deb;i<nv.fin;i++){
+        const done = vp.includes(i);
+        const lec = LECONS_PORC[i][langue]||LECONS_PORC[i].fr;
+        leconHTML += `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLeconPorc(${i})">
+          <div class="lecon-num">${done?'✓':i+1}</div>
+          <div class="lecon-titre">${ICONES_P[i]||'•'} ${esc(lec.ti)}</div>
+          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+        </div>`;
+      }
+    }
+    leconHTML += '</div>';
+  });
+
+  return `
+    <h2 class="page-title">${titre}</h2>
+    <p class="page-sub">${L('Parcours certifiant en 3 niveaux — 16 leçons + quiz (5 questions). Validez tout pour obtenir votre certificat.','Certifying path in 3 levels — 16 lessons + quizzes (5 questions). Complete all to earn your certificate.')}</p>
+    ${selecteurEspece()}
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${n} / ${total} ${L('leçons validées','lessons completed')}</p>
+      <div class="progress-bar"><div style="width:${n/total*100}%"></div></div>
+      <div style="margin-top:12px">${leconHTML}</div>
+    </div>`;
+}
+
+function ouvrirLeconPorc(idx){ leconOuverte=idx; rendre(); window.scrollTo(0,0); }
+
+function vueLeconPorc(idx){
+  const lec = LECONS_PORC[idx][langue]||LECONS_PORC[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ICONES_P = ['🐷','🏗️','🌽','🔄','🍼','🐣','🧮','🦠','💉','🌡️','⭐','🌞','🛡️','💰','🏪','🌱'];
+  const done = (etat.ecole.valideesPorc||[]).includes(idx);
+  const txtHtml = lec.tx.map(p=>`<p>${esc(p)}</p>`).join('');
+  const opts = lec.qz.map((q,qi)=>`
+    <div class="quiz-q">
+      <p>${qi+1}. ${esc(q.q)}</p>
+      ${q.o.map((o,oi)=>`
+        <label class="quiz-opt" id="qpc-${qi}-${oi}">
+          <input type="radio" name="qpc${qi}" value="${oi}" style="flex-shrink:0"> ${esc(o)}
+        </label>`).join('')}
+    </div>`).join('');
+  return `
+    <button class="btn sec" onclick="fermerLeconPorc()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">
+        ${ICONES_P[idx]||'•'} ${esc(lec.ti)}
+        ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}
+      </h2>
+      <div class="lecon-texte" style="margin-top:12px">${txtHtml}</div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>❓ ${fmt(t('quiz_title'),{n:4})}</h3>
+      <p style="color:var(--gris);font-size:.88rem;margin-bottom:10px">
+        ${L('⚠️ Leçons 8 et 9 : protocoles de vaccination et PPA à valider avec un vétérinaire de votre zone.','⚠️ Lessons 8 and 9: ASF and vaccination protocols to validate with a vet in your area.')}
+      </p>
+      <form id="qpc-form">${opts}</form>
+      <div id="qpc-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerLeconPorc(${idx})">${t('btn_check')}</button>
+    </div>`;
+}
+
+function fermerLeconPorc(){ leconOuverte=null; rendre(); window.scrollTo(0,0); }
+
+function validerLeconPorc(idx){
+  const lec = LECONS_PORC[idx][langue]||LECONS_PORC[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const res = document.getElementById('qpc-res');
+  let bonnes=0, total=lec.qz.length, allAnswered=true;
+  lec.qz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="qpc'+qi+'"]:checked');
+    if(!sel){ allAnswered=false; return; }
+    const ok=parseInt(sel.value)===q.b;
+    if(ok) bonnes++;
+    q.o.forEach((_,oi)=>{
+      const lbl=document.getElementById('qpc-'+qi+'-'+oi);
+      if(lbl){ lbl.classList.remove('bonne','fausse'); if(oi===q.b) lbl.classList.add('bonne'); else if(oi===parseInt(sel.value)) lbl.classList.add('fausse'); }
+    });
+  });
+  if(!allAnswered){ if(res) res.innerHTML='<span style="color:var(--rouge)">'+L('Répondez à toutes les questions.','Answer all questions.')+'</span>'; return; }
+  if(!res) return;
+  if(bonnes>=4){
+    if(!etat.ecole.valideesPorc) etat.ecole.valideesPorc=[];
+    if(!etat.ecole.valideesPorc.includes(idx)) etat.ecole.valideesPorc.push(idx);
+    sauver();
+    res.innerHTML='<span style="color:var(--feuille-fonce);font-weight:700">🎉 '+L('Bravo ! '+bonnes+'/'+total+' — Leçon validée !','Well done! '+bonnes+'/'+total+' — Lesson completed!')+'</span>';
+    setTimeout(()=>{ leconOuverte=null; rendre(); window.scrollTo(0,0); },1100);
+  } else {
+    res.innerHTML='<span style="color:var(--rouge)">✗ '+bonnes+'/'+total+' — '+L('Relisez la leçon et réessayez (4/5 requis).','Re-read the lesson and try again (4/5 required).')+'</span>';
+  }
+}
+
+function partagerCertifPorc(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const num=(etat.ecole.numPorc)?('N° '+etat.ecole.numPorc):'';
+  const txt=['🎓 '+L('Certificat CuniMaster — École de porciculture','CuniMaster Certificate — Pig Farming School'),
+    (etat.ecole.nom||'—'),
+    L('16 leçons validées.','16 lessons completed.'),
+    num,'— CuniSmart'].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
+}
+
 function vueEcole(){
   if(espActive() === 'volaille') return vueLeconsPondeuse();
+  if(espActive() === 'porc') return vueLeconsPorcin();
   if(espActive() !== 'lapin') return vueFiches();
   if(leconOuverte !== null) return vueLecon(leconOuverte);
   const n = etat.ecole.validees.length;
