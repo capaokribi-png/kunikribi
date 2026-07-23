@@ -3356,7 +3356,7 @@ function vueTableau(){
       <div class="card stat amber"><div class="ico">⏳</div><div class="val">${gest}</div><div class="lab">${t('st_gest')}</div></div>
       <div class="card stat leaf"><div class="ico">🐣</div><div class="val">${kits}</div><div class="lab">${espPetit(espActive())}</div></div>
       <div class="card stat ${k.marge>=0?'leaf':'red'}"><div class="ico">💰</div><div class="val ${k.marge>=0?'solde-pos':'solde-neg'}" style="font-size:1.35rem">${fcfa(k.marge)}</div><div class="lab">${t('st_balance')}</div></div>
-      <div class="card stat amber"><div class="ico">🎓</div><div class="val">${etat.ecole.validees.length}/6</div><div class="lab">${t('st_school')}</div></div>
+      <div class="card stat amber"><div class="ico">🎓</div><div class="val">${(()=>{ const kk=espActive(); if(kk==='lapin') return etat.ecole.validees.length+'/'+LECONS.length; const ff=fichesFaites(kk); const tt=FICHES_ESP[kk]?FICHES_ESP[kk][langue||'fr'].fiches.length:6; return ff.length+'/'+tt; })()}</div><div class="lab">${t('st_school')}</div></div>
     </div>
     ${animauxEsp().length===0 ? `<div class="card empty-state">
       <div class="em-ic">${espDef().icon}</div>
@@ -4463,19 +4463,23 @@ const FICHES_ESP = {
   },
   volaille:{
     fr:{fiches:[
-      ["Logement & poussinière","Poulailler sec, bien ventilé mais sans courant d'air, protégé des prédateurs, avec une litière sèche (copeaux, balle de riz). Pour les poussins, une poussinière chauffée à ~32-34 °C la première semaine, réduite progressivement. Densité raisonnable (souvent 8 à 10 poulets/m²) pour éviter stress, picage et maladies."],
-      ["Alimentation","Servez un aliment démarrage, puis croissance (chair) ou ponte (pondeuse, enrichi en calcium pour la coquille). Aliment et eau propres en permanence, mangeoires nettoyées ; un manque d'eau coupe aussitôt la croissance ou la ponte. Évitez de gaspiller : des mangeoires bien réglées limitent les pertes qui grèvent la marge."],
-      ["Conduite en bandes","Travaillez en « tout plein / tout vide » : une seule bande à la fois, puis vide sanitaire (nettoyage, désinfection, repos du bâtiment) avant la suivante. Choisissez des poussins de qualité et soignez les 3 premiers jours (chaleur, eau sucrée légère, aliment dès l'arrivée) qui décident du lot."],
-      ["Santé & biosécurité","Vaccinez : Newcastle (essentiel, avec rappels), Gumboro, variole aviaire, selon un calendrier vétérinaire. Biosécurité : entrées limitées, pédiluve, litière sèche, pas de mélange d'âges. La contagion est très rapide : isolez ou éliminez vite les sujets malades."],
-      ["Gestion & rentabilité","Suivez trois chiffres : la mortalité, la consommation d'aliment et le poids (chair) ou le taux de ponte. Mortalité et gaspillage détruisent la marge ; comparez le coût poussin + aliment au prix de vente pour piloter votre rentabilité."],
-      ["Réussir : erreurs à éviter","Les échecs viennent surtout d'un démarrage raté (froid, eau tardive), d'une litière humide, d'un oubli de vaccination Newcastle et du mélange de bandes d'âges différents. Un lot bien démarré et bien vacciné est déjà à moitié gagné."]]},
+      ["Choisir sa souche et son projet","La poule pondeuse et le poulet de chair sont deux métiers totalement différents : pas les mêmes poussins, pas le même aliment, pas le même bâtiment. Pour la ponte, les souches améliorées (ISA Brown, Lohmann Brown, Hy-Line Brown, Novogen) produisent 94–96 % de taux de ponte au pic. Avant d'acheter, téléchargez le guide officiel de la souche : il contient la courbe de poids, la courbe de ponte et le programme lumineux — c'est votre vrai manuel. Prévoyez de financer les 20 premières semaines sans recettes : c'est là que la plupart des projets échouent."],
+      ["Le démarrage en poussinière (0–6 semaines)","Le poussin d'un jour ne régule pas sa température : un démarrage raté ne se rattrape jamais complètement. Préchauffez la poussinière 24–48 h avant l'arrivée — air 34–36 °C, litière au sol ≈ 32 °C. Baissez d'environ 3 °C par semaine jusqu'à la température ambiante. Lisez le comportement : entassés sous la lampe = froid, écartés aux parois bec ouvert = trop chaud, répartis partout et actifs = parfait. 24 h après l'arrivée, la grande majorité des poussins doit avoir le jabot plein et souple : c'est le meilleur contrôle qui existe. Ne mettez jamais 24 h de lumière : 22 h maximum les 3 premiers jours, avec une période d'obscurité."],
+      ["L'élevage de la poulette (6–16 semaines)","C'est la phase que tout le monde néglige — et qui décide du pic de ponte. Pesez un échantillon du lot chaque semaine, même jour, même heure, et comparez au poids standard de la souche (objectif ≈ 1,6 kg à 19 semaines). L'uniformité est aussi importante que le poids : visez plus de 80 % des sujets dans ± 10 % du poids moyen. Un lot uniforme donne un pic plus haut, plus rapide et plus persistant. Ne réduisez jamais la durée d'éclairage si le poids cible n'est pas atteint. Au Cameroun et au Bénin (entre 20° N et 20° S), tenez compte de la durée du jour naturel pour les bâtiments ouverts."],
+      ["Transfert et entrée en ponte (16–21 semaines)","Transférez à 16–17 semaines, aux heures fraîches. Une perte de poids de 10–12 % après transfert est normale (baisse de consommation d'eau) et se rattrape. Ne stimulez par la lumière que si le poids cible est atteint : stimuler un lot trop léger donne de petits œufs et une carrière écourtée. Passez à l'aliment pré-ponte à partir de 15 semaines, et arrêtez-le dès le premier œuf pour passer à l'aliment ponte. Installez les pondoirs AVANT l'entrée en ponte, obscurs et propres : un œuf pondu au sol est sale, souvent cassé, et difficile à vendre. L'âge à 50 % de production se situe autour de 20–22 semaines."],
+      ["Conduite en ponte : le pic et la persistance","Taux de ponte (%) = (œufs pondus ÷ poules présentes) × 100. Le pic atteint 94–96 % vers 26–32 semaines. La persistance — rester haut longtemps après le pic — vaut plus que le pic lui-même : un bon lot reste au-dessus de 90 % pendant jusqu'à 34 semaines. Tracez votre courbe réelle sur le standard de la souche : l'écart entre les deux est votre diagnostic. Devant une chute de ponte, vérifiez dans cet ordre : 1) l'eau, 2) l'aliment, 3) la lumière, 4) la chaleur, 5) le stress, 6) la maladie. La consommation d'eau qui chute est le tout premier signal d'alerte de n'importe quel problème."],
+      ["Alimentation et qualité de coquille","La consommation en ponte est de 113–118 g par poule et par jour. La forme du calcium compte autant que la quantité : environ la moitié doit être en grosses particules (2–4 mm), qui restent dans le gésier et libèrent le calcium la nuit, quand la coquille se forme. Coquille fine ou molle = calcium insuffisant ou trop fin. Ne distribuez pas d'aliment pré-ponte avant 15 semaines. Stockez l'aliment au sec, sur palettes : un aliment moisi produit des mycotoxines qui font chuter la ponte et abîment le foie — ne le distribuez jamais, même partiellement."],
+      ["Santé et biosécurité","Prévenir coûte toujours moins cher que soigner. Vide sanitaire entre deux bandes, pédiluve à l'entrée, marche en avant (jeunes avant vieux, sains avant malades), visiteurs limités, aucun mélange d'âges. Vaccinations essentielles : Newcastle (mortalité pouvant atteindre 100 %), Gumboro (détruit l'immunité des jeunes), bronchite infectieuse, Marek (au couvoir), variole aviaire en zone endémique. Il n'existe pas de calendrier vaccinal universel : établissez-le avec un vétérinaire ou technicien avicole de votre zone. Observation quotidienne : un bâtiment silencieux alors qu'il est normalement bruyant est un bâtiment qui va mal."],
+      ["Gestion, rentabilité et réforme","Enregistrez chaque jour : poules présentes, œufs (et œufs déclassés à part), aliment distribué, mortalité, dépenses et ventes. Indice de consommation = kg d'aliment ÷ kg d'œufs produits (repère : ≈ 2,1 à 72 semaines). L'aliment représente la grande majorité du coût : un IC dégradé est le signal d'alerte n° 1 sur la rentabilité. La réforme se fait généralement à 72–80 semaines : quand l'aliment consommé coûte plus que les œufs produits, le lot n'est plus rentable. La vente des poules de réforme est une recette réelle à intégrer au calcul."]]},
     en:{fiches:[
-      ["Housing & brooder","Dry, well-ventilated but draught-free house, predator-proof, with dry litter (shavings, rice husk). For chicks, a brooder at ~32-34 °C the first week, reduced gradually. Reasonable density (often 8-10 birds/m²) to avoid stress, pecking and disease."],
-      ["Feeding","Serve starter, then grower (broilers) or layer feed (calcium-enriched for shells). Clean feed and water at all times, cleaned feeders; a lack of water instantly stops growth or laying. Avoid waste: well-set feeders limit losses that eat the margin."],
-      ["Batch management","Work all-in/all-out: one batch at a time, then an empty period (cleaning, disinfection, house rest) before the next. Choose quality chicks and nail the first 3 days (heat, light sugar water, feed on arrival) that decide the batch."],
-      ["Health & biosecurity","Vaccinate: Newcastle (essential, with boosters), Gumboro, fowl pox, on a vet schedule. Biosecurity: limited entries, footbath, dry litter, no mixing of ages. Spread is very fast: isolate or cull sick birds quickly."],
-      ["Management & profit","Track three numbers: mortality, feed intake and weight (broilers) or lay rate. Mortality and waste destroy the margin; compare chick + feed cost to selling price to steer profitability."],
-      ["Getting it right: mistakes to avoid","Failures mostly come from a poor start (cold, late water), damp litter, skipping Newcastle vaccination and mixing different-age batches. A well-started, well-vaccinated batch is already half won."]]}
+      ["Choosing your breed and project","Layers and broilers are two entirely different trades: different chicks, different feed, different housing. For laying, improved strains (ISA Brown, Lohmann Brown, Hy-Line Brown, Novogen) reach 94–96% peak lay rate. Before buying, download the official breed guide: it contains weight and lay curves and the lighting programme — it is your real manual. Budget the first 20 weeks with no income: that is where most projects fail."],
+      ["Brooding (0–6 weeks)","A day-old chick cannot regulate its own temperature: a poor brooding start is never fully recovered. Pre-heat 24–48 h before arrival — air 34–36 °C, floor litter ≈ 32 °C. Reduce by about 3 °C per week until ambient. Read behaviour: huddled under the lamp = cold, spread to walls panting = too hot, evenly spread and active = perfect. 24 h after arrival, most chicks should have a full, soft crop: the best brooding check there is. Never use 24-hour light: 22 h maximum the first 3 days, with a dark period."],
+      ["Pullet rearing (6–16 weeks)","This is the phase everyone neglects — and the one that decides the peak. Weigh a sample weekly, same day and time, and compare to the breed standard (target ≈ 1.6 kg at 19 weeks). Uniformity matters as much as average weight: target over 80% of birds within ±10% of average. A uniform flock peaks higher, faster and persists better. Never reduce day length if target body weight is not reached. In Cameroon and Benin (between 20° N and 20° S), factor in natural day length for open-sided houses."],
+      ["Transfer and onset of lay (16–21 weeks)","Transfer at 16–17 weeks in cool hours. A 10–12% weight loss after transfer is normal (reduced water intake) and recovers. Only light-stimulate if target body weight is reached: stimulating an underweight flock gives small eggs and a shortened career. Switch to pre-lay feed from 15 weeks and stop it at the first egg, moving to layer feed. Install nests BEFORE onset of lay, dark and clean: a floor egg is dirty, often cracked and hard to sell. Age at 50% production is around 20–22 weeks."],
+      ["Managing lay: the peak and persistency","Lay rate (%) = (eggs collected ÷ hens present) × 100. The peak reaches 94–96% at 26–32 weeks. Persistency — staying high after the peak — is worth more than the peak itself: a good flock stays above 90% for up to 34 weeks. Plot your real curve over the breed standard: the gap is your diagnosis. Facing a production drop, check in order: 1) water, 2) feed, 3) light, 4) heat, 5) stress, 6) disease. A drop in water consumption is the very first warning signal of any problem."],
+      ["Feeding and shell quality","Intake in lay is 113–118 g per hen per day. Calcium form matters as much as amount: about half should be coarse particles (2–4 mm) that stay in the gizzard and release calcium at night, when the shell forms. Thin or soft shells = insufficient calcium or too fine. Do not feed pre-lay before 15 weeks. Store feed dry on pallets: mouldy feed produces mycotoxins that crash production and damage the liver — never feed it, even partly."],
+      ["Health and biosecurity","Prevention always costs less than treatment. Downtime between flocks, footbath at entry, one-way flow (young before old, healthy before sick), limited visitors, no mixing of ages. Key vaccinations: Newcastle (mortality up to 100%), Gumboro (destroys young birds' immunity), infectious bronchitis, Marek (at hatchery), fowl pox in endemic areas. There is no universal vaccination schedule: set one with a vet or poultry technician in your area. Daily observation: a house gone quiet when normally noisy is a house in trouble."],
+      ["Management, profit and depletion","Record daily: hens present, eggs (downgraded separately), feed distributed, mortality, expenses and sales. Feed conversion ratio = kg feed ÷ kg eggs (benchmark ≈ 2.1 at 72 weeks). Feed is the largest cost: a worsening FCR is profit warning number one. Depletion is usually at 72–80 weeks: when feed costs more than the eggs produced, the flock is no longer profitable. Spent hen sales are real income — include them in the calculation."]]},
   },
   bovin:{
     fr:{fiches:[
@@ -4527,19 +4531,23 @@ const QUIZ_ESP = {
     {q:"Feed is about what share of cost?",o:["10%","30%","65-70%"],b:2},
     {q:"What best protects the farm?",o:["Lots of medicine","Strict biosecurity + clean start","High density"],b:1}]},
   volaille:{fr:[
-    {q:"Température de la poussinière la 1ʳᵉ semaine ?",o:["15-18 °C","32-34 °C","45 °C"],b:1},
-    {q:"Que se passe-t-il si l'eau vient à manquer ?",o:["Rien","La croissance/ponte s'arrête aussitôt","Les poules grossissent"],b:1},
-    {q:"Le principe « tout plein / tout vide » signifie…",o:["Mélanger les âges","Un seul lot, puis vide sanitaire","Ne jamais nettoyer"],b:1},
-    {q:"Quel vaccin est essentiel en volaille ?",o:["Newcastle","Aucun","La PPR"],b:0},
-    {q:"Quels chiffres suivre pour piloter ?",o:["Aucun","Mortalité, aliment, poids/ponte","Seulement le prix"],b:1},
-    {q:"Un lot bien démarré et bien vacciné est…",o:["Perdu d'avance","À moitié gagné","Sans importance"],b:1}],
+    {q:"Vous achetez une poulette pondeuse. Le premier document à télécharger est…",o:["La liste des prix du marché","Le guide d'élevage officiel de la souche","La notice de l'aliment"],b:1},
+    {q:"À l'arrivée des poussins, la température de l'air doit être d'environ…",o:["20 °C","34–36 °C","45 °C"],b:1},
+    {q:"Les poussins sont tous entassés sous la lampe. Que faites-vous ?",o:["Vous augmentez la chaleur","Vous réduisez la chaleur","Vous éteignez la lumière"],b:0},
+    {q:"Le meilleur moment pour stimuler la poulette par la lumière est…",o:["Dès 10 semaines quelle que soit sa taille","Lorsque le poids cible est atteint","Après le premier œuf"],b:1},
+    {q:"Vous ramassez 280 œufs pour 350 poules présentes. Le taux de ponte est de…",o:["125 %","80 %","28 %"],b:1},
+    {q:"Des œufs à coquille fine ou molle indiquent d'abord…",o:["Un problème de calcium (quantité ou forme)","Un excès de lumière","Un problème d'eau uniquement"],b:0},
+    {q:"Quelle maladie détruit l'immunité des jeunes poules et les rend vulnérables à toutes les autres ?",o:["La variole aviaire","La maladie de Gumboro","Le coryza"],b:1},
+    {q:"La réforme d'un lot de pondeuses se décide principalement sur…",o:["L'âge en mois uniquement","Le taux de ponte comparé au coût de l'aliment consommé","La couleur des plumes"],b:1}],
   en:[
-    {q:"Brooder temperature in the first week?",o:["15-18 °C","32-34 °C","45 °C"],b:1},
-    {q:"What happens if water runs out?",o:["Nothing","Growth/laying stops at once","Birds gain weight"],b:1},
-    {q:"'All-in / all-out' means…",o:["Mixing ages","One batch, then an empty period","Never cleaning"],b:1},
-    {q:"Which vaccine is essential in poultry?",o:["Newcastle","None","PPR"],b:0},
-    {q:"Which numbers should you track?",o:["None","Mortality, feed, weight/lay","Only the price"],b:1},
-    {q:"A well-started, well-vaccinated batch is…",o:["Doomed","Half won","Irrelevant"],b:1}]},
+    {q:"You are buying a layer pullet. The first document to download is…",o:["The market price list","The official breed management guide","The feed label"],b:1},
+    {q:"On chick arrival, air temperature should be about…",o:["20 °C","34–36 °C","45 °C"],b:1},
+    {q:"Chicks are all huddled under the lamp. What do you do?",o:["Increase heat","Reduce heat","Turn off the light"],b:0},
+    {q:"The right time to light-stimulate the pullet is…",o:["At 10 weeks whatever her size","When target body weight is reached","After the first egg"],b:1},
+    {q:"You collect 280 eggs for 350 hens present. Lay rate is…",o:["125%","80%","28%"],b:1},
+    {q:"Thin or soft shells point first to…",o:["A calcium problem (amount or form)","Too much light","A water problem only"],b:0},
+    {q:"Which disease destroys young hens' immunity and opens the door to all others?",o:["Fowl pox","Gumboro (infectious bursal disease)","Coryza"],b:1},
+    {q:"The decision to deplete a layer flock rests mainly on…",o:["Age in months only","Lay rate against the cost of feed consumed","Feather colour"],b:1}]},
   bovin:{fr:[
     {q:"À quoi sert la rotation des parcelles ?",o:["Fatiguer les vaches","Préserver l'herbe + casser les parasites","À rien"],b:1},
     {q:"Quelle est la base de l'alimentation du bovin ?",o:["Le fourrage","La viande","Le sucre"],b:0},
@@ -4579,7 +4587,11 @@ function vueFiches(){
   if(ficheOuverte && ficheOuverte.esp===k) return vueFicheDetail(k, ficheOuverte.i);
   const g = cfg[langue] || cfg.fr;
   const L = (fr,en)=> langue==='fr'?fr:en;
-  const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
+  const ICONES_ESP = {
+    volaille: ['🐔','🐣','📏','🥚','📈','🌽','🛡️','💰'],
+    default:  ['🏠','🌾','🍼','🩺','📊','⚠️']
+  };
+  const ic = ICONES_ESP[k] || ICONES_ESP.default;
   const faites = fichesFaites(k);
   const total = g.fiches.length;
 
@@ -4607,8 +4619,16 @@ function vueFiches(){
     </div>`;
   }).join('');
 
+  const TITRES_ECOLE = {
+    lapin:   {fr:"École de cuniculture",   en:"Rabbit farming school"},
+    porc:    {fr:"École de porciculture",  en:"Pig farming school"},
+    bovin:   {fr:"École d'élevage bovin",  en:"Cattle farming school"},
+    caprin:  {fr:"École d'élevage caprin", en:"Goat farming school"},
+    volaille:{fr:"École d'aviculture — Filière ponte", en:"Poultry school — Layer production"}
+  };
+  const titreEcole = (TITRES_ECOLE[k] && TITRES_ECOLE[k][langue]) || t('school_title');
   return `
-    <h2 class="page-title">${t('school_title')}</h2>
+    <h2 class="page-title">${titreEcole}</h2>
     <p class="page-sub">${L('Parcours certifiant','Certifying path')} — ${espLbl(k)}</p>
     ${selecteurEspece()}
     ${certif}
@@ -4623,7 +4643,11 @@ function vueFicheDetail(k,i){
   const g = FICHES_ESP[k][langue] || FICHES_ESP[k].fr;
   const f = g.fiches[i]; const ti = f[0], txt = f[1];
   const L = (fr,en)=> langue==='fr'?fr:en;
-  const ic = ['🏠','🌾','🍼','🩺','📊','⚠️'];
+  const ICONES_ESP2 = {
+    volaille: ['🐔','🐣','📏','🥚','📈','🌽','🛡️','💰'],
+    default:  ['🏠','🌾','🍼','🩺','📊','⚠️']
+  };
+  const ic = ICONES_ESP2[k] || ICONES_ESP2.default;
   const done = fichesFaites(k).includes(i);
   const qz = (QUIZ_ESP[k] && QUIZ_ESP[k][langue]) ? QUIZ_ESP[k][langue][i] : null;
   let quizHtml = '';
