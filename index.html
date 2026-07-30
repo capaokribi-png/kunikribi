@@ -211,6 +211,7 @@
     <button class="nav-btn" data-vue="ecole" onclick="naviguer('ecole')"><span class="ico">🎓</span> <span data-i18n="nav_school"></span></button>
     <button class="nav-btn" data-vue="tracabilite" onclick="naviguer('tracabilite')"><span class="ico">🔖</span> <span data-i18n="nav_trace"></span></button>
     <button class="nav-btn" data-vue="consanguinite" onclick="naviguer('consanguinite')"><span class="ico">🧬</span> <span data-i18n="nav_consang"></span></button>
+    <button class="nav-btn" data-vue="cultures" onclick="naviguer('cultures')"><span class="ico">🌱</span> <span data-i18n="nav_cultures"></span></button>
     <button class="nav-btn" data-vue="compte" onclick="naviguer('compte')"><span class="ico">☁️</span> <span data-i18n="nav_compte"></span></button>
     <button class="lang-btn" onclick="basculerLangue()" id="lang-btn">🌍 English</button>
     <div class="foot">CuniSmart v2.0<br>
@@ -2585,6 +2586,7 @@ const I18N = {
     f_weight:"Poids (kg)", ph_weight:"Ex : 2,4", th_weight:"Poids", btn_weigh:"Peser", weigh_prompt:"Nouveau poids en kg (ex : 2,4) :", weigh_bad:"Poids invalide.",
     f_pere:"Père (mâle reproducteur)", f_mere:"Mère (femelle reproductrice)",
     nav_consang:"🧬 Consanguinité",
+    nav_cultures:"🌱 Mes Cultures",
     sp_ask:"Code Super PRO — multi-élevage (porc, bœuf, chèvre, poules), 30 000 FCFA/an. Pas encore abonné ? Laissez vide puis OK pour vous abonner.", sp_ok:"✅ Super PRO activé ! Vous pouvez maintenant gérer porc, bœuf, chèvre et poules.", sp_bad:"❌ Code Super PRO invalide.",
     rf_btn:"Rapport financier (banque)",
     sp_fin_title:"Multi-Élevage Super PRO", sp_fin_pitch:"Gérez porc, bœuf, chèvre et poules, avec formations certifiantes et rapport financier pour la banque.", sp_fin_price:"30 000 FCFA / an", sp_fin_cta:"S'abonner", sp_fin_active:"Actif",
@@ -2738,6 +2740,7 @@ const I18N = {
     f_weight:"Weight (kg)", ph_weight:"e.g. 2.4", th_weight:"Weight", btn_weigh:"Weigh", weigh_prompt:"New weight in kg (e.g. 2.4):", weigh_bad:"Invalid weight.",
     f_pere:"Sire (breeding male)", f_mere:"Dam (breeding female)",
     nav_consang:"🧬 Inbreeding",
+    nav_cultures:"🌱 My Crops",
     sp_ask:"Super PRO code — multi-species (pigs, cattle, goats, poultry), 30,000 FCFA/year. Not subscribed yet? Leave empty then OK to subscribe.", sp_ok:"✅ Super PRO activated! You can now manage pigs, cattle, goats and poultry.", sp_bad:"❌ Invalid Super PRO code.",
     rf_btn:"Financial report (bank)",
     sp_fin_title:"Multi-species Super PRO", sp_fin_pitch:"Manage pigs, cattle, goats and poultry, with certifying courses and a bank financial report.", sp_fin_price:"30,000 FCFA / year", sp_fin_cta:"Subscribe", sp_fin_active:"Active",
@@ -4398,7 +4401,7 @@ const NIVEAUX_BOVIN = [
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
-let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [], compte: {ok:false} };
+let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [], parcelles: [], compte: {ok:false} };
 let vueActive = 'tableau';
 let leconOuverte = null;
 let ficheOuverte = null;
@@ -4588,6 +4591,160 @@ function calculerDiagnostic(k){
 }
 
 /* ================= VUES ================= */
+/* === MODULE MES CULTURES (injecté) === */
+/* ═══════════════════════════════════════════════════════════════════
+   MODULE MES CULTURES — CuniSmart
+   Réservé Super PRO. Parcelles + planning automatique + suivi + bilan.
+   Données dans etat.parcelles → sauvegardées et synchronisées cloud
+   via sauver(). Classes de l'app : card, champ, btn, "btn mini sec",
+   vide, page-title, page-sub. Format nombre : fcfa().
+   ═══════════════════════════════════════════════════════════════════ */
+
+const CULTURE_TPL = {
+  tomate: { fr:"Tomate", en:"Tomato",  recolte:75 },
+  piment: { fr:"Piment", en:"Pepper",  recolte:80 },
+  mais:   { fr:"Maïs",   en:"Maize",   recolte:95 },
+  oignon: { fr:"Oignon", en:"Onion",   recolte:110 },
+  gombo:  { fr:"Gombo",  en:"Okra",    recolte:50 },
+  chou:   { fr:"Chou",   en:"Cabbage", recolte:80 },
+  autre:  { fr:"Autre",  en:"Other",   recolte:80 },
+};
+function cultLbl(k){ const c=CULTURE_TPL[k]||CULTURE_TPL.autre; return langue==='fr'?c.fr:c.en; }
+
+function addJours(iso,n){ const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function frDate(iso){
+  if(!iso) return '—';
+  const d=new Date(iso+'T00:00:00');
+  return d.toLocaleDateString(langue==='fr'?'fr-FR':'en-GB',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+function genPlanning(pc){
+  const c=CULTURE_TPL[pc.culture]||CULTURE_TPL.autre;
+  const d0=pc.semis, L=(fr,en)=>langue==='fr'?fr:en;
+  const et=[
+    {j:0,  ico:"💩", t:L("Épandre le fumier (crottes de lapin) avant semis","Spread manure (rabbit droppings) before sowing")},
+    {j:3,  ico:"🌿", t:L("1er traitement préventif au neem","1st preventive neem treatment")},
+    {j:14, ico:"🌿", t:L("2e traitement au neem","2nd neem treatment")},
+    {j:21, ico:"🐇", t:L("Arrosage à l'urine de lapin diluée (1:10)","Water with diluted rabbit urine (1:10)")},
+    {j:35, ico:"🌿", t:L("3e traitement au neem","3rd neem treatment")},
+    {j:Math.round(c.recolte*0.6), ico:"🔍", t:L("Inspection floraison","Flowering check")},
+    {j:c.recolte, ico:"🍅", t:L("Récolte estimée","Estimated harvest")},
+  ];
+  return et.map(e=>({...e, date:addJours(d0,e.j)}));
+}
+
+function vueCultures(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+
+  if(etat.superpro !== true){
+    return `<h2 class="page-title">🌱 ${L('Mes Cultures','My Crops')}</h2>
+      <p class="page-sub">${L('Fermez la boucle : votre élevage nourrit vos cultures.','Close the loop: your livestock feeds your crops.')}</p>
+      <div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:#6B2409">🔒 ${L('Mes Cultures — réservé à CuniSmart Super PRO','My Crops — CuniSmart Super PRO only')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${L('Gérez vos parcelles, obtenez un planning automatique de fertilisation et de traitement au neem, suivez vos récoltes et calculez votre marge — le tout nourri par votre propre élevage.','Manage your plots, get an automatic fertilization and neem-treatment schedule, track your harvests and compute your margin — all fed by your own livestock.')}</p>
+        <button class="btn" onclick="demanderSuperPro()">⭐ ${L('Passer à Super PRO','Upgrade to Super PRO')}</button>
+      </div>`;
+  }
+
+  const parcelles = etat.parcelles || [];
+  const nbLapins = (etat.lapins||[]).length;
+  const crottesKg = Math.round(nbLapins*3.5);
+
+  const bandeau = `
+    <div class="card" style="background:linear-gradient(135deg,#1C4025,#245127);color:#F5F8F0;border:none">
+      <div style="font-weight:700;font-size:13px;color:#E0A32E;margin-bottom:6px">🔄 ${L('VOTRE CYCLE INTELLIGENT','YOUR SMART CYCLE')}</div>
+      <div style="font-size:14px;line-height:1.6">🐇 ${L('Cheptel','Herd')} ${nbLapins} → 💩 ${L('Fumier estimé','Est. manure')} <b>${crottesKg} kg/${L('mois','mo')}</b> → 🌱 ${L('Parcelles','Plots')} ${parcelles.length} → 💰 ${L('Marge','Margin')} <b>${fcfa(margeCulturesTotale())}</b></div>
+    </div>`;
+
+  const optsCult = Object.keys(CULTURE_TPL).map(k=>`<option value="${k}">${cultLbl(k)}</option>`).join('');
+  const form = `
+    <div class="card">
+      <h3 style="color:#6B2409;margin-bottom:10px">➕ ${L('Ajouter une parcelle','Add a plot')}</h3>
+      <div class="champ"><label>${L('Nom de la parcelle','Plot name')}</label><input id="pc_nom" placeholder="${L('Ex : Champ derrière la maison','E.g. Field behind the house')}"></div>
+      <div class="champ"><label>${L('Culture','Crop')}</label><select id="pc_cult">${optsCult}</select></div>
+      <div class="champ"><label>${L('Surface (m²)','Area (m²)')}</label><input type="number" min="0" id="pc_surf" placeholder="500"></div>
+      <div class="champ"><label>${L('Date de semis / repiquage','Sowing / transplant date')}</label><input type="date" id="pc_semis" value="${auj()}"></div>
+      <button class="btn" onclick="ajouterParcelle()">🌱 ${L('Créer la parcelle','Create plot')}</button>
+    </div>`;
+
+  let liste='';
+  if(parcelles.length===0){
+    liste=`<p class="vide">${L('Aucune parcelle pour l’instant. Créez-en une ci-dessus — l’app génère aussitôt son planning.','No plot yet. Add one above — the app builds its schedule right away.')}</p>`;
+  } else {
+    liste = parcelles.map(pc=>{
+      const plan=genPlanning(pc);
+      const lignes=plan.map(e=>{
+        const passe = e.date < auj();
+        return `<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #EEE8DC;${passe?'opacity:.45':''}">
+          <span style="width:22px">${e.ico}</span>
+          <span style="width:110px;color:var(--gris);font-size:13px">${frDate(e.date)}</span>
+          <span style="flex:1;font-size:14px">${e.t}</span></div>`;
+      }).join('');
+      const cout=coutsParcelle(pc), rev=(pc.recolte&&pc.recolte.revenu)||0, marge=rev-cout;
+      const bilan = `<div style="margin-top:10px;padding:10px;background:#F0F7EE;border-radius:8px;font-size:14px">
+        💰 ${L('Coûts','Costs')} : <b>${fcfa(cout)}</b> · ${L('Revenu','Revenue')} : <b>${fcfa(rev)}</b><br>
+        <span style="color:${marge>=0?'#1C4025':'#B00020'};font-weight:700">${L('Marge','Margin')} : ${fcfa(marge)}</span></div>`;
+      const rec = pc.recolte ? `<div style="margin-top:6px;font-size:13px;color:var(--gris)">🍅 ${L('Récolté','Harvested')} ${pc.recolte.kg} kg — ${frDate(pc.recolte.date)}</div>` : '';
+      return `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="color:#6B2409">🌱 ${esc(pc.nom)}</h3>
+          <button class="btn mini sec" onclick="supprimerParcelle('${pc.id}')">✕</button>
+        </div>
+        <p style="color:var(--gris);font-size:13px;margin:4px 0 10px">${cultLbl(pc.culture)} · ${pc.surface||'?'} m² · ${L('semé le','sown')} ${frDate(pc.semis)}</p>
+        <div style="font-weight:700;color:var(--vert-foret);font-size:13px;margin-bottom:2px">📅 ${L('Programme','Schedule')}</div>
+        ${lignes}${bilan}${rec}
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn mini" onclick="enregistrerRecolte('${pc.id}')">🍅 ${L('Récolte','Harvest')}</button>
+          <button class="btn mini sec" onclick="ajouterCoutParcelle('${pc.id}')">💰 ${L('Ajouter un coût','Add a cost')}</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  return `<h2 class="page-title">🌱 ${L('Mes Cultures','My Crops')}</h2>
+    <p class="page-sub">${L('Vos parcelles, nourries par votre élevage.','Your plots, fed by your livestock.')}</p>
+    ${bandeau}${form}${liste}`;
+}
+
+function ajouterParcelle(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const nom=(document.getElementById('pc_nom').value||'').trim();
+  const cult=document.getElementById('pc_cult').value;
+  const surf=parseInt(document.getElementById('pc_surf').value,10)||0;
+  const semis=document.getElementById('pc_semis').value||auj();
+  if(!nom){ alert(L('Donnez un nom à la parcelle.','Please name the plot.')); return; }
+  if(!etat.parcelles) etat.parcelles=[];
+  etat.parcelles.push({ id:'pc'+Date.now(), nom, culture:cult, surface:surf, semis, couts:[], recolte:null });
+  sauver(); rendre();
+}
+function supprimerParcelle(id){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(!confirm(L('Supprimer cette parcelle et son suivi ?','Delete this plot and its tracking?'))) return;
+  etat.parcelles=(etat.parcelles||[]).filter(p=>p.id!==id); sauver(); rendre();
+}
+function ajouterCoutParcelle(id){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const pc=(etat.parcelles||[]).find(p=>p.id===id); if(!pc) return;
+  const lib=prompt(L('Nature du coût (semences, aliment, neem…) :','Cost type (seeds, feed, neem…):')); if(!lib) return;
+  const mnt=parseInt(prompt(L('Montant en FCFA :','Amount in FCFA:'))||'0',10)||0;
+  if(mnt<=0) return;
+  pc.couts=pc.couts||[]; pc.couts.push({lib, mnt}); sauver(); rendre();
+}
+function enregistrerRecolte(id){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const pc=(etat.parcelles||[]).find(p=>p.id===id); if(!pc) return;
+  const kg=parseInt(prompt(L('Quantité récoltée (kg) :','Harvested quantity (kg):'))||'0',10)||0;
+  if(kg<=0) return;
+  const prix=parseInt(prompt(L('Prix de vente total (FCFA) :','Total sale price (FCFA):'))||'0',10)||0;
+  pc.recolte={ kg, revenu:prix, date:auj() }; sauver(); rendre();
+}
+
+function coutsParcelle(pc){ return (pc.couts||[]).reduce((s,c)=>s+(c.mnt||0),0); }
+function margeParcelle(pc){ return ((pc.recolte&&pc.recolte.revenu)||0) - coutsParcelle(pc); }
+function margeCulturesTotale(){ return (etat.parcelles||[]).reduce((s,p)=>s+margeParcelle(p),0); }
+
+
 function rendre(){
   const c = document.getElementById('contenu');
   if(vueActive === 'tableau') c.innerHTML = vueTableau();
@@ -4599,6 +4756,7 @@ function rendre(){
   else if(vueActive === 'nutrition') c.innerHTML = vueNutrition();
   else if(vueActive === 'tracabilite') c.innerHTML = vueTracabilite();
   else if(vueActive === 'consanguinite') c.innerHTML = vueConsanguinite();
+  else if(vueActive === 'cultures') c.innerHTML = vueCultures();
   else if(vueActive === 'compte') c.innerHTML = vueCompte();
   else c.innerHTML = vueEcole();
 }
