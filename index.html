@@ -4633,6 +4633,57 @@ function genPlanning(pc){
   return et.map(e=>({...e, date:addJours(d0,e.j)}));
 }
 
+
+/* ─────────────  SECTION INTRANTS & TRAITEMENTS  ─────────────
+   Fiches dosage + boutons Commander (WhatsApp Bénin) + marché crottes/urine.
+   Chaque bouton ouvre WhatsApp avec un message pré-rempli. */
+const WA_AGRIELEV = "2290190113915";
+function cmdWhatsApp(produit){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const msg = L("Bonjour, je souhaite commander : ","Hello, I would like to order: ") + produit + L(" (via CuniSmart)."," (via CuniSmart).");
+  return "https://wa.me/"+WA_AGRIELEV+"?text="+encodeURIComponent(msg);
+}
+function ficheIntrant(o){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const btn = o.commande
+    ? `<a class="btn mini" style="margin-top:8px;display:inline-block;text-decoration:none" href="${cmdWhatsApp(o.commande)}" target="_blank" rel="noopener">🛒 ${L('Commander','Order')}</a>`
+    : (o.marche
+      ? `<a class="btn mini sec" style="margin-top:8px;display:inline-block;text-decoration:none" href="${cmdWhatsApp(o.marche)}" target="_blank" rel="noopener">🤝 ${L('Acheter / Vendre','Buy / Sell')}</a>`
+      : '');
+  const warn = o.warn ? `<p style="color:#B00020;font-size:12.5px;margin-top:6px">⚠️ ${o.warn}</p>` : '';
+  return `<div style="padding:12px 0;border-bottom:1px solid #EEE8DC">
+    <div style="font-weight:700;color:#6B2409;font-size:15px">${o.ico} ${o.nom}</div>
+    <div style="font-size:13.5px;color:#333;margin-top:4px;line-height:1.55">${o.desc}</div>
+    ${warn}${btn}</div>`;
+}
+function sectionIntrants(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const items=[
+    { ico:"💩", nom:L("Crottes de lapin","Rabbit droppings"),
+      desc:L("Engrais NPK naturel. Dosage : 200–400 g/m² avant semis, 1 fois/mois en croissance. Épandre sec, bêcher légèrement, arroser.","Natural NPK fertilizer. 200–400 g/m² before sowing, once a month during growth. Spread dry, dig in lightly, water."),
+      marche:L("Crottes de lapin (fumier)","Rabbit droppings (manure)") },
+    { ico:"🐇", nom:L("Urine de lapin diluée","Diluted rabbit urine"),
+      desc:L("Engrais liquide riche en azote. Dosage : 1 volume d'urine pour 10 d'eau, toutes les 2 semaines en phase végétative. Arroser au pied, jamais sur les feuilles.","Nitrogen-rich liquid fertilizer. 1 part urine to 10 parts water, every 2 weeks during vegetative phase. Water at the base, never on leaves."),
+      warn:L("Ne pas utiliser si l'animal a reçu des antibiotiques récemment.","Do not use if the animal was recently treated with antibiotics."),
+      marche:L("Urine de lapin","Rabbit urine") },
+    { ico:"🌿", nom:L("Huile de Neem AgriElev","AgriElev Neem Oil"),
+      desc:L("Insecticide naturel. Dosage : 2–3 % dans l'eau + savon noir. Tous les 7–10 jours en préventif, foliaire (dessus ET dessous). Cible : pucerons, chenilles, mouches blanches, acariens.","Natural insecticide. 2–3 % in water + black soap. Every 7–10 days preventively, foliar (top AND underside). Targets: aphids, caterpillars, whiteflies, mites."),
+      commande:L("1 L d'Huile de Neem AgriElev","1 L AgriElev Neem Oil") },
+    { ico:"🍂", nom:L("Tourteau de Neem AgriElev","AgriElev Neem Cake"),
+      desc:L("Amendement du sol avant semis. Dosage : 100–200 g/m². Enrichit le sol et repousse les nématodes.","Soil amendment before sowing. 100–200 g/m². Enriches soil and repels nematodes."),
+      commande:L("5 kg de Tourteau de Neem AgriElev","5 kg AgriElev Neem Cake") },
+    { ico:"💧", nom:L("4Tree Enhancer (A4S)","4Tree Enhancer (A4S)"),
+      desc:L("Biostimulant foliaire. Dosage : 1 g pour 2 L d'eau. À J1, J14, J30, J45. Pulvériser le matin avant 9h ou après 17h.","Foliar biostimulant. 1 g per 2 L water. On D1, D14, D30, D45. Spray in the morning before 9am or after 5pm."),
+      commande:L("4Tree Enhancer (A4S)","4Tree Enhancer (A4S)") },
+  ];
+  return `<div class="card">
+    <h3 style="color:#6B2409;margin-bottom:4px">🧪 ${L('Intrants & traitements','Inputs & treatments')}</h3>
+    <p style="color:var(--gris);font-size:13px;margin-bottom:6px">${L('Dosages recommandés. Commandez le neem/4Tree, ou achetez/vendez le fumier entre éleveurs.','Recommended dosages. Order neem/4Tree, or buy/sell manure between farmers.')}</p>
+    ${items.map(ficheIntrant).join('')}
+    <p style="color:var(--gris);font-size:12px;margin-top:10px">${L('Le fumier de lapin se vend : vos crottes et urines intéressent les maraîchers de votre zone.','Rabbit manure sells: your droppings and urine are valuable to nearby market gardeners.')}</p>
+  </div>`;
+}
+
 function vueCultures(){
   const L=(fr,en)=>langue==='fr'?fr:en;
 
@@ -4704,7 +4755,7 @@ function vueCultures(){
 
   return `<h2 class="page-title">🌱 ${L('Mes Cultures','My Crops')}</h2>
     <p class="page-sub">${L('Vos parcelles, nourries par votre élevage.','Your plots, fed by your livestock.')}</p>
-    ${bandeau}${form}${liste}`;
+    ${bandeau}${form}${sectionIntrants()}${liste}`;
 }
 
 function ajouterParcelle(){
