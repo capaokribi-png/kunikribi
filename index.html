@@ -4672,15 +4672,24 @@ function sectionIntrants(){
     { ico:"🍂", nom:L("Tourteau de Neem AgriElev","AgriElev Neem Cake"),
       desc:L("Amendement du sol avant semis. Dosage : 100–200 g/m². Enrichit le sol et repousse les nématodes.","Soil amendment before sowing. 100–200 g/m². Enriches soil and repels nematodes."),
       commande:L("5 kg de Tourteau de Neem AgriElev","5 kg AgriElev Neem Cake") },
-    { ico:"💧", nom:L("4Tree Enhancer (A4S)","4Tree Enhancer (A4S)"),
-      desc:L("Biostimulant foliaire. Dosage : 1 g pour 2 L d'eau. À J1, J14, J30, J45. Pulvériser le matin avant 9h ou après 17h.","Foliar biostimulant. 1 g per 2 L water. On D1, D14, D30, D45. Spray in the morning before 9am or after 5pm."),
-      commande:L("4Tree Enhancer (A4S)","4Tree Enhancer (A4S)") },
+    { ico:"💧", nom:L("4Tree Enhancer — Format S (légumes-feuilles)","4Tree Enhancer — Size S (leafy vegetables)"),
+      desc:L("Pour légumes-feuilles et petites plantes (chou, épinard, laitue, céleri, coriandre, arachide, tabac…). <b>Dose : ½ spatule pour 20 L d'eau</b> (ou ½ sachet pour 800 L). Tous les 7 à 10 jours. 1 sachet = 40 spatules = 6 ha.","For leafy vegetables and small plants (cabbage, spinach, lettuce, celery, coriander, groundnut, tobacco…). <b>Dose: ½ scoop per 20 L water</b> (or ½ sachet per 800 L). Every 7–10 days. 1 sachet = 40 scoops = 6 ha."),
+      commande:L("4Tree Enhancer Format S (A4S)","4Tree Enhancer Size S (A4S)") },
+    { ico:"💧", nom:L("4Tree Enhancer — Format M (plein champ & vergers)","4Tree Enhancer — Size M (field crops & orchards)"),
+      desc:L("Pour cultures de plein champ et arbres fruitiers (riz, maïs, manioc, canne, sésame, coton, cacao, café, mangue, avocat, ananas, banane…). <b>Dose : 1 spatule pour 20 L d'eau</b> (ou 1 sachet pour 800 L). Tous les 10 à 15 jours. 1 sachet = 3 ha.","For field crops and fruit trees (rice, maize, cassava, cane, sesame, cotton, cocoa, coffee, mango, avocado, pineapple, banana…). <b>Dose: 1 scoop per 20 L water</b> (or 1 sachet per 800 L). Every 10–15 days. 1 sachet = 3 ha."),
+      commande:L("4Tree Enhancer Format M (A4S)","4Tree Enhancer Size M (A4S)") },
+    { ico:"💧", nom:L("4Tree Enhancer — Format L (plantes vivaces)","4Tree Enhancer — Size L (perennials)"),
+      desc:L("Pour plantes vivaces (cocotier, hévéa, palmier). <b>Dose : 2 spatules pour 20 L d'eau</b> (ou 2 sachets pour 800 L). Tous les 15 à 30 jours. 1 sachet = 1,5 ha. Vaporiser l'écorce, la base du tronc et le sol autour.","For perennials (coconut, rubber tree, palm). <b>Dose: 2 scoops per 20 L water</b> (or 2 sachets per 800 L). Every 15–30 days. 1 sachet = 1.5 ha. Spray the bark, trunk base and surrounding soil."),
+      commande:L("4Tree Enhancer Format L (A4S)","4Tree Enhancer Size L (A4S)") },
   ];
   return `<div class="card">
     <h3 style="color:#6B2409;margin-bottom:4px">🧪 ${L('Intrants & traitements','Inputs & treatments')}</h3>
     <p style="color:var(--gris);font-size:13px;margin-bottom:6px">${L('Dosages recommandés. Commandez le neem/4Tree, ou achetez/vendez le fumier entre éleveurs.','Recommended dosages. Order neem/4Tree, or buy/sell manure between farmers.')}</p>
     ${items.map(ficheIntrant).join('')}
     <p style="color:var(--gris);font-size:12px;margin-top:10px">${L('Le fumier de lapin se vend : vos crottes et urines intéressent les maraîchers de votre zone.','Rabbit manure sells: your droppings and urine are valuable to nearby market gardeners.')}</p>
+    <div style="margin-top:12px;padding:10px;background:#FFF9EE;border-radius:8px;font-size:12.5px;color:#555">
+      <b>${L('Les 3 gestes 4Tree','4Tree in 3 steps')} :</b> ${L('1) Diluer — pulvérisateur à moitié plein, ajouter la dose. 2) Agiter jusqu\'à dissolution, compléter l\'eau. 3) Pulvériser tôt le matin ou en fin d\'après-midi, dessus ET dessous des feuilles.','1) Dilute — sprayer half full, add the dose. 2) Shake until dissolved, top up water. 3) Spray early morning or late afternoon, top AND underside of leaves.')}<br>
+      ⚠️ ${L('Pas en plein soleil, pas si la pluie est proche. Utiliser la bouillie le jour même. Tenir hors de portée des enfants.','Not in full sun, not if rain is near. Use the mix the same day. Keep out of reach of children.')}</div>
   </div>`;
 }
 
