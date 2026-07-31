@@ -116,6 +116,26 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: false, error: 'invalid' }); // consomme entre-temps
     }
 
+    // ── Parrainage : si ce compte a été parrainé, marquer la conversion ──
+    // Best-effort : ne JAMAIS bloquer l'activation si le parrainage échoue.
+    try {
+      if (phone) {
+        const recompense = (data.type === 'superpro') ? 1000 : 500;
+        await fetch(
+          URL + '/rest/v1/referrals?referred_phone=eq.' + encodeURIComponent(phone) + '&status=eq.inscrit',
+          {
+            method: 'PATCH',
+            headers: headers({ Prefer: 'return=minimal' }),
+            body: JSON.stringify({
+              status: 'converti',
+              reward: recompense,
+              converted_at: new Date().toISOString(),
+            }),
+          }
+        );
+      }
+    } catch (e) { /* le parrainage ne bloque jamais l'activation */ }
+
     // On renvoie le type LU EN BASE : c'est lui qui fait foi.
     return res.status(200).json({ ok: true, exp: exp, type: data.type });
   } catch (e) {
