@@ -1,83 +1,73 @@
-// api/referral.js — Parrainage CuniSmart
-// POST {action:'link',  referrer_phone, referred_phone}  → enregistre le parrainage à l'inscription
-// POST {action:'stats', phone}                           → statistiques du parrain (inscrits, conversions, gains)
-// GET/POST {action:'convert', admin, phone, plan}        → ADMIN : marque une conversion ('pro' = 500 F, 'superpro' = 1000 F)
-//   Exemple admin (navigateur) : /api/referral?action=convert&admin=VOTRE_SECRET&phone=2376XXXXXXX&plan=pro
+// api/referral.js — POST { action, ... }
+//   action 'link'  : { referrer_phone, referred_phone }  → lie un filleul à un parrain
+//   action 'stats' : { phone }                           → renvoie {inscrits, conversions, gains}
+//
+// Utilise la SERVICE ROLE key via les variables d'env (comme lib/supabase.js).
+// La table 'referrals' doit exister (voir creer-table-referrals.sql).
+
 const URL = process.env.SUPABASE_URL;
 const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const ADMIN = process.env.REFERRAL_ADMIN_SECRET || '';
 
 function headers(extra) {
   const h = { apikey: KEY, 'Content-Type': 'application/json' };
   if (KEY && KEY.indexOf('eyJ') === 0) h.Authorization = 'Bearer ' + KEY;
   return Object.assign(h, extra || {});
 }
-function okPhone(p) { return /^\d{8,}$/.test(String(p || '')); }
+function configured() { return !!(URL && KEY); }
 
 module.exports = async (req, res) => {
-  if (!URL || !KEY) return res.status(503).json({ error: 'Cloud non configuré' });
-  const q = req.query || {};
-  const b = req.body || {};
-  const action = b.action || q.action;
+  if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  if (!configured()) return res.status(503).json({ ok: false, error: 'Cloud non configuré' });
 
   try {
-    /* ---------- 1) Lier un filleul à son parrain (à l'inscription) ---------- */
+    const body = req.body || {};
+    const action = body.action;
+
+    // ───────────────────────── LIER UN FILLEUL ─────────────────────────
     if (action === 'link') {
-      const parrain = String(b.referrer_phone || '');
-      const filleul = String(b.referred_phone || '');
-      if (!okPhone(parrain) || !okPhone(filleul)) return res.status(400).json({ error: 'Numéros invalides' });
-      if (parrain === filleul) return res.status(400).json({ error: 'Auto-parrainage refusé' });
-
-      // déjà parrainé ? (un filleul ne compte qu'une fois)
-      const chk = await fetch(URL + '/rest/v1/referrals?referred_phone=eq.' + encodeURIComponent(filleul) + '&select=id', { headers: headers() });
-      const rows = await chk.json();
-      if (Array.isArray(rows) && rows.length) return res.status(200).json({ ok: true, deja: true });
-
-      const ins = await fetch(URL + '/rest/v1/referrals', {
+      const referrer = String(body.referrer_phone || '').trim();
+      const referred = String(body.referred_phone || '').trim();
+      // garde-fous : deux identifiants valides, et on ne se parraine pas soi-même
+      if (referrer.length < 4 || referred.length < 4 || referrer === referred) {
+        return res.status(200).json({ ok: false, error: 'invalid' });
+      }
+      // insert ; si le filleul est déjà lié (unique), on ignore proprement
+      const r = await fetch(URL + '/rest/v1/referrals', {
         method: 'POST',
-        headers: headers({ Prefer: 'return=minimal' }),
-        body: JSON.stringify({ referrer_phone: parrain, referred_phone: filleul, status: 'inscrit', reward: 0 }),
+        headers: headers({ Prefer: 'resolution=ignore-duplicates,return=minimal' }),
+        body: JSON.stringify({ referrer_phone: referrer, referred_phone: referred })
       });
-      return res.status(ins.ok ? 200 : 500).json(ins.ok ? { ok: true } : { error: 'Insertion impossible' });
+      // 201 créé, 200/409 déjà présent → dans tous ces cas c'est "ok" côté app
+      if (r.status === 201 || r.status === 200 || r.status === 409) {
+        return res.status(200).json({ ok: true });
+      }
+      const txt = await r.text();
+      return res.status(500).json({ ok: false, error: 'db', detail: String(txt).slice(0, 180) });
     }
 
-    /* ---------- 2) Statistiques du parrain ---------- */
+    // ───────────────────────── STATS D'UN PARRAIN ─────────────────────────
     if (action === 'stats') {
-      const phone = String(b.phone || '');
-      if (!okPhone(phone)) return res.status(400).json({ error: 'Numéro invalide' });
-      const r = await fetch(URL + '/rest/v1/referrals?referrer_phone=eq.' + encodeURIComponent(phone) + '&select=status,reward', { headers: headers() });
+      const phone = String(body.phone || '').trim();
+      if (phone.length < 4) return res.status(200).json({ ok: false, error: 'invalid' });
+
+      const r = await fetch(
+        URL + '/rest/v1/referrals?referrer_phone=eq.' + encodeURIComponent(phone) + '&select=status,reward',
+        { headers: headers() }
+      );
+      if (!r.ok) {
+        const txt = await r.text();
+        return res.status(500).json({ ok: false, error: 'db', detail: String(txt).slice(0, 180) });
+      }
       const rows = await r.json();
-      if (!Array.isArray(rows)) return res.status(500).json({ error: 'Lecture impossible' });
       const inscrits = rows.length;
-      const conversions = rows.filter(x => x.status === 'pro' || x.status === 'superpro').length;
-      const gains = rows.reduce((s, x) => s + (x.reward || 0), 0);
+      const conversions = rows.filter(x => x.status === 'converti').length;
+      // 500 F pour un filleul Pro, 1000 F pour un Super PRO
+      const gains = rows.reduce((s, x) => s + (Number(x.reward) || 0), 0);
       return res.status(200).json({ ok: true, inscrits, conversions, gains });
     }
 
-    /* ---------- 3) ADMIN : marquer une conversion (à l'activation Pro/Super PRO) ---------- */
-    if (action === 'convert') {
-      const admin = String(b.admin || q.admin || '');
-      if (!ADMIN || admin !== ADMIN) return res.status(401).json({ error: 'Accès refusé' });
-      const filleul = String(b.phone || q.phone || '');
-      const plan = String(b.plan || q.plan || '').toLowerCase();
-      if (!okPhone(filleul) || (plan !== 'pro' && plan !== 'superpro'))
-        return res.status(400).json({ error: 'Paramètres invalides (phone, plan=pro|superpro)' });
-      const reward = plan === 'superpro' ? 1000 : 500;
-
-      const up = await fetch(URL + '/rest/v1/referrals?referred_phone=eq.' + encodeURIComponent(filleul), {
-        method: 'PATCH',
-        headers: headers({ Prefer: 'return=representation' }),
-        body: JSON.stringify({ status: plan, reward: reward, converted_at: new Date().toISOString() }),
-      });
-      const rows = await up.json().catch(() => null);
-      const row = Array.isArray(rows) && rows.length ? rows[0] : null;
-      if (!row) return res.status(404).json({ error: 'Aucun parrainage trouvé pour ce numéro' });
-      return res.status(200).json({ ok: true, parrain_a_payer: row.referrer_phone, montant: reward, plan: plan });
-    }
-
-    return res.status(400).json({ error: 'Action inconnue' });
+    return res.status(400).json({ ok: false, error: 'unknown action' });
   } catch (e) {
-    console.error('[referral]', e);
-    return res.status(500).json({ error: 'Erreur serveur' });
+    return res.status(500).json({ ok: false, error: 'server', detail: String(e && e.message || e).slice(0, 180) });
   }
 };
