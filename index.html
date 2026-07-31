@@ -4699,6 +4699,59 @@ function sectionIntrants(){
   </div>`;
 }
 
+
+/* ─────────────  RAPPELS « À FAIRE » (cultures)  ─────────────
+   Balaie toutes les parcelles, remonte les étapes du jour et en retard.
+   Affiché en haut du Tableau de bord ET de Mes Cultures. */
+function rappelsCultures(){
+  const parcelles = (etat.parcelles||[]);
+  if(parcelles.length===0) return [];
+  const today = auj();
+  const items=[];
+  parcelles.forEach(pc=>{
+    genPlanning(pc).forEach(e=>{
+      // on ignore la récolte déjà enregistrée
+      if(pc.recolte && e.t && /récolte|harvest/i.test(e.t)) return;
+      if(e.date <= today){
+        const retard = e.date < today;
+        items.push({ date:e.date, retard, ico:e.ico, txt:e.t, parcelle:pc.nom });
+      }
+    });
+  });
+  // tri : retards d'abord (plus anciens en tête), puis aujourd'hui
+  items.sort((a,b)=> a.date.localeCompare(b.date));
+  return items;
+}
+
+function bandeauRappels(compact){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  if(etat.superpro !== true) return '';        // module réservé Super PRO
+  const items = rappelsCultures();
+  if(items.length===0) return '';
+  const today = auj();
+  const enRetard = items.filter(i=>i.retard).length;
+
+  const lignes = items.slice(0, compact?3:20).map(i=>{
+    const tag = i.retard
+      ? `<span style="background:#B00020;color:#fff;font-size:11px;padding:1px 7px;border-radius:10px">${L('en retard','overdue')}</span>`
+      : `<span style="background:#E0A32E;color:#3a2c08;font-size:11px;padding:1px 7px;border-radius:10px">${L('aujourd’hui','today')}</span>`;
+    return `<div style="display:flex;gap:8px;align-items:center;padding:5px 0;font-size:13.5px">
+      <span>${i.ico}</span>
+      <span style="flex:1">${i.txt} <span style="color:#9AB08C">· ${esc(i.parcelle)}</span></span>
+      ${tag}</div>`;
+  }).join('');
+
+  const plus = (compact && items.length>3) ? `<div style="font-size:12.5px;color:#9AB08C;margin-top:4px">+${items.length-3} ${L('autre(s) — voir Mes Cultures','more — see My Crops')}</div>` : '';
+  const titre = enRetard>0
+    ? `🔔 ${L('À faire — ','To do — ')}${enRetard} ${L('en retard','overdue')}`
+    : `🔔 ${L('À faire aujourd’hui','To do today')}`;
+
+  return `<div class="card" style="background:linear-gradient(135deg,#1C4025,#245127);color:#F5F8F0;border:none;cursor:${compact?'pointer':'default'}" ${compact?"onclick=\"naviguer('cultures')\"":''}>
+    <div style="font-weight:700;color:#E0A32E;font-size:14px;margin-bottom:6px">${titre}</div>
+    ${lignes}${plus}
+  </div>`;
+}
+
 function vueCultures(){
   const L=(fr,en)=>langue==='fr'?fr:en;
 
@@ -4770,7 +4823,7 @@ function vueCultures(){
 
   return `<h2 class="page-title">🌱 ${L('Mes Cultures','My Crops')}</h2>
     <p class="page-sub">${L('Vos parcelles, nourries par votre élevage.','Your plots, fed by your livestock.')}</p>
-    ${bandeau}${form}${sectionIntrants()}${liste}`;
+    ${bandeau}${bandeauRappels(false)}${form}${sectionIntrants()}${liste}`;
 }
 
 function ajouterParcelle(){
@@ -4840,6 +4893,7 @@ function vueTableau(){
   return `
     <h2 class="page-title">${t('dash_title')}</h2>
     <p class="page-sub">${t('dash_sub')} — ${dateJour}</p>
+    ${bandeauRappels(true)}
     ${selecteurEspece()}
     <div class="grid stats">
       <div class="card stat leaf"><div class="ico">${espDef().icon}</div><div class="val">${fem}</div><div class="lab">${espF(espActive())}</div></div>
