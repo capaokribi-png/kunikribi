@@ -4601,13 +4601,19 @@ function calculerDiagnostic(k){
    ═══════════════════════════════════════════════════════════════════ */
 
 const CULTURE_TPL = {
-  tomate: { fr:"Tomate", en:"Tomato",  recolte:75 },
-  piment: { fr:"Piment", en:"Pepper",  recolte:80 },
-  mais:   { fr:"Maïs",   en:"Maize",   recolte:95 },
-  oignon: { fr:"Oignon", en:"Onion",   recolte:110 },
-  gombo:  { fr:"Gombo",  en:"Okra",    recolte:50 },
-  chou:   { fr:"Chou",   en:"Cabbage", recolte:80 },
-  autre:  { fr:"Autre",  en:"Other",   recolte:80 },
+  /* Maraîchage (vente) */
+  tomate:  { fr:"Tomate",                  en:"Tomato",                     recolte:75 },
+  piment:  { fr:"Piment",                  en:"Chili pepper",               recolte:90 },
+  gombo:   { fr:"Gombo",                   en:"Okra",                       recolte:50 },
+  oignon:  { fr:"Oignon",                  en:"Onion",                      recolte:110 },
+  morelle: { fr:"Grande morelle (gboma)",  en:"African nightshade (gboma)", recolte:45 },
+  amarante:{ fr:"Amarante (fotètè)",       en:"Amaranth",                   recolte:30 },
+  /* Vivrier (base alimentaire) */
+  mais:    { fr:"Maïs",                    en:"Maize",                      recolte:95 },
+  manioc:  { fr:"Manioc",                  en:"Cassava",                    recolte:300 },
+  igname:  { fr:"Igname",                  en:"Yam",                        recolte:210 },
+  niebe:   { fr:"Niébé (haricot)",         en:"Cowpea",                     recolte:70 },
+  autre:   { fr:"Autre",                   en:"Other",                      recolte:80 },
 };
 function cultLbl(k){ const c=CULTURE_TPL[k]||CULTURE_TPL.autre; return langue==='fr'?c.fr:c.en; }
 
