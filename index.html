@@ -6813,6 +6813,485 @@ function partagerCertifCaprin(){
 }
 
 
+
+/* ═══════════ ÉCOLE OVIN (mouton) — 16 leçons, 3 niveaux ═══════════ */
+/* ═══════════ LECONS_OVIN — NIVEAU 1 : DÉBUTANT (leçons 0-4) ═══════════ */
+// Format identique au caprin : {fr:{ti,tx:[3 paragraphes],qz:[5 questions]}, en:{...}}
+
+const LECONS_OVIN = [
+
+/* ---------- NIVEAU 1 : DÉBUTANT (0-5) ---------- */
+{fr:{ti:"Comprendre le mouton au Bénin",tx:[
+ "Le mouton (ovin) est l'un des piliers de l'élevage au Nord-Bénin — Borgou, Alibori, Atacora — et un animal de grande valeur culturelle et religieuse dans tout le pays. Contrairement à la chèvre qui broute les feuilles et les arbustes, le mouton est avant tout un brouteur d'herbe : il valorise les pâturages, les jachères et les résidus de récolte. Il résiste bien à la chaleur, marche loin, et supporte la transhumance saisonnière que pratiquent de nombreux éleveurs peuls de la région.",
+ "Deux grands systèmes coexistent au Bénin. Le système extensif (divagation, transhumance) : le troupeau cherche seul sa nourriture, l'éleveur intervient peu. Il est économique mais expose au vol, aux accidents, aux conflits avec les champs, et à une forte mortalité des agneaux. Le système semi-intensif (enclos la nuit, complément alimentaire, surveillance de l'agnelage) : les pertes chutent, l'engraissement s'accélère, et surtout le revenu devient planifiable — ce qui compte énormément quand on vise la Tabaski.",
+ "Ce que CuniSmart apporte à l'éleveur ovin : la date d'agnelage calculée à l'avance, le suivi du poids des agneaux, le registre de chaque vaccination et déparasitage, et la marge réelle par animal vendu. Sans ces données, l'éleveur subit le marché. Avec elles, il vise la bonne date, le bon poids, le bon prix — notamment pour la Tabaski, le rendez-vous économique majeur du mouton."],
+ qz:[{q:"Au Bénin, le mouton est surtout élevé…",o:["Dans le Sud humide uniquement","Dans le Nord (Borgou, Alibori, Atacora)","En ville seulement"],b:1},
+     {q:"Contrairement à la chèvre, le mouton est surtout un…",o:["Brouteur d'herbe","Mangeur de feuilles et d'arbustes","Carnivore"],b:0},
+     {q:"Le système extensif (divagation) expose surtout à…",o:["Un revenu très stable","Vol, accidents, conflits et mortalité des agneaux","Aucun risque"],b:1},
+     {q:"Le système semi-intensif rend le revenu…",o:["Imprévisible","Planifiable, utile pour viser la Tabaski","Toujours plus faible"],b:1},
+     {q:"Sans données de suivi, l'éleveur ovin…",o:["Pilote parfaitement","Subit le marché sans pouvoir viser la bonne date","Vend toujours plus cher"],b:1}]},
+ en:{ti:"Understanding sheep in Benin",tx:[
+ "Sheep (ovines) are a pillar of livestock farming in northern Benin — Borgou, Alibori, Atacora — and an animal of great cultural and religious value across the country. Unlike goats, which browse leaves and shrubs, sheep are primarily grass grazers: they make use of pastures, fallows and crop residues. They tolerate heat well, walk long distances, and cope with the seasonal transhumance practised by many Fulani herders in the region.",
+ "Two main systems coexist in Benin. The extensive system (free-ranging, transhumance): the flock finds its own food, the farmer intervenes little. It is cheap but exposes animals to theft, accidents, crop conflicts, and high lamb mortality. The semi-intensive system (night pen, feed supplement, lambing supervision): losses drop, fattening speeds up, and above all income becomes plannable — which matters greatly when aiming for Tabaski.",
+ "What CuniSmart brings the sheep farmer: the lambing date calculated in advance, lamb weight tracking, a record of every vaccination and deworming, and the real margin per animal sold. Without this data, the farmer is at the mercy of the market. With it, they target the right date, the right weight, the right price — especially for Tabaski, the sheep's major economic event."],
+ qz:[{q:"In Benin, sheep are mainly raised…",o:["In the humid south only","In the north (Borgou, Alibori, Atacora)","In cities only"],b:1},
+     {q:"Unlike goats, sheep are mainly…",o:["Grass grazers","Leaf and shrub browsers","Carnivores"],b:0},
+     {q:"The extensive (free-ranging) system mainly exposes animals to…",o:["Very stable income","Theft, accidents, conflicts and lamb mortality","No risk"],b:1},
+     {q:"The semi-intensive system makes income…",o:["Unpredictable","Plannable, useful for targeting Tabaski","Always lower"],b:1},
+     {q:"Without tracking data, the sheep farmer…",o:["Manages perfectly","Endures the market without hitting the right date","Always sells higher"],b:1}]}},
+
+{fr:{ti:"Loger le mouton dans le Borgou",tx:[
+ "Le logement du mouton au Nord-Bénin dépend du système choisi. En divagation, l'animal dort dehors ou sous un simple abri, exposé au vol, aux prédateurs et aux intempéries. La première amélioration rentable est l'enclos sécurisé pour la nuit : il protège le capital contre le vol — un fléau réel — et permet de compter et surveiller les bêtes chaque soir. C'est le premier pas vers un élevage maîtrisé.",
+ "La bergerie (stabulation) doit être SÈCHE avant tout. Un sol surélevé ou bien drainé, une litière propre changée régulièrement, un toit contre la pluie battante et le soleil de plomb. L'humidité et la boue sont les premières causes de piétin (boiterie handicapante) et de prolifération des parasites. Prévoyez de l'ombre — arbre ou hangar ventilé — car la chaleur de la saison sèche fait chuter l'appétit et la fertilité des béliers.",
+ "L'organisation de l'espace compte autant que l'abri lui-même. Séparez les béliers reproducteurs, les brebis gestantes et les agneaux. Un bélier laissé en permanence avec le troupeau donne des naissances toute l'année, impossibles à planifier pour la Tabaski. Prévoyez une case d'agnelage propre et à l'écart : c'est là que se sauvent les agneaux les plus fragiles dans leurs premières heures de vie."],
+ qz:[{q:"La première amélioration rentable en divagation, c'est…",o:["Un enclos sécurisé pour la nuit","Rien, laisser dehors","Une cage individuelle"],b:0},
+     {q:"La bergerie doit être avant tout…",o:["Humide et fermée","Sèche, drainée, avec litière propre","En plein soleil"],b:1},
+     {q:"L'humidité et la boue provoquent surtout…",o:["Une meilleure croissance","Le piétin et les parasites","Rien de grave"],b:1},
+     {q:"Laisser le bélier en permanence avec le troupeau donne…",o:["Des naissances planifiées","Des naissances toute l'année, impossibles à caler sur la Tabaski","Aucune naissance"],b:1},
+     {q:"La case d'agnelage sert à…",o:["Stocker l'aliment","Protéger les agneaux fragiles à la naissance","Isoler les béliers"],b:1}]},
+ en:{ti:"Housing sheep in Borgou",tx:[
+ "Sheep housing in northern Benin depends on the chosen system. When free-ranging, the animal sleeps outside or under a simple shelter, exposed to theft, predators and weather. The first profitable improvement is a secure night pen: it protects capital against theft — a real scourge — and lets you count and check the animals every evening. It is the first step toward controlled farming.",
+ "The fold (housing) must be DRY above all. A raised or well-drained floor, clean bedding changed regularly, a roof against driving rain and harsh sun. Damp and mud are the leading causes of foot rot (crippling lameness) and parasite build-up. Provide shade — a tree or ventilated shed — because dry-season heat cuts appetite and ram fertility.",
+ "Organising the space matters as much as the shelter itself. Separate breeding rams, pregnant ewes and lambs. A ram left permanently with the flock produces year-round births, impossible to plan for Tabaski. Provide a clean, separate lambing pen: that is where the most fragile lambs are saved in their first hours of life."],
+ qz:[{q:"The first profitable improvement when free-ranging is…",o:["A secure night pen","Nothing, leave outside","An individual cage"],b:0},
+     {q:"The fold must be above all…",o:["Damp and closed","Dry, drained, with clean bedding","In full sun"],b:1},
+     {q:"Damp and mud mainly cause…",o:["Better growth","Foot rot and parasites","Nothing serious"],b:1},
+     {q:"Leaving the ram permanently with the flock produces…",o:["Planned births","Year-round births, impossible to time for Tabaski","No births"],b:1},
+     {q:"The lambing pen is used to…",o:["Store feed","Protect fragile lambs at birth","Isolate rams"],b:1}]}},
+
+{fr:{ti:"Nourrir avec les ressources locales",tx:[
+ "Le mouton est un brouteur d'herbe : au Borgou, la base de son alimentation reste le pâturage naturel, les jachères et les bords de champs. Mais le pâturage seul ne suffit pas à engraisser un animal pour la vente. Le complément du soir fait la différence : son de maïs, fanes d'arachide et de niébé, tiges et sons de sorgho, tourteau de coton ou d'arachide, résidus de récolte. Ce sont des ressources locales, souvent bon marché, qui accélèrent nettement la croissance.",
+ "Le vrai défi du Nord-Bénin, c'est la SAISON SÈCHE : de décembre à avril, l'herbe se raréfie et les animaux maigrissent — souvent juste avant la période où il faudrait qu'ils soient gras. La solution qui rapporte : constituer des réserves dès la fin des pluies (foin, fanes séchées, résidus stockés au sec). L'éleveur qui a du stock vend cher quand les autres bradent des bêtes amaigries faute de fourrage.",
+ "L'eau propre à volonté est vitale, surtout en saison sèche, pendant la transhumance et aux heures chaudes : chez le mouton, la soif tue plus vite que la faim. N'oubliez pas les minéraux : une pierre à lécher ou un complément minéral prévient bien des carences qui freinent la croissance et la reproduction. Enfin, tout changement d'aliment se fait progressivement sur 5 à 7 jours, pour éviter les troubles digestifs qui peuvent être mortels."],
+ qz:[{q:"La base de l'alimentation du mouton au Borgou, c'est…",o:["Le pâturage naturel","La viande","Le poisson"],b:0},
+     {q:"Le complément du soir sert à…",o:["Rien","Accélérer la croissance pour la vente","Faire maigrir"],b:1},
+     {q:"Le grand défi du Nord pour nourrir le troupeau, c'est…",o:["La saison des pluies","La saison sèche (décembre-avril)","Le froid"],b:1},
+     {q:"Constituer des réserves de fourrage permet de…",o:["Vendre cher quand les autres bradent","Gaspiller","Rien"],b:0},
+     {q:"Chez le mouton, ce qui tue le plus vite, c'est…",o:["La faim","La soif (manque d'eau propre)","Le bruit"],b:1}]},
+ en:{ti:"Feeding with local resources",tx:[
+ "Sheep are grass grazers: in Borgou, the base of their diet remains natural pasture, fallows and field edges. But pasture alone cannot fatten an animal for sale. The evening supplement makes the difference: maize bran, groundnut and cowpea haulms, sorghum stalks and bran, cotton or groundnut cake, crop residues. These are local, often cheap resources that clearly speed up growth.",
+ "The real challenge in northern Benin is the DRY SEASON: from December to April grass grows scarce and animals lose weight — often just before the period when they should be fat. The profitable solution: build reserves as the rains end (hay, dried haulms, residues stored dry). The farmer with stock sells high when others dump thin animals for lack of fodder.",
+ "Clean water at will is vital, especially in the dry season, during transhumance and hot hours: in sheep, thirst kills faster than hunger. Don't forget minerals: a lick block or mineral supplement prevents many deficiencies that slow growth and breeding. Finally, change any feed gradually over 5–7 days to avoid digestive upsets that can be fatal."],
+ qz:[{q:"The base of the sheep's diet in Borgou is…",o:["Natural pasture","Meat","Fish"],b:0},
+     {q:"The evening supplement serves to…",o:["Nothing","Speed up growth for sale","Cause weight loss"],b:1},
+     {q:"The big northern challenge for feeding the flock is…",o:["The rainy season","The dry season (December-April)","Cold"],b:1},
+     {q:"Building fodder reserves lets you…",o:["Sell high when others dump cheap","Waste","Nothing"],b:0},
+     {q:"In sheep, what kills fastest is…",o:["Hunger","Thirst (lack of clean water)","Noise"],b:1}]}},
+
+{fr:{ti:"Connaître les races du Bénin",tx:[
+ "Connaître ses races change toute la stratégie d'élevage. Le Djallonké (aussi appelé mouton Djallonké ou mouton du Sud) est un petit mouton sans laine, rustique, et surtout trypanotolérant : il résiste à la trypanosomose transmise par la mouche tsé-tsé, ce qui le rend précieux dans les zones humides. Il est prolifique et peu exigeant, idéal pour démarrer ou pour les zones à forte pression parasitaire.",
+ "Les races sahéliennes sont plus grandes et se vendent bien plus cher, surtout pour la Tabaski. Le Balami (grand, souvent blanc, très recherché) atteint un poids impressionnant. L'Oudah (ou Ouda, bicolore, avant brun et arrière blanc) est prisé pour sa prestance. Le Peul-peul et le mouton Bali-bali sont aussi présents. Ces races demandent plus d'alimentation, mais leur valeur marchande, notamment pour l'Aïd, justifie l'investissement.",
+ "Beaucoup d'éleveurs du Borgou pratiquent le croisement : accoupler une brebis Djallonké rustique avec un bélier sahélien pour obtenir des agneaux plus grands tout en gardant une bonne résistance. C'est une stratégie intelligente, mais qui demande de bien noter les origines (père, mère) pour éviter la consanguinité et suivre les performances. C'est exactement ce que le registre CuniSmart permet de faire."],
+ qz:[{q:"Le Djallonké est surtout apprécié pour…",o:["Sa très grande taille","Sa rusticité et sa trypanotolérance","Sa laine abondante"],b:1},
+     {q:"Pour la Tabaski, les races les plus recherchées sont…",o:["Les races sahéliennes (Balami, Oudah)","Uniquement le Djallonké","Les moutons malades"],b:0},
+     {q:"Le Balami est réputé pour…",o:["Sa petite taille","Sa grande taille et sa valeur marchande","Sa laine"],b:1},
+     {q:"Le croisement Djallonké × bélier sahélien vise à…",o:["Réduire la taille","Des agneaux plus grands gardant de la résistance","Rien"],b:1},
+     {q:"Pour croiser sans risque, il faut…",o:["Noter les origines (père, mère) pour éviter la consanguinité","Mélanger au hasard","Ne rien noter"],b:0}]},
+ en:{ti:"Knowing Benin's breeds",tx:[
+ "Knowing your breeds changes the whole farming strategy. The Djallonké (also called Djallonké or southern sheep) is a small, hairless, hardy sheep and, crucially, trypanotolerant: it resists trypanosomiasis transmitted by the tsetse fly, making it valuable in humid zones. It is prolific and undemanding, ideal for starting out or for areas with high parasite pressure.",
+ "Sahelian breeds are larger and sell far higher, especially for Tabaski. The Balami (large, often white, highly sought) reaches an impressive weight. The Oudah (or Ouda, two-tone, brown front and white rear) is prized for its presence. The Peul-peul and Bali-bali sheep are also present. These breeds need more feed, but their market value, notably for Eid, justifies the investment.",
+ "Many Borgou farmers practise crossbreeding: mating a hardy Djallonké ewe with a Sahelian ram to obtain larger lambs while keeping good resistance. It is a smart strategy, but one that requires carefully recording origins (sire, dam) to avoid inbreeding and track performance. That is exactly what the CuniSmart register allows."],
+ qz:[{q:"The Djallonké is mainly valued for…",o:["Its very large size","Its hardiness and trypanotolerance","Its abundant wool"],b:1},
+     {q:"For Tabaski, the most sought-after breeds are…",o:["Sahelian breeds (Balami, Oudah)","Only the Djallonké","Sick sheep"],b:0},
+     {q:"The Balami is known for…",o:["Its small size","Its large size and market value","Its wool"],b:1},
+     {q:"Crossing Djallonké × Sahelian ram aims for…",o:["Reducing size","Larger lambs keeping resistance","Nothing"],b:1},
+     {q:"To cross without risk, you must…",o:["Record origins (sire, dam) to avoid inbreeding","Mix at random","Record nothing"],b:0}]}},
+
+{fr:{ti:"Démarrer son élevage sans se tromper",tx:[
+ "Bien démarrer évite des pertes coûteuses. Choisissez des animaux sains : œil vif, absence d'écoulement au nez, démarche assurée (pas de boiterie), bon état de chair, dents et gencives saines. Pour une brebis reproductrice, vérifiez la mamelle. Pour un futur bélier reproducteur, contrôlez les testicules (deux, bien descendus, symétriques). Fuyez tout animal qui tousse, maigre, boite ou a la diarrhée : le prix bas cache souvent une maladie coûteuse.",
+ "La QUARANTAINE est la règle d'or trop souvent ignorée. Tout animal nouvellement acheté doit être isolé du troupeau pendant deux à trois semaines, le temps de vérifier qu'il n'est pas porteur d'une maladie contagieuse. Un seul mouton ramené du marché sans quarantaine peut contaminer tout le troupeau — PPR, gale, parasites. Cette précaution gratuite évite des catastrophes.",
+ "Commencez à une taille que vous pouvez nourrir et soigner correctement. Mieux vaut cinq brebis bien suivies que vingt animaux négligés. Enregistrez dès le départ chaque bête dans CuniSmart : origine, race, sexe, date de naissance estimée. Ce registre de départ est la fondation de tout le reste — reproduction planifiée, suivi sanitaire, calcul des marges. Un élevage qui démarre avec des données démarre bien."],
+ qz:[{q:"Un animal sain se reconnaît à…",o:["Un prix très bas","Œil vif, pas de boiterie, bon état de chair","Sa maigreur"],b:1},
+     {q:"Pour un futur bélier reproducteur, on vérifie…",o:["La couleur uniquement","Les testicules (deux, bien descendus)","Rien"],b:1},
+     {q:"La quarantaine d'un animal acheté dure…",o:["Zéro jour","Deux à trois semaines d'isolement","Un an"],b:1},
+     {q:"Sauter la quarantaine peut…",o:["Améliorer le troupeau","Contaminer tout le troupeau","Faire grossir les bêtes"],b:1},
+     {q:"Pour bien démarrer, il vaut mieux…",o:["Vingt animaux négligés","Cinq brebis bien suivies","Aucun suivi"],b:1}]},
+ en:{ti:"Starting your flock without mistakes",tx:[
+ "Starting well avoids costly losses. Choose healthy animals: bright eye, no nasal discharge, confident gait (no lameness), good body condition, healthy teeth and gums. For a breeding ewe, check the udder. For a future breeding ram, check the testicles (two, well descended, symmetrical). Avoid any animal that coughs, is thin, limps or scours: a low price often hides a costly disease.",
+ "QUARANTINE is the golden rule too often ignored. Every newly bought animal must be isolated from the flock for two to three weeks, time to check it is not carrying a contagious disease. A single sheep brought from market without quarantine can infect the whole flock — PPR, mange, parasites. This free precaution avoids disasters.",
+ "Start at a size you can feed and care for properly. Five well-monitored ewes are better than twenty neglected animals. From the outset, register each animal in CuniSmart: origin, breed, sex, estimated birth date. This starting register is the foundation of everything else — planned breeding, health tracking, margin calculation. A flock that starts with data starts well."],
+ qz:[{q:"A healthy animal is recognised by…",o:["A very low price","Bright eye, no lameness, good body condition","Its thinness"],b:1},
+     {q:"For a future breeding ram, you check…",o:["Colour only","The testicles (two, well descended)","Nothing"],b:1},
+     {q:"Quarantine of a bought animal lasts…",o:["Zero days","Two to three weeks of isolation","One year"],b:1},
+     {q:"Skipping quarantine can…",o:["Improve the flock","Infect the whole flock","Fatten the animals"],b:1},
+     {q:"To start well, it is better to have…",o:["Twenty neglected animals","Five well-monitored ewes","No monitoring"],b:1}]}},
+
+/* ---------- NIVEAU 2 : CONFIRMÉ (5-10) ---------- */
+{fr:{ti:"Maîtriser la reproduction",tx:[
+ "La brebis a un cycle sexuel d'environ 17 jours et une gestation de ~150 jours (5 mois). Elle atteint la puberté vers 6-9 mois selon la race et l'alimentation, mais il vaut mieux attendre qu'elle ait atteint environ les deux tiers de son poids adulte avant la première saillie. Une brebis bien nourrie donne le plus souvent un agneau, parfois deux, et peut agneler plus d'une fois par an si les conditions le permettent.",
+ "Le point clé de gestion, c'est de MAÎTRISER LES DATES. En retirant le bélier du troupeau et en ne le réintroduisant qu'à une date choisie, vous programmez les agnelages. C'est ainsi qu'on obtient des agneaux mâles au bon poids juste avant la Tabaski. Le 'flushing' — améliorer l'alimentation de la brebis dans les semaines qui précèdent la saillie — augmente le taux d'ovulation et donc de jumeaux. Notez chaque saillie dans CuniSmart : l'app calcule la date d'agnelage.",
+ "Autour de l'agnelage, la vigilance sauve des vies. Préparez une case propre et sèche. À la naissance, assurez-vous que l'agneau tète le colostrum (premier lait) dans les toutes premières heures : c'est sa seule protection immunitaire de départ. Un agneau qui ne tète pas vite se refroidit et meurt. Désinfectez le cordon ombilical. Surveillez que la brebis accepte bien son petit, surtout les primipares (premières mises bas)."],
+ qz:[{q:"La gestation de la brebis dure environ…",o:["31 jours","150 jours (5 mois)","283 jours"],b:1},
+     {q:"Pour programmer les agnelages, on…",o:["Laisse le bélier en permanence","Retire le bélier et le réintroduit à une date choisie","Ne fait rien"],b:1},
+     {q:"Le 'flushing' consiste à…",o:["Améliorer l'alimentation avant la saillie pour plus de jumeaux","Priver la brebis d'eau","Vendre le bélier"],b:0},
+     {q:"À la naissance, l'agneau doit téter…",o:["Le colostrum dans les premières heures","De l'eau sucrée","Rien pendant un jour"],b:0},
+     {q:"La surveillance particulière concerne surtout…",o:["Les vieux béliers","Les primipares (premières mises bas)","Personne"],b:1}]},
+ en:{ti:"Mastering breeding",tx:[
+ "The ewe has a ~17-day sexual cycle and a ~150-day (5-month) gestation. She reaches puberty around 6-9 months depending on breed and feeding, but it is better to wait until she has reached about two-thirds of her adult weight before the first mating. A well-fed ewe usually gives one lamb, sometimes two, and can lamb more than once a year if conditions allow.",
+ "The key management point is CONTROLLING DATES. By removing the ram from the flock and reintroducing it only on a chosen date, you schedule lambings. That is how you get male lambs at the right weight just before Tabaski. 'Flushing' — improving the ewe's feeding in the weeks before mating — raises the ovulation rate and thus twins. Record each mating in CuniSmart: the app calculates the lambing date.",
+ "Around lambing, vigilance saves lives. Prepare a clean, dry pen. At birth, make sure the lamb suckles colostrum (first milk) within the very first hours: it is its only initial immune protection. A lamb that doesn't suckle quickly gets cold and dies. Disinfect the navel cord. Watch that the ewe accepts her lamb, especially first-timers (primiparous)."],
+ qz:[{q:"The ewe's gestation lasts about…",o:["31 days","150 days (5 months)","283 days"],b:1},
+     {q:"To schedule lambings, you…",o:["Leave the ram permanently","Remove the ram and reintroduce it on a chosen date","Do nothing"],b:1},
+     {q:"'Flushing' means…",o:["Improving feeding before mating for more twins","Depriving the ewe of water","Selling the ram"],b:0},
+     {q:"At birth, the lamb must suckle…",o:["Colostrum in the first hours","Sugar water","Nothing for a day"],b:0},
+     {q:"Special watch concerns mainly…",o:["Old rams","First-timers (primiparous)","No one"],b:1}]}},
+
+{fr:{ti:"PPR et clavelée : les deux vaccins vitaux",tx:[
+ "Au Bénin, deux maladies virales menacent gravement les troupeaux ovins, et deux vaccins peu coûteux les préviennent. La PPR (peste des petits ruminants) est une maladie hautement contagieuse et souvent mortelle : fièvre, écoulements du nez et des yeux, diarrhée, forte mortalité. Elle peut décimer un troupeau entier en quelques jours. Le vaccin PPR est efficace et bon marché — c'est le meilleur investissement possible pour protéger votre capital.",
+ "La clavelée (variole ovine) est spécifique au mouton : elle provoque des boutons (pustules) sur la peau et les muqueuses, de la fièvre, et affaiblit gravement l'animal. Elle aussi se prévient par la vaccination. Ces deux vaccins — PPR et clavelée — sont les piliers de tout calendrier sanitaire ovin sérieux au Bénin. Renseignez-vous auprès du vétérinaire ou de l'agent d'élevage de votre commune pour les dates et l'organisation des campagnes.",
+ "Vacciner n'est utile que si c'est fait à temps et enregistré. Notez chaque vaccination dans CuniSmart : quel animal, quel vaccin, quelle date, prochain rappel. Un calendrier sanitaire écrit et respecté vaut mille bonnes intentions. Le piège classique : 'le troupeau va bien, je saute le vaccin cette année'. Le jour où la maladie entre, il est trop tard — et la perte se compte en dizaines d'animaux."],
+ qz:[{q:"La PPR est une maladie…",o:["Bénigne","Hautement contagieuse et souvent mortelle","Non transmissible"],b:1},
+     {q:"La clavelée est…",o:["Une maladie du poulet","La variole ovine, spécifique au mouton","Sans danger"],b:1},
+     {q:"Les deux vaccins piliers au Bénin sont…",o:["PPR et clavelée","Rage et grippe","Aucun"],b:0},
+     {q:"Vacciner est utile seulement si c'est…",o:["Fait à temps et enregistré","Fait n'importe quand","Jamais noté"],b:0},
+     {q:"Sauter le vaccin 'parce que le troupeau va bien' est…",o:["Une bonne économie","Un piège : trop tard quand la maladie entre","Sans conséquence"],b:1}]},
+ en:{ti:"PPR and sheep pox: the two vital vaccines",tx:[
+ "In Benin, two viral diseases seriously threaten sheep flocks, and two low-cost vaccines prevent them. PPR (peste des petits ruminants) is highly contagious and often fatal: fever, nasal and eye discharge, diarrhoea, high mortality. It can wipe out a whole flock in days. The PPR vaccine is effective and cheap — the best possible investment to protect your capital.",
+ "Sheep pox (clavelée) is specific to sheep: it causes pustules on the skin and mucous membranes, fever, and severely weakens the animal. It too is prevented by vaccination. These two vaccines — PPR and sheep pox — are the pillars of any serious sheep health calendar in Benin. Ask your vet or your commune's livestock agent about dates and campaign organisation.",
+ "Vaccinating is only useful if done on time and recorded. Log each vaccination in CuniSmart: which animal, which vaccine, which date, next booster. A written, respected health calendar is worth a thousand good intentions. The classic trap: 'the flock is fine, I'll skip the vaccine this year.' The day disease enters, it is too late — and the loss runs into dozens of animals."],
+ qz:[{q:"PPR is a disease that is…",o:["Mild","Highly contagious and often fatal","Non-transmissible"],b:1},
+     {q:"Sheep pox is…",o:["A chicken disease","Ovine pox, specific to sheep","Harmless"],b:1},
+     {q:"The two pillar vaccines in Benin are…",o:["PPR and sheep pox","Rabies and flu","None"],b:0},
+     {q:"Vaccinating is useful only if it is…",o:["Done on time and recorded","Done anytime","Never noted"],b:0},
+     {q:"Skipping the vaccine 'because the flock is fine' is…",o:["Good saving","A trap: too late when disease enters","Harmless"],b:1}]}},
+
+{fr:{ti:"Parasites, piétin et biosécurité",tx:[
+ "Après les vaccins, les parasites sont le deuxième ennemi du mouton, surtout après la saison des pluies. Les vers gastro-intestinaux (strongles) et la douve du foie affaiblissent en silence : l'animal maigrit, sa laine ou son poil se ternit, sa croissance ralentit, et les agneaux peuvent en mourir. Le déparasitage régulier, selon les conseils du vétérinaire et le calendrier de votre zone, est indispensable. Alternez les produits pour éviter les résistances.",
+ "Le piétin est une maladie du pied liée à l'humidité : l'animal boite, refuse de marcher, maigrit car il ne va plus pâturer. Prévention : garder les aires sèches, parer régulièrement les onglons, éviter la boue stagnante. Un pédiluve (bain de pieds désinfectant) aide dans les élevages plus intensifs. La gale (parasite de la peau) et les tiques méritent aussi une surveillance, surtout à l'entrée de nouveaux animaux.",
+ "La biosécurité est la ceinture de sécurité de l'élevage. Trois règles simples : quarantaine systématique de tout animal entrant ; isolement immédiat de tout animal malade (qui tousse, boite, maigrit, a la diarrhée) ; et ne jamais mélanger son troupeau avec un troupeau au statut sanitaire inconnu, notamment lors de la transhumance ou aux points d'eau communs. Ces règles gratuites évitent l'essentiel des épidémies."],
+ qz:[{q:"Le deuxième ennemi après les vaccins, ce sont…",o:["Les parasites (vers, douve)","Les oiseaux","Le vent"],b:0},
+     {q:"Les vers gastro-intestinaux…",o:["Font grossir l'animal","Affaiblissent en silence et tuent les agneaux","Sont utiles"],b:1},
+     {q:"Le piétin est lié à…",o:["Le froid","L'humidité et la boue","Le soleil"],b:1},
+     {q:"Contre le piétin, on…",o:["Garde les aires sèches et pare les onglons","Ajoute de la boue","Ne fait rien"],b:0},
+     {q:"Une règle clé de biosécurité, c'est…",o:["Mélanger tous les troupeaux","Isoler immédiatement tout animal malade","Ignorer les malades"],b:1}]},
+ en:{ti:"Parasites, foot rot and biosecurity",tx:[
+ "After vaccines, parasites are the sheep's second enemy, especially after the rainy season. Gastro-intestinal worms (strongyles) and liver fluke weaken silently: the animal thins, its wool or coat dulls, growth slows, and lambs may die of it. Regular deworming, on veterinary advice and your area's calendar, is essential. Alternate products to avoid resistance.",
+ "Foot rot is a foot disease linked to damp: the animal limps, refuses to walk, thins because it no longer grazes. Prevention: keep areas dry, trim hooves regularly, avoid stagnant mud. A footbath (disinfectant foot dip) helps in more intensive farms. Mange (skin parasite) and ticks also deserve watching, especially when new animals arrive.",
+ "Biosecurity is the flock's seat belt. Three simple rules: systematic quarantine of every incoming animal; immediate isolation of any sick animal (coughing, limping, thinning, scouring); and never mix your flock with one of unknown health status, notably during transhumance or at shared water points. These free rules prevent most epidemics."],
+ qz:[{q:"The second enemy after vaccines is…",o:["Parasites (worms, fluke)","Birds","Wind"],b:0},
+     {q:"Gastro-intestinal worms…",o:["Fatten the animal","Weaken silently and kill lambs","Are useful"],b:1},
+     {q:"Foot rot is linked to…",o:["Cold","Damp and mud","Sun"],b:1},
+     {q:"Against foot rot, you…",o:["Keep areas dry and trim hooves","Add mud","Do nothing"],b:0},
+     {q:"A key biosecurity rule is…",o:["Mix all flocks","Immediately isolate any sick animal","Ignore sick ones"],b:1}]}},
+
+{fr:{ti:"Engraisser pour la vente",tx:[
+ "L'engraissement (embouche ovine) est l'activité la plus rentable de l'élevage de mouton au Bénin, surtout en visant la Tabaski. Le principe : acheter ou sélectionner des jeunes mâles maigres mais sains, puis les nourrir intensivement pendant 60 à 90 jours pour qu'ils prennent du poids et de l'état juste avant la vente. Un bélier bien embouché se vend beaucoup plus cher que ce qu'il a coûté en aliment.",
+ "La ration d'embouche combine un fourrage de qualité (foin, fanes) et un concentré énergétique et protéique : son de maïs, tourteau de coton ou d'arachide, drèches, parfois un peu de graine de coton. L'eau propre à volonté est indispensable. La transition alimentaire doit être progressive pour éviter les accidents digestifs (acidose, ballonnement). Un animal qui mange bien et boit bien prend du poids visiblement chaque semaine.",
+ "L'embouche ne s'improvise pas : elle se calcule. Notez le poids ou l'état de départ, le coût de l'aliment consommé, et le prix de vente final. La marge = prix de vente − (prix d'achat + coût aliment + soins). C'est le seul moyen de savoir si l'opération a rapporté. CuniSmart vous permet de suivre ces chiffres animal par animal, et de répéter ce qui marche."],
+ qz:[{q:"L'embouche ovine consiste à…",o:["Laisser maigrir l'animal","Nourrir intensivement 60-90 jours pour engraisser avant la vente","Vendre des animaux malades"],b:1},
+     {q:"La ration d'embouche combine…",o:["Fourrage de qualité + concentré énergétique/protéique","De l'eau seulement","Rien"],b:0},
+     {q:"La transition alimentaire doit être…",o:["Brutale","Progressive pour éviter l'acidose","Inutile"],b:1},
+     {q:"La marge d'embouche se calcule…",o:["Prix de vente − (achat + aliment + soins)","Au hasard","Prix de vente seul"],b:0},
+     {q:"L'embouche est la plus rentable en visant…",o:["Le Nouvel An","La Tabaski","La saison des pluies"],b:1}]},
+ en:{ti:"Fattening for sale",tx:[
+ "Fattening (sheep finishing) is the most profitable activity in sheep farming in Benin, especially aiming for Tabaski. The principle: buy or select young, thin but healthy males, then feed them intensively for 60 to 90 days so they gain weight and condition just before sale. A well-finished ram sells for far more than it cost in feed.",
+ "The finishing ration combines quality forage (hay, haulms) with an energy and protein concentrate: maize bran, cotton or groundnut cake, brewers' grains, sometimes a little cottonseed. Clean water at will is essential. The feed transition must be gradual to avoid digestive accidents (acidosis, bloat). An animal that eats and drinks well visibly gains weight each week.",
+ "Finishing is not improvised: it is calculated. Record the starting weight or condition, the cost of feed consumed, and the final sale price. Margin = sale price − (purchase price + feed cost + care). It is the only way to know whether the operation paid. CuniSmart lets you track these figures animal by animal, and repeat what works."],
+ qz:[{q:"Sheep finishing means…",o:["Letting the animal thin","Feeding intensively 60-90 days to fatten before sale","Selling sick animals"],b:1},
+     {q:"The finishing ration combines…",o:["Quality forage + energy/protein concentrate","Water only","Nothing"],b:0},
+     {q:"The feed transition must be…",o:["Abrupt","Gradual to avoid acidosis","Unnecessary"],b:1},
+     {q:"The finishing margin is calculated…",o:["Sale price − (purchase + feed + care)","At random","Sale price only"],b:0},
+     {q:"Finishing is most profitable aiming for…",o:["New Year","Tabaski","The rainy season"],b:1}]}},
+
+{fr:{ti:"Tenir ses comptes et ses registres",tx:[
+ "Un éleveur qui ne compte pas ne sait pas s'il gagne ou perd de l'argent. Tenir ses comptes, c'est noter systématiquement les DÉPENSES (achat d'animaux, aliment, vaccins, déparasitants, transport, main-d'œuvre) et les RECETTES (ventes d'animaux, de fumier). La différence, c'est la marge. Beaucoup d'éleveurs 'sentent' que ça va sans jamais vérifier — et découvrent trop tard qu'une saison a été déficitaire.",
+ "Le registre du troupeau est tout aussi important. Pour chaque animal : identifiant, race, sexe, date de naissance, origine (père, mère si connus), et son histoire — saillies, mises bas, vaccinations, traitements, poids. Ce registre permet de repérer les brebis les plus productives (à garder) et les moins performantes (à réformer), d'éviter la consanguinité, et de prouver la traçabilité à un acheteur exigeant.",
+ "CuniSmart réunit ces deux fonctions — comptes et registre — dans un seul outil, sur le téléphone, même sans internet. Chaque saillie notée calcule la date d'agnelage. Chaque dépense entrée nourrit le bilan. Chaque vente enregistrée met à jour la marge. À la fin d'une campagne, vous savez exactement quel animal a rapporté, combien, et pourquoi. C'est la différence entre subir et piloter son élevage."],
+ qz:[{q:"Tenir ses comptes, c'est noter…",o:["Seulement les recettes","Les dépenses ET les recettes","Rien"],b:1},
+     {q:"La marge, c'est…",o:["Recettes − dépenses","Les dépenses seules","Le nombre d'animaux"],b:0},
+     {q:"Le registre du troupeau permet de…",o:["Repérer les brebis productives et éviter la consanguinité","Rien d'utile","Perdre du temps"],b:0},
+     {q:"CuniSmart fonctionne…",o:["Seulement avec internet","Sur le téléphone, même sans internet","Jamais"],b:1},
+     {q:"Compter permet de…",o:["Piloter au lieu de subir","Deviner","Ignorer les pertes"],b:0}]},
+ en:{ti:"Keeping accounts and records",tx:[
+ "A farmer who doesn't count doesn't know whether they gain or lose money. Keeping accounts means systematically recording EXPENSES (animal purchases, feed, vaccines, dewormers, transport, labour) and INCOME (animal sales, manure). The difference is the margin. Many farmers 'feel' things are fine without ever checking — and discover too late that a season ran at a loss.",
+ "The flock register is just as important. For each animal: ID, breed, sex, birth date, origin (sire, dam if known), and its history — matings, lambings, vaccinations, treatments, weights. This register lets you spot the most productive ewes (to keep) and the least performing (to cull), avoid inbreeding, and prove traceability to a demanding buyer.",
+ "CuniSmart combines these two functions — accounts and register — in a single tool, on the phone, even offline. Each mating recorded calculates the lambing date. Each expense entered feeds the report. Each sale recorded updates the margin. At the end of a season, you know exactly which animal paid, how much, and why. That is the difference between enduring and steering your farm."],
+ qz:[{q:"Keeping accounts means recording…",o:["Only income","Expenses AND income","Nothing"],b:1},
+     {q:"Margin is…",o:["Income − expenses","Expenses alone","Number of animals"],b:0},
+     {q:"The flock register lets you…",o:["Spot productive ewes and avoid inbreeding","Nothing useful","Waste time"],b:0},
+     {q:"CuniSmart works…",o:["Only with internet","On the phone, even offline","Never"],b:1},
+     {q:"Counting lets you…",o:["Steer instead of endure","Guess","Ignore losses"],b:0}]}},
+
+/* ---------- NIVEAU 3 : EXPERT (10-16) ---------- */
+{fr:{ti:"La stratégie Tabaski de A à Z",tx:[
+ "La Tabaski (Aïd el-Kebir) est LE sommet économique de l'année pour l'éleveur ovin. À cette période, chaque famille musulmane cherche un mouton à sacrifier, la demande explose et les prix d'un bon bélier montent fortement. Mais ce pic ne profite qu'à celui qui a anticipé : avoir le bon animal, au bon poids, au bon endroit, à la bonne date. Tout le reste de l'année se pense en fonction de ce rendez-vous.",
+ "La stratégie se construit à rebours. La Tabaski suit le calendrier lunaire et avance d'environ 11 jours chaque année : notez sa date à l'avance. En comptant en arrière — ~90 jours d'embouche finale, ~5 mois de gestation — vous savez quand faire saillir vos brebis pour que les agneaux mâles atteignent le poids de vente pile à temps. Un bélier destiné à la Tabaski doit être ENTIER (non castré), sain, sans défaut visible, bien conformé et bien gras.",
+ "Le jour du marché, la présentation fait le prix. Un animal propre, en pleine forme, à la démarche assurée, se vend bien mieux qu'une bête négligée. Connaissez les défauts qui font chuter le prix (boiterie, dents cassées, testicule manquant, maigreur, blessure) et évitez-les. Vendez au bon endroit : les grands marchés urbains paient souvent mieux que le village. Et gardez vos chiffres : coût total de production vs prix obtenu = votre vraie marge Tabaski."],
+ qz:[{q:"La Tabaski, pour l'éleveur ovin, c'est…",o:["Un jour ordinaire","Le sommet économique de l'année","Une perte"],b:1},
+     {q:"La date de la Tabaski chaque année…",o:["Est fixe","Avance d'environ 11 jours (calendrier lunaire)","Recule d'un mois"],b:1},
+     {q:"On construit la stratégie…",o:["Au hasard","À rebours, en comptant embouche + gestation","Après la fête"],b:1},
+     {q:"Un bélier de Tabaski doit être…",o:["Castré et maigre","Entier, sain, sans défaut, bien gras","Malade mais gros"],b:1},
+     {q:"Le jour du marché, ce qui fait le prix, c'est…",o:["La présentation et l'absence de défauts","La couleur des cordes","Le hasard"],b:0}]},
+ en:{ti:"The Tabaski strategy from A to Z",tx:[
+ "Tabaski (Eid al-Adha) is THE economic peak of the year for the sheep farmer. At that time, every Muslim family seeks a sheep to sacrifice, demand surges, and the price of a good ram rises sharply. But this peak only benefits those who anticipated: having the right animal, at the right weight, in the right place, on the right date. The rest of the year is planned around this event.",
+ "The strategy is built backwards. Tabaski follows the lunar calendar and moves about 11 days earlier each year: note its date in advance. Counting back — ~90 days of final finishing, ~5 months of gestation — you know when to mate your ewes so male lambs reach sale weight right on time. A ram destined for Tabaski must be WHOLE (uncastrated), healthy, with no visible defect, well-conformed and well-fattened.",
+ "On market day, presentation makes the price. A clean animal in top form with a confident gait sells far better than a neglected one. Know the defects that drop the price (lameness, broken teeth, missing testicle, thinness, injury) and avoid them. Sell in the right place: large urban markets often pay better than the village. And keep your figures: total production cost vs price obtained = your true Tabaski margin."],
+ qz:[{q:"Tabaski, for the sheep farmer, is…",o:["An ordinary day","The economic peak of the year","A loss"],b:1},
+     {q:"The Tabaski date each year…",o:["Is fixed","Moves about 11 days earlier (lunar calendar)","Moves a month later"],b:1},
+     {q:"You build the strategy…",o:["At random","Backwards, counting finishing + gestation","After the feast"],b:1},
+     {q:"A Tabaski ram must be…",o:["Castrated and thin","Whole, healthy, defect-free, well-fattened","Sick but big"],b:1},
+     {q:"On market day, what makes the price is…",o:["Presentation and absence of defects","The colour of the ropes","Chance"],b:0}]}},
+
+{fr:{ti:"Transhumance et gestion des conflits",tx:[
+ "La transhumance — le déplacement saisonnier des troupeaux vers les pâturages et les points d'eau — est une pratique ancienne et rationnelle en zone sahélienne et au Nord-Bénin. Elle permet de nourrir le bétail quand l'herbe manque localement. Mais elle comporte des risques : épuisement des animaux, exposition aux maladies au contact d'autres troupeaux, vols, et surtout conflits avec les agriculteurs dont les champs sont parfois dévastés.",
+ "Les conflits agriculteurs-éleveurs sont une réalité sensible au Bénin, parfois violente. La prévention passe par le respect des couloirs de passage et des calendriers agricoles, le dialogue avec les communautés traversées, et de plus en plus par la sédentarisation partielle : cultiver du fourrage et stocker des réserves pour limiter les déplacements. Un éleveur qui produit son propre fourrage dépend moins de la transhumance et de ses risques.",
+ "Pour l'éleveur qui transhume, quelques règles réduisent les pertes : partir avec des animaux en bon état (les faibles ne survivent pas au voyage), vacciner AVANT le départ (PPR, clavelée), éviter les points d'eau surpeuplés (foyers de contagion), et tenir un inventaire précis pour repérer immédiatement un animal manquant. CuniSmart aide à garder ce registre même en déplacement, hors ligne."],
+ qz:[{q:"La transhumance sert à…",o:["Nourrir le bétail quand l'herbe manque localement","Fatiguer les animaux pour rien","Vendre plus cher"],b:0},
+     {q:"Un risque majeur de la transhumance, c'est…",o:["Trop de repos","Les conflits avec les agriculteurs","L'ennui"],b:1},
+     {q:"Pour prévenir les conflits, on…",o:["Ignore les champs","Respecte les couloirs et dialogue avec les communautés","Passe en force"],b:1},
+     {q:"Avant de transhumer, il faut…",o:["Vacciner (PPR, clavelée)","Ne rien faire","Vendre le troupeau"],b:0},
+     {q:"Produire son propre fourrage permet de…",o:["Dépendre moins de la transhumance","Transhumer plus loin","Rien"],b:0}]},
+ en:{ti:"Transhumance and conflict management",tx:[
+ "Transhumance — the seasonal movement of flocks toward pastures and water points — is an ancient and rational practice in the Sahel and northern Benin. It lets livestock feed when grass is locally scarce. But it carries risks: animal exhaustion, disease exposure when meeting other flocks, theft, and above all conflicts with farmers whose fields are sometimes destroyed.",
+ "Farmer-herder conflicts are a sensitive, sometimes violent reality in Benin. Prevention comes through respecting passage corridors and cropping calendars, dialogue with the communities crossed, and increasingly partial settling: growing fodder and storing reserves to limit movement. A farmer who produces their own fodder depends less on transhumance and its risks.",
+ "For the herder who transhumes, a few rules cut losses: leave with animals in good condition (the weak don't survive the journey), vaccinate BEFORE departure (PPR, sheep pox), avoid overcrowded water points (contagion hotspots), and keep a precise inventory to immediately spot a missing animal. CuniSmart helps keep this register even on the move, offline."],
+ qz:[{q:"Transhumance serves to…",o:["Feed livestock when grass is locally scarce","Tire animals for nothing","Sell higher"],b:0},
+     {q:"A major transhumance risk is…",o:["Too much rest","Conflicts with farmers","Boredom"],b:1},
+     {q:"To prevent conflicts, you…",o:["Ignore fields","Respect corridors and dialogue with communities","Force through"],b:1},
+     {q:"Before transhuming, you must…",o:["Vaccinate (PPR, sheep pox)","Do nothing","Sell the flock"],b:0},
+     {q:"Producing your own fodder lets you…",o:["Depend less on transhumance","Transhume farther","Nothing"],b:0}]}},
+
+{fr:{ti:"Comprendre le marché et la filière",tx:[
+ "Vendre au bon endroit et au bon moment peut doubler le revenu à qualité d'animal égale. Au Bénin, la commercialisation passe par des marchés à bétail (comme ceux du Nord et les grands marchés d'approvisionnement des villes), des intermédiaires (dilaali), et une demande urbaine forte, notamment à Cotonou. Comprendre cette chaîne — qui achète, à quel prix, à quelle période — permet de ne pas se faire imposer un prix bas par méconnaissance.",
+ "Les prix varient énormément selon la période : bas en saison des pluies (animaux maigres, éleveurs pressés de vendre), hauts avant la Tabaski et les grandes fêtes. Ils varient aussi selon le lieu (un grand marché urbain paie souvent mieux que le village) et selon la race et l'état de l'animal. L'éleveur informé choisit son moment et son lieu ; l'éleveur pressé subit le prix du jour.",
+ "Au-delà de la vente de l'animal vivant, il existe des opportunités : la vente de fumier aux maraîchers (un revenu complémentaire réel, comme le montre le module Cultures de CuniSmart), le groupage entre éleveurs pour négocier de meilleurs prix, et à terme la contractualisation avec des acheteurs réguliers (boucheries, restaurants, événements). Penser 'filière' plutôt que 'vente au coup par coup' fait grandir l'élevage."],
+ qz:[{q:"Vendre au bon endroit et au bon moment peut…",o:["Doubler le revenu","Ne rien changer","Faire perdre"],b:0},
+     {q:"Les prix du mouton sont hauts…",o:["En saison des pluies","Avant la Tabaski et les grandes fêtes","Jamais"],b:1},
+     {q:"Un grand marché urbain paie souvent…",o:["Moins que le village","Mieux que le village","Pareil"],b:1},
+     {q:"Le fumier de mouton peut être…",o:["Jeté","Vendu aux maraîchers comme revenu complémentaire","Sans valeur"],b:1},
+     {q:"Penser 'filière' signifie…",o:["Vendre au coup par coup","Groupage, contrats, revenus complémentaires","Ne rien vendre"],b:1}]},
+ en:{ti:"Understanding the market and value chain",tx:[
+ "Selling in the right place at the right time can double income for the same animal quality. In Benin, marketing goes through livestock markets (like those in the north and the large city-supply markets), intermediaries (dilaali), and strong urban demand, notably in Cotonou. Understanding this chain — who buys, at what price, in what period — prevents being forced into a low price through ignorance.",
+ "Prices vary enormously by period: low in the rainy season (thin animals, farmers rushed to sell), high before Tabaski and major feasts. They also vary by place (a large urban market often pays better than the village) and by breed and animal condition. The informed farmer chooses their time and place; the rushed farmer takes the price of the day.",
+ "Beyond selling the live animal, there are opportunities: selling manure to market gardeners (a real complementary income, as CuniSmart's Crops module shows), pooling among farmers to negotiate better prices, and eventually contracting with regular buyers (butchers, restaurants, events). Thinking 'value chain' rather than 'one-off sale' grows the farm."],
+ qz:[{q:"Selling in the right place and time can…",o:["Double income","Change nothing","Cause loss"],b:0},
+     {q:"Sheep prices are high…",o:["In the rainy season","Before Tabaski and major feasts","Never"],b:1},
+     {q:"A large urban market often pays…",o:["Less than the village","Better than the village","The same"],b:1},
+     {q:"Sheep manure can be…",o:["Thrown away","Sold to gardeners as extra income","Worthless"],b:1},
+     {q:"Thinking 'value chain' means…",o:["One-off selling","Pooling, contracts, extra income","Selling nothing"],b:1}]}},
+
+{fr:{ti:"Piloter un troupeau performant",tx:[
+ "Un éleveur expert ne gère pas des animaux au hasard : il pilote un troupeau avec des indicateurs. Les chiffres qui comptent : le taux de fertilité (combien de brebis mettent bas sur celles saillies), la prolificité (nombre d'agneaux par mise bas), la mortalité des agneaux (à surveiller de près), l'intervalle entre deux agnelages, et la vitesse de croissance. Suivre ces indicateurs dans le temps révèle ce qui va et ce qui cloche.",
+ "La sélection est le levier de progrès le plus puissant. Gardez pour la reproduction les meilleures brebis (celles qui font des jumeaux, élèvent bien leurs agneaux, restent en bon état) et les meilleurs béliers (croissance, conformation, absence de défaut). Réformez sans état d'âme les animaux improductifs : une brebis qui ne donne rien coûte de l'aliment sans rapporter. Génération après génération, le troupeau s'améliore.",
+ "La gestion de la consanguinité est un piège classique des petits élevages : à force de garder ses propres béliers, on finit par accoupler des animaux apparentés, ce qui affaiblit la descendance (petits chétifs, malformations, faible résistance). La solution : renouveler régulièrement le bélier (achat ou échange avec un autre éleveur), et tenir un registre des origines. Le module Consanguinité de CuniSmart aide à repérer les croisements à risque."],
+ qz:[{q:"Un éleveur expert pilote avec…",o:["Des indicateurs (fertilité, prolificité, mortalité)","Rien","Son humeur"],b:0},
+     {q:"La sélection consiste à…",o:["Garder les meilleurs, réformer les improductifs","Garder tout","Vendre les meilleurs"],b:0},
+     {q:"Une brebis qui ne donne rien…",o:["Doit être gardée à vie","Coûte de l'aliment sans rapporter (à réformer)","Est la plus rentable"],b:1},
+     {q:"La consanguinité provoque…",o:["Des petits plus forts","Des petits chétifs et des malformations","Rien"],b:1},
+     {q:"Pour éviter la consanguinité, on…",o:["Garde toujours le même bélier","Renouvelle le bélier et tient un registre","Ne note rien"],b:1}]},
+ en:{ti:"Steering a high-performing flock",tx:[
+ "An expert farmer doesn't manage animals at random: they steer a flock with indicators. The figures that matter: fertility rate (how many ewes lamb out of those mated), prolificacy (lambs per birth), lamb mortality (to watch closely), interval between two lambings, and growth rate. Tracking these indicators over time reveals what works and what is wrong.",
+ "Selection is the most powerful lever of progress. Keep for breeding the best ewes (those that twin, raise their lambs well, stay in good condition) and the best rams (growth, conformation, no defect). Cull without sentiment unproductive animals: a ewe that gives nothing costs feed without return. Generation after generation, the flock improves.",
+ "Inbreeding management is a classic trap of small farms: by always keeping your own rams, you end up mating related animals, which weakens offspring (stunted young, malformations, poor resistance). The solution: renew the ram regularly (buy or swap with another farmer), and keep a register of origins. CuniSmart's Inbreeding module helps spot risky matings."],
+ qz:[{q:"An expert farmer steers with…",o:["Indicators (fertility, prolificacy, mortality)","Nothing","Their mood"],b:0},
+     {q:"Selection means…",o:["Keep the best, cull the unproductive","Keep everything","Sell the best"],b:0},
+     {q:"A ewe that gives nothing…",o:["Must be kept for life","Costs feed without return (to cull)","Is the most profitable"],b:1},
+     {q:"Inbreeding causes…",o:["Stronger young","Stunted young and malformations","Nothing"],b:1},
+     {q:"To avoid inbreeding, you…",o:["Always keep the same ram","Renew the ram and keep a register","Record nothing"],b:1}]}},
+
+{fr:{ti:"Prophylaxie avancée et calendrier sanitaire",tx:[
+ "L'éleveur expert ne soigne pas au coup par coup : il PRÉVIENT selon un calendrier sanitaire complet, établi avec un vétérinaire. Ce calendrier fixe à l'avance les vaccinations (PPR, clavelée, et selon la zone pasteurellose ou charbon), les déparasitages (interne contre les vers et la douve, externe contre gale et tiques), et les moments clés — avant la saison des pluies, avant la transhumance, avant l'agnelage. Écrit et respecté, il transforme la santé du troupeau.",
+ "La gestion raisonnée des médicaments est cruciale. Alternez les familles de déparasitants pour éviter les résistances (un vermifuge toujours identique finit par ne plus agir). Respectez les doses selon le poids réel de l'animal — sous-doser crée des résistances, surdoser intoxique. Et surtout, respectez les DÉLAIS D'ATTENTE : après un traitement, la viande n'est consommable qu'après un certain nombre de jours. Vendre un animal traité trop tôt, c'est un risque pour le consommateur et pour votre réputation.",
+ "Savoir reconnaître vite les signes d'alerte sauve le troupeau : un animal isolé qui ne suit plus, qui refuse de manger, respire vite, tousse, boite, a les yeux ou le nez qui coulent, ou de la diarrhée. Au moindre doute : isoler, observer, appeler le vétérinaire ou l'agent d'élevage. Noter le symptôme, le traitement et le résultat dans CuniSmart construit peu à peu votre propre mémoire sanitaire — précieuse pour anticiper les problèmes récurrents de votre zone."],
+ qz:[{q:"L'éleveur expert, en matière de santé…",o:["Soigne au coup par coup","Prévient selon un calendrier sanitaire complet","Ne fait rien"],b:1},
+     {q:"Pour éviter les résistances aux vermifuges, on…",o:["Garde toujours le même produit","Alterne les familles de déparasitants","Double la dose"],b:1},
+     {q:"Le délai d'attente après un traitement, c'est…",o:["Sans importance","Le temps avant que la viande soit consommable","Une superstition"],b:1},
+     {q:"Face à un animal isolé qui refuse de manger, on…",o:["Attend qu'il guérisse seul","Isole, observe et appelle le vétérinaire","L'envoie au marché"],b:1},
+     {q:"Noter symptômes et traitements dans CuniSmart permet de…",o:["Rien","Construire une mémoire sanitaire pour anticiper","Perdre du temps"],b:1}]},
+ en:{ti:"Advanced prophylaxis and health calendar",tx:[
+ "The expert farmer doesn't treat one-off: they PREVENT according to a complete health calendar, set with a vet. This calendar fixes in advance the vaccinations (PPR, sheep pox, and depending on the zone pasteurellosis or anthrax), the dewormings (internal against worms and fluke, external against mange and ticks), and the key moments — before the rains, before transhumance, before lambing. Written and respected, it transforms flock health.",
+ "Reasoned medicine management is crucial. Alternate dewormer families to avoid resistance (an always-identical wormer eventually stops working). Respect doses according to the animal's real weight — underdosing creates resistance, overdosing poisons. And above all, respect WITHDRAWAL PERIODS: after treatment, the meat is only edible after a certain number of days. Selling a treated animal too early risks the consumer and your reputation.",
+ "Recognising warning signs fast saves the flock: an isolated animal that no longer follows, refuses to eat, breathes fast, coughs, limps, has runny eyes or nose, or diarrhoea. At the slightest doubt: isolate, observe, call the vet or livestock agent. Recording the symptom, treatment and result in CuniSmart gradually builds your own health memory — valuable for anticipating your area's recurring problems."],
+ qz:[{q:"On health, the expert farmer…",o:["Treats one-off","Prevents with a complete health calendar","Does nothing"],b:1},
+     {q:"To avoid dewormer resistance, you…",o:["Always keep the same product","Alternate dewormer families","Double the dose"],b:1},
+     {q:"The withdrawal period after treatment is…",o:["Unimportant","The time before meat is edible","A superstition"],b:1},
+     {q:"Facing an isolated animal refusing to eat, you…",o:["Wait for it to heal alone","Isolate, observe and call the vet","Send it to market"],b:1},
+     {q:"Recording symptoms and treatments in CuniSmart lets you…",o:["Nothing","Build a health memory to anticipate","Waste time"],b:1}]}},
+
+{fr:{ti:"De l'élevage à l'entreprise",tx:[
+ "Passer d'un petit troupeau familial à une véritable entreprise d'élevage demande un changement d'état d'esprit. L'éleveur-entrepreneur ne pense plus seulement 'nombre d'animaux' mais 'rentabilité, croissance et durabilité'. Il planifie ses investissements (bergerie, reproducteurs de qualité, stocks de fourrage), calcule son point d'équilibre, et réinvestit ses bénéfices plutôt que de tout consommer. La donnée devient sa boussole.",
+ "La diversification renforce l'entreprise : embouche pour la Tabaski (revenu saisonnier fort), vente d'animaux reproducteurs (marge élevée), vente de fumier aux maraîchers (revenu régulier via le module Cultures), et pourquoi pas transformation ou contractualisation avec des acheteurs. Plusieurs sources de revenus rendent l'élevage moins vulnérable aux aléas d'un seul marché.",
+ "Enfin, l'éleveur-entrepreneur s'inscrit dans un réseau : coopératives, groupements, partenaires techniques et vétérinaires, formations. Il ne reste pas isolé. Le certificat CuniMaster que vous obtenez en terminant ce parcours atteste de votre maîtrise et peut être présenté à des partenaires, des banques ou des programmes d'appui. L'élevage moderne du mouton au Bénin a un avenir — à condition de le gérer comme une entreprise, pas comme une habitude."],
+ qz:[{q:"L'éleveur-entrepreneur pense d'abord…",o:["Nombre d'animaux seulement","Rentabilité, croissance, durabilité","Rien"],b:1},
+     {q:"Réinvestir ses bénéfices permet de…",o:["Faire grandir l'entreprise","Tout perdre","Stagner"],b:0},
+     {q:"La diversification, c'est…",o:["Une seule source de revenu","Plusieurs sources (embouche, reproducteurs, fumier)","Ne rien vendre"],b:1},
+     {q:"Plusieurs sources de revenus rendent l'élevage…",o:["Plus vulnérable","Moins vulnérable aux aléas","Impossible"],b:1},
+     {q:"Le certificat CuniMaster…",o:["Ne sert à rien","Atteste votre maîtrise pour partenaires et banques","Est payant chaque mois"],b:1}]},
+ en:{ti:"From farming to enterprise",tx:[
+ "Moving from a small family flock to a genuine farming enterprise requires a change of mindset. The farmer-entrepreneur no longer thinks only 'number of animals' but 'profitability, growth and sustainability'. They plan investments (fold, quality breeders, fodder stocks), calculate their break-even point, and reinvest profits rather than consuming everything. Data becomes their compass.",
+ "Diversification strengthens the enterprise: finishing for Tabaski (strong seasonal income), selling breeding animals (high margin), selling manure to gardeners (regular income via the Crops module), and why not processing or contracting with buyers. Several income sources make the farm less vulnerable to the ups and downs of a single market.",
+ "Finally, the farmer-entrepreneur joins a network: cooperatives, groups, technical and veterinary partners, training. They don't stay isolated. The CuniMaster certificate you earn by completing this path attests to your mastery and can be shown to partners, banks or support programmes. Modern sheep farming in Benin has a future — provided it is run like a business, not a habit."],
+ qz:[{q:"The farmer-entrepreneur thinks first of…",o:["Number of animals only","Profitability, growth, sustainability","Nothing"],b:1},
+     {q:"Reinvesting profits lets you…",o:["Grow the enterprise","Lose everything","Stagnate"],b:0},
+     {q:"Diversification means…",o:["A single income source","Several sources (finishing, breeders, manure)","Selling nothing"],b:1},
+     {q:"Several income sources make the farm…",o:["More vulnerable","Less vulnerable to shocks","Impossible"],b:1},
+     {q:"The CuniMaster certificate…",o:["Is useless","Attests your mastery for partners and banks","Costs money every month"],b:1}]}}
+
+];
+
+
+const NIVEAUX_OVIN = [
+  {deb:0,  fin:5,  k:'lvl_1'},
+  {deb:5,  fin:10, k:'lvl_2'},
+  {deb:10, fin:16, k:'lvl_3'}
+];
+
+function niveauOvinFait(idx){
+  const vc = etat.ecole.valideesOvin || [];
+  const nv = NIVEAUX_OVIN[idx];
+  for(let i=nv.deb; i<nv.fin; i++) if(!vc.includes(i)) return false;
+  return true;
+}
+function vueLeconsOvins(){
+  if(leconOuverte !== null) return vueLeconOvin(leconOuverte);
+  const vc = etat.ecole.valideesOvin || [];
+  const n = vc.length, total = LECONS_OVIN.length;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const titre = L("École d'élevage ovin — Cap Tabaski","Sheep farming school");
+  const toutFait = n === total;
+  let certif = '';
+  if(toutFait){
+    if(!etat.ecole.numOvin){
+      etat.ecole.numOvin = 'CSM-CAP-'+auj().replace(/-/g,'')+'-'+uid().slice(-4).toUpperCase();
+      sauver();
+    }
+    certif = `<div class="certif" style="border-color:#B8860B;background:linear-gradient(135deg,#FDF6E3,#EFD98A)">
+      <h3 style="color:#8A6400">${L('Certificat CuniMaster','CuniMaster Certificate')} — 🐐 ${L('Élevage caprin','Goat Farming')}</h3>
+      <input value="${esc(etat.ecole.nom)}" placeholder="${t('certif_name_ph')}" oninput="majNomCertif(this.value)">
+      <div class="grand-nom">${esc(etat.ecole.nom)||'…'}</div>
+      <p>${L("a validé le parcours certifiant École d'élevage ovin — Cap Tabaski.","has completed the Sheep Farming School — Tabaski certifying path.")}</p>
+      <p style="margin-top:6px">🐐 CuniSmart · ${fdate(auj())}</p>
+      <p style="margin-top:8px;font-weight:700;color:var(--vert-foret)">${t('certif_num')} : ${etat.ecole.numOvin}</p>
+      <button class="btn wa" style="margin-top:12px" onclick="partagerCertifOvin()">🟢 ${L('Partager mon certificat','Share my certificate')}</button>
+    </div>`;
+  }
+  const ICONES_C = ['🐐','🔍','🏠','🌿','🔄','🍼','⚠️','🦠','💉','🥛','🌾','♻️','🛡️','🧀','💰','🌱'];
+  const LABELS_NV = {fr:['Niveau 1 · Débutant','Niveau 2 · Confirmé','Niveau 3 · Expert'],
+                     en:['Level 1 · Beginner','Level 2 · Intermediate','Level 3 · Expert']};
+  const lblNv = LABELS_NV[langue]||LABELS_NV.fr;
+  let leconHTML = '';
+  NIVEAUX_OVIN.forEach((nv,ni)=>{
+    const nvFait = niveauOvinFait(ni);
+    const premierVerrouProCA = (ni===1 && etat.pro!==true);
+    const deuxiemeVerrouProCA = (ni===2 && etat.pro!==true);
+    if(deuxiemeVerrouProCA){ leconHTML += ''; return; }
+    if(premierVerrouProCA){
+      leconHTML += `<div style="margin-top:18px"><div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
+        <h3 style="color:var(--terre-fonce,#6B2409)">${t('pro_lock_title')}</h3>
+        <p style="color:var(--gris);margin:6px 0 12px">${t('pro_pitch')}</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div class="pro-feat">${t('pro_f1')}</div><div class="pro-feat">${t('pro_f2')}</div>
+          <div class="pro-feat">${t('pro_f3')}</div><div class="pro-feat">${t('pro_f4')}</div>
+          <div class="pro-feat">${t('pro_f5')}</div>
+        </div>
+        <p style="font-weight:700;color:var(--vert-foret);margin-bottom:12px">${t('pro_price')}</p>
+        <button class="btn" onclick="demanderPro()">⭐ ${t('pro_cta')}</button>
+        <p class="vide" style="margin-top:10px">${t('pro_soon')}</p>
+      </div></div>`;
+      return;
+    }
+    const nvDispo = ni===0 || (etat.pro===true && niveauOvinFait(ni-1));
+    const badgeCA = (ni>=1) ? ` <span class="tag gest">${t('pro_badge')}</span>` : ` <span class="tag ok">${t('nut_free')}</span>`;
+    leconHTML += `<div style="margin-bottom:18px">
+      <div style="font-weight:700;color:var(--vert-foret);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+        ${lblNv[ni]}${badgeCA} ${nvFait?'<span class="tag ok">✓ '+L('Validé','Completed')+'</span>':''}
+      </div>`;
+    if(!nvDispo){
+      leconHTML += `<p class="vide">${t('lvl_locked')}</p>`;
+    } else {
+      for(let i=nv.deb;i<nv.fin;i++){
+        const done = vc.includes(i);
+        const lec = LECONS_OVIN[i][langue]||LECONS_OVIN[i].fr;
+        leconHTML += `<div class="lecon-item ${done?'done':''}" onclick="ouvrirLeconOvin(${i})">
+          <div class="lecon-num">${done?'✓':i+1}</div>
+          <div class="lecon-titre">${ICONES_C[i]||'•'} ${esc(lec.ti)}</div>
+          <span class="tag ${done?'ok':'fin'}">${done?t('lesson_done'):t('lesson_todo')}</span>
+        </div>`;
+      }
+    }
+    leconHTML += '</div>';
+  });
+  return `
+    <h2 class="page-title">${titre}</h2>
+    <p class="page-sub">${L('Parcours certifiant en 3 niveaux — 16 leçons + quiz (5 questions). Validez tout pour obtenir votre certificat.','Certifying path in 3 levels — 16 lessons + quizzes (5 questions). Complete all to earn your certificate.')}</p>
+    ${selecteurEspece()}
+    ${certif}
+    <div class="card">
+      <p style="font-weight:600;color:var(--vert-foret)">${n} / ${total} ${L('leçons validées','lessons completed')}</p>
+      <div class="progress-bar"><div style="width:${n/total*100}%"></div></div>
+      <div style="margin-top:12px">${leconHTML}</div>
+    </div>`;
+}
+function ouvrirLeconOvin(idx){ leconOuverte=idx; rendre(); window.scrollTo(0,0); }
+function vueLeconOvin(idx){
+  const lec = LECONS_OVIN[idx][langue]||LECONS_OVIN[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const ICONES_C = ['🐐','🔍','🏠','🌿','🔄','🍼','⚠️','🦠','💉','🥛','🌾','♻️','🛡️','🧀','💰','🌱'];
+  const done = (etat.ecole.valideesOvin||[]).includes(idx);
+  const txtHtml = lec.tx.map(p=>`<p>${esc(p)}</p>`).join('');
+  const opts = lec.qz.map((q,qi)=>`
+    <div class="quiz-q">
+      <p>${qi+1}. ${esc(q.q)}</p>
+      ${q.o.map((o,oi)=>`
+        <label class="quiz-opt" id="qca-${qi}-${oi}">
+          <input type="radio" name="qca${qi}" value="${oi}" style="flex-shrink:0"> ${esc(o)}
+        </label>`).join('')}
+    </div>`).join('');
+  return `
+    <button class="btn sec" onclick="fermerLeconOvin()">← ${L('Retour au parcours','Back to path')}</button>
+    <div class="card" style="margin-top:14px">
+      <h2 class="page-title" style="font-size:1.25rem">
+        ${ICONES_C[idx]||'•'} ${esc(lec.ti)}
+        ${done?'<span class="tag ok">'+t('lesson_done')+'</span>':''}
+      </h2>
+      <div class="lecon-texte" style="margin-top:12px">${txtHtml}</div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>❓ ${fmt(t('quiz_title'),{n:4})}</h3>
+      <p style="color:var(--gris);font-size:.88rem;margin-bottom:10px">
+        ${L('⚠️ Leçons 9 et 13 : protocoles sanitaires à valider avec un vétérinaire de votre zone.','⚠️ Lessons 9 and 13: health protocols to validate with a vet in your area.')}
+      </p>
+      <form id="qca-form">${opts}</form>
+      <div id="qca-res" style="margin-top:10px"></div>
+      <button class="btn" style="margin-top:12px" onclick="validerLeconOvin(${idx})">${t('btn_check')}</button>
+    </div>`;
+}
+function fermerLeconOvin(){ leconOuverte=null; rendre(); window.scrollTo(0,0); }
+function validerLeconOvin(idx){
+  const lec = LECONS_OVIN[idx][langue]||LECONS_OVIN[idx].fr;
+  const L = (fr,en)=> langue==='fr'?fr:en;
+  const res = document.getElementById('qca-res');
+  let bonnes=0, total=lec.qz.length, allOk=true;
+  lec.qz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="qca'+qi+'"]:checked');
+    if(!sel){ allOk=false; return; }
+    const ok=parseInt(sel.value)===q.b;
+    if(ok) bonnes++;
+    q.o.forEach((_,oi)=>{
+      const lbl=document.getElementById('qca-'+qi+'-'+oi);
+      if(lbl){ lbl.classList.remove('bonne','fausse'); if(oi===q.b) lbl.classList.add('bonne'); else if(oi===parseInt(sel.value)) lbl.classList.add('fausse'); }
+    });
+  });
+  if(!allOk){ if(res) res.innerHTML='<span style="color:var(--rouge)">'+L('Répondez à toutes les questions.','Answer all questions.')+'</span>'; return; }
+  if(!res) return;
+  if(bonnes>=4){
+    if(!etat.ecole.valideesOvin) etat.ecole.valideesOvin=[];
+    if(!etat.ecole.valideesOvin.includes(idx)) etat.ecole.valideesOvin.push(idx);
+    sauver();
+    res.innerHTML='<span style="color:var(--feuille-fonce);font-weight:700">🎉 '+L('Bravo ! '+bonnes+'/'+total+' — Leçon validée !','Well done! '+bonnes+'/'+total+' — Lesson completed!')+'</span>';
+    setTimeout(()=>{ leconOuverte=null; rendre(); window.scrollTo(0,0); },1100);
+  } else {
+    res.innerHTML='<span style="color:var(--rouge)">✗ '+bonnes+'/'+total+' — '+L('Relisez la leçon et réessayez (4/5 requis).','Re-read the lesson and try again (4/5 required).')+'</span>';
+  }
+}
+function partagerCertifOvin(){
+  const L=(fr,en)=>langue==='fr'?fr:en;
+  const num=(etat.ecole.numOvin)?('N° '+etat.ecole.numOvin):'';
+  const txt=['🎓 '+L("Certificat CuniMaster — École d'élevage ovin — Cap Tabaski","CuniMaster Certificate — Sheep Farming School — Tabaski"),
+    (etat.ecole.nom||'—'), L('16 leçons validées.','16 lessons completed.'), num,'— CuniSmart'].filter(Boolean);
+  partagerWhatsApp(txt.join('\n'));
+}
+
 /* ===== ÉCOLE D'ÉLEVAGE BOVIN — fonctions de rendu ===== */
 function niveauBovinFait(idx){
   const vb = etat.ecole.valideesBovin || [];
@@ -6974,6 +7453,7 @@ function vueEcole(){
   if(espActive() === 'volaille') return vueLeconsPondeuse();
   if(espActive() === 'porc') return vueLeconsPorcin();
   if(espActive() === 'caprin') return vueLeconsCaprins();
+  if(espActive() === 'ovin') return vueLeconsOvins();
   if(espActive() === 'bovin') return vueLeconsBovin();
   if(espActive() !== 'lapin') return vueFiches();
   if(leconOuverte !== null) return vueLecon(leconOuverte);
