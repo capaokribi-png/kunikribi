@@ -4725,7 +4725,7 @@ function rappelsCultures(){
 
 function bandeauRappels(compact){
   const L=(fr,en)=>langue==='fr'?fr:en;
-  if(etat.superpro !== true) return '';        // module réservé Super PRO
+  // Mes Cultures est ouvert à tous (verrou Super PRO retiré). Pour re-verrouiller : if(etat.superpro !== true) return '';
   const items = rappelsCultures();
   if(items.length===0) return '';
   const today = auj();
@@ -4755,7 +4755,9 @@ function bandeauRappels(compact){
 function vueCultures(){
   const L=(fr,en)=>langue==='fr'?fr:en;
 
-  if(etat.superpro !== true){
+  // Mes Cultures est GRATUIT POUR TOUS. Ancien verrou Super PRO conservé en commentaire
+  // au cas où vous voudriez le rétablir : remplacer "false" par "etat.superpro !== true".
+  if(false){
     return `<h2 class="page-title">🌱 ${L('Mes Cultures','My Crops')}</h2>
       <p class="page-sub">${L('Fermez la boucle : votre élevage nourrit vos cultures.','Close the loop: your livestock feeds your crops.')}</p>
       <div class="card" style="border:2px solid var(--vert-moyen);background:linear-gradient(160deg,#FFF9EE,#FCF3E2)">
@@ -4942,6 +4944,10 @@ const ESPECES = {
             f_fr:'Chèvre', f_en:'Doe',  m_fr:'Bouc', m_en:'Buck',
             petit_fr:'Chevreaux', petit_en:'Kids',
             races:['Naine de Guinée','Boer','Saanen','Alpine','Local']},
+  ovin:    {icon:'🐑', fr:'Moutons', en:'Sheep', gestation:150, palpation:45, sevrage:90,
+            f_fr:'Brebis', f_en:'Ewe',  m_fr:'Bélier', m_en:'Ram',
+            petit_fr:'Agneaux', petit_en:'Lambs',
+            races:['Djallonké','Sahélien','Balami','Oudah','Peul-peul','Local']},
   volaille:{icon:'🐔', fr:'Poules',  en:'Poultry', gestation:21, palpation:0, sevrage:0,
             f_fr:'Poule', f_en:'Hen',   m_fr:'Coq', m_en:'Rooster',
             petit_fr:'Poussins', petit_en:'Chicks',
