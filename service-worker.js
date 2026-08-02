@@ -2,7 +2,8 @@
 // Astuce : incrémentez CACHE_VERSION (v4 -> v5...) à chaque grosse mise à jour
 // pour forcer le nettoyage de l'ancien cache.
 // v5 — CuniMaster : parcours certifiants pondeuse, porc, chèvre, bovin (64 leçons ajoutées)
-const CACHE_VERSION = 'cunismart-v15';
+// v16 — correctif leçon 12 du parcours porc + guide santé et recettes ovines
+const CACHE_VERSION = 'cunismart-v16';
 const CORE = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', (e) => {
