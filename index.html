@@ -3662,8 +3662,6 @@ const LECONS_PORC = [
      {q:"The nursing sow is especially sensitive to heat because…",o:["She is bigger","She eats less, produces less milk and loses weight","She has more parasites"],b:1},
      {q:"To reduce heat in the pig house, you can…",o:["Close all openings","Spray rooftops during the hottest hours","Increase density"],b:1},
      {q:"Heat worsens disease susceptibility because…",o:["Animals sleep more","Thermal stress weakens immune defences","Bacteria disappear with heat"],b:1}]}},
-
-,
 {fr:{ti:"Piloter par l'indice de consommation (IC)",tx:[
  "L'indice de consommation (IC) est l'indicateur de performance le plus important en engraissement porcin. Il mesure l'efficacité avec laquelle votre porc transforme l'aliment en viande : IC = kilos d'aliment consommés ÷ kilos de poids vif gagné. Exemple : un porc qui mange 280 kg d'aliment pour passer de 30 kg à 110 kg gagne 80 kg — son IC est de 280 ÷ 80 = 3,5. Repères : 2,8 à 3,2 pour une race améliorée bien conduite, 4 à 5 pour le porc local.",
  "Pesez chaque semaine un échantillon représentatif de 5 à 10 porcs à l'engrais — toujours le même jour, à jeun de préférence. Le gain moyen quotidien (GMQ) = gain de poids (kg) ÷ nombre de jours. Un porc amélioré en bonne conduite gagne 600 à 800 g par jour. En dessous de 500 g, quelque chose ne va pas : chaleur, aliment déséquilibré, maladie, ou porc hors de sa fenêtre optimale d'engraissement.",
@@ -5376,6 +5374,28 @@ const SANTE_ESP = {
       vaccins:"PPR (annual booster), anthrax depending on area — vet schedule.",
       avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
   },
+  ovin:{
+    fr:{intro:"Deux vaccins (PPR et clavelée) et un déparasitage régulier évitent l'essentiel des pertes. Redoublez de vigilance avant la Tabaski : regroupements, transports et changement brutal d'alimentation sont les moments à risque.",
+      maladies:[
+        ["PPR (peste des petits ruminants)","Fièvre, jetage, diarrhée, forte mortalité","Vaccination PPR (rappel annuel)"],
+        ["Clavelée (variole ovine)","Nodules et croûtes sur les zones sans laine : museau, paupières, mamelle","Vaccination, isolement des malades"],
+        ["Parasites gastro-intestinaux","Muqueuses pâles, œdème sous la mâchoire, amaigrissement","Vermifugation raisonnée, rotation des pâturages, éviter la pâture sur rosée"],
+        ["Pasteurellose / pneumonie","Toux, jetage, respiration difficile — souvent après un transport","Éviter la surcharge et les transports en pleine chaleur, abri ventilé"],
+        ["Entérotoxémie (surcharge en concentré)","Mort brutale d'un animal en bon état, en pleine embouche","Transition alimentaire progressive sur 10 à 15 jours, jamais de hausse brutale"],
+        ["Piétin","Boiterie, mauvaise odeur entre les onglons","Parage régulier, litière sèche, pédiluve"]],
+      vaccins:"PPR et clavelée en priorité (rappel annuel) ; charbon selon la zone. Vaccinez au moins 3 à 4 semaines avant la vente de Tabaski — calendrier à établir avec un vétérinaire.",
+      avert:"Isolez tout animal malade et consultez un vétérinaire. Infos préventives — pas un diagnostic, sans posologie."},
+    en:{intro:"Two vaccines (PPR and sheep pox) plus regular deworming prevent most losses. Be extra careful before Tabaski: gatherings, transport and abrupt feed changes are the risky moments.",
+      maladies:[
+        ["PPR (peste des petits ruminants)","Fever, nasal discharge, diarrhoea, high mortality","PPR vaccination (annual booster)"],
+        ["Sheep pox","Nodules and crusts on wool-free areas: muzzle, eyelids, udder","Vaccination, isolate sick animals"],
+        ["Gastro-intestinal parasites","Pale mucous membranes, swelling under the jaw, weight loss","Targeted deworming, pasture rotation, avoid grazing on dew"],
+        ["Pasteurellosis / pneumonia","Coughing, discharge, laboured breathing — often after transport","Avoid overcrowding and transport in full heat, ventilated shelter"],
+        ["Enterotoxaemia (concentrate overload)","Sudden death of an animal in good condition during fattening","Gradual feed transition over 10 to 15 days, never an abrupt increase"],
+        ["Foot rot","Lameness, bad smell between the claws","Regular trimming, dry bedding, foot bath"]],
+      vaccins:"PPR and sheep pox first (annual booster); anthrax depending on area. Vaccinate at least 3 to 4 weeks before the Tabaski sale — schedule to be set with a vet.",
+      avert:"Isolate sick animals and consult a vet. Preventive info — not a diagnosis, no dosages."}
+  },
   volaille:{
     fr:{intro:"La vaccination des poussins et une litière sèche évitent l'essentiel des pertes ; respectez le vide sanitaire entre bandes.",
       maladies:[
@@ -5832,6 +5852,24 @@ const RECETTES_ESP = {
         ing:[["Forage / leaves","Fibre",55],["Wheat or maize bran","Energy",18],
              ["Groundnut cake","Protein",15],["Ground maize","Concentrated energy",5],
              ["Molasses","Palatability",4],["Mineral mix / bone meal","Minerals",2],["Salt","Electrolytes",1]]}}
+  },
+  ovin: {
+    base:{fr:{nom:"Complément mouton (pâture + concentré)", desc:"Base = pâture et fourrage. Ce complément équilibre la ration d'entretien.",
+        ing:[["Fourrage / pâture (herbe, fanes de niébé ou d'arachide)","Base fibreuse",60],["Son de blé ou de maïs","Énergie",18],
+             ["Tourteau d'arachide ou de coton","Protéines",12],["Mélasse","Appétence",4],
+             ["Poudre d'os / CMV","Minéraux",4],["Sel / pierre à lécher","Électrolytes",2]]},
+      en:{nom:"Sheep supplement (grazing + concentrate)", desc:"Base = grazing and forage. This supplement balances the maintenance ration.",
+        ing:[["Forage / grazing (grass, cowpea or groundnut haulms)","Fibre base",60],["Wheat or maize bran","Energy",18],
+             ["Groundnut or cottonseed cake","Protein",12],["Molasses","Palatability",4],
+             ["Bone meal / mineral mix","Minerals",4],["Salt / lick block","Electrolytes",2]]}},
+    pro:{fr:{nom:"Ration d'embouche Tabaski (Pro)", desc:"Ration de finition pour bélier destiné à la Tabaski, sur 90 jours. Montez en concentré progressivement sur 10 à 15 jours, sous peine d'entérotoxémie.",
+        ing:[["Fourrage (fanes de niébé ou d'arachide, paille)","Fibres — indispensables au rumen",45],["Maïs broyé","Énergie de finition",20],
+             ["Son de blé ou de maïs","Énergie et fibres",15],["Tourteau d'arachide ou de coton","Protéines",12],
+             ["Mélasse","Appétence",4],["CMV / poudre d'os","Minéraux",3],["Sel","Électrolytes",1]]},
+      en:{nom:"Tabaski fattening ration (Pro)", desc:"Finishing ration for a Tabaski ram, over 90 days. Increase concentrate gradually over 10 to 15 days, otherwise enterotoxaemia is a real risk.",
+        ing:[["Forage (cowpea or groundnut haulms, straw)","Fibre — essential for the rumen",45],["Ground maize","Finishing energy",20],
+             ["Wheat or maize bran","Energy and fibre",15],["Groundnut or cottonseed cake","Protein",12],
+             ["Molasses","Palatability",4],["Mineral mix / bone meal","Minerals",3],["Salt","Electrolytes",1]]}}
   }
 };
 function recettesEsp(){
