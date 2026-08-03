@@ -4399,7 +4399,7 @@ const NIVEAUX_BOVIN = [
 const NIVEAUX = [{deb:0,fin:5,k:'lvl_1'},{deb:5,fin:10,k:'lvl_2'},{deb:10,fin:16,k:'lvl_3'}];
 
 /* ================= ÉTAT & PERSISTANCE ================= */
-let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], lots: [], parcelles: [], compte: {ok:false} };
+let etat = { lapins: [], saillies: [], transactions: [], soins: [], ecole: { validees: [], nom: '' }, racesPerso: [], racesPersoEsp: {}, lots: [], parcelles: [], compte: {ok:false} };
 let vueActive = 'tableau';
 let leconOuverte = null;
 let ficheOuverte = null;
@@ -4533,7 +4533,14 @@ function nouvelleRace(){
   if(!r) return;
   const v = r.trim();
   if(!v) return;
-  if(!toutesRaces().includes(v)) { etat.racesPerso.push(v); sauver(); }
+  const esp = espActive();
+  if(esp==='lapin'){
+    if(!racesEsp().includes(v)){ if(!etat.racesPerso) etat.racesPerso=[]; etat.racesPerso.push(v); sauver(); }
+  } else {
+    if(!etat.racesPersoEsp) etat.racesPersoEsp={};
+    if(!etat.racesPersoEsp[esp]) etat.racesPersoEsp[esp]=[];
+    if(!racesEsp().includes(v)){ etat.racesPersoEsp[esp].push(v); sauver(); }
+  }
   rendre();
   setTimeout(()=>{ const s = document.getElementById('l-race'); if(s) s.value = v; }, 0);
 }
@@ -4961,7 +4968,13 @@ function espM(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.m_fr
 function espPetit(k){ const e=ESPECES[k]||ESPECES.lapin; return langue==='fr'?e.petit_fr:e.petit_en; }
 function espDe(l){ return (l && l.espece) || 'lapin'; }
 function animauxEsp(){ return etat.lapins.filter(l => espDe(l)===espActive()); }
-function racesEsp(){ const base = espDef().races || []; return espActive()==='lapin' ? [...base, ...(etat.racesPerso||[])] : base; }
+function racesEsp(){
+  const base = espDef().races || [];
+  const esp = espActive();
+  // Lapin : garde racesPerso (compatibilité). Autres espèces : racesPersoEsp[esp].
+  const perso = esp==='lapin' ? (etat.racesPerso||[]) : ((etat.racesPersoEsp && etat.racesPersoEsp[esp]) || []);
+  return [...base, ...perso];
+}
 function espSaillie(s){ const f=lapin(s.femelle); return ESPECES[(f&&f.espece)||s.espece||'lapin'] || ESPECES.lapin; }
 
 function setEspece(k){
